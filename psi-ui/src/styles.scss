@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body, app-root, .app-frame {
+    overflow: auto;
+    margin: 0;
+    height: 100%;
+    box-sizing: border-box;
+    color: #e0e0e0;
+}
+body { margin: 0; font-family: OpenSansLight !important }
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+.page-header {
+    margin-bottom: 20px;
+
+    h1 {
+        font-size: 40px !important;
+        font-family: OpenSansSemiBold !important;
+    }
+}
+.button-icon {
+    margin-right: 5px;
+}
+
+.action-button {
+    margin: 0 5px !important;
+}
+
+.basic-info-box {
+    margin-bottom: 40px;
+}
+
+.basic-info {
+    font-size: 20px;
+    margin-bottom: 20px;
+
+    .title {
+        background-color: antiquewhite; 
+        border-radius: 50px; 
+        color: brown;
+        padding: 2px 7px;
+        margin-right: 10px;
+        font-family: OpenSansSemiBold;
+    }
+}
+
+.center-text {
+    text-align: center;
+}
+

@@ -1,0 +1,93 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+@font-face {
+    font-family: OpenSansLight;
+    src: url(assets/OpenSansLight.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: OpenSansSemiBold;
+    src: url(assets/OpenSansSemiBold.ttf) format("truetype");
+}
+
+
+$pwr-primary-palette: (
+    50 : #f7e5e4,
+    100 : #eabfbc,
+    200 : #dc9590,
+    300 : #ce6a63,
+    400 : #c44a41,
+    500 : #b92a20,
+    600 : #b2251c,
+    700 : #aa1f18,
+    800 : #a21913,
+    900 : #930f0b,
+    A100 : #ffc3c2,
+    A200 : #ff918f,
+    A400 : #ff5e5c,
+    A700 : #ff4542,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+$pwr-accent-palette: (
+    50 : #fdf9f4,
+    100 : #fbf1e3,
+    200 : #f8e8d1,
+    300 : #f5dfbe,
+    400 : #f3d8b0,
+    500 : #f1d1a2,
+    600 : #efcc9a,
+    700 : #edc690,
+    800 : #ebc086,
+    900 : #e7b575,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #fffffe,
+    A700 : #fff3e5,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$custom-typography: mat-typography-config(
+  $font-family: 'OpenSansLight, monospace',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+@include mat-core($custom-typography);
+
+$pwr-primary: mat-palette($pwr-primary-palette);
+$pwr-accent:  mat-palette($pwr-accent-palette);
+$pwr-warn:    mat-palette($mat-deep-orange);
+$pwr-theme: mat-dark-theme($pwr-primary, $pwr-accent, $pwr-warn);
+@include angular-material-theme($pwr-theme);

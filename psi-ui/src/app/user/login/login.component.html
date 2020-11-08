@@ -1,0 +1,22 @@
+<mat-card fxLayoutAlign="center center" class="login-center">
+  <mat-card-content>
+    <h2 class="login-text">Logowanie</h2>
+    <div class="login-panel">
+      <mat-form-field class="input-headline">
+        <input matInput placeholder="Email" required /><mat-error>
+          Pole nie może być puste
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="login-panel">
+      <mat-form-field class="input-headline">
+        <input matInput type="password" placeholder="Hasło" required />
+        <mat-error> Pole nie może być puste </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" class="login-btn">Zaloguj się</button>
+    <button mat-button color="accent" class="forgotten-pass-btn">Przypomnij hasło</button>
+  </mat-card-content>
+</mat-card>

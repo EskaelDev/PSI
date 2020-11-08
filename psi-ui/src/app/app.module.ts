@@ -16,9 +16,13 @@ import { HistoryComponent } from './shared/history/history.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CrudKierunkiComponent } from './admin/crud-kierunki/crud-kierunki.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './user/login/login.component';
+import { ForgottenPasswordComponent } from './user/forgotten-password/forgotten-password.component';
+import { AccountComponent } from './user/account/account.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     CrudEfektyComponent,
     HomeComponent,
     HistoryComponent,
-    CrudKierunkiComponent
+    CrudKierunkiComponent,
+    LoginComponent,
+    ForgottenPasswordComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -41,11 +48,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatCardModule,
     MatSelectModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'efektycrud', component: CrudEfektyComponent },
       { path: 'kierunkicrud', component: CrudKierunkiComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'forgotten-password', component: ForgottenPasswordComponent },
+      { path: 'account', component: AccountComponent },
     ])
   ],
   entryComponents: [

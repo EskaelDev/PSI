@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HistoryComponent } from '../shared/history/history.component';
+import { HistoryComponent } from '../../shared/history/history.component';
 
 export interface LearningOutcome {
   symbol: string;

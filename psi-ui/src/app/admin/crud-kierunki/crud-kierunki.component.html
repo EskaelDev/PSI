@@ -1,0 +1,191 @@
+<div class="page-header">
+  <div>
+    <h1>[Administracja] Kierunki studiów</h1>
+  </div>
+  <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="flex-start">
+    <div>
+      <div
+        fxLayout="row"
+        fxLayoutGap="32px"
+        fxLayoutAlign="space-between end"
+        style="margin-top: 30px; margin-bottom: 20px"
+      >
+        <h2 style="width: 100px" class="round-title">Kierunki:</h2>
+        <button mat-fab color="accent">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <mat-list role="list" class="field-list">
+        <mat-list-item role="listitem"
+          ><button class="field-list-btn" mat-button>
+            Informatyka w j. ang.
+          </button></mat-list-item
+        >
+        <mat-list-item role="listitem"
+          ><button class="field-list-btn selected" mat-button>
+            Informatyka stosowana
+          </button></mat-list-item
+        >
+        <mat-list-item role="listitem"
+          ><button class="field-list-btn" mat-button>
+            Inżynieria systemów
+          </button></mat-list-item
+        >
+        <mat-list-item role="listitem"
+          ><button class="field-list-btn" mat-button>
+            Zarządzanie
+          </button></mat-list-item
+        >
+      </mat-list>
+    </div>
+    <div
+      class="edit-field"
+      fxLayout="row"
+      fxLayoutGap="12px"
+      fxLayoutAlign="space-between center"
+    >
+      <div>
+        <div fxLayout="row" fxLayoutGap="22px" fxLayoutAlign="flex-start">
+          <h1>Informatyka stosowana</h1>
+          <button
+            mat-raised-button
+            class="action-button"
+            color="primary"
+            style="height: 45px"
+          >
+            <mat-icon class="button-icon">save</mat-icon><span>Zapisz</span>
+          </button>
+          <button
+            mat-raised-button
+            class="action-button"
+            color="warn"
+            style="height: 45px"
+          >
+            <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+          </button>
+        </div>
+        <mat-form-field class="input-headline">
+          <mat-label>Kod kierunku</mat-label>
+          <input matInput placeholder="Kod kierunku" value="INFSTS" />
+        </mat-form-field>
+        <mat-form-field class="input-headline">
+          <mat-label>Tytuł kierunku</mat-label>
+          <input
+            matInput
+            placeholder="Tytuł kierunku"
+            value="Informatyka stosowana"
+          />
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="fill">
+          <mat-label>Stopień</mat-label>
+          <mat-select>
+            <mat-option [value]="'inżynier'"> inżynier </mat-option>
+            <mat-option [value]="'magister'"> magister </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Forma</mat-label>
+          <mat-select>
+            <mat-option [value]="'stacjonarna'"> stacjonarna </mat-option>
+            <mat-option [value]="'niestacjonarna'"> niestacjonarna </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Profil</mat-label>
+          <mat-select>
+            <mat-option [value]="'ogólnoakademicki'">
+              ogólnoakademicki
+            </mat-option>
+            <mat-option [value]="'praktyczny'"> praktyczny </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="input-headline">
+          <mat-label>Dziedzina</mat-label>
+          <input
+            matInput
+            placeholder="Dziedzina"
+            value="Nauki inżynieryjno-techniczne"
+          />
+        </mat-form-field>
+        <mat-form-field class="input-headline">
+          <mat-label>Dyscyplina</mat-label>
+          <input
+            matInput
+            placeholder="Dyscyplina"
+            value="Informatyka techniczna i telekomunikacja"
+          />
+        </mat-form-field>
+        <mat-form-field class="input-headline">
+          <input
+            type="text"
+            placeholder="Opienkun"
+            aria-label="Number"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div style="width: 100%">
+        <h3 style="font-weight: bold; font-size: 20px">Specjalizacje:</h3>
+        <mat-list
+          role="list"
+          style="min-width: 450px; height: 20vh; overflow: auto"
+        >
+          <mat-list-item role="listitem"
+            ><span>Inżynieria oprogramowania (IO)</span
+            ><button style="margin-left: 10px" mat-mini-fab color="accent">
+              <mat-icon>edit</mat-icon></button
+            ><button style="margin-left: 10px" mat-mini-fab color="primary">
+              <mat-icon>delete</mat-icon>
+            </button></mat-list-item
+          >
+          <mat-list-item role="listitem"
+            ><span>Danologia (DAN)</span
+            ><button style="margin-left: 10px" mat-mini-fab color="accent">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button style="margin-left: 10px" mat-mini-fab color="primary">
+              <mat-icon>delete</mat-icon>
+            </button></mat-list-item
+          >
+          <mat-list-item role="listitem"
+            ><span>Projektowanie systemów informatycznych (PSI)</span
+            ><button style="margin-left: 10px" mat-mini-fab color="accent">
+              <mat-icon>edit</mat-icon></button
+            ><button style="margin-left: 10px" mat-mini-fab color="primary">
+              <mat-icon>delete</mat-icon>
+            </button></mat-list-item
+          >
+        </mat-list>
+        <h4 style="margin-top: 20px; font-weight: bold">Nowa specjalizacja:</h4>
+        <div>
+          <mat-form-field>
+            <mat-label>Kod</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Nazwa</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="accent">
+          <mat-icon>add</mat-icon>
+          Dodaj
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

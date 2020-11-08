@@ -10,7 +10,7 @@
         fxLayoutAlign="space-between end"
         style="margin-top: 30px; margin-bottom: 20px"
       >
-        <h2 style="width: 100px" class="round-title">Kierunki:</h2>
+        <h2 style="width: 100px; padding-left: 15px;" class="round-title">Kierunki:</h2>
         <button mat-fab color="accent">
           <mat-icon>add</mat-icon>
         </button>
@@ -65,76 +65,98 @@
             <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
           </button>
         </div>
-        <mat-form-field class="input-headline">
-          <mat-label>Kod kierunku</mat-label>
-          <input matInput placeholder="Kod kierunku" value="INFSTS" />
-        </mat-form-field>
-        <mat-form-field class="input-headline">
-          <mat-label>Tytuł kierunku</mat-label>
-          <input
-            matInput
-            placeholder="Tytuł kierunku"
-            value="Informatyka stosowana"
-          />
-        </mat-form-field>
-        <br />
-        <mat-form-field appearance="fill">
-          <mat-label>Stopień</mat-label>
-          <mat-select>
-            <mat-option [value]="'inżynier'"> inżynier </mat-option>
-            <mat-option [value]="'magister'"> magister </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Forma</mat-label>
-          <mat-select>
-            <mat-option [value]="'stacjonarna'"> stacjonarna </mat-option>
-            <mat-option [value]="'niestacjonarna'"> niestacjonarna </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Profil</mat-label>
-          <mat-select>
-            <mat-option [value]="'ogólnoakademicki'">
-              ogólnoakademicki
-            </mat-option>
-            <mat-option [value]="'praktyczny'"> praktyczny </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="input-headline">
-          <mat-label>Dziedzina</mat-label>
-          <input
-            matInput
-            placeholder="Dziedzina"
-            value="Nauki inżynieryjno-techniczne"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-headline">
-          <mat-label>Dyscyplina</mat-label>
-          <input
-            matInput
-            placeholder="Dyscyplina"
-            value="Informatyka techniczna i telekomunikacja"
-          />
-        </mat-form-field>
-        <mat-form-field class="input-headline">
-          <input
-            type="text"
-            placeholder="Opienkun"
-            aria-label="Number"
-            matInput
-            [formControl]="myControl"
-            [matAutocomplete]="auto"
-          />
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option
-              *ngFor="let option of filteredOptions | async"
-              [value]="option"
-            >
-              {{ option }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+        <div>
+          <mat-form-field class="input-headline">
+            <mat-label>Kod kierunku</mat-label>
+            <input matInput placeholder="Kod kierunku" value="INFSTS" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="input-headline">
+            <mat-label>Tytuł kierunku</mat-label>
+            <input
+              matInput
+              placeholder="Tytuł kierunku"
+              value="Informatyka stosowana"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Stopień</mat-label>
+            <mat-select>
+              <mat-option [value]="'inżynier'"> inżynier </mat-option>
+              <mat-option [value]="'magister'"> magister </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Forma</mat-label>
+            <mat-select>
+              <mat-option [value]="'stacjonarna'"> stacjonarna </mat-option>
+              <mat-option [value]="'niestacjonarna'">
+                niestacjonarna
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Profil</mat-label>
+            <mat-select>
+              <mat-option [value]="'ogólnoakademicki'">
+                ogólnoakademicki
+              </mat-option>
+              <mat-option [value]="'praktyczny'"> praktyczny </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="input-headline">
+            <mat-label>Dziedzina</mat-label>
+            <input
+              matInput
+              placeholder="Dziedzina"
+              value="Nauki inżynieryjno-techniczne"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Język</mat-label>
+            <mat-select>
+              <mat-option [value]="'polski'"> polski </mat-option>
+              <mat-option [value]="'angielski'"> angielski </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="input-headline">
+            <mat-label>Dyscyplina</mat-label>
+            <input
+              matInput
+              placeholder="Dyscyplina"
+              value="Informatyka techniczna i telekomunikacja"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="input-headline">
+            <input
+              type="text"
+              placeholder="Opienkun"
+              aria-label="Number"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let option of filteredOptions | async"
+                [value]="option"
+              >
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
       </div>
       <div style="width: 100%">
         <h3 style="font-weight: bold; font-size: 20px">Specjalizacje:</h3>

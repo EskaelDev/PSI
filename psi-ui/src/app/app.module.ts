@@ -12,12 +12,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { HistoryComponent } from './shared/history/history.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
     AppComponent,
     CrudEfektyComponent,
-    HomeComponent
+    HomeComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -28,10 +32,15 @@ import { HomeComponent } from './home/home.component';
     MatIconModule,
     MatInputModule,
     MatTableModule,
+    MatDialogModule,
+    MatListModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'efektycrud', component: CrudEfektyComponent },
     ])
+  ],
+  entryComponents: [
+    HistoryComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

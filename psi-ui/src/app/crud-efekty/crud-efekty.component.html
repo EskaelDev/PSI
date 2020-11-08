@@ -22,7 +22,7 @@
     </button>
   </div>
   <div>
-    <button mat-raised-button class="action-button" color="accent">
+    <button mat-raised-button class="action-button" color="accent" (click)="openDialog()">
       <mat-icon class="button-icon">history</mat-icon><span>Historia</span>
     </button>
   </div>
@@ -40,7 +40,7 @@
 <div>
   <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="flex-start center">
     <div class="document-details">Objaśnienia</div>
-    <button mat-raised-button color="secondary" (click)="toggleDetails()"> {{ isDetails ? 'Hide' : 'Show' }} </button>
+    <button mat-raised-button color="secondary" (click)="toggleDetails()"> {{ isDetails ? 'Ukryj' : 'Pokaż' }} </button>
   </div>
   <div *ngIf="isDetails">P6U – charakterystyki uniwersalne odpowiadające kształceniu na studiach pierwszego stopnia - 6
     poziom PRK*<br />
@@ -63,8 +63,7 @@
     S(symbol specjalności)_U…, S(symbol specjalności)_U…, S(symbol specjalności)_U…, …- efekty specjalnościowe dot.
     kategorii „umiejętności”<br />
     S(symbol specjalności)_K…, S(symbol specjalności)_K…, S(symbol specjalności)_K…, …- efekty specjalnościowe dot.
-    kategorii „kompetencje<br />
-    społeczne”<br />
+    kategorii „kompetencje społeczne”<br />
     …._inż – efekty uczenia się umożliwiające uzyskanie kompetencji inżynierskich</div>
 </div>
 
@@ -139,6 +138,74 @@
 
 <div class="basic-info outcome-section">
   <h3 class="title center-text">Specjalnościowe</h3>
+  <h4 class="sub-title center-text">Danologia</h4>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field class="example-full-width">
+          <input matInput [value]="element.symbol" [name]="element.symbol">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Opis </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field style="width: 32vw;">
+          <textarea rows="5" matInput [value]="element.description" [name]="element.description"></textarea>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="universal">
+      <th mat-header-cell *matHeaderCellDef> Uniwersalne charakterystyki (U) </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field class="example-full-width">
+          <input matInput [value]="element.universal" [name]="element.universal">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="level6">
+      <th mat-header-cell *matHeaderCellDef> Charakterystyki poziomu 6 </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field class="example-full-width">
+          <input matInput [value]="element.level6" [name]="element.level6">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="level6eng">
+      <th mat-header-cell *matHeaderCellDef> Charakterystyki poziomu 6 inż </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field class="example-full-width">
+          <input matInput [value]="element.level6eng" [name]="element.level6eng">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Akcje </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-fab color="primary">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <button mat-fab color="accent" style="margin:10px">
+    <mat-icon>add</mat-icon>
+  </button>
+
+
+  <h4 style="margin-top: 50px;" class="sub-title center-text">Inżynieria Oprogramowania</h4>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

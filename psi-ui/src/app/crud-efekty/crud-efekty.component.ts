@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { HistoryComponent } from '../shared/history/history.component';
 
 export interface LearningOutcome {
   symbol: string;
@@ -27,12 +29,19 @@ export class CrudEfektyComponent implements OnInit {
 
   isDetails = false;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
   toggleDetails() {
     this.isDetails = !this.isDetails;
+  }
+
+  openDialog(): void {
+    this.dialog.open(HistoryComponent, {
+      height: '500px',
+      width: '400px'
+    });
   }
 }

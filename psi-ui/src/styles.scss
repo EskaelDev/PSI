@@ -57,6 +57,24 @@ body { margin: 0; font-family: OpenSansLight !important }
         margin-right: 10px;
         font-family: OpenSansSemiBold;
     }
+
+    .sub-title {
+        background-color: brown; 
+        border-radius: 50px; 
+        color: antiquewhite;
+        padding: 2px 7px;
+        margin: 0 120px 20px 120px;
+        font-family: OpenSansSemiBold;
+    }
+}
+
+.round-title {
+    background-color: antiquewhite; 
+    border-radius: 50px; 
+    color: brown;
+    padding: 2px 7px;
+    margin-right: 10px;
+    font-family: OpenSansSemiBold;
 }
 
 .center-text {

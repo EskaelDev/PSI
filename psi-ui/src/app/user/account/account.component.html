@@ -1,1 +1,48 @@
-<p>account works!</p>
+<mat-card class="acc-box">
+  <mat-card-content>
+    <div fxLayoutAlign="start center" fxLayoutGap="25px">
+        <img
+        class="img-responsive"
+        height="100"
+        src="assets/account.png"
+      />
+      <h2 class="acc-text">Moje konto</h2>
+      <button mat-raised-button color="accent"><mat-icon>power_settings_new</mat-icon><span style="margin-left: 5px;">Wyloguj</span></button>
+    </div>
+    <div class="basic-info" style="margin-top: 50px">
+      <span class="title">Imię i nazwisko:</span>
+      <span>dr inż. Jan Kowalski</span>
+    </div>
+    <div class="basic-info">
+      <span class="title">Email:</span> <span>jan.kowalski@university.com</span>
+    </div>
+
+    <h2 style="margin-top: 80px">Zmień hasło</h2>
+
+    <div class="acc-panel">
+      <mat-form-field class="input-headline">
+        <input matInput type="password" placeholder="Obecne hasło" required />
+        <mat-error> Pole nie może być puste </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="acc-panel">
+      <mat-form-field class="input-headline">
+        <input matInput type="password" placeholder="Nowe hasło" required />
+        <mat-error> Pole nie może być puste </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="acc-panel">
+      <mat-form-field class="input-headline">
+        <input
+          matInput
+          type="password"
+          placeholder="Powtórz nowe hasło"
+          required
+        />
+        <mat-error> Pole nie może być puste </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="accent" class="acc-btn">Zmień</button>
+  </mat-card-content>
+</mat-card>

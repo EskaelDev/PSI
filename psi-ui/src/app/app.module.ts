@@ -23,6 +23,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './user/login/login.component';
 import { ForgottenPasswordComponent } from './user/forgotten-password/forgotten-password.component';
 import { AccountComponent } from './user/account/account.component';
+import { PanelComponent } from './admin/panel/panel.component';
+import { CrudKontaComponent } from './admin/crud-konta/crud-konta.component';
+import { ChooseComponent } from './efekty/choose/choose.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { AccountComponent } from './user/account/account.component';
     CrudKierunkiComponent,
     LoginComponent,
     ForgottenPasswordComponent,
-    AccountComponent
+    AccountComponent,
+    PanelComponent,
+    CrudKontaComponent,
+    ChooseComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +63,9 @@ import { AccountComponent } from './user/account/account.component';
       { path: 'login', component: LoginComponent },
       { path: 'forgotten-password', component: ForgottenPasswordComponent },
       { path: 'account', component: AccountComponent },
+      { path: 'admin-panel', component: PanelComponent },
+      { path: 'kontacrud', component: CrudKontaComponent },
+      { path: 'efektychoose', component: ChooseComponent },
     ])
   ],
   entryComponents: [

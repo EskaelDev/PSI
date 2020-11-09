@@ -12,17 +12,17 @@
 }
 
 
-$pwr-primary-palette: (
+$pwr-red-palette: (
     50 : #f7e5e4,
     100 : #eabfbc,
     200 : #dc9590,
     300 : #ce6a63,
     400 : #c44a41,
-    500 : #b92a20,
-    600 : #b2251c,
-    700 : #aa1f18,
-    800 : #a21913,
-    900 : #930f0b,
+    500 : #920707,
+    600 : #8f0303,
+    700 : #700404,
+    800 : #700404,
+    900 : #700404,
     A100 : #ffc3c2,
     A200 : #ff918f,
     A400 : #ff5e5c,
@@ -45,7 +45,7 @@ $pwr-primary-palette: (
     )
 );
 
-$pwr-accent-palette: (
+$pwr-cream-palette: (
     50 : #fdf9f4,
     100 : #fbf1e3,
     200 : #f8e8d1,
@@ -86,8 +86,8 @@ $custom-typography: mat-typography-config(
 
 @include mat-core($custom-typography);
 
-$pwr-primary: mat-palette($pwr-primary-palette);
-$pwr-accent:  mat-palette($pwr-accent-palette);
+$pwr-primary: mat-palette($pwr-cream-palette);
+$pwr-accent:  mat-palette($pwr-red-palette);
 $pwr-warn:    mat-palette($mat-deep-orange);
 $pwr-theme: mat-dark-theme($pwr-primary, $pwr-accent, $pwr-warn);
 @include angular-material-theme($pwr-theme);

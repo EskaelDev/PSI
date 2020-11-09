@@ -1,6 +1,30 @@
 <div class="mat-typography app-frame mat-app-background">
-  <mat-toolbar color="primary" style="height: 80; margin-bottom: 40px;">
-    <img class="img-responsive" height="70" src="assets/logo.png" [routerLink]="'/'">
+  <mat-toolbar color="primary" style="height: 80; margin-bottom: 40px;background-color: #700404;">
+    <div fxLayoutAlign="space-between center" style="width: 100%;">
+        <img
+        class="img-responsive"
+        height="70"
+        src="assets/logo.png"
+        [routerLink]="'/'"
+      />
+      <div fxLayoutAlign="center center" fxLayoutGap="25px">
+      <button mat-button class="nav-btn">Strona główna</button>
+      <button mat-button class="nav-btn">Programy studiów</button>
+      <button mat-button class="nav-btn">Przedmioty</button>
+      <button mat-button class="nav-btn">Efekty uczenia się</button>
+      <button mat-button class="nav-btn">Administracja</button>
+      </div>
+      <div fxLayoutAlign="end center" fxLayoutGap="15px">
+        <mat-icon class="logout-btn">power_settings_new</mat-icon>
+        <img
+        class="img-responsive"
+        height="50"
+        src="assets/account.png"
+        [routerLink]="'/account'"
+      />
+      </div>
+      
+    </div>
   </mat-toolbar>
   <div style="margin: 40px">
     <router-outlet></router-outlet>

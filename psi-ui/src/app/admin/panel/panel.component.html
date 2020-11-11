@@ -1,7 +1,20 @@
 <div class="page-header">
-    <div>
-      <h1>Panel administratora</h1>
-    </div>
-    
+  <div>
+    <h1>Panel administratora</h1>
   </div>
-  
+  <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="start center" style="margin-top: 70px;">
+    <div class="panel-tile" fxLayoutAlign="start end" [routerLink]="'/kontacrud'">
+      <div>
+        <p>Zarządzanie</p>
+        <p>użytkownikami</p>
+      </div>
+    </div>
+    <div class="panel-tile" fxLayoutAlign="start end" [routerLink]="'/kierunkicrud'">
+      <div>
+        <p>Zarządzanie</p>
+        <p>kierunkami</p>
+        <p>studiów</p>
+      </div>
+    </div>
+  </div>
+</div>

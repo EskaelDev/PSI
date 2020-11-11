@@ -8,20 +8,22 @@
         [routerLink]="'/'"
       />
       <div fxLayoutAlign="center center" fxLayoutGap="25px">
-      <button mat-button class="nav-btn">Strona główna</button>
-      <button mat-button class="nav-btn">Programy studiów</button>
-      <button mat-button class="nav-btn">Przedmioty</button>
-      <button mat-button class="nav-btn">Efekty uczenia się</button>
-      <button mat-button class="nav-btn">Administracja</button>
+      <button mat-button class="nav-btn" [routerLink]="'/'">Strona główna</button>
+      <button mat-button class="nav-btn" [routerLink]="'/'">Programy studiów</button>
+      <button mat-button class="nav-btn" [routerLink]="'/'">Przedmioty</button>
+      <button mat-button class="nav-btn" [routerLink]="'/efektychoose'">Efekty uczenia się</button>
+      <button mat-button class="nav-btn" [routerLink]="'/admin-panel'">Administracja</button>
       </div>
-      <div fxLayoutAlign="end center" fxLayoutGap="15px">
-        <mat-icon class="logout-btn">power_settings_new</mat-icon>
-        <img
+      <div fxLayoutAlign="end center" fxLayoutGap="5px">
+        <button mat-button [routerLink]="'/'"><mat-icon class="logout-btn">power_settings_new</mat-icon></button>
+        <button mat-button><img
         class="img-responsive"
         height="50"
         src="assets/account.png"
         [routerLink]="'/account'"
-      />
+      /></button>
+        
+        
       </div>
       
     </div>

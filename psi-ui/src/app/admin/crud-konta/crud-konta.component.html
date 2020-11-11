@@ -1,1 +1,132 @@
-<p>crud-konta works!</p>
+<div class="page-header accounts-crud">
+  <div>
+    <h1>[Administracja] Użytkownicy</h1>
+  </div>
+  <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="flex-start">
+    <div>
+      <div
+        fxLayout="row"
+        fxLayoutGap="32px"
+        fxLayoutAlign="space-between end"
+        style="margin-top: 30px; margin-bottom: 20px"
+      >
+        <div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="center center">
+          <mat-form-field style="width: 400px">
+            <mat-label>Szukaj...</mat-label>
+            <input matInput />
+          </mat-form-field>
+          <button mat-mini-fab color="secondary">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+        <button mat-fab color="primary">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <mat-list role="list" class="field-list">
+        <mat-list-item role="listitem"
+          ><button class="field-list-btn" mat-button>
+            dr inż. Jan Kowalski
+          </button></mat-list-item
+        >
+        <mat-list-item role="listitem"
+          ><button class="field-list-btn selected" mat-button>
+            dr inż. Anna Nowak
+          </button></mat-list-item
+        >
+        <mat-list-item role="listitem"
+          ><button class="field-list-btn" mat-button>
+            mgr inż. Katarzyna Nowak
+          </button></mat-list-item
+        >
+      </mat-list>
+    </div>
+    <div
+      class="edit-field"
+      fxLayout="row"
+      fxLayoutGap="100px"
+      style="padding-left: 50px; padding-top: 70px"
+      fxLayoutAlign="space-between start"
+    >
+      <div>
+        <div fxLayout="row" fxLayoutGap="22px" fxLayoutAlign="flex-start">
+          <h1>dr inż. Anna Nowak</h1>
+          <button
+            mat-raised-button
+            class="action-button"
+            color="accent"
+            style="height: 45px"
+          >
+            <mat-icon class="button-icon">save</mat-icon><span>Zapisz</span>
+          </button>
+          <button
+            mat-raised-button
+            class="action-button"
+            color="warn"
+            style="height: 45px"
+          >
+            <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+          </button>
+        </div>
+        <mat-form-field class="input-headline">
+          <mat-label>Imię i nazwisko</mat-label>
+          <input
+            matInput
+            placeholder="Imię i nazwisko"
+            value="dr inż. Anna Nowak"
+          />
+        </mat-form-field>
+        <mat-form-field class="input-headline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="Email"
+            value="anna.nowak@university.com"
+          />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          class="action-button"
+          color="secondary"
+          style="height: 45px"
+        >
+          <mat-icon class="button-icon">no_encryption</mat-icon
+          ><span>Zresetuj hasło</span>
+        </button>
+      </div>
+      <div style="width: 100%">
+        <h3 style="font-weight: bold; font-size: 20px">Role:</h3>
+        <mat-list
+          role="list"
+          style="min-width: 350px; height: 20vh; overflow: auto"
+        >
+          <mat-list-item role="listitem"
+            ><span>Prowadzący</span
+            ><button style="margin-left: 10px" mat-mini-fab color="accent">
+              <mat-icon>delete</mat-icon>
+            </button></mat-list-item
+          >
+        </mat-list>
+        <h4 style="margin-top: 20px; font-weight: bold">Przypisz rolę:</h4>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Rola</mat-label>
+            <mat-select>
+              <mat-option [value]="'administrator'"> Administrator </mat-option>
+              <mat-option [value]="'administrator'"> Prowadzący </mat-option>
+              <mat-option [value]="'samorząd studencki'">
+                Samorząd studencki
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary">
+          <mat-icon>add</mat-icon>
+          Przypisz
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

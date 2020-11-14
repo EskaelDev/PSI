@@ -1,0 +1,137 @@
+<div class="page-header"
+     fxLayout="row"
+     fxLayoutGap="32px"
+     fxLayoutAlign="flex-start">
+    <div>
+        <h1> Przedmioty </h1>
+    </div>
+</div>
+
+
+<mat-card fxLayoutAlign="center center"
+          class="lo-center">
+    <table mat-table
+           #table
+           matSort
+           class="w100"
+           [dataSource]="dataSource">
+
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Symbol </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.symbol}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Nazwa </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supervisor">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Opiekun </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.supervisor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ECTS">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> ECTS </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.ECTS}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="hoursAtUniversity">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Godz na uni </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.hoursAtUniversity}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="hoursAtHome">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Godz w domu </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.hoursAtHome}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Forma zajęć </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="crediting">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Sposób zaliczenia </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.crediting}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="field">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Kierunek </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.field}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="form">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Dzienne/Zaoczne </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.form}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="kind">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Wymagane </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.kind}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="group">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Grupa kursów </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.group}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="specialization">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Specjalizacja </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.specialization}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="level">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Stopień </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.level}} </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row
+            *matRowDef="let row; columns: displayedColumns;"> </tr>
+    </table>
+</mat-card>

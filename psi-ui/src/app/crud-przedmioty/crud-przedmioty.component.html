@@ -1,0 +1,150 @@
+<div class="page-header fields-crud">
+    <div>
+        <h1>Nowy przedmiot/kurs</h1>
+    </div>
+</div>
+<mat-card fxLayoutAlign="left center"
+          class="lo-center">
+    <mat-card-content>
+        <div class="flex-container">
+
+            <!-- dane kursu -->
+            <div style="margin-right: 3vw;">
+                <h2 style="margin-top: 80px">Dane kursu</h2>
+
+
+                <mat-list role="list"
+                          class="field-list">
+                    <!-- foreach pole -->
+                    <mat-list-item role="listitem"
+                                   *ngFor="let item of subjectFields">
+
+
+                        <!-- Rodzaj -->
+                        <mat-form-field appearance="fill"
+                                        *ngIf="item == 'Rodzaj'">
+                            <mat-label>{{item}}</mat-label>
+                            <mat-select>
+                                <mat-option [value]="'obowiązkowy'">obowiązkowy </mat-option>
+                                <mat-option [value]="'ogólnouczelniany'">ogólnouczelniany </mat-option>
+                                <mat-option [value]="'sportowy'">sportowy </mat-option>
+                                <mat-option [value]="'humanistyczny'">humanistyczny </mat-option>
+                                <mat-option [value]="'językowy'">językowy </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- TYP -->
+                        <mat-form-field appearance="fill"
+                                        *ngIf="item == 'Typ'">
+                            <mat-label>{{item}}</mat-label>
+                            <mat-select>
+                                <mat-option [value]="'specialization'">specialization </mat-option>
+                                <mat-option [value]="'general'">general </mat-option>
+                                <mat-option [value]="'field of study'">field of study </mat-option>
+                                <mat-option [value]="'basic science'">basic science </mat-option>
+                                <mat-option [value]="'thesis '">thesis </mat-option>
+                                <mat-option [value]="'internship  '">internship </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Język -->
+                        <mat-form-field appearance="fill"
+                                        *ngIf="item == 'Język zajęć'">
+                            <mat-label>{{item}}</mat-label>
+                            <mat-select>
+                                <mat-option [value]="'polski'">polski </mat-option>
+                                <mat-option [value]="'angielski'">angielski </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- nazwa -->
+                        <div class="acc-panel"
+                             *ngIf="item == 'Nazwa polska' || item == 'Nazwa angielska'|| item == 'Kod'">
+                            <mat-form-field class="input-headline">
+                                <input matInput
+                                       id="{{item}}"
+                                       placeholder="{{item}}"
+                                       required />
+                                <mat-error> Pole nie może być puste </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-list-item>
+
+                </mat-list>
+
+
+
+            </div>
+
+            <!-- dane zajęć -->
+            <div>
+                <h2 style="margin-top: 80px">Dane zajęć</h2>
+                <mat-list role="list"
+                          class="field-list">
+                    <mat-list-item role="listitem"
+                                   *ngFor="let item of classFields">
+                        <!-- foreach pole -->
+                        <!-- TYP -->
+                        <mat-form-field appearance="fill"
+                                        *ngIf="item == 'Typ'">
+                            <mat-label>{{item}}</mat-label>
+                            <mat-select>
+                                <mat-option [value]="'wykład'"> wykład </mat-option>
+                                <mat-option [value]="'laboratorium'"> laboratorium </mat-option>
+                                <mat-option [value]="'ćwiczenia'"> ćwiczenia </mat-option>
+                                <mat-option [value]="'projekt'"> projekt </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Sposób zaliczenia -->
+                        <mat-form-field appearance="fill"
+                                        *ngIf="item == 'Sposób zaliczenia'">
+                            <mat-label>{{item}}</mat-label>
+                            <mat-select>
+                                <mat-option [value]="'wykład'"> egzamin </mat-option>
+                                <mat-option [value]="'laboratorium'"> ocena </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Kończący badawczy-->
+                        <mat-checkbox *ngIf="item == 'Kończący' || item == 'Badawczy' ">{{item}}</mat-checkbox>
+                        <!-- czas na uczelni -->
+                        <div class="acc-panel"
+                             *ngIf="item == 'Czas na uczelni' || item ==  'Czas w domu'|| item ==  'ECTS'">
+                            <mat-form-field class="input-headline">
+                                <input matInput
+                                       id="{{item}}"
+                                       type="number"
+                                       placeholder="{{item}}"
+                                       required />
+                                <mat-error> Pole nie może być puste </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-list-item>
+
+                </mat-list>
+
+            </div>
+
+            <div>
+                <button mat-fab
+                        class="my-fab"
+                        color="accent">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+    </mat-card-content>
+    <!-- 
+    <div class="literature">
+        Literatura
+        <div>Autorzy</div>
+        <div>Tytuł</div>
+        <div>ISBN</div>
+    </div> -->
+    <div style="width: 100%; align-self:flex-end">
+        <button mat-raised-button
+                color="accent"
+                class="acc-btn"
+                style="float:right">Zapisz</button>
+    </div>
+</mat-card>

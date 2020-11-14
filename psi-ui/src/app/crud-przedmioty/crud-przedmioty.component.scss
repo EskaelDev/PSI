@@ -1,0 +1,63 @@
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.flex-container > div {
+    width: 100%;
+    margin: 10px;
+    text-align: left;
+    line-height: 75px;
+}
+
+.mat-form-field {
+    width: 20vw;
+}
+
+.field-list {
+    border: 1px white solid;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+    padding-bottom: 20px;
+    overflow: auto;
+}
+
+.field-list > mat-list-item {
+    margin-top: 10px;
+}
+
+.icon {
+    font-size: 50px;
+}
+
+.icon-button {
+    width: 200px;
+    height: 200px;
+    float: right;
+    margin-top: 50px;
+    margin-left: 100px;
+}
+
+.my-fab {
+    margin: 230px 0px 0px 150px;
+    width: 200px;
+    height: 200px;
+    line-height: 140px;
+    font-size: 140px;
+
+    &::ng-deep .mat-button-wrapper {
+        line-height: 140px;
+        padding: 0;
+
+        .mat-icon {
+            font-size: 140px;
+            padding-right: 120px;
+            padding-bottom: 120px;
+        }
+    }
+}
+.literature {
+    position: absolute;
+    bottom: 0px;
+}

@@ -14,8 +14,10 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './shared/history/history.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatSortModule} from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CrudKierunkiComponent } from './admin/crud-kierunki/crud-kierunki.component';
@@ -26,6 +28,9 @@ import { AccountComponent } from './user/account/account.component';
 import { PanelComponent } from './admin/panel/panel.component';
 import { CrudKontaComponent } from './admin/crud-konta/crud-konta.component';
 import { ChooseComponent } from './efekty/choose/choose.component';
+import { PrzedmiotyListaComponent } from './przedmioty-lista/przedmioty-lista.component';
+import { CrudPrzedmiotyComponent } from './crud-przedmioty/crud-przedmioty.component';
+import { CrudKartyPrzedmiotowComponent } from './crud-karty-przedmiotow/crud-karty-przedmiotow.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +44,10 @@ import { ChooseComponent } from './efekty/choose/choose.component';
     AccountComponent,
     PanelComponent,
     CrudKontaComponent,
-    ChooseComponent
+    ChooseComponent,
+    PrzedmiotyListaComponent,
+    CrudPrzedmiotyComponent,
+    CrudKartyPrzedmiotowComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +63,8 @@ import { ChooseComponent } from './efekty/choose/choose.component';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatSortModule,
+    MatCheckboxModule,
     MatSelectModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
@@ -66,6 +76,9 @@ import { ChooseComponent } from './efekty/choose/choose.component';
       { path: 'admin-panel', component: PanelComponent },
       { path: 'kontacrud', component: CrudKontaComponent },
       { path: 'efektychoose', component: ChooseComponent },
+      { path: 'przedmiotylista', component: PrzedmiotyListaComponent },
+      { path: 'przedmiotycrud', component: CrudPrzedmiotyComponent },
+      { path: 'kartycrud', component: CrudKartyPrzedmiotowComponent },
     ])
   ],
   entryComponents: [

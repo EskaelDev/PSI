@@ -32,6 +32,7 @@ import { PrzedmiotyListaComponent } from './przedmioty-lista/przedmioty-lista.co
 import { CrudPrzedmiotyComponent } from './crud-przedmioty/crud-przedmioty.component';
 import { CrudKartyPrzedmiotowComponent } from './crud-karty-przedmiotow/crud-karty-przedmiotow.component';
 import { NewSubjectComponent } from './crud-przedmioty/new-subject/new-subject.component';
+import { MainMenuComponent } from './home/main-menu/main-menu.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { NewSubjectComponent } from './crud-przedmioty/new-subject/new-subject.c
     PrzedmiotyListaComponent,
     CrudPrzedmiotyComponent,
     CrudKartyPrzedmiotowComponent,
-    NewSubjectComponent
+    NewSubjectComponent,
+    MainMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -81,6 +83,7 @@ import { NewSubjectComponent } from './crud-przedmioty/new-subject/new-subject.c
       { path: 'przedmiotylista', component: PrzedmiotyListaComponent },
       { path: 'przedmiotycrud', component: CrudPrzedmiotyComponent },
       { path: 'kartycrud', component: CrudKartyPrzedmiotowComponent },
+      { path: 'main', component: MainMenuComponent },
     ])
   ],
   entryComponents: [

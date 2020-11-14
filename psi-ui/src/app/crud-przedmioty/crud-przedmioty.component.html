@@ -1,7 +1,34 @@
-<div class="page-header fields-crud">
+<div class="page-header fields-crud" fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="flex-start">
     <div>
         <h1>Nowy przedmiot/kurs</h1>
     </div>
+    <div>
+        <button mat-raised-button class="action-button" color="accent">
+          <mat-icon class="button-icon">save</mat-icon><span>Zapisz</span>
+        </button>
+        <button mat-raised-button class="action-button" color="accent">
+          <mat-icon class="button-icon">note_add</mat-icon><span>Zapisz jako</span>
+        </button>
+        <button mat-raised-button class="action-button" color="primary">
+          <mat-icon class="button-icon">save_alt</mat-icon><span>Importuj z</span>
+        </button>
+        <button mat-raised-button class="action-button" color="secondary">
+          <mat-icon class="button-icon">close</mat-icon><span>Anuluj</span>
+        </button>
+      </div>
+      <div>
+        <button mat-raised-button class="action-button" color="warn">
+          <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+        </button>
+        <button mat-raised-button class="action-button" color="accent">
+          <mat-icon class="button-icon">description</mat-icon><span>PDF</span>
+        </button>
+      </div>
+      <div>
+        <button mat-raised-button class="action-button" color="primary" (click)="openDialog()">
+          <mat-icon class="button-icon">history</mat-icon><span>Historia</span>
+        </button>
+      </div>
 </div>
 <mat-card fxLayoutAlign="left center"
           class="lo-center">
@@ -134,17 +161,4 @@
         </div>
 
     </mat-card-content>
-    <!-- 
-    <div class="literature">
-        Literatura
-        <div>Autorzy</div>
-        <div>Tytuł</div>
-        <div>ISBN</div>
-    </div> -->
-    <div style="width: 100%; align-self:flex-end">
-        <button mat-raised-button
-                color="accent"
-                class="acc-btn"
-                style="float:right">Zapisz</button>
-    </div>
 </mat-card>

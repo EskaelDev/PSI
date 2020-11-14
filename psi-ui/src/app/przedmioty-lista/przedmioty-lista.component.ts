@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NewSubjectComponent } from '../crud-przedmioty/new-subject/new-subject.component';
 
 interface SubjectVM {
     symbol: string;
@@ -107,10 +109,17 @@ export class PrzedmiotyListaComponent implements OnInit {
         this.dataSource.sort = this.sort;
     }
     dataSource = new MatTableDataSource(LEARING_OUTCOMES);
-    constructor() { }
+    constructor(public dialog: MatDialog) { }
 
 
     ngOnInit(): void {
+    }
+
+    addSubject() {
+    this.dialog.open(NewSubjectComponent, {
+      height: '400px',
+      width: '700px'
+    });
     }
 
 }

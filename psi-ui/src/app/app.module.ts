@@ -31,6 +31,7 @@ import { ChooseComponent } from './efekty/choose/choose.component';
 import { PrzedmiotyListaComponent } from './przedmioty-lista/przedmioty-lista.component';
 import { CrudPrzedmiotyComponent } from './crud-przedmioty/crud-przedmioty.component';
 import { CrudKartyPrzedmiotowComponent } from './crud-karty-przedmiotow/crud-karty-przedmiotow.component';
+import { NewSubjectComponent } from './crud-przedmioty/new-subject/new-subject.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { CrudKartyPrzedmiotowComponent } from './crud-karty-przedmiotow/crud-kar
     ChooseComponent,
     PrzedmiotyListaComponent,
     CrudPrzedmiotyComponent,
-    CrudKartyPrzedmiotowComponent
+    CrudKartyPrzedmiotowComponent,
+    NewSubjectComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ import { CrudKartyPrzedmiotowComponent } from './crud-karty-przedmiotow/crud-kar
     ])
   ],
   entryComponents: [
-    HistoryComponent
+    HistoryComponent,
+    NewSubjectComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

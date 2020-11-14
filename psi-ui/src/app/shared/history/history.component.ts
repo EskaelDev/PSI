@@ -1,10 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-history',
@@ -13,6 +8,5 @@ export interface DialogData {
 })
 export class HistoryComponent {
 
-  constructor(public dialogRef: MatDialogRef<HistoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  constructor(public dialogRef: MatDialogRef<HistoryComponent>) { }
 }

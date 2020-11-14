@@ -2,8 +2,13 @@
      fxLayout="row"
      fxLayoutGap="32px"
      fxLayoutAlign="flex-start">
-    <div>
+    <div fxLayoutAlign="flex-start" fxLayoutGap="20px">
         <h1> Przedmioty </h1>
+        <button mat-fab
+                color="primary"
+                (click)="addSubject()">
+            <mat-icon>add</mat-icon>
+        </button>
     </div>
 </div>
 

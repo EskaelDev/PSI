@@ -1,34 +1,54 @@
-<div class="page-header fields-crud" fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+<div class="page-header fields-crud"
+     fxLayout="row"
+     fxLayoutGap="32px"
+     fxLayoutAlign="flex-start">
     <div>
         <h1>Nowy przedmiot/kurs</h1>
     </div>
+    <!--#region przyciski -->
     <div>
-        <button mat-raised-button class="action-button" color="accent">
-          <mat-icon class="button-icon">save</mat-icon><span>Zapisz</span>
+        <button mat-raised-button
+                class="action-button"
+                color="accent">
+            <mat-icon class="button-icon">save</mat-icon><span>Zapisz</span>
         </button>
-        <button mat-raised-button class="action-button" color="accent">
-          <mat-icon class="button-icon">note_add</mat-icon><span>Zapisz jako</span>
+        <button mat-raised-button
+                class="action-button"
+                color="accent">
+            <mat-icon class="button-icon">note_add</mat-icon><span>Zapisz jako</span>
         </button>
-        <button mat-raised-button class="action-button" color="primary">
-          <mat-icon class="button-icon">save_alt</mat-icon><span>Importuj z</span>
+        <button mat-raised-button
+                class="action-button"
+                color="primary">
+            <mat-icon class="button-icon">save_alt</mat-icon><span>Importuj z</span>
         </button>
-        <button mat-raised-button class="action-button" color="secondary">
-          <mat-icon class="button-icon">close</mat-icon><span>Anuluj</span>
+        <button mat-raised-button
+                class="action-button"
+                color="secondary">
+            <mat-icon class="button-icon">close</mat-icon><span>Anuluj</span>
         </button>
-      </div>
-      <div>
-        <button mat-raised-button class="action-button" color="warn">
-          <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+    </div>
+    <div>
+        <button mat-raised-button
+                class="action-button"
+                color="warn">
+            <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
         </button>
-        <button mat-raised-button class="action-button" color="accent">
-          <mat-icon class="button-icon">description</mat-icon><span>PDF</span>
+        <button mat-raised-button
+                class="action-button"
+                color="accent">
+            <mat-icon class="button-icon">description</mat-icon><span>PDF</span>
         </button>
-      </div>
-      <div>
-        <button mat-raised-button class="action-button" color="primary" (click)="openDialog()">
-          <mat-icon class="button-icon">history</mat-icon><span>Historia</span>
+    </div>
+    <div>
+        <button mat-raised-button
+                class="action-button"
+                color="primary"
+                (click)="openDialog()">
+            <mat-icon class="button-icon">history</mat-icon><span>Historia</span>
         </button>
-      </div>
+    </div>
+    <!--#endregion przyciski -->
 </div>
 <mat-card fxLayoutAlign="left center"
           class="lo-center">
@@ -46,9 +66,24 @@
                     <mat-list-item role="listitem"
                                    *ngFor="let item of subjectFields">
 
+                        <!-- Rodzaj -->
+                        <mat-form-field class="form-field"
+                                        appearance="fill"
+                                        style="margin-top: 15px;"
+                                        *ngIf="item == 'Prowadzący'">
+                            <mat-label>{{item}}</mat-label>
+                            <mat-select>
+                                <mat-option [value]="'obowiązkowy'">Jan Kowalski </mat-option>
+                                <mat-option [value]="'ogólnouczelniany'">Piotr Nowak </mat-option>
+                                <mat-option [value]="'sportowy'">Adam Małysz</mat-option>
+
+
+                            </mat-select>
+                        </mat-form-field>
 
                         <!-- Rodzaj -->
-                        <mat-form-field appearance="fill"
+                        <mat-form-field class="form-field"
+                                        appearance="fill"
                                         *ngIf="item == 'Rodzaj'">
                             <mat-label>{{item}}</mat-label>
                             <mat-select>
@@ -61,7 +96,8 @@
                             </mat-select>
                         </mat-form-field>
                         <!-- TYP -->
-                        <mat-form-field appearance="fill"
+                        <mat-form-field class="form-field"
+                                        appearance="fill"
                                         *ngIf="item == 'Typ'">
                             <mat-label>{{item}}</mat-label>
                             <mat-select>
@@ -75,7 +111,8 @@
                             </mat-select>
                         </mat-form-field>
                         <!-- Język -->
-                        <mat-form-field appearance="fill"
+                        <mat-form-field class="form-field"
+                                        appearance="fill"
                                         *ngIf="item == 'Język zajęć'">
                             <mat-label>{{item}}</mat-label>
                             <mat-select>
@@ -86,11 +123,10 @@
                         <!-- nazwa -->
                         <div class="acc-panel"
                              *ngIf="item == 'Nazwa polska' || item == 'Nazwa angielska'|| item == 'Kod'">
-                            <mat-form-field class="input-headline">
+                            <mat-form-field class="form-field input-headline">
                                 <input matInput
                                        id="{{item}}"
-                                       placeholder="{{item}}"
-                                       required />
+                                       placeholder="{{item}}" />
                                 <mat-error> Pole nie może być puste </mat-error>
                             </mat-form-field>
                         </div>
@@ -104,53 +140,83 @@
 
             <!-- dane zajęć -->
             <div>
-                <h2 style="margin-top: 80px">Dane zajęć</h2>
-                <mat-list role="list"
-                          class="field-list">
-                    <mat-list-item role="listitem"
-                                   *ngFor="let item of classFields">
-                        <!-- foreach pole -->
-                        <!-- TYP -->
-                        <mat-form-field appearance="fill"
-                                        *ngIf="item == 'Typ'">
-                            <mat-label>{{item}}</mat-label>
-                            <mat-select>
-                                <mat-option [value]="'wykład'"> wykład </mat-option>
-                                <mat-option [value]="'laboratorium'"> laboratorium </mat-option>
-                                <mat-option [value]="'ćwiczenia'"> ćwiczenia </mat-option>
-                                <mat-option [value]="'projekt'"> projekt </mat-option>
+                <div>
+                    <div fxLayout="row">
+                        <h2 style="margin-top: 80px">Dane zajęć</h2>
+                        <button mat-raised-button
+                                class="action-button"
+                                style="height: 40px; top: 75px; left: 265px;"
+                                color="secondary">
+                            <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+                        </button>
+                    </div>
+                    <mat-list role="list"
+                              class="field-list">
+                        <mat-list-item role="listitem"
+                                       *ngFor="let item of classFields">
+                            <!-- foreach pole -->
+                            <!-- TYP -->
+                            <mat-form-field class="form-field"
+                                            style="margin-top:10px"
+                                            appearance="fill"
+                                            *ngIf="item == 'Typ'">
+                                <mat-label>{{item}}</mat-label>
+                                <mat-select>
+                                    <mat-option [value]="'wykład'"> wykład </mat-option>
+                                    <mat-option [value]="'laboratorium'"> laboratorium </mat-option>
+                                    <mat-option [value]="'ćwiczenia'"> ćwiczenia </mat-option>
+                                    <mat-option [value]="'projekt'"> projekt </mat-option>
 
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- Sposób zaliczenia -->
-                        <mat-form-field appearance="fill"
-                                        *ngIf="item == 'Sposób zaliczenia'">
-                            <mat-label>{{item}}</mat-label>
-                            <mat-select>
-                                <mat-option [value]="'wykład'"> egzamin </mat-option>
-                                <mat-option [value]="'laboratorium'"> ocena </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- Kończący badawczy-->
-                        <mat-checkbox *ngIf="item == 'Kończący' || item == 'Badawczy' ">{{item}}</mat-checkbox>
-                        <!-- czas na uczelni -->
-                        <div class="acc-panel"
-                             *ngIf="item == 'Czas na uczelni' || item ==  'Czas w domu'|| item ==  'ECTS'">
-                            <mat-form-field class="input-headline">
-                                <input matInput
-                                       id="{{item}}"
-                                       type="number"
-                                       placeholder="{{item}}"
-                                       required />
-                                <mat-error> Pole nie może być puste </mat-error>
+                                </mat-select>
                             </mat-form-field>
-                        </div>
-                    </mat-list-item>
+                            <!-- Sposób zaliczenia -->
+                            <mat-form-field class="form-field"
+                                            appearance="fill"
+                                            *ngIf="item == 'Sposób zaliczenia'">
+                                <mat-label>{{item}}</mat-label>
+                                <mat-select>
+                                    <mat-option [value]="'wykład'"> egzamin </mat-option>
+                                    <mat-option [value]="'laboratorium'"> ocena </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- Kończący badawczy-->
+                            <mat-checkbox
+                                          *ngIf="item == 'Grupa przedmiotow' || item == 'Kończący' || item == 'Badawczy' ">
+                                {{item}}</mat-checkbox>
+                            <!-- czas na uczelni -->
+                            <div class="acc-panel"
+                                 *ngIf="item == 'Czas na uczelni' || item ==  'Czas w domu'|| item ==  'ECTS' || item ==  'ECTS zajec praktycznych' || item ==  'ECTS zajec bezpośrednich'">
+                                <mat-form-field class="form-field input-headline">
+                                    <input matInput
+                                           id="{{item}}"
+                                           type="number"
+                                           placeholder="{{item}}" />
+                                    <mat-error> Pole nie może być puste </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-list-item>
 
-                </mat-list>
+                    </mat-list>
 
+                </div>
+                <!-- Forma zajęć -->
+                <div style="margin-top: 5px">
+                    <h2 style="margin-top: 5px">Forma zajęć</h2>
+                    <div class="field-list">
+                        <mat-form-field style="width: 300px; margin-left: 15px;">
+                            <input matInput />
+                            <mat-error> Pole nie może być puste </mat-error>
+                        </mat-form-field>
+                        <button mat-raised-button
+                                style="height: 40px; margin-left: 15px"
+                                color="accent">
+                            <mat-icon class="button-icon">add</mat-icon><span>Dodaj</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
+            <!-- duży przycisk -->
             <div>
                 <button mat-fab
                         class="my-fab"
@@ -160,5 +226,171 @@
             </div>
         </div>
 
+        <!-- Literatura -->
+        <div class="white-border">
+            <h2 style="margin-top: 80px">Literatura</h2>
+            <!-- inputy -->
+            <div fxLayout="row">
+                <div class="literature-input"
+                     *ngFor="let item of literature">
+                    <!-- <div class="acc-panel"> -->
+                    <!-- Text -->
+                    <mat-form-field *ngIf="item != 'podstawowa' ">
+                        <input matInput
+                               id="{{item}}"
+                               placeholder="{{item}}" />
+                        <mat-error> Pole nie może być puste </mat-error>
+                    </mat-form-field>
+
+                    <!-- podstawowa -->
+                    <div style="margin-top:20px">
+                        <mat-checkbox *ngIf="item == 'podstawowa' ">{{item}}</mat-checkbox>
+                    </div>
+                    <!-- </div> -->
+                </div>
+                <button mat-raised-button
+                        style="height: 40px;"
+                        class="action-button"
+                        color="accent">
+                    <mat-icon class="button-icon">add</mat-icon><span>Dodaj</span>
+                </button>
+            </div>
+            <!-- tabelka -->
+            <div>
+                <table mat-table
+                       #table
+                       style="width: 100%;"
+                       [dataSource]="literatureDS">
+
+                    <ng-container matColumnDef="autor">
+                        <th mat-header-cell
+                            *matHeaderCellDef> autor </th>
+                        <td mat-cell
+                            *matCellDef="let row"> {{row.autor}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tytul">
+                        <th mat-header-cell
+                            *matHeaderCellDef> tytuł </th>
+                        <td mat-cell
+                            *matCellDef="let row"> {{row.tytul}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="rok">
+                        <th mat-header-cell
+                            *matHeaderCellDef> rok </th>
+                        <td mat-cell
+                            *matCellDef="let row"> {{row.rok}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="wydawnictwo">
+                        <th mat-header-cell
+                            *matHeaderCellDef> wydawnictwo </th>
+                        <td mat-cell
+                            *matCellDef="let row"> {{row.wydawnictwo}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="podstawowa">
+                        <th mat-header-cell
+                            *matHeaderCellDef> podstawowa </th>
+                        <td mat-cell
+                            *matCellDef="let row"> {{row.podstawowa}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="isbn">
+                        <th mat-header-cell
+                            *matHeaderCellDef> isbn </th>
+                        <td mat-cell
+                            *matCellDef="let row"> {{row.isbn}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row
+                        *matHeaderRowDef="literature"></tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: literature;"></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- wymagania i cele -->
+        <div fxLayout="row"
+             fxLayoutGap="32px"
+             fxLayoutAlign="flex-start"
+             style="margin-top: 80px">
+
+            <!-- wymagania -->
+            <div class="white-border">
+                <h2>Wymagania wstępne w zakresie wiedzy, umiejętności i innych kompetencji </h2>
+                <div fxLayoutGap="32px"
+                     fxLayoutAlign="flex-start">
+                    <mat-form-field class="prerequisites">
+                        <textarea matInput></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button
+                            style="height: 40px; margin-left: 10px;"
+                            class="action-button"
+                            color="accent">
+                        <mat-icon class="button-icon">add</mat-icon><span>Dodaj</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cele -->
+            <div class="white-border">
+                <h2>Cele przedmiotu</h2>
+                <div fxLayoutGap="32px"
+                     fxLayoutAlign="flex-start">
+                    <mat-form-field class="prerequisites">
+                        <textarea matInput></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button
+                            style="height: 40px; margin-left: 10px;"
+                            class="action-button"
+                            color="accent">
+                        <mat-icon class="button-icon">add</mat-icon><span>Dodaj</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- efekty uczenia i narzędzia -->
+        <div fxLayout="row"
+             fxLayoutGap="32px"
+             fxLayoutAlign="flex-start"
+             style="margin-top: 80px">
+
+            <!-- Efekty uczenia -->
+            <div class="white-border">
+                <h2>Przedmiotowe efekty kształcenia</h2>
+                <div fxLayoutGap="32px"
+                     fxLayoutAlign="flex-start">
+                    <mat-form-field class="prerequisites">
+                        <textarea matInput></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button
+                            style="height: 40px; margin-left: 10px;"
+                            class="action-button"
+                            color="accent">
+                        <mat-icon class="button-icon">add</mat-icon><span>Dodaj</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Narzędzia -->
+            <div class="white-border">
+                <h2>Stosowane narzędzia dydaktyczne</h2>
+                <div fxLayoutGap="32px"
+                     fxLayoutAlign="flex-start">
+                    <mat-form-field class="prerequisites">
+                        <textarea matInput></textarea>
+                    </mat-form-field>
+                    <button mat-raised-button
+                            style="height: 40px; margin-left: 10px;"
+                            class="action-button"
+                            color="accent">
+                        <mat-icon class="button-icon">add</mat-icon><span>Dodaj</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>

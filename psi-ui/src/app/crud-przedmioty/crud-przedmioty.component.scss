@@ -10,7 +10,7 @@
     line-height: 75px;
 }
 
-.mat-form-field {
+.form-field {
     width: 20vw;
 }
 
@@ -45,6 +45,7 @@
     height: 200px;
     line-height: 140px;
     font-size: 140px;
+    box-shadow: 2px 2px 1px #00000085;
 
     &::ng-deep .mat-button-wrapper {
         line-height: 140px;
@@ -60,4 +61,25 @@
 .literature {
     position: absolute;
     bottom: 0px;
+}
+
+.literature-input{
+    width: 150px;
+    margin-right: 80px !important;
+}
+
+.mat-cell,
+.mat-header-cell {
+    padding: 8px 16px 8px 0;
+}
+
+.prerequisites{
+    width: 500px;
+    max-width: 1000px;
+}
+
+
+.white-border{
+    // border: 1px white solid;
+    
 }

@@ -30,7 +30,6 @@ import { CrudKontaComponent } from './admin/crud-konta/crud-konta.component';
 import { ChooseComponent } from './efekty/choose/choose.component';
 import { PrzedmiotyListaComponent } from './przedmioty-lista/przedmioty-lista.component';
 import { CrudPrzedmiotyComponent } from './crud-przedmioty/crud-przedmioty.component';
-import { CrudKartyPrzedmiotowComponent } from './crud-karty-przedmiotow/crud-karty-przedmiotow.component';
 import { NewSubjectComponent } from './crud-przedmioty/new-subject/new-subject.component';
 import { MainMenuComponent } from './home/main-menu/main-menu.component';
 
@@ -49,7 +48,6 @@ import { MainMenuComponent } from './home/main-menu/main-menu.component';
     ChooseComponent,
     PrzedmiotyListaComponent,
     CrudPrzedmiotyComponent,
-    CrudKartyPrzedmiotowComponent,
     NewSubjectComponent,
     MainMenuComponent
   ],
@@ -82,7 +80,6 @@ import { MainMenuComponent } from './home/main-menu/main-menu.component';
       { path: 'efektychoose', component: ChooseComponent },
       { path: 'przedmiotylista', component: PrzedmiotyListaComponent },
       { path: 'przedmiotycrud', component: CrudPrzedmiotyComponent },
-      { path: 'kartycrud', component: CrudKartyPrzedmiotowComponent },
       { path: 'main', component: MainMenuComponent },
     ])
   ],

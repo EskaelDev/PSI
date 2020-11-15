@@ -1,0 +1,103 @@
+<div class="page-header"
+     fxLayout="row"
+     fxLayoutGap="32px"
+     fxLayoutAlign="flex-start">
+    <div fxLayoutAlign="flex-start"
+         fxLayoutGap="20px">
+        <h1> Przedmioty </h1>
+        <button mat-fab
+                color="primary"
+                (click)="addSubject()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div>
+    <mat-form-field class="example-full-width">
+        <mat-label>Szukaj</mat-label>
+        <input matInput
+               placeholder="Szukaj">
+    </mat-form-field>
+</div>
+<mat-card fxLayoutAlign="center center"
+          class="lo-center">
+    <table mat-table
+           #table
+           matSort
+           class="w100"
+           [dataSource]="dataSource">
+
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Symbol </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.symbol}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Nazwa </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supervisor">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Opiekun </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.supervisor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Typ </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.type}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="kind">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Rodzaj </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.kind}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="language">
+            <th mat-header-cell
+                mat-sort-header
+                *matHeaderCellDef> Język </th>
+            <td mat-cell
+                *matCellDef="let row"> {{row.language}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action" >
+            <th mat-header-cell
+                *matHeaderCellDef> Akcja </th>
+            <td mat-cell
+                *matCellDef="let element"
+                class="action-link">
+                <button mat-raised-button
+                        color="secondary">
+                    <mat-icon class="button-icon">edit</mat-icon><span>Edytuj</span>
+                </button>
+                <button mat-raised-button
+                        class="action-button"
+                        color="accent">
+                    <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row
+            *matRowDef="let row; columns: displayedColumns;"> </tr>
+    </table>
+</mat-card>

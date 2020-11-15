@@ -14,8 +14,10 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './shared/history/history.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatSortModule} from '@angular/material/sort';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CrudKierunkiComponent } from './admin/crud-kierunki/crud-kierunki.component';
@@ -28,7 +30,11 @@ import { CrudKontaComponent } from './admin/crud-konta/crud-konta.component';
 import { ChooseComponent } from './efekty/choose/choose.component';
 import { ChooseSyllabusComponent } from './syllabus/choose-syllabus/choose-syllabus.component';
 import { CrudSyllabusComponent } from './syllabus/crud-syllabus/crud-syllabus.component';
-import {MatTabsModule} from "@angular/material/tabs";
+import { MatTabsModule } from '@angular/material/tabs';
+import { PrzedmiotyListaComponent } from './przedmioty-lista/przedmioty-lista.component';
+import { CrudPrzedmiotyComponent } from './crud-przedmioty/crud-przedmioty.component';
+import { NewSubjectComponent } from './crud-przedmioty/new-subject/new-subject.component';
+import { MainMenuComponent } from './home/main-menu/main-menu.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +50,11 @@ import {MatTabsModule} from "@angular/material/tabs";
     CrudKontaComponent,
     ChooseComponent,
     ChooseSyllabusComponent,
-    CrudSyllabusComponent
+    CrudSyllabusComponent,
+    PrzedmiotyListaComponent,
+    CrudPrzedmiotyComponent,
+    NewSubjectComponent,
+    MainMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +70,8 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatSortModule,
+    MatCheckboxModule,
     MatSelectModule,
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
@@ -73,11 +85,15 @@ import {MatTabsModule} from "@angular/material/tabs";
       {path: 'efektychoose', component: ChooseComponent},
       {path: 'syllabus-choose', component: ChooseSyllabusComponent},
       {path: 'syllabus-crud', component: CrudSyllabusComponent},
+      { path: 'przedmiotylista', component: PrzedmiotyListaComponent },
+      { path: 'przedmiotycrud', component: CrudPrzedmiotyComponent },
+      { path: 'main', component: MainMenuComponent },
     ]),
     MatTabsModule
   ],
   entryComponents: [
-    HistoryComponent
+    HistoryComponent,
+    NewSubjectComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

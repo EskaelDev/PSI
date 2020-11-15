@@ -1,0 +1,31 @@
+<mat-card fxLayoutAlign="center center" class="lo-center">
+  <mat-card-content>
+    <h2 class="lo-text">Wybierz plan studiów</h2>
+    <div style="margin: 70px 0">
+      <div fxLayoutAlign="center center">
+        <mat-form-field appearance="fill" style="width: 40vw">
+          <mat-label>Kierunek studiów</mat-label>
+          <mat-select>
+            <mat-option [value]="'INFST'"> INFST Informatyka stosowana I ST OA PL</mat-option>
+            <mat-option [value]="'INZSYS'"> INZSYS Inżynieria systemów I ST OA PL</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="center center">
+        <mat-form-field appearance="fill">
+          <mat-label>Rok akademicki</mat-label>
+          <mat-select>
+            <mat-option [value]="'2019/2020'"> 2019/2020 </mat-option>
+            <mat-option [value]="'2020/2021'"> 2020/2021 </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+<div class="buttons">
+  <button mat-raised-button color="accent" class="download-btn"><mat-icon class="button-icon">save</mat-icon><span>Pobierz</span></button>
+  <button mat-raised-button color="primary" class="download-btn"><mat-icon class="button-icon">edit</mat-icon><span>Edytuj</span></button>
+</div>
+
+  </mat-card-content>
+</mat-card>

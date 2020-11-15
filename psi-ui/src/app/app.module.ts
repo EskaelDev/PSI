@@ -26,6 +26,9 @@ import { AccountComponent } from './user/account/account.component';
 import { PanelComponent } from './admin/panel/panel.component';
 import { CrudKontaComponent } from './admin/crud-konta/crud-konta.component';
 import { ChooseComponent } from './efekty/choose/choose.component';
+import { ChooseSyllabusComponent } from './syllabus/choose-syllabus/choose-syllabus.component';
+import { CrudSyllabusComponent } from './syllabus/crud-syllabus/crud-syllabus.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -39,7 +42,9 @@ import { ChooseComponent } from './efekty/choose/choose.component';
     AccountComponent,
     PanelComponent,
     CrudKontaComponent,
-    ChooseComponent
+    ChooseComponent,
+    ChooseSyllabusComponent,
+    CrudSyllabusComponent
   ],
   imports: [
     BrowserModule,
@@ -57,16 +62,19 @@ import { ChooseComponent } from './efekty/choose/choose.component';
     MatCardModule,
     MatSelectModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      { path: 'efektycrud', component: CrudEfektyComponent },
-      { path: 'kierunkicrud', component: CrudKierunkiComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'forgotten-password', component: ForgottenPasswordComponent },
-      { path: 'account', component: AccountComponent },
-      { path: 'admin-panel', component: PanelComponent },
-      { path: 'kontacrud', component: CrudKontaComponent },
-      { path: 'efektychoose', component: ChooseComponent },
-    ])
+      {path: '', component: HomeComponent},
+      {path: 'efektycrud', component: CrudEfektyComponent},
+      {path: 'kierunkicrud', component: CrudKierunkiComponent},
+      {path: 'login', component: LoginComponent},
+      {path: 'forgotten-password', component: ForgottenPasswordComponent},
+      {path: 'account', component: AccountComponent},
+      {path: 'admin-panel', component: PanelComponent},
+      {path: 'kontacrud', component: CrudKontaComponent},
+      {path: 'efektychoose', component: ChooseComponent},
+      {path: 'syllabus-choose', component: ChooseSyllabusComponent},
+      {path: 'syllabus-crud', component: CrudSyllabusComponent},
+    ]),
+    MatTabsModule
   ],
   entryComponents: [
     HistoryComponent

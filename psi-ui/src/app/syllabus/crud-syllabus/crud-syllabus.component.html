@@ -1,0 +1,300 @@
+<div class="page-header" fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+  <div>
+    <h1> Program studiów </h1>
+  </div>
+  <div>
+    <button mat-raised-button class="action-button" color="accent">
+      <mat-icon class="button-icon">save</mat-icon><span>Zapisz</span>
+    </button>
+    <button mat-raised-button class="action-button" color="accent">
+      <mat-icon class="button-icon">note_add</mat-icon><span>Zapisz jako</span>
+    </button>
+    <button mat-raised-button class="action-button" color="secondary">
+      <mat-icon class="button-icon">close</mat-icon><span>Anuluj</span>
+    </button>
+  </div>
+  <div>
+    <button mat-raised-button class="action-button" color="warn">
+      <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+    </button>
+    <button mat-raised-button class="action-button" color="accent">
+      <mat-icon class="button-icon">description</mat-icon><span>PDF</span>
+    </button>
+  </div>
+  <div>
+    <button mat-raised-button class="action-button" color="primary" (click)="openDialog()">
+      <mat-icon class="button-icon">history</mat-icon><span>Historia</span>
+    </button>
+  </div>
+</div>
+
+<div class="basic-info-box">
+  <div>
+      <div class="basic-info"><span class="title">Wydział</span><span>Informatyka i Zarządzanie</span></div>
+      <div class="basic-info"><span class="title">Poziom studiów</span><span>studia pierwszego stopnia</span></div>
+      <div class="basic-info"><span class="title">Kierunek studiów</span><span>Informatyka stosowana</span></div>
+      <div class="basic-info"><span class="title">Specjalność</span><span>brak</span></div>
+      <div class="basic-info"><span class="title">Numer dokumentu</span><span>PO-W08-IST- - -ST-Ii-WRO-/2020</span></div>
+  </div>
+  <div class="basic-info"><button mat-fab color="primary" style="float: right; margin: 20px;"><mat-icon>edit</mat-icon></button></div>
+</div>
+
+<!-- Opis -->
+
+<mat-tab-group style="width: 100%">
+  <mat-tab label="Opis">
+    <div class="main_window">
+      <div class="inputlabel">
+      <mat-form-field class="inputlabel" appearance="legacy">
+        <mat-label class="inputlabel">Liczba semestrów:</mat-label>
+        <input  matInput>
+        <mat-hint>Min 7</mat-hint>
+      </mat-form-field>
+        <div  class="inputlabel" *ngFor="let decstype of DESCRIPTION">
+          <mat-form-field style="min-width: 1700px;" appearance="legacy">
+            <mat-label>{{decstype.name}}</mat-label>
+            <textarea style="min-height: 50px"  matInput >{{decstype.value}}</textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+<!-- Lista kursów -->
+
+  <mat-tab label="Lista kursów" >
+    <div class="basic-info outcome-section">
+      <h3 class="title center-text">Lista modułów kierunkowych</h3>
+      <h5 class="title center-text">min liczba ECTS: 86 pkt</h5>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="Kod kursu/grupy kursów" readonly>
+      </mat-form-field>
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="Nazwa kursu/grupy kursów" readonly>
+      </mat-form-field>
+      <mat-form-field style="max-width: 15vw;" >
+        <input matInput placeholder="W---C----L----P----S" readonly>
+      </mat-form-field>
+      <mat-form-field style="max-width: 3vw;" >
+        <input matInput placeholder="ZZU" readonly>
+      </mat-form-field>
+      <mat-form-field style="max-width: 3vw;" >
+        <input matInput placeholder="CNPS" readonly>
+      </mat-form-field>
+      <mat-form-field style="max-width: 3vw;" >
+        <input matInput placeholder="ECTS" readonly>
+      </mat-form-field>
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="Forma zaliczenia" readonly>
+      </mat-form-field>
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="Semestr zaliczenia" readonly>
+      </mat-form-field>
+
+      <div *ngFor="let sub of dataSource">
+        <mat-form-field class="mat-input-maxi-description" >
+          <input matInput placeholder="{{sub.code}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-maxi-description" >
+            <input matInput placeholder="{{sub.name}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-mini-description" >
+          <input matInput placeholder="{{sub.w}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-mini-description" >
+          <input matInput placeholder="{{sub.c}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-mini-description" >
+          <input matInput placeholder="{{sub.l}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-mini-description" >
+          <input matInput placeholder="{{sub.p}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-mini-description" >
+          <input matInput placeholder="{{sub.s}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-midi-description" >
+          <input matInput placeholder="{{sub.ZZU}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-midi-description" >
+          <input matInput placeholder="{{sub.CNPS}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-midi-description" >
+          <input matInput placeholder="{{sub.ECTS}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-maxi-description" >
+          <input matInput placeholder="{{sub.examForm}}" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="mat-input-maxi-description" >
+          <input matInput placeholder="nr. semestru">
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-tab>
+
+<!--  Limit punktów  -->
+
+  <mat-tab label="Limit punktów ">
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Lista tematyczna" readonly>
+    </mat-form-field>
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Sekcja listy tematycznej" readonly>
+    </mat-form-field>
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Limit punktów" readonly>
+    </mat-form-field>
+
+    <div *ngFor="let mod of modulePoints">
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{mod.module}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{mod.list}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-mini-description" >
+        <input matInput placeholder="{{mod.points}} " readonly>
+      </mat-form-field>
+    </div>
+  </mat-tab>
+
+<!--  Grupy kursów z egzaminem  -->
+
+  <mat-tab label="Grupy kursów z egzaminem">
+    <mat-form-field class="mat-input-mini-description" >
+    <input matInput placeholder="L.p." readonly>
+  </mat-form-field>
+
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Kurs końcowy: kod">
+    </mat-form-field>
+
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Kurs końcowy: nazwa" readonly>
+    </mat-form-field>
+
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Kursy cząstkowe: kod" readonly>
+    </mat-form-field>
+
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Kursy cząstkowe: nazwa" readonly>
+    </mat-form-field>
+
+    <div *ngFor="let groupValue of groupsOfClasses">
+      <mat-form-field class="mat-input-mini-description" >
+        <input matInput placeholder="{{groupValue.np}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{groupValue.codeFinal}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{groupValue.nameFinal}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{groupValue.codePart}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{groupValue.namePart}}" readonly>
+      </mat-form-field>
+    </div>
+  </mat-tab>
+
+<!--  Praca dyplomowa/praktyki  -->
+
+  <mat-tab label="Praca dyplomowa/praktyki"> Praca dyplomowa/praktyki </mat-tab>
+
+<!--  Zakres egzaminu dyplomowego -->
+
+  <mat-tab label="Zakres egzaminu dyplomowego">
+    <div class="basic-info outcome-section">
+      <h3 class="title center-text">Zakres egzaminu dyplomowego </h3>
+      <div  class="inputlabel">
+        <mat-form-field style="min-width: 1700px;" appearance="legacy">
+          <textarea style="min-height: 900px"  matInput >{{examScope}}</textarea>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </mat-tab>
+
+
+<!--  Termin zaliczenia kursów  -->
+
+  <mat-tab label="Termin zaliczenia kursów">
+    <mat-form-field class="mat-input-mini-description" >
+    <input matInput placeholder="L.p." readonly>
+    </mat-form-field>
+
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Kod kursu" readonly>
+    </mat-form-field>
+
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Nazwa kursu" readonly>
+    </mat-form-field>
+
+    <mat-form-field class="mat-input-maxi-description" >
+      <input matInput placeholder="Termin zaliczenia do... (nr semestru)" readonly>
+    </mat-form-field>
+
+    <div *ngFor="let deadlineValue of classesDeadline">
+      <mat-form-field class="mat-input-mini-description" >
+        <input matInput placeholder="{{deadlineValue.lp}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{deadlineValue.code}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{deadlineValue.name}}" readonly>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="{{deadlineValue.deadlineSemester}}" readonly>
+      </mat-form-field>
+    </div>
+    <div>
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="Nazwa kursu" readonly>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nazwa kursu</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let names of newClassesDeadline" [value]="names">
+            {{names}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field class="mat-input-maxi-description" >
+        <input matInput placeholder="Termin zaliczenia do... (nr semestru)">
+      </mat-form-field>
+
+      <button mat-fab color="primary" style="margin:10px; float: right;">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-tab>
+</mat-tab-group>

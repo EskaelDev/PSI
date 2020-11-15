@@ -13,12 +13,34 @@
     </div>
 </div>
 
-<div>
+<div fxLayoutAlign="start center"
+     fxLayoutGap="32px">
     <mat-form-field class="example-full-width">
         <mat-label>Szukaj</mat-label>
         <input matInput
                placeholder="Szukaj">
     </mat-form-field>
+    <div>
+        <mat-form-field appearance="fill"
+                        style="width: 20vw">
+            <mat-label>Kierunek studiów</mat-label>
+            <mat-select>
+                <mat-option [value]="'INFST'"> INFST Informatyka stosowana I ST OA PL</mat-option>
+                <mat-option [value]="'INZSYS'"> INZSYS Inżynieria systemów I ST OA PL</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Rok akademicki</mat-label>
+            <mat-select>
+                <mat-option [value]="'2019/2020'"> 2019/2020 </mat-option>
+                <mat-option [value]="'2020/2021'"> 2020/2021 </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <mat-checkbox>
+        Tylko moje</mat-checkbox>
 </div>
 <mat-card fxLayoutAlign="center center"
           class="lo-center">
@@ -77,12 +99,11 @@
                 *matCellDef="let row"> {{row.language}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="action" >
+        <ng-container matColumnDef="action">
             <th mat-header-cell
                 *matHeaderCellDef> Akcja </th>
             <td mat-cell
-                *matCellDef="let element"
-                class="action-link">
+                *matCellDef="let element">
                 <button mat-raised-button
                         color="secondary">
                     <mat-icon class="button-icon">edit</mat-icon><span>Edytuj</span>

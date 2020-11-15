@@ -50,102 +50,156 @@
     </div>
     <!--#endregion przyciski -->
 </div>
+<div class="basic-info-box"
+     fxLayoutAlign="start start"
+     fxLayoutGap="32px">
+    <div>
+        <div class="basic-info"><span class="title">Wydział</span><span>Informatyka i Zarządzanie</span></div>
+        <div class="basic-info"><span class="title">Kierunek studiów</span><span>informatyka stosowana</span></div>
+        <div class="basic-info"><span class="title">Specjalizacja</span><span>Danologia (DAN)</span></div>
+        <div class="basic-info"><span class="title">Rok akademicki</span><span>2020</span></div>
+    </div>
+    <div>
+        <div class="basic-info"><span class="title">Poziom studiów</span><span>studia pierwszego stopnia</span></div>
+        <div class="basic-info"><span class="title">Profil</span><span>ogólnoakademicki</span></div>
+        <div class="basic-info"><span class="title">Umiejscowienie</span><span>Nauki inżynieryjno-techniczne</span>
+        </div>
+        <div class="basic-info"><span class="title">Dyscyplina</span><span> Informatyka techniczna i
+                telekomunikacja</span></div>
+    </div>
+</div>
 <mat-card fxLayoutAlign="left center"
           class="lo-center">
     <mat-card-content>
         <div class="flex-container">
 
-            <!-- dane kursu -->
-            <div style="margin-right: 3vw;">
-                <h2 style="margin-top: 80px">Dane kursu</h2>
+            <div>
+                <!-- dane kursu -->
+                <div style="margin-right: 3vw;">
+                    <h2 style="margin-top: 15px">Dane kursu</h2>
 
 
-                <mat-list role="list"
-                          class="field-list">
-                    <!-- foreach pole -->
-                    <mat-list-item role="listitem"
-                                   *ngFor="let item of subjectFields">
+                    <mat-list role="list"
+                              class="field-list">
+                        <!-- foreach pole -->
+                        <mat-list-item role="listitem"
+                                       *ngFor="let item of subjectFields">
 
-                        <!-- Rodzaj -->
-                        <mat-form-field class="form-field"
-                                        appearance="fill"
-                                        style="margin-top: 15px;"
-                                        *ngIf="item == 'Prowadzący'">
-                            <mat-label>{{item}}</mat-label>
-                            <mat-select>
-                                <mat-option [value]="'obowiązkowy'">Jan Kowalski </mat-option>
-                                <mat-option [value]="'ogólnouczelniany'">Piotr Nowak </mat-option>
-                                <mat-option [value]="'sportowy'">Adam Małysz</mat-option>
+                            <!-- Rodzaj -->
+                            <mat-form-field class="form-field"
+                                            appearance="fill"
+                                            style="margin-top: 15px;"
+                                            *ngIf="item == 'Prowadzący'">
+                                <mat-label>{{item}}</mat-label>
+                                <mat-select>
+                                    <mat-option [value]="'obowiązkowy'">Jan Kowalski </mat-option>
+                                    <mat-option [value]="'ogólnouczelniany'">Piotr Nowak </mat-option>
+                                    <mat-option [value]="'sportowy'">Adam Małysz</mat-option>
 
 
-                            </mat-select>
-                        </mat-form-field>
+                                </mat-select>
+                            </mat-form-field>
 
-                        <!-- Rodzaj -->
-                        <mat-form-field class="form-field"
-                                        appearance="fill"
-                                        *ngIf="item == 'Rodzaj'">
-                            <mat-label>{{item}}</mat-label>
-                            <mat-select>
-                                <mat-option [value]="'obowiązkowy'">obowiązkowy </mat-option>
-                                <mat-option [value]="'ogólnouczelniany'">ogólnouczelniany </mat-option>
-                                <mat-option [value]="'sportowy'">sportowy </mat-option>
-                                <mat-option [value]="'humanistyczny'">humanistyczny </mat-option>
-                                <mat-option [value]="'językowy'">językowy </mat-option>
+                            <!-- Rodzaj -->
+                            <mat-form-field class="form-field"
+                                            appearance="fill"
+                                            *ngIf="item == 'Rodzaj'">
+                                <mat-label>{{item}}</mat-label>
+                                <mat-select>
+                                    <mat-option [value]="'obowiązkowy'">obowiązkowy </mat-option>
+                                    <mat-option [value]="'ogólnouczelniany'">ogólnouczelniany </mat-option>
+                                    <mat-option [value]="'sportowy'">sportowy </mat-option>
+                                    <mat-option [value]="'humanistyczny'">humanistyczny </mat-option>
+                                    <mat-option [value]="'językowy'">językowy </mat-option>
 
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- TYP -->
-                        <mat-form-field class="form-field"
-                                        appearance="fill"
-                                        *ngIf="item == 'Typ'">
-                            <mat-label>{{item}}</mat-label>
-                            <mat-select>
-                                <mat-option [value]="'specialization'">specialization </mat-option>
-                                <mat-option [value]="'general'">general </mat-option>
-                                <mat-option [value]="'field of study'">field of study </mat-option>
-                                <mat-option [value]="'basic science'">basic science </mat-option>
-                                <mat-option [value]="'thesis '">thesis </mat-option>
-                                <mat-option [value]="'internship  '">internship </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- TYP -->
+                            <mat-form-field class="form-field"
+                                            appearance="fill"
+                                            *ngIf="item == 'Typ'">
+                                <mat-label>{{item}}</mat-label>
+                                <mat-select>
+                                    <mat-option [value]="'specialization'">specialization </mat-option>
+                                    <mat-option [value]="'general'">general </mat-option>
+                                    <mat-option [value]="'field of study'">field of study </mat-option>
+                                    <mat-option [value]="'basic science'">basic science </mat-option>
+                                    <mat-option [value]="'thesis '">thesis </mat-option>
+                                    <mat-option [value]="'internship  '">internship </mat-option>
 
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- Język -->
-                        <mat-form-field class="form-field"
-                                        appearance="fill"
-                                        *ngIf="item == 'Język zajęć'">
-                            <mat-label>{{item}}</mat-label>
-                            <mat-select>
-                                <mat-option [value]="'polski'">polski </mat-option>
-                                <mat-option [value]="'angielski'">angielski </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <!-- nazwa -->
-                        <div class="acc-panel"
-                             *ngIf="item == 'Nazwa polska' || item == 'Nazwa angielska'|| item == 'Kod'">
-                            <mat-form-field class="form-field input-headline">
-                                <input matInput
-                                       id="{{item}}"
-                                       placeholder="{{item}}" />
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- Język -->
+                            <mat-form-field class="form-field"
+                                            appearance="fill"
+                                            *ngIf="item == 'Język zajęć'">
+                                <mat-label>{{item}}</mat-label>
+                                <mat-select>
+                                    <mat-option [value]="'polski'">polski </mat-option>
+                                    <mat-option [value]="'angielski'">angielski </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- nazwa -->
+                            <div class="acc-panel"
+                                 *ngIf="item == 'Nazwa polska' || item == 'Nazwa angielska'|| item == 'Kod'">
+                                <mat-form-field class="form-field input-headline">
+                                    <input matInput
+                                           id="{{item}}"
+                                           placeholder="{{item}}" />
+                                    <mat-error> Pole nie może być puste </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </mat-list-item>
+
+                    </mat-list>
+                </div>
+
+                <!-- Możliwi prowadzący -->
+                <div style="margin-top: 5px">
+                    <h2 style="margin-top: 5px">Możliwi prowadzący</h2>
+                    <div class="field-list"
+                         style="width: 495px;">
+                        <div>
+                            <mat-form-field style="width: 300px; margin-left: 15px;">
+                                <input matInput />
                                 <mat-error> Pole nie może być puste </mat-error>
                             </mat-form-field>
+                            <button mat-raised-button
+                                    style="height: 40px; margin-left: 15px"
+                                    color="accent">
+                                <mat-icon class="button-icon">add</mat-icon><span>Dodaj</span>
+                            </button>
                         </div>
-                    </mat-list-item>
+                        <div>
+                            <mat-list role="list"
+                                      style="min-width: 450px; height: 165px; overflow: auto">
+                                <mat-list-item role="listitem"><span>dr inż. Jan Kowalski</span>
+                                    <button style="margin-left: 10px"
+                                            mat-mini-fab
+                                            color="accent">
+                                        <mat-icon>delete</mat-icon>
+                                    </button></mat-list-item>
+                                <mat-list-item role="listitem"><span>dr inż. Anna Nowak</span>
+                                    <button style="margin-left: 10px"
+                                            mat-mini-fab
+                                            color="accent">
+                                        <mat-icon>delete</mat-icon>
+                                    </button></mat-list-item>
+                            </mat-list>
+                        </div>
+                    </div>
 
-                </mat-list>
-
-
-
+                </div>
             </div>
 
             <!-- dane zajęć -->
             <div>
                 <div>
                     <div fxLayout="row">
-                        <h2 style="margin-top: 80px">Dane zajęć</h2>
+                        <h2 style="margin-top: 15px">Dane zajęć</h2>
                         <button mat-raised-button
                                 class="action-button"
-                                style="height: 40px; top: 75px; left: 265px;"
+                                style="height: 40px; top: 10px; left: 350px;"
                                 color="secondary">
                             <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
                         </button>
@@ -304,6 +358,23 @@
                             *matCellDef="let row"> {{row.isbn}} </td>
                     </ng-container>
 
+                    <ng-container matColumnDef="akcje">
+                        <th mat-header-cell
+                            *matHeaderCellDef> akcje </th>
+                        <td mat-cell
+                            *matCellDef="let row">
+                            <button mat-mini-fab
+                                    color="primary"
+                                    style="margin-right: 10px;">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-mini-fab
+                                    color="accent">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
                     <tr mat-header-row
                         *matHeaderRowDef="literature"></tr>
                     <tr mat-row
@@ -376,7 +447,8 @@
             </div>
 
             <!-- Narzędzia -->
-            <div class="white-border">
+            <div class="white-border"
+                 style="padding-left: 25px;">
                 <h2>Stosowane narzędzia dydaktyczne</h2>
                 <div fxLayoutGap="32px"
                      fxLayoutAlign="flex-start">

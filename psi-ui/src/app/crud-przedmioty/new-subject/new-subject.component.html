@@ -1,45 +1,63 @@
 <div>
-    <h1 mat-dialog-title>Nowy przedmiot</h1>
-    <div mat-dialog-content style="overflow: unset;">
-        <div>
-            <div fxLayoutAlign="center center">
-                <mat-form-field appearance="fill" style="width: 40vw">
-                  <mat-label>Kierunek studiów</mat-label>
-                  <mat-select>
-                    <mat-option [value]="'INFST'"> INFST Informatyka stosowana I ST OA PL</mat-option>
-                    <mat-option [value]="'INZSYS'"> INZSYS Inżynieria systemów I ST OA PL</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-          <div fxLayoutAlign="center center">
-            <mat-form-field appearance="fill">
-              <mat-label>Rok akademicki</mat-label>
-              <mat-select>
-                <mat-option [value]="'2019/2020'"> 2019/2020 </mat-option>
-                <mat-option [value]="'2020/2021'"> 2020/2021 </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div fxLayoutAlign="center center">
-            <mat-form-field class="input-headline" style="width: 30vw">
-                <input type="text"
-                       placeholder="Opienkun"
-                       aria-label="Number"
-                       matInput
-                       [formControl]="myControl"
-                       [matAutocomplete]="auto" />
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async"
-                                [value]="option">
-                        {{ option }}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </div>
+  <h1 mat-dialog-title>Nowy przedmiot</h1>
+  <div mat-dialog-content
+       style="overflow: unset;">
+    <div>
+      <div fxLayoutAlign="center center">
+        <mat-form-field appearance="fill"
+                        style="width: 40vw">
+          <mat-label>Kierunek studiów</mat-label>
+          <mat-select>
+            <mat-option [value]="'INFST'"> INFST Informatyka stosowana I ST OA PL</mat-option>
+            <mat-option [value]="'INZSYS'"> INZSYS Inżynieria systemów I ST OA PL</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="center center">
+        <mat-form-field appearance="fill"
+                        style="width: 30vw">
+          <mat-label>Specjalizacja</mat-label>
+          <mat-select>
+            <mat-option [value]="'none'"> - </mat-option>
+            <mat-option [value]="'DAN'"> Danologia (DAN) </mat-option>
+            <mat-option [value]="'IO'"> Inżynieria oprogramowania (IO) </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="center center">
+        <mat-form-field appearance="fill">
+          <mat-label>Rok akademicki</mat-label>
+          <mat-select>
+            <mat-option [value]="'2019/2020'"> 2019/2020 </mat-option>
+            <mat-option [value]="'2020/2021'"> 2020/2021 </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="center center">
+        <mat-form-field class="input-headline"
+                        style="width: 30vw">
+          <input type="text"
+                 placeholder="Opienkun"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="myControl"
+                 [matAutocomplete]="auto" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async"
+                        [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
     </div>
     <mat-dialog-actions align="end">
-        <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>Anuluj</button>
-        <button mat-raised-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>Utwórz</button>
+      <button mat-raised-button
+              [mat-dialog-close]="true"
+              cdkFocusInitial>Anuluj</button>
+      <button mat-raised-button
+              [mat-dialog-close]="true"
+              color="primary"
+              cdkFocusInitial>Utwórz</button>
     </mat-dialog-actions>
   </div>
-  

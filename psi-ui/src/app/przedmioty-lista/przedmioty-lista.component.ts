@@ -77,17 +77,8 @@ export class PrzedmiotyListaComponent implements OnInit {
 
     addSubject() {
     this.dialog.open(NewSubjectComponent, {
-      height: '400px',
+      height: '470px',
       width: '700px'
     });
     }
-
 }
-
-
-
-
-
-
-
-

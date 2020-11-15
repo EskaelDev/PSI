@@ -8,18 +8,9 @@ interface SubjectVM {
     symbol: string;
     name: string;
     supervisor: string;
-    ECTS: number;
-    hoursAtUniversity: number;
-    hoursAtHome: number;
     type: string;
-    crediting: string;
-    field: string;
-    form: string;
     kind: string;
-    group: boolean;
-    specialization: string;
-    level: string;
-
+    language: string;
 }
 // Technologie wsp wytw oprogr
 // Inżynieria pozyskiwania i ochr
@@ -33,49 +24,25 @@ const LEARING_OUTCOMES: SubjectVM[] = [
         symbol: 'INZ_TWWO',
         name: 'Technologie wsp wytw oprogr',
         supervisor: 'Jan Kowalski',
-        ECTS: 4,
-        hoursAtUniversity: 4,
-        hoursAtHome: 2,
-        type: 'Laboratorium',
-        crediting: 'Ocena',
-        field: 'Informatyka stosowana',
-        form: 'Dzienne',
+        type: 'Kierunkowy',
         kind: 'Obowiązkowy',
-        group: false,
-        specialization: 'Inżynieria Oprogramowania',
-        level: 'Inżynier'
+        language: 'Polski'
     },
     {
         symbol: 'INZ_IPIO',
-        name: 'Inżynieria pozyskiwania i ochr',
+        name: 'Analiza matematyczna',
         supervisor: 'Jan Kowalski',
-        ECTS: 7,
-        hoursAtUniversity: 2,
-        hoursAtHome: 6,
-        type: 'Projekt',
-        crediting: 'Ocena',
-        field: 'Informatyka stosowana',
-        form: 'Zaoczne',
-        kind: 'Nieobowiązkowy',
-        group: false,
-        specialization: 'Inżynieria Oprogramowania',
-        level: 'Inżynier'
+        type: 'Ogólny',
+        kind: 'Matematyka',
+        language: 'Polski'
     },
     {
         symbol: 'MGR_INFS',
-        name: 'Programowanie III',
+        name: 'Praca inżynierska',
         supervisor: 'Jan Nowak',
-        ECTS: 2,
-        hoursAtUniversity: 16,
-        hoursAtHome: 75,
-        type: 'Wykład',
-        crediting: 'Egzamin',
-        field: 'Danologia',
-        form: 'Dzienne',
+        type: 'Praca dyplomowa',
         kind: 'Obowiązkowy',
-        group: true,
-        specialization: 'Sieci neuronowe',
-        level: 'Magister'
+        language: 'Polski'
     }
 ];
 
@@ -90,17 +57,10 @@ export class PrzedmiotyListaComponent implements OnInit {
         'symbol',
         'name',
         'supervisor',
-        'ECTS',
-        'hoursAtUniversity',
-        'hoursAtHome',
         'type',
-        'crediting',
-        'field',
-        'form',
         'kind',
-        'group',
-        'specialization',
-        'level'
+        'language',
+        'action'
     ];
 
     @ViewChild(MatSort) sort: MatSort;
@@ -123,3 +83,11 @@ export class PrzedmiotyListaComponent implements OnInit {
     }
 
 }
+
+
+
+
+
+
+
+

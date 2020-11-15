@@ -2,7 +2,8 @@
      fxLayout="row"
      fxLayoutGap="32px"
      fxLayoutAlign="flex-start">
-    <div fxLayoutAlign="flex-start" fxLayoutGap="20px">
+    <div fxLayoutAlign="flex-start"
+         fxLayoutGap="20px">
         <h1> Przedmioty </h1>
         <button mat-fab
                 color="primary"
@@ -12,7 +13,13 @@
     </div>
 </div>
 
-
+<div>
+    <mat-form-field class="example-full-width">
+        <mat-label>Szukaj</mat-label>
+        <input matInput
+               placeholder="Szukaj">
+    </mat-form-field>
+</div>
 <mat-card fxLayoutAlign="center center"
           class="lo-center">
     <table mat-table
@@ -45,93 +52,47 @@
                 *matCellDef="let row"> {{row.supervisor}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="ECTS">
-            <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> ECTS </th>
-            <td mat-cell
-                *matCellDef="let row"> {{row.ECTS}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="hoursAtUniversity">
-            <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> Godz na uni </th>
-            <td mat-cell
-                *matCellDef="let row"> {{row.hoursAtUniversity}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="hoursAtHome">
-            <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> Godz w domu </th>
-            <td mat-cell
-                *matCellDef="let row"> {{row.hoursAtHome}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="type">
             <th mat-header-cell
                 mat-sort-header
-                *matHeaderCellDef> Forma zajęć </th>
+                *matHeaderCellDef> Typ </th>
             <td mat-cell
                 *matCellDef="let row"> {{row.type}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="crediting">
-            <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> Sposób zaliczenia </th>
-            <td mat-cell
-                *matCellDef="let row"> {{row.crediting}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="field">
-            <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> Kierunek </th>
-            <td mat-cell
-                *matCellDef="let row"> {{row.field}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="form">
-            <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> Dzienne/Zaoczne </th>
-            <td mat-cell
-                *matCellDef="let row"> {{row.form}} </td>
         </ng-container>
 
         <ng-container matColumnDef="kind">
             <th mat-header-cell
                 mat-sort-header
-                *matHeaderCellDef> Wymagane </th>
+                *matHeaderCellDef> Rodzaj </th>
             <td mat-cell
                 *matCellDef="let row"> {{row.kind}} </td>
         </ng-container>
 
 
-        <ng-container matColumnDef="group">
+        <ng-container matColumnDef="language">
             <th mat-header-cell
                 mat-sort-header
-                *matHeaderCellDef> Grupa kursów </th>
+                *matHeaderCellDef> Język </th>
             <td mat-cell
-                *matCellDef="let row"> {{row.group}} </td>
+                *matCellDef="let row"> {{row.language}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="specialization">
+        <ng-container matColumnDef="action" >
             <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> Specjalizacja </th>
+                *matHeaderCellDef> Akcja </th>
             <td mat-cell
-                *matCellDef="let row"> {{row.specialization}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="level">
-            <th mat-header-cell
-                mat-sort-header
-                *matHeaderCellDef> Stopień </th>
-            <td mat-cell
-                *matCellDef="let row"> {{row.level}} </td>
+                *matCellDef="let element"
+                class="action-link">
+                <button mat-raised-button
+                        color="secondary">
+                    <mat-icon class="button-icon">edit</mat-icon><span>Edytuj</span>
+                </button>
+                <button mat-raised-button
+                        class="action-button"
+                        color="accent">
+                    <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
+                </button>
+            </td>
         </ng-container>
 
         <tr mat-header-row

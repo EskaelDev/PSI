@@ -72,9 +72,9 @@
 <!-- Lista kursów -->
 
   <mat-tab label="Lista kursów" >
-    <div class="basic-info outcome-section">
+    <div class="header-info outcome-section">
       <h3 class="title center-text">Lista modułów kierunkowych</h3>
-      <h5 class="title center-text">min liczba ECTS: 86 pkt</h5>
+      <h5 class="sub-title center-text">min liczba ECTS: 86 pkt</h5>
 
       <mat-form-field class="mat-input-maxi-description" >
         <input matInput placeholder="Kod kursu/grupy kursów" readonly>
@@ -230,7 +230,7 @@
 <!--  Praca dyplomowa/praktyki  -->
 
   <mat-tab label="Praca dyplomowa/praktyki">
-    <div class="basic-info outcome-section" fxLayout="row"
+    <div class="header-info outcome-section" fxLayout="row"
          fxLayoutGap="15px"
          fxLayoutAlign="flex-start start">
       <div *ngFor="let cours of courses">
@@ -253,7 +253,7 @@
 <!--  Zakres egzaminu dyplomowego -->
 
   <mat-tab label="Zakres egzaminu dyplomowego">
-    <div class="basic-info outcome-section">
+    <div class="header-info outcome-section">
       <h3 class="title center-text">Zakres egzaminu dyplomowego </h3>
       <div  class="inputlabel">
         <mat-form-field style="min-width: 1700px;" appearance="legacy">

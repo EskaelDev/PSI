@@ -9,12 +9,12 @@
     <button mat-raised-button class="action-button" color="accent">
       <mat-icon class="button-icon">note_add</mat-icon><span>Zapisz jako</span>
     </button>
-    <button mat-raised-button class="action-button" color="secondary">
-      <mat-icon class="button-icon">close</mat-icon><span>Anuluj</span>
+    <button [routerLink]="'/syllabus-choose'" mat-raised-button class="action-button" color="secondary">
+      <mat-icon class="button-icon">close</mat-icon><span>Zamknij</span>
     </button>
   </div>
   <div>
-    <button mat-raised-button class="action-button" color="warn">
+    <button [routerLink]="'/syllabus-choose'" mat-raised-button class="action-button" color="warn">
       <mat-icon class="button-icon">delete</mat-icon><span>Usuń</span>
     </button>
     <button mat-raised-button class="action-button" color="accent">

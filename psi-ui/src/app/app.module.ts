@@ -78,7 +78,7 @@ import { AcceptSyllabusComponent } from './syllabus/accept-syllabus/accept-sylla
     MatCheckboxModule,
     MatSelectModule,
     RouterModule.forRoot([
-      {path: '', component: HomeComponent},
+      {path: '', component: MainMenuComponent},
       {path: 'efektycrud', component: CrudEfektyComponent},
       {path: 'kierunkicrud', component: CrudKierunkiComponent},
       {path: 'login', component: LoginComponent},
@@ -91,7 +91,7 @@ import { AcceptSyllabusComponent } from './syllabus/accept-syllabus/accept-sylla
       {path: 'syllabus-crud', component: CrudSyllabusComponent},
       { path: 'przedmiotylista', component: PrzedmiotyListaComponent },
       { path: 'przedmiotycrud', component: CrudPrzedmiotyComponent },
-      { path: 'main', component: MainMenuComponent },
+      { path: 'allwindows', component: HomeComponent },
       { path: 'view-syllabuses', component: ViewSyllabusesComponent },
       { path: 'accept-syllabus', component: AcceptSyllabusComponent },
     ]),

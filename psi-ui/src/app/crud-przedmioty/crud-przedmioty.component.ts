@@ -44,7 +44,7 @@ export class CrudPrzedmiotyComponent implements OnInit {
         'Kończący',
         'Badawczy',
         'Grupa przedmiotow']
-    literature = ['autor', 'tytul', 'wydawnictwo', 'rok', 'podstawowa', 'isbn'];
+    literature = ['autor', 'tytul', 'wydawnictwo', 'rok', 'podstawowa', 'isbn', 'akcje'];
     isDetails = false;
 
     constructor(public dialog: MatDialog) { }

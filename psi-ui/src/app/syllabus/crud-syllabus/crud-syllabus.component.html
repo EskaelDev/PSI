@@ -28,16 +28,24 @@
   </div>
 </div>
 
-<div class="basic-info-box">
+<div class="basic-info-box"  
+     fxLayoutAlign="start start"
+     fxLayoutGap="32px">
   <div>
-      <div class="basic-info"><span class="title">Wydział</span><span>Informatyka i Zarządzanie</span></div>
-      <div class="basic-info"><span class="title">Poziom studiów</span><span>studia pierwszego stopnia</span></div>
-      <div class="basic-info"><span class="title">Kierunek studiów</span><span>Informatyka stosowana</span></div>
-      <div class="basic-info"><span class="title">Specjalność</span><span>brak</span></div>
-      <div class="basic-info"><span class="title">Numer dokumentu</span><span>PO-W08-IST- - -ST-Ii-WRO-/2020</span></div>
+    <div class="basic-info"><span class="title">Wydział</span><span>Informatyka i Zarządzanie</span></div>
+    <div class="basic-info"><span class="title">Kierunek studiów</span><span>informatyka stosowana</span></div>
+    <div class="basic-info"><span class="title">Specjalizacja</span><span>wszystkie</span></div>
+    <div class="basic-info"><span class="title">Rok akademicki</span><span>2020</span></div>
+    <div class="basic-info"><span class="title">Numer dokumentu</span><span>PO-W08-IST- - -ST-Ii-WRO-/2020</span></div>
   </div>
-  <div class="basic-info"><button mat-fab color="primary" style="float: right; margin: 20px;"><mat-icon>edit</mat-icon></button></div>
+  <div>
+    <div class="basic-info"><span class="title">Poziom studiów</span><span>studia pierwszego stopnia</span></div>
+    <div class="basic-info"><span class="title">Profil</span><span>ogólnoakademicki</span></div>
+    <div class="basic-info"><span class="title">Umiejscowienie</span><span>Nauki inżynieryjno-techniczne</span></div>
+    <div class="basic-info"><span class="title">Dyscyplina</span><span> Informatyka techniczna i telekomunikacja</span></div>
+  </div>
 </div>
+<div class="basic-info"><button mat-fab color="primary" style="float: right; margin: 20px;"><mat-icon>edit</mat-icon></button></div>
 
 <!-- Opis -->
 
@@ -256,7 +264,7 @@
       <input matInput placeholder="Termin zaliczenia do... (nr semestru)" readonly>
     </mat-form-field>
 
-    <div *ngFor="let deadlineValue of classesDeadline">
+    <div *ngFor="let deadlineValue of classesDeadline"  fxLayoutAlign="start start">
       <mat-form-field class="mat-input-mini-description" >
         <input matInput placeholder="{{deadlineValue.lp}}" readonly>
       </mat-form-field>
@@ -270,15 +278,22 @@
       </mat-form-field>
 
       <mat-form-field class="mat-input-maxi-description" >
-        <input matInput placeholder="{{deadlineValue.deadlineSemester}}" readonly>
+        <input matInput placeholder="{{deadlineValue.deadlineSemester}}">
       </mat-form-field>
+
+      <div class="mat-input-maxi-description" style="margin-left: 20px;">
+        <button mat-mini-fab
+                color="accent">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </div>
-    <div>
+    <div fxLayoutGap="32px">
 
       <mat-form-field class="mat-input-maxi-description" >
         <input matInput placeholder="Nazwa kursu" readonly>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill" style="width: 320px;">
         <mat-label>Nazwa kursu</mat-label>
         <mat-select>
           <mat-option *ngFor="let names of newClassesDeadline" [value]="names">

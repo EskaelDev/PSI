@@ -68,6 +68,27 @@ body { margin: 0; font-family: OpenSansLight !important }
     }
 }
 
+.header-info {
+    font-size: 20px;
+    margin-bottom: 20px;
+
+    .title {
+        background-color: antiquewhite; 
+        color: brown;
+        padding: 2px 7px;
+        margin-right: 10px;
+        font-family: OpenSansSemiBold !important;
+    }
+
+    .sub-title {
+        background-color: brown; 
+        color: antiquewhite;
+        padding: 2px 7px;
+        margin: 0 120px 20px 120px;
+        font-family: OpenSansSemiBold !important;
+    }
+}
+
 .round-title {
     background-color: antiquewhite; 
     border-radius: 50px; 

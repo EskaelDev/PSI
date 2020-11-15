@@ -35,6 +35,8 @@ import { PrzedmiotyListaComponent } from './przedmioty-lista/przedmioty-lista.co
 import { CrudPrzedmiotyComponent } from './crud-przedmioty/crud-przedmioty.component';
 import { NewSubjectComponent } from './crud-przedmioty/new-subject/new-subject.component';
 import { MainMenuComponent } from './home/main-menu/main-menu.component';
+import { ViewSyllabusesComponent } from './syllabus/view-syllabuses/view-syllabuses.component';
+import { AcceptSyllabusComponent } from './syllabus/accept-syllabus/accept-syllabus.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { MainMenuComponent } from './home/main-menu/main-menu.component';
     PrzedmiotyListaComponent,
     CrudPrzedmiotyComponent,
     NewSubjectComponent,
-    MainMenuComponent
+    MainMenuComponent,
+    ViewSyllabusesComponent,
+    AcceptSyllabusComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +92,8 @@ import { MainMenuComponent } from './home/main-menu/main-menu.component';
       { path: 'przedmiotylista', component: PrzedmiotyListaComponent },
       { path: 'przedmiotycrud', component: CrudPrzedmiotyComponent },
       { path: 'main', component: MainMenuComponent },
+      { path: 'view-syllabuses', component: ViewSyllabusesComponent },
+      { path: 'accept-syllabus', component: AcceptSyllabusComponent },
     ]),
     MatTabsModule
   ],

@@ -1,0 +1,24 @@
+.mat-cell,
+.mat-header-cell {
+    padding: 8px 8px 8px 0;
+}
+.w100 {
+    width: 100%;
+}
+.example-full-width {
+    min-width: 150px;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .mat-column-action {
+    max-width: 210px;
+    width: 210px;
+}
+
+.document-entry {
+    padding: 10px 20px; 
+    border-radius: 20px; 
+    width: 100%; 
+    background-color: gray;
+}

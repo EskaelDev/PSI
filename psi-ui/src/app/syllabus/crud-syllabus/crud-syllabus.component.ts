@@ -43,6 +43,13 @@ interface ClassesDeadline{
   deadlineSemester: number;
 }
 
+interface CousesDescription{
+  name: string;
+  ZZU: number;
+  ECTS: number;
+  kind: string;
+}
+
 const SUBJECTS: Subject[] =
   [
     {code: 'INZ002007L', name: 'Bazy danych', w: 0, c: 0, l: 1, p: 0, s: 0, ZZU: 15, CNPS: 60, ECTS: 2, examForm: 'Zaliczenie' },
@@ -185,6 +192,12 @@ export class CrudSyllabusComponent implements OnInit {
     '39. Wnioskowanie w logice niemonotonicznej - zadanie planowania.';
 
   dataSource = SUBJECTS;
+  courses: CousesDescription[] =
+    [
+      { name: 'thesis', ZZU: 0, ECTS: 0, kind: null},
+      { name: 'intership', ZZU: 0, ECTS: 5, kind: 'umowa o pracę'}
+    ];
+
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {

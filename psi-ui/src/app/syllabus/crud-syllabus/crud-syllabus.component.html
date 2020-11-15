@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<div class="basic-info-box"  
+<div class="basic-info-box"
      fxLayoutAlign="start start"
      fxLayoutGap="32px">
   <div>
@@ -229,7 +229,26 @@
 
 <!--  Praca dyplomowa/praktyki  -->
 
-  <mat-tab label="Praca dyplomowa/praktyki"> Praca dyplomowa/praktyki </mat-tab>
+  <mat-tab label="Praca dyplomowa/praktyki">
+    <div class="basic-info outcome-section" fxLayout="row"
+         fxLayoutGap="15px"
+         fxLayoutAlign="flex-start center">
+      <div *ngFor="let cours of courses">
+        <h3 *ngIf="cours.name == 'thesis'" class="title center-text">Kurs/kursy "praca dyplomowa", "projekt dyplomowy" itp.</h3>
+        <h3 *ngIf="cours.name == 'intership'" class="title center-text">Praktyki studenckie</h3>
+        <div fxFlexFill>
+          <mat-label>Rodzaj: </mat-label>
+          <input *ngIf="cours.name == 'intership' " matInput placeholder="{{cours.kind}}">
+          <mat-label>Wymiar godzinowy ZZU:</mat-label>
+          <input matInput placeholder="{{cours.ZZU}}" readonly>
+          <mat-label>Liczba punktów ECTS:</mat-label>
+          <input matInput placeholder="{{cours.ECTS}}" readonly>
+        </div>
+
+      </div>
+
+    </div>
+  </mat-tab>
 
 <!--  Zakres egzaminu dyplomowego -->
 
@@ -244,7 +263,6 @@
 
     </div>
   </mat-tab>
-
 
 <!--  Termin zaliczenia kursów  -->
 
@@ -289,20 +307,24 @@
         </button>
       </div>
     </div>
-    <div fxLayoutGap="32px">
-
+    <div fxLayoutGap="32px" >
       <mat-form-field class="mat-input-maxi-description" >
-        <input matInput placeholder="Nazwa kursu" readonly>
+        <input matInput placeholder="INZ002017P" readonly>
       </mat-form-field>
       <mat-form-field appearance="fill" style="width: 320px;">
         <mat-label>Nazwa kursu</mat-label>
         <mat-select>
-          <mat-option *ngFor="let names of newClassesDeadline" [value]="names">
-            {{names}}
+          <mat-option *ngFor="let classes of classesDeadline" [value]="classes">
+            {{classes.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
+      <mat-checkbox class="example-margin">W</mat-checkbox>
+      <mat-checkbox class="example-margin">C</mat-checkbox>
+      <mat-checkbox class="example-margin">L</mat-checkbox>
+      <mat-checkbox class="example-margin">P</mat-checkbox>
+      <mat-checkbox class="example-margin">S</mat-checkbox>
 
       <mat-form-field class="mat-input-maxi-description" >
         <input matInput placeholder="Termin zaliczenia do... (nr semestru)">

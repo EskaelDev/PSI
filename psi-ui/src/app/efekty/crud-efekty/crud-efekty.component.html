@@ -120,6 +120,21 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="type">
+      <th mat-header-cell
+          *matHeaderCellDef> Typ </th>
+      <td mat-cell
+          *matCellDef="let element">
+        <mat-form-field class="example-full-width lo-type">
+          <mat-select [value]="element.type" [name]="element.type">
+            <mat-option [value]="'W'"> W</mat-option>
+            <mat-option [value]="'U'"> U</mat-option>
+            <mat-option [value]="'K'"> K</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="description">
       <th mat-header-cell
           *matHeaderCellDef> Opis </th>
@@ -220,6 +235,21 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="type">
+      <th mat-header-cell
+          *matHeaderCellDef> Typ </th>
+      <td mat-cell
+          *matCellDef="let element">
+        <mat-form-field class="example-full-width lo-type">
+          <mat-select [value]="element.type" [name]="element.type">
+            <mat-option [value]="'W'"> W</mat-option>
+            <mat-option [value]="'U'"> U</mat-option>
+            <mat-option [value]="'K'"> K</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="description">
       <th mat-header-cell
           *matHeaderCellDef> Opis </th>
@@ -314,6 +344,21 @@
           <input matInput
                  [value]="element.symbol"
                  [name]="element.symbol">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell
+          *matHeaderCellDef> Typ </th>
+      <td mat-cell
+          *matCellDef="let element">
+        <mat-form-field class="example-full-width lo-type">
+          <mat-select [value]="element.type" [name]="element.type">
+            <mat-option [value]="'W'"> W</mat-option>
+            <mat-option [value]="'U'"> U</mat-option>
+            <mat-option [value]="'K'"> K</mat-option>
+          </mat-select>
         </mat-form-field>
       </td>
     </ng-container>

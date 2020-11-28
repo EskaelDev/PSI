@@ -1,0 +1,8 @@
+﻿Add-Migration Initial -Context SqlServerSyllabusManagerDbContext -OutputDir Migrations\SqlServer
+Add-Migration Initial -Context OracleSyllabusManagerDbContext -OutputDir Migrations\Oracle
+Update-Database -Context SqlServerSyllabusManagerDbContext
+Update-Database -Context OracleSyllabusManagerDbContext
+
+
+SqlServer connection string example: "Server=kinga-pc\\kingasql;Database=TestDb;Trusted_Connection=True;",
+Oracle connection string example: "Data Source=localhost/XE;User Id=SYSTEM;Password=password;"

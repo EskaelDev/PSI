@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\LearingOutcome\**" />
+    <EmbeddedResource Remove="Models\LearingOutcome\**" />
+    <None Remove="Models\LearingOutcome\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
@@ -17,12 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\Oracle\" />
     <Folder Include="Migrations\SqlServer\" />
-    <Folder Include="Models\FieldOfStudy\" />
-    <Folder Include="Models\LearingOutcome\" />
-    <Folder Include="Models\Subject\" />
-    <Folder Include="Models\Syllabus\" />
+    <Folder Include="Models\Subjects\" />
   </ItemGroup>
 
 </Project>

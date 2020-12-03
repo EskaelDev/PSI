@@ -2,7 +2,7 @@
 
 namespace SyllabusManager.Data.Models.User
 {
-    public class User : IdentityUser
+    public class SyllabusManagerUser : IdentityUser
     {
     }
 }

@@ -8,7 +8,7 @@ namespace SyllabusManager.Data.Models.Syllabuses
 {
     public partial class Syllabus : DocumentInAcademicYearBase
     {
-        public Option StudentGovernmentOpinion { get; set; }
+        public Option? StudentGovernmentOpinion { get; set; }
         public DateTime? OpinionDeadline { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? ApprovalDate { get; set; }

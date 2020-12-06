@@ -14,10 +14,10 @@ namespace SyllabusManager.Data.Models.Syllabuses
         public DateTime? ApprovalDate { get; set; }
         public DateTime? ValidFrom { get; set; }
         public string StudentRepresentativeName { get; set; }
-        [Required]
         public string DeanName { get; set; }
         [Required]
         public string AuthorName { get; set; }
+        [Required]
         public string ScopeOfDiplomaExam { get; set; }
         public string IntershipType { get; set; }
         public SyllabusDescription Description { get; set; }

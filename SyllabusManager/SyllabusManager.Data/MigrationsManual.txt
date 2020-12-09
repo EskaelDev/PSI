@@ -1,8 +1,11 @@
 ﻿Add-Migration Initial -Context SqlServerSyllabusManagerDbContext -OutputDir Migrations\SqlServer
 Add-Migration Initial -Context OracleSyllabusManagerDbContext -OutputDir Migrations\Oracle
+Add-Migration Initial -Context PostgresSyllabusManagerDbContext -OutputDir Migrations\Postgres
 Update-Database -Context SqlServerSyllabusManagerDbContext
 Update-Database -Context OracleSyllabusManagerDbContext
+Update-Database -Context PostgresSyllabusManagerDbContext
 
 
 SqlServer connection string example: "Server=kinga-pc\\kingasql;Database=TestDb;Trusted_Connection=True;",
 Oracle connection string example: "Data Source=localhost/XE;User Id=SYSTEM;Password=password;"
+Postgres connection string example: "Host=my_host;Database=my_db;Username=my_user;Password=my_pw"

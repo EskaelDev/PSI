@@ -68,8 +68,12 @@ namespace SyllabusManager.DbMigrator
                     var connectionStringOracle = _configuration.GetValue<string>($"ConnectionStrings:{type}Database");
                     var optionsBuilderOracle = new DbContextOptionsBuilder<OracleSyllabusManagerDbContext>().UseOracle(connectionStringOracle);
                     return new OracleSyllabusManagerDbContext(optionsBuilderOracle.Options);
+                case "Postgres":
+                    var connectionStringPostgres = _configuration.GetValue<string>($"ConnectionStrings:{type}Database");
+                    var optionsBuilderPostgres = new DbContextOptionsBuilder<PostgresSyllabusManagerDbContext>().UseNpgsql(connectionStringPostgres);
+                    return new PostgresSyllabusManagerDbContext(optionsBuilderPostgres.Options);
                 default:
-                    throw new Exception("No valid database provider! Available options: SqlServer, Oracle.");
+                    throw new Exception("No valid database provider! Available options: SqlServer, Oracle, Postgres.");
             }
         }
     }

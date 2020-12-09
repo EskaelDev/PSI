@@ -43,8 +43,11 @@ namespace SyllabusManager.API
                 case "Oracle":
                     services.AddDbContext<SyllabusManagerDbContext, OracleSyllabusManagerDbContext>(options => options.UseOracle(Configuration.GetConnectionString("SMDatabase")));
                     break;
+                case "Postgres":
+                    services.AddDbContext<SyllabusManagerDbContext, PostgresSyllabusManagerDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("SMDatabase")));
+                    break;
                 default:
-                    throw new Exception("No valid database provider! Available options: SqlServer, Oracle.");
+                    throw new Exception("No valid database provider! Available options: SqlServer, Oracle, Postgres.");
             }
         }
 

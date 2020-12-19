@@ -4,38 +4,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Oracle.EntityFrameworkCore.Metadata;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SyllabusManager.Data.ProviderContexts;
 
-namespace SyllabusManager.Data.Migrations.Oracle
+namespace SyllabusManager.Data.Migrations.Postgres
 {
-    [DbContext(typeof(OracleSyllabusManagerDbContext))]
-    [Migration("20201203203206_Initial")]
+    [DbContext(typeof(PostgresSyllabusManagerDbContext))]
+    [Migration("20201219113320_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn)
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("NVARCHAR2(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("NVARCHAR2(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -51,18 +51,18 @@ namespace SyllabusManager.Data.Migrations.Oracle
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -75,18 +75,18 @@ namespace SyllabusManager.Data.Migrations.Oracle
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -98,17 +98,17 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -120,10 +120,10 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -135,16 +135,16 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -154,39 +154,39 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", b =>
                 {
                     b.Property<string>("Code")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("BranchOfScience")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Discipline")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Faculty")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Language")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Level")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Profile")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("SupervisorId")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Type")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.HasKey("Code");
 
@@ -198,14 +198,17 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.FieldOfStudies.Specialization", b =>
                 {
                     b.Property<string>("Code")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FieldOfStudyCode")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.HasKey("Code");
 
@@ -217,33 +220,33 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.LearningOutcomes.LearningOutcome", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Category")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("LearningOutcomeDocumentId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("S2degreePrk")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("S2degreePrkeng")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SpecializationCode")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Symbol")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("U1degreeCharacteristics")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -257,21 +260,21 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.LearningOutcomes.LearningOutcomeDocument", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AcademicYear")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("FieldOfStudyCode")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Version")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -280,20 +283,35 @@ namespace SyllabusManager.Data.Migrations.Oracle
                     b.ToTable("LearningOutcomeDocuments");
                 });
 
+            modelBuilder.Entity("SyllabusManager.Data.Models.ManyToMany.SubjectTeacher", b =>
+                {
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("text");
+
+                    b.HasKey("SubjectId", "TeacherId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("SubjectTeacher");
+                });
+
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.CardEntries", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("SubjectId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Type")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -305,17 +323,17 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.CardEntry", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("CardEntriesId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -327,16 +345,16 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.ClassForm", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Hours")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("LessonId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -348,21 +366,20 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.LearningOutcomeEvaluation", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
-                    b.Property<string>("GradingSystem")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                    b.Property<int>("GradingSystem")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LearningOutcomeSymbol")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("SubjectId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -374,40 +391,40 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.Lesson", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Ects")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("EctsinclDirectTeacherStudentContactClasses")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("EctsinclPracticalClasses")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("FormOfCrediting")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("HoursAtUniversity")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsFinal")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsGroup")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsScientific")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("LessonType")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("StudentWorkloadHours")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("SubjectId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -419,31 +436,31 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.Literature", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Authors")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Distributor")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsPrimary")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Isbn")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("SubjectId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("Year")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -455,47 +472,47 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.Subject", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AcademicYear")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Discriminator")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("KindOfSubject")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Language")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ModuleType")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("NameEng")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NamePl")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SupervisorId")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<int>("TypeOfSubject")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Version")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -507,19 +524,19 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SubjectInSyllabusDescription", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("AssignedSemester")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("CompletionSemester")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("SubjectId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("SyllabusId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -533,56 +550,59 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.Syllabus", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AcademicYear")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("ApprovalDate")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("AuthorName")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DeanName")
-                        .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("DescriptionId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("FieldOfStudyCode")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("IntershipType")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("OpinionDeadline")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ScopeOfDiplomaExam")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("StudentGovernmentOpinion")
-                        .HasColumnType("NUMBER(10)");
+                    b.Property<string>("SpecializationCode")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("StudentGovernmentOpinion")
+                        .HasColumnType("integer");
 
                     b.Property<string>("StudentRepresentativeName")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("ValidFrom")
-                        .HasColumnType("TIMESTAMP(7)");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Version")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -590,34 +610,39 @@ namespace SyllabusManager.Data.Migrations.Oracle
 
                     b.HasIndex("FieldOfStudyCode");
 
+                    b.HasIndex("SpecializationCode");
+
                     b.ToTable("Syllabuses");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SyllabusDescription", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Ects")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("EmploymentOpportunities")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int?>("FormOfGraduation")
-                        .HasColumnType("NUMBER(10)");
+                    b.Property<int>("FormOfGraduation")
+                        .HasColumnType("integer");
 
                     b.Property<int>("NumOfSemesters")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PossibilityOfContinuation")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Prerequisites")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int?>("ProfessionalTitleAfterGraduation")
-                        .HasColumnType("NUMBER(10)");
+                    b.Property<int>("ProfessionalTitleAfterGraduation")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -627,53 +652,53 @@ namespace SyllabusManager.Data.Migrations.Oracle
             modelBuilder.Entity("SyllabusManager.Data.Models.User.SyllabusManagerUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("NVARCHAR2(450)");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasColumnType("NVARCHAR2(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("NVARCHAR2(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("NVARCHAR2(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("NUMBER(1)");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("NVARCHAR2(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -748,7 +773,7 @@ namespace SyllabusManager.Data.Migrations.Oracle
 
             modelBuilder.Entity("SyllabusManager.Data.Models.FieldOfStudies.Specialization", b =>
                 {
-                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", null)
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany("Specializations")
                         .HasForeignKey("FieldOfStudyCode");
                 });
@@ -769,6 +794,21 @@ namespace SyllabusManager.Data.Migrations.Oracle
                     b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany()
                         .HasForeignKey("FieldOfStudyCode");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.ManyToMany.SubjectTeacher", b =>
+                {
+                    b.HasOne("SyllabusManager.Data.Models.Subjects.Subject", "Subject")
+                        .WithMany("SubjectsTeachers")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerUser", "Teacher")
+                        .WithMany("SubjectsTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.CardEntries", b =>
@@ -840,6 +880,10 @@ namespace SyllabusManager.Data.Migrations.Oracle
                     b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany()
                         .HasForeignKey("FieldOfStudyCode");
+
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationCode");
                 });
 #pragma warning restore 612, 618
         }

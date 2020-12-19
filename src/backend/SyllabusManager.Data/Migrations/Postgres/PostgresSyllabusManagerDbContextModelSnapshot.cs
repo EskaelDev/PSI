@@ -201,6 +201,9 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.Property<string>("FieldOfStudyCode")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -278,6 +281,21 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.ToTable("LearningOutcomeDocuments");
                 });
 
+            modelBuilder.Entity("SyllabusManager.Data.Models.ManyToMany.SubjectTeacher", b =>
+                {
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("text");
+
+                    b.HasKey("SubjectId", "TeacherId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("SubjectTeacher");
+                });
+
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.CardEntries", b =>
                 {
                     b.Property<Guid>("Id")
@@ -351,9 +369,8 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("GradingSystem")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("GradingSystem")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LearningOutcomeSymbol")
                         .IsRequired()
@@ -569,6 +586,9 @@ namespace SyllabusManager.Data.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("SpecializationCode")
+                        .HasColumnType("text");
+
                     b.Property<int?>("StudentGovernmentOpinion")
                         .HasColumnType("integer");
 
@@ -587,6 +607,8 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.HasIndex("DescriptionId");
 
                     b.HasIndex("FieldOfStudyCode");
+
+                    b.HasIndex("SpecializationCode");
 
                     b.ToTable("Syllabuses");
                 });
@@ -749,7 +771,7 @@ namespace SyllabusManager.Data.Migrations.Postgres
 
             modelBuilder.Entity("SyllabusManager.Data.Models.FieldOfStudies.Specialization", b =>
                 {
-                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", null)
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany("Specializations")
                         .HasForeignKey("FieldOfStudyCode");
                 });
@@ -770,6 +792,21 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany()
                         .HasForeignKey("FieldOfStudyCode");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.ManyToMany.SubjectTeacher", b =>
+                {
+                    b.HasOne("SyllabusManager.Data.Models.Subjects.Subject", "Subject")
+                        .WithMany("SubjectsTeachers")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerUser", "Teacher")
+                        .WithMany("SubjectsTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.CardEntries", b =>
@@ -841,6 +878,10 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany()
                         .HasForeignKey("FieldOfStudyCode");
+
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationCode");
                 });
 #pragma warning restore 612, 618
         }

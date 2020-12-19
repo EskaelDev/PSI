@@ -202,6 +202,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.Property<string>("FieldOfStudyCode")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -279,6 +282,21 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.ToTable("LearningOutcomeDocuments");
                 });
 
+            modelBuilder.Entity("SyllabusManager.Data.Models.ManyToMany.SubjectTeacher", b =>
+                {
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("SubjectId", "TeacherId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("SubjectTeacher");
+                });
+
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.CardEntries", b =>
                 {
                     b.Property<Guid>("Id")
@@ -352,9 +370,8 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GradingSystem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GradingSystem")
+                        .HasColumnType("int");
 
                     b.Property<string>("LearningOutcomeSymbol")
                         .IsRequired()
@@ -549,7 +566,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeanName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("DescriptionId")
@@ -568,9 +584,13 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ScopeOfDiplomaExam")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StudentGovernmentOpinion")
+                    b.Property<string>("SpecializationCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("StudentGovernmentOpinion")
                         .HasColumnType("int");
 
                     b.Property<string>("StudentRepresentativeName")
@@ -589,6 +609,8 @@ namespace SyllabusManager.Data.Migrations.SqlServer
 
                     b.HasIndex("FieldOfStudyCode");
 
+                    b.HasIndex("SpecializationCode");
+
                     b.ToTable("Syllabuses");
                 });
 
@@ -601,21 +623,24 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         .HasColumnType("int");
 
                     b.Property<string>("EmploymentOpportunities")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FormOfGraduation")
+                    b.Property<int>("FormOfGraduation")
                         .HasColumnType("int");
 
                     b.Property<int>("NumOfSemesters")
                         .HasColumnType("int");
 
                     b.Property<string>("PossibilityOfContinuation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Prerequisites")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProfessionalTitleAfterGraduation")
+                    b.Property<int>("ProfessionalTitleAfterGraduation")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -748,7 +773,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
 
             modelBuilder.Entity("SyllabusManager.Data.Models.FieldOfStudies.Specialization", b =>
                 {
-                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", null)
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany("Specializations")
                         .HasForeignKey("FieldOfStudyCode");
                 });
@@ -769,6 +794,21 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany()
                         .HasForeignKey("FieldOfStudyCode");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.ManyToMany.SubjectTeacher", b =>
+                {
+                    b.HasOne("SyllabusManager.Data.Models.Subjects.Subject", "Subject")
+                        .WithMany("SubjectsTeachers")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerUser", "Teacher")
+                        .WithMany("SubjectsTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.CardEntries", b =>
@@ -840,6 +880,10 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
                         .WithMany()
                         .HasForeignKey("FieldOfStudyCode");
+
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationCode");
                 });
 #pragma warning restore 612, 618
         }

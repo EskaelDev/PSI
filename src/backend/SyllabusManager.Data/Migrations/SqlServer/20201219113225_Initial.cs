@@ -53,11 +53,11 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     Id = table.Column<Guid>(nullable: false),
                     NumOfSemesters = table.Column<int>(nullable: false),
                     Ects = table.Column<int>(nullable: false),
-                    Prerequisites = table.Column<string>(nullable: true),
-                    ProfessionalTitleAfterGraduation = table.Column<int>(nullable: true),
-                    EmploymentOpportunities = table.Column<string>(nullable: true),
-                    PossibilityOfContinuation = table.Column<string>(nullable: true),
-                    FormOfGraduation = table.Column<int>(nullable: true)
+                    Prerequisites = table.Column<string>(nullable: false),
+                    ProfessionalTitleAfterGraduation = table.Column<int>(nullable: false),
+                    EmploymentOpportunities = table.Column<string>(nullable: false),
+                    PossibilityOfContinuation = table.Column<string>(nullable: false),
+                    FormOfGraduation = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,6 +175,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 columns: table => new
                 {
                     Code = table.Column<string>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Level = table.Column<int>(nullable: false),
                     Profile = table.Column<int>(nullable: false),
@@ -183,7 +184,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     Faculty = table.Column<string>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     Language = table.Column<int>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     SupervisorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -252,6 +252,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 columns: table => new
                 {
                     Code = table.Column<string>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     FieldOfStudyCode = table.Column<string>(nullable: true)
                 },
@@ -260,44 +261,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     table.PrimaryKey("PK_Specialization", x => x.Code);
                     table.ForeignKey(
                         name: "FK_Specialization_FieldsOfStudies_FieldOfStudyCode",
-                        column: x => x.FieldOfStudyCode,
-                        principalTable: "FieldsOfStudies",
-                        principalColumn: "Code",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Syllabuses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    AcademicYear = table.Column<string>(nullable: false),
-                    Version = table.Column<string>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    StudentGovernmentOpinion = table.Column<int>(nullable: false),
-                    OpinionDeadline = table.Column<DateTime>(nullable: true),
-                    CreationDate = table.Column<DateTime>(nullable: false),
-                    ApprovalDate = table.Column<DateTime>(nullable: true),
-                    ValidFrom = table.Column<DateTime>(nullable: true),
-                    StudentRepresentativeName = table.Column<string>(nullable: true),
-                    DeanName = table.Column<string>(nullable: false),
-                    AuthorName = table.Column<string>(nullable: false),
-                    ScopeOfDiplomaExam = table.Column<string>(nullable: true),
-                    IntershipType = table.Column<string>(nullable: true),
-                    DescriptionId = table.Column<Guid>(nullable: true),
-                    FieldOfStudyCode = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Syllabuses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Syllabuses_SyllabusDescription_DescriptionId",
-                        column: x => x.DescriptionId,
-                        principalTable: "SyllabusDescription",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Syllabuses_FieldsOfStudies_FieldOfStudyCode",
                         column: x => x.FieldOfStudyCode,
                         principalTable: "FieldsOfStudies",
                         principalColumn: "Code",
@@ -329,7 +292,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    GradingSystem = table.Column<string>(nullable: false),
+                    GradingSystem = table.Column<int>(nullable: false),
                     LearningOutcomeSymbol = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     SubjectId = table.Column<Guid>(nullable: true)
@@ -398,6 +361,30 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubjectTeacher",
+                columns: table => new
+                {
+                    SubjectId = table.Column<Guid>(nullable: false),
+                    TeacherId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectTeacher", x => new { x.SubjectId, x.TeacherId });
+                    table.ForeignKey(
+                        name: "FK_SubjectTeacher_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SubjectTeacher_AspNetUsers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LearningOutcome",
                 columns: table => new
                 {
@@ -429,29 +416,47 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubjectInSyllabusDescription",
+                name: "Syllabuses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    AssignedSemester = table.Column<int>(nullable: false),
-                    CompletionSemester = table.Column<int>(nullable: true),
-                    SubjectId = table.Column<Guid>(nullable: true),
-                    SyllabusId = table.Column<Guid>(nullable: true)
+                    AcademicYear = table.Column<string>(nullable: false),
+                    Version = table.Column<string>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    StudentGovernmentOpinion = table.Column<int>(nullable: true),
+                    OpinionDeadline = table.Column<DateTime>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    ApprovalDate = table.Column<DateTime>(nullable: true),
+                    ValidFrom = table.Column<DateTime>(nullable: true),
+                    StudentRepresentativeName = table.Column<string>(nullable: true),
+                    DeanName = table.Column<string>(nullable: true),
+                    AuthorName = table.Column<string>(nullable: false),
+                    ScopeOfDiplomaExam = table.Column<string>(nullable: false),
+                    IntershipType = table.Column<string>(nullable: true),
+                    DescriptionId = table.Column<Guid>(nullable: true),
+                    FieldOfStudyCode = table.Column<string>(nullable: true),
+                    SpecializationCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubjectInSyllabusDescription", x => x.Id);
+                    table.PrimaryKey("PK_Syllabuses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubjectInSyllabusDescription_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subjects",
+                        name: "FK_Syllabuses_SyllabusDescription_DescriptionId",
+                        column: x => x.DescriptionId,
+                        principalTable: "SyllabusDescription",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SubjectInSyllabusDescription_Syllabuses_SyllabusId",
-                        column: x => x.SyllabusId,
-                        principalTable: "Syllabuses",
-                        principalColumn: "Id",
+                        name: "FK_Syllabuses_FieldsOfStudies_FieldOfStudyCode",
+                        column: x => x.FieldOfStudyCode,
+                        principalTable: "FieldsOfStudies",
+                        principalColumn: "Code",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Syllabuses_Specialization_SpecializationCode",
+                        column: x => x.SpecializationCode,
+                        principalTable: "Specialization",
+                        principalColumn: "Code",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -491,6 +496,33 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         name: "FK_ClassForm_Lesson_LessonId",
                         column: x => x.LessonId,
                         principalTable: "Lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubjectInSyllabusDescription",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AssignedSemester = table.Column<int>(nullable: false),
+                    CompletionSemester = table.Column<int>(nullable: true),
+                    SubjectId = table.Column<Guid>(nullable: true),
+                    SyllabusId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectInSyllabusDescription", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubjectInSyllabusDescription_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SubjectInSyllabusDescription_Syllabuses_SyllabusId",
+                        column: x => x.SyllabusId,
+                        principalTable: "Syllabuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -605,6 +637,11 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 column: "SupervisorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubjectTeacher_TeacherId",
+                table: "SubjectTeacher",
+                column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Syllabuses_DescriptionId",
                 table: "Syllabuses",
                 column: "DescriptionId");
@@ -613,6 +650,11 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 name: "IX_Syllabuses_FieldOfStudyCode",
                 table: "Syllabuses",
                 column: "FieldOfStudyCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Syllabuses_SpecializationCode",
+                table: "Syllabuses",
+                column: "SpecializationCode");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -651,6 +693,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 name: "SubjectInSyllabusDescription");
 
             migrationBuilder.DropTable(
+                name: "SubjectTeacher");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -663,9 +708,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 name: "LearningOutcomeDocuments");
 
             migrationBuilder.DropTable(
-                name: "Specialization");
-
-            migrationBuilder.DropTable(
                 name: "Syllabuses");
 
             migrationBuilder.DropTable(
@@ -673,6 +715,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
 
             migrationBuilder.DropTable(
                 name: "SyllabusDescription");
+
+            migrationBuilder.DropTable(
+                name: "Specialization");
 
             migrationBuilder.DropTable(
                 name: "FieldsOfStudies");

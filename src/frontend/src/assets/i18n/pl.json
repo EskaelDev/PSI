@@ -1,0 +1,7 @@
+{
+    "roles": {
+      "Admin": "Administrator",
+      "Teacher": "Prowadzący",
+      "StudentGovernment": "Samorząd studencki"
+    }
+  }

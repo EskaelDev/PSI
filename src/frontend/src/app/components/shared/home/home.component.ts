@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Role } from 'src/app/core/enums/role.enum';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  selectedRole: Role = Role.Admin;
+  roles = Object.values(Role);
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

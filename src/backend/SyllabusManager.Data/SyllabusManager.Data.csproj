@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\SqlServer\" />
     <Folder Include="Models\Subjects\" />
   </ItemGroup>
 

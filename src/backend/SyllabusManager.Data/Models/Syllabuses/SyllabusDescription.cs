@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyllabusManager.Data.Models.Syllabuses
 {
-    public partial class SyllabusDescription : ModelBase
+    public class SyllabusDescription : ModelBase
     {
         public int NumOfSemesters { get; set; }
         public int Ects { get; set; }

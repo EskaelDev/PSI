@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SyllabusManager.Data.Models.Subjects
 {
-    public partial class Lesson : ModelBase
+    public class Lesson : ModelBase
     {
         public LessonType LessonType { get; set; }
         public int HoursAtUniversity { get; set; }

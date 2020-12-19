@@ -2,11 +2,12 @@
 
 namespace SyllabusManager.Data.Models.FieldOfStudies
 {
-    public partial class Specialization
+    public class Specialization : NonVersionedModelBase
     {
-        [Key]
-        public string Code { get; set; }
         [Required]
         public string Name { get; set; }
+
+        public FieldOfStudy FieldOfStudy { get; set; }
+
     }
 }

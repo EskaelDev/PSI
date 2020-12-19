@@ -2,7 +2,7 @@
 
 namespace SyllabusManager.Data.Models.Subjects
 {
-    public partial class Literature : ModelBase
+    public class Literature : ModelBase
     {
         [Required]
         public string Authors { get; set; }

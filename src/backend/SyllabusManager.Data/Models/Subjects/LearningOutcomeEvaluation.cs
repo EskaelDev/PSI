@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SyllabusManager.Data.Enums.Subjects;
+using System.ComponentModel.DataAnnotations;
 
 namespace SyllabusManager.Data.Models.Subjects
 {
-    public partial class LearningOutcomeEvaluation : ModelBase
+    public class LearningOutcomeEvaluation : ModelBase
     {
         [Required]
-        public string GradingSystem { get; set; }
+        public GradingSystem GradingSystem { get; set; }
         [Required]
         public string LearningOutcomeSymbol { get; set; }
         public string Description { get; set; }

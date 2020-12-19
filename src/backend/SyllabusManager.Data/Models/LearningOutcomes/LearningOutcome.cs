@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyllabusManager.Data.Models.LearningOutcomes
 {
-    public partial class LearningOutcome : ModelBase
+    public class LearningOutcome : ModelBase
     {
         [Required]
         public string Symbol { get; set; }

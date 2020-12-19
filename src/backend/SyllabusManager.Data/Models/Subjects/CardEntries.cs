@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyllabusManager.Data.Models.Subjects
 {
-    public partial class CardEntries : ModelBase
+    public class CardEntries : ModelBase
     {
         [Required]
         public string Name { get; set; }

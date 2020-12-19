@@ -6,7 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyllabusManager.Data.Models.Syllabuses
 {
-    public partial class Syllabus : DocumentInAcademicYearBase
+
+    /// <summary>
+    /// Program studiów
+    /// </summary>
+    public class Syllabus : DocumentInAcademicYearBase
     {
         public Option? StudentGovernmentOpinion { get; set; }
         public DateTime? OpinionDeadline { get; set; }
@@ -23,5 +27,6 @@ namespace SyllabusManager.Data.Models.Syllabuses
         public SyllabusDescription Description { get; set; }
         public List<SubjectInSyllabusDescription> SubjectDescriptions { get; set; }
         public FieldOfStudy FieldOfStudy { get; set; }
+        public Specialization Specialization { get; set; }
     }
 }

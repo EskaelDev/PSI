@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SyllabusManager.Data.Models.FieldOfStudies
 {
-    public partial class FieldOfStudy
+    /// <summary>
+    /// Kierunek studiów
+    /// </summary>
+    public class FieldOfStudy : NonVersionedModelBase
     {
-        [Key]
-        public string Code { get; set; }
+
         [Required]
         public string Name { get; set; }
         public DegreeLevel Level { get; set; }
@@ -19,7 +21,6 @@ namespace SyllabusManager.Data.Models.FieldOfStudies
         public string Faculty { get; set; }
         public CourseType Type { get; set; }
         public MainLanguage Language { get; set; }
-        public bool IsDeleted { get; set; }
         public SyllabusManagerUser Supervisor { get; set; }
         public List<Specialization> Specializations { get; set; }
     }

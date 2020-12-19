@@ -2,7 +2,7 @@
 
 namespace SyllabusManager.Data.Models.Subjects
 {
-    public partial class CardEntry :ModelBase
+    public class CardEntry :ModelBase
     {
         [Required]
         public string Code { get; set; }

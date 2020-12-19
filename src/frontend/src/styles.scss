@@ -1,26 +1,95 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat-core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$syllabus-manager-primary: mat-palette($mat-indigo);
-$syllabus-manager-accent: mat-palette($mat-pink, A200, A100, A400);
+@font-face {
+    font-family: OpenSansLight;
+    src: url(assets/OpenSansLight.ttf) format("truetype");
+}
 
-// The warn palette is optional (defaults to red).
-$syllabus-manager-warn: mat-palette($mat-red);
+@font-face {
+    font-family: OpenSansSemiBold;
+    src: url(assets/OpenSansSemiBold.ttf) format("truetype");
+}
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$syllabus-manager-theme: mat-light-theme((
+
+$pwr-red-palette: (
+    50 : #f7e5e4,
+    100 : #eabfbc,
+    200 : #dc9590,
+    300 : #ce6a63,
+    400 : #c44a41,
+    500 : #920707,
+    600 : #8f0303,
+    700 : #700404,
+    800 : #700404,
+    900 : #700404,
+    A100 : #ffc3c2,
+    A200 : #ff918f,
+    A400 : #ff5e5c,
+    A700 : #ff4542,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+$pwr-cream-palette: (
+    50 : #fdf9f4,
+    100 : #fbf1e3,
+    200 : #f8e8d1,
+    300 : #f5dfbe,
+    400 : #f3d8b0,
+    500 : #f1d1a2,
+    600 : #efcc9a,
+    700 : #edc690,
+    800 : #ebc086,
+    900 : #e7b575,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #fffffe,
+    A700 : #fff3e5,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$custom-typography: mat-typography-config(
+  $font-family: 'OpenSansLight, monospace',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+@include mat-core($custom-typography);
+
+$syllabus-manager-primary: mat-palette($pwr-cream-palette);
+$syllabus-manager-accent: mat-palette($pwr-red-palette);
+$syllabus-manager-warn: mat-palette($mat-deep-orange);
+$syllabus-manager-theme: mat-dark-theme((
   color: (
     primary: $syllabus-manager-primary,
     accent: $syllabus-manager-accent,
@@ -28,12 +97,117 @@ $syllabus-manager-theme: mat-light-theme((
   )
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
 @include angular-material-theme($syllabus-manager-theme);
 
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body, app-root, .app-frame {
+  overflow: auto;
+  margin: 0;
+  height: 100%;
+  box-sizing: border-box;
+  color: #e0e0e0;
+}
+body { margin: 0; font-family: OpenSansLight !important }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.page-header {
+  margin-bottom: 20px;
+
+  h1 {
+      font-size: 40px !important;
+      font-family: OpenSansSemiBold !important;
+  }
+}
+.button-icon {
+  margin-right: 5px;
+}
+
+.action-button {
+  margin: 0 5px !important;
+}
+
+.basic-info-box {
+  margin-bottom: 40px;
+}
+
+.basic-info {
+  font-size: 20px;
+  margin-bottom: 20px;
+
+  .title {
+      background-color: antiquewhite; 
+      border-radius: 50px; 
+      color: brown;
+      padding: 2px 7px;
+      margin-right: 10px;
+      font-family: OpenSansSemiBold !important;
+  }
+
+  .sub-title {
+      background-color: brown; 
+      border-radius: 50px; 
+      color: antiquewhite;
+      padding: 2px 7px;
+      margin: 0 120px 20px 120px;
+      font-family: OpenSansSemiBold !important;
+  }
+}
+
+.header-info {
+  font-size: 20px;
+  margin-bottom: 20px;
+
+  .title {
+      background-color: antiquewhite; 
+      color: brown;
+      padding: 2px 7px;
+      margin-right: 10px;
+      font-family: OpenSansSemiBold !important;
+  }
+
+  .sub-title {
+      background-color: brown; 
+      color: antiquewhite;
+      padding: 2px 7px;
+      margin: 0 120px 20px 120px;
+      font-family: OpenSansSemiBold !important;
+  }
+}
+
+.round-title {
+  background-color: antiquewhite; 
+  border-radius: 50px; 
+  color: brown;
+  padding: 2px 7px;
+  margin-right: 10px;
+  font-family: OpenSansSemiBold !important;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.panel-tile {
+  height: 250px;
+  width: 300px;
+  background-color: gray;
+  padding: 25px;
+  font-size: 35px;
+  border-radius: 10px;
+  cursor: pointer;
+}

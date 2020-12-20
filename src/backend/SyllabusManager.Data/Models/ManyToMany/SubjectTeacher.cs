@@ -12,6 +12,6 @@ namespace SyllabusManager.Data.Models.ManyToMany
         public Subject Subject { get; set; }
 
         public string TeacherId { get; set; }
-        public SyllabusManagerUser Teacher{ get; set; }
+        public SyllabusManagerUser Teacher { get; set; }
     }
 }

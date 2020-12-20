@@ -5,7 +5,6 @@ namespace SyllabusManager.Data.Models.Subjects
 {
     public class LearningOutcomeEvaluation : ModelBase
     {
-        [Required]
         public GradingSystem GradingSystem { get; set; }
         [Required]
         public string LearningOutcomeSymbol { get; set; }

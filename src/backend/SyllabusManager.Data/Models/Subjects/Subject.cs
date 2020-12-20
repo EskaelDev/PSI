@@ -4,6 +4,7 @@ using SyllabusManager.Data.Models.ManyToMany;
 using SyllabusManager.Data.Models.User;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SyllabusManager.Data.Models.Subjects
 {
@@ -25,5 +26,6 @@ namespace SyllabusManager.Data.Models.Subjects
         public List<LearningOutcomeEvaluation> LearningOutcomeEvaluations { get; set; }
         public List<CardEntries> CardEntries { get; set; }
         public List<SubjectTeacher> SubjectsTeachers { get; set; }
+        public IEnumerable<SyllabusManagerUser> Teachers => SubjectsTeachers.Select(st => st.Teacher);
     }
 }

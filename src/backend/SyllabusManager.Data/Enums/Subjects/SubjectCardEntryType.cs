@@ -2,5 +2,9 @@
 {
     public enum SubjectCardEntryType
     {
+        Prerequisite,
+        Goal,
+        LearningOutcome,
+        TeachingTools
     }
 }

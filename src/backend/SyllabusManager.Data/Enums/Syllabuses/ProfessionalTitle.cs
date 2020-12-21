@@ -2,5 +2,9 @@
 {
     public enum ProfessionalTitle
     {
+        MasterOfScience,
+        BachelorOfScience,
+        MasterOfArts,
+        BachelorOfArts
     }
 }

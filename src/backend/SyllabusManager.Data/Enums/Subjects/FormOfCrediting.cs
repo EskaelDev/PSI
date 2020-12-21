@@ -2,5 +2,7 @@
 {
     public enum FormOfCrediting
     {
+        Examination,
+        CreditingWithGrade
     }
 }

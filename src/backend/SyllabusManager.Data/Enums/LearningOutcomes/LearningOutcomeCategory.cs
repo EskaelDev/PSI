@@ -2,5 +2,8 @@
 {
     public enum LearningOutcomeCategory
     {
+        Knowledge,
+        Skills,
+        SocialCompetences
     }
 }

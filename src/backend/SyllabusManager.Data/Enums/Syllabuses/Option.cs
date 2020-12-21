@@ -2,5 +2,8 @@
 {
     public enum Option
     {
+        Pending,
+        Approved,
+        Rejected
     }
 }

@@ -2,5 +2,7 @@
 {
     public enum CourseType
     {
-    }
+        Extramural,
+        FullTime
+    };
 }

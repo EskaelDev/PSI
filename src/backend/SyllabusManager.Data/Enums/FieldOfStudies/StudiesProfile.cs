@@ -2,5 +2,7 @@
 {
     public enum StudiesProfile
     {
+        Academic,
+        Practical
     }
 }

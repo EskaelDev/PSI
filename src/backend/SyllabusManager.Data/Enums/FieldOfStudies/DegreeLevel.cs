@@ -2,5 +2,10 @@
 {
     public enum DegreeLevel
     {
+        FirstLevel,
+        SecondLevel,
+
+        //jednolite magisterskie
+        MasterUniform
     }
 }

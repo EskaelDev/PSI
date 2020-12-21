@@ -2,5 +2,11 @@
 {
     public enum ModuleType
     {
+        Specialization,
+        General,
+        FieldOfStudy,
+        BasicScience,
+        Thesis,
+        Internship
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SyllabusManager.Logic.Services;
+using SyllabusManager.Logic.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +13,5 @@ namespace SyllabusManager.API.Controllers
     public class SubjectController : ControllerBase
     {
 
-
-        public void Test()
-        {
-            new SubjectService().SubjectTest();
-        }
     }
 }

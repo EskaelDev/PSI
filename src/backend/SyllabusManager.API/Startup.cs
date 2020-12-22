@@ -10,6 +10,10 @@ using SyllabusManager.Data.Models.User;
 using SyllabusManager.Data.ProviderContexts;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Serilog;
+using System.Text.Json;
+using SyllabusManager.API.Helpers;
 
 namespace SyllabusManager.API
 {
@@ -18,6 +22,10 @@ namespace SyllabusManager.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -46,20 +54,10 @@ namespace SyllabusManager.API
                 .AddEntityFrameworkStores<SyllabusManagerDbContext>()
                 .AddDefaultTokenProviders();
 
-            switch (Configuration.GetValue<string>("DatabaseProvider"))
-            {
-                case "SqlServer":
-                    services.AddDbContext<SyllabusManagerDbContext, SqlServerSyllabusManagerDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SMDatabase")));
-                    break;
-                case "Oracle":
-                    services.AddDbContext<SyllabusManagerDbContext, OracleSyllabusManagerDbContext>(options => options.UseOracle(Configuration.GetConnectionString("SMDatabase")));
-                    break;
-                case "Postgres":
-                    services.AddDbContext<SyllabusManagerDbContext, PostgresSyllabusManagerDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("SMDatabase")));
-                    break;
-                default:
-                    throw new Exception("No valid database provider! Available options: SqlServer, Oracle, Postgres.");
-            }
+
+            InjectionHelper.Inject(services, Configuration);
+            
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

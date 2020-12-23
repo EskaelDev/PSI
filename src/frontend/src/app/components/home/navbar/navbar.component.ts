@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.messageHub.currentUser.subscribe((user) => (this.user = user))
     );
   }
-
+  
   ngOnDestroy(): void {
     this.subscribtions.forEach((s) => {
       s.unsubscribe();

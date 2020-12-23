@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/authentication/login/login.component';
+import { LogoutComponent } from './components/authentication/logout/logout.component';
 import { HomeComponent } from './components/home/home/home.component';
 import { NoAccessComponent } from './components/home/no-access/no-access.component';
 import { NotFoundComponent } from './components/home/not-found/not-found.component';
@@ -14,6 +15,9 @@ const routes: Routes = [
   },
   { 
     path: 'login', component: LoginComponent
+  },
+  { 
+    path: 'logout', component: LogoutComponent
   },
   { 
     path: 'home', component: HomeComponent,

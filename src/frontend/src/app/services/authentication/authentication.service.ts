@@ -94,7 +94,7 @@ export class AuthenticationService {
   }
 
   private showLoginErrorMessage(err: any) {
-    if (err.status === 401) {
+    if (err.status === 404) {
       this.alerts.showCustomErrorMessage('Wrong credentials!');
     } else {
       this.alerts.showDefaultErrorMessage();
@@ -110,7 +110,7 @@ export class AuthenticationService {
   }
 
   private showLogoutSuccessMessage() {
-    this.alerts.showCustomSuccessMessage('You have successfully logged out');
+    this.alerts.showCustomInfoMessage('You have logged out');
   }
 
   private showSessionExpiredMessage() {

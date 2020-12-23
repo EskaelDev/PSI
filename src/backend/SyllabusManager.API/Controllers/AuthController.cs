@@ -41,10 +41,8 @@ namespace SyllabusManager.API.Controllers
         {
             SyllabusManagerUser user = await _userManager.FindByEmailAsync(loginModel.Email);
 
-            if (user == null)
+            if (user == null || !await _userManager.CheckPasswordAsync(user, loginModel.Password))
                 return NotFound();
-            if (!await _userManager.CheckPasswordAsync(user, loginModel.Password))
-                return Unauthorized();
 
             return Ok(await _authService.Login(user));
 

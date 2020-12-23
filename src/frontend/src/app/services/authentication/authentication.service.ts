@@ -95,14 +95,14 @@ export class AuthenticationService {
 
   private showLoginErrorMessage(err: any) {
     if (err.status === 404) {
-      this.alerts.showCustomErrorMessage('Wrong credentials!');
+      this.alerts.showCustomErrorMessage('Niepoprawny email lub hasło!');
     } else {
       this.alerts.showDefaultErrorMessage();
     }
   }
 
   private showRegisterSuccessMessage() {
-    this.alerts.showCustomSuccessMessage('Account created');
+    this.alerts.showCustomSuccessMessage('Konto utworzone');
   }
 
   private showRegisterErrorMessage(err: any) {
@@ -110,10 +110,10 @@ export class AuthenticationService {
   }
 
   private showLogoutSuccessMessage() {
-    this.alerts.showCustomInfoMessage('You have logged out');
+    this.alerts.showCustomInfoMessage('Wylogowano');
   }
 
   private showSessionExpiredMessage() {
-    this.alerts.showCustomWarningMessage('Your session has expired');
+    this.alerts.showCustomWarningMessage('Sesja wygasła');
   }
 }

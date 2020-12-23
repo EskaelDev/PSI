@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
-const ERROR_MESSAGE = 'Something went wrong, try again!';
+const ERROR_MESSAGE = 'Coś poszło nie tak, spróbuj ponownie!';
 
 @Injectable({
   providedIn: 'root',

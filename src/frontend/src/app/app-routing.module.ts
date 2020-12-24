@@ -13,14 +13,17 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full',
   },
-  { 
-    path: 'login', component: LoginComponent
+  {
+    path: 'login',
+    component: LoginComponent
   },
-  { 
-    path: 'logout', component: LogoutComponent
+  {
+    path: 'logout',
+    component: LogoutComponent
   },
-  { 
-    path: 'home', component: HomeComponent,
+  {
+    path: 'home',
+    component: HomeComponent,
     canActivate: [AuthGuard]
   },
   {

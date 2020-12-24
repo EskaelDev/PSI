@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US">
+  <file id="ngi18n" original="ng.template">
+    <unit id="EmailInvalid">
+      <notes>
+        <note category="location">src/app/components/authentication/login/login.component.html:54</note>
+        <note category="meaning">Form Login</note>
+      </notes>
+      <segment>
+        <source>Please provide a valid email address</source>
+        <target>Proszę podać prawidłowy email</target>
+      </segment>
+    </unit>
+    <unit id="PasswordInvalid">
+      <notes>
+        <note category="location">src/app/components/authentication/login/login.component.html:65</note>
+        <note category="meaning">Form Login</note>
+      </notes>
+      <segment>
+        <source>Please provide a valid password</source>
+        <target>Proszę podać prawidłowe hasło</target>
+      </segment>
+    </unit>
+    <unit id="LoginNotFound">
+      <notes>
+        <note category="location">src/app/components/authentication/login/login.component.html:50,51</note>
+        <note category="meaning">Form Login</note>
+      </notes>
+      <segment>
+        <source> The username and password were not recognised </source>
+        <target>Nie rozpoznano nazwy użytkownika i hasła</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

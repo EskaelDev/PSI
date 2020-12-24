@@ -1,3 +1,7 @@
+body {
+  font-size: 1vw;
+}
+
 .container {
   position: absolute;
   width: 100vw;
@@ -5,9 +9,10 @@
   color: rgba(28, 30, 35, 1);
   background-color: rgba(28, 30, 35, 1);
   overflow: hidden;
-  display:flex;
+  display: flex;
   --web-scale-on-resize: true;
   --web-enable-deep-linking: true;
+  font-size: 1.21vw;
 }
 
 .background {
@@ -20,6 +25,7 @@
     transform-origin: center;
     left: 0px;
     top: 0px;
+
     path {
       opacity: 0.57;
       fill: rgba(188, 158, 35, 1);
@@ -31,6 +37,7 @@
       shape-rendering: auto;
     }
   }
+
   .polygon-right {
     filter: drop-shadow(0px 25px 49px rgba(0, 0, 0, 0.161));
     overflow: visible;
@@ -41,6 +48,7 @@
     transform-origin: center;
     left: 0px;
     top: 0px;
+
     path {
       opacity: 0.92;
       fill: rgba(154, 52, 45, 1);
@@ -50,47 +58,57 @@
 
 .login-form-container {
   width: 39.36%;
-  height: 70.66%;
   margin: auto;
   z-index: 999;
   background-color: rgba(39, 42, 49, 1);
   border: rgba(112, 112, 112, 1) 1px solid;
+
   .logo-bez-tla {
     width: 18.15%;
     height: auto;
     display: block;
-    margin: 30px auto;
+    margin: 2.75em auto 1.5em;
   }
+
   .login-form {
     width: 61.6%;
-    margin: 0 auto;
+    margin: 3.5em auto 0;
     white-space: nowrap;
     text-align: left;
-    font-size: 1.5rem;
     font-family: Segoe UI;
     font-style: normal;
     font-weight: normal;
     color: rgba(112, 112, 112, 1);
+
     .login-element {
       width: 100%;
       white-space: nowrap;
       text-align: left;
-      font-size: 2.375rem;
+      font-size: 1em;
       color: rgba(112, 112, 112, 1);
     }
-    .controls {
-      margin-top: 30px;
-      line-height: 4.25rem;
-      .password-reset {
-        vertical-align: center;
-      }
-      .login-button {
-        opacity: 0.92;
-        background-color: rgba(154, 52, 45, 1);
-        font-size: 2rem;
-        font-weight: bold;
-        line-height: 4.25rem;
-        float: right;
+
+    .controls-container {
+      display: block;
+      clear: both;
+      margin: 3.75em auto;
+      .controls {
+        margin: auto;
+        line-height: 2.25em;
+
+        .password-reset {
+          font-size: 1em;
+          vertical-align: center;
+        }
+
+        .login-button {
+          opacity: 0.92;
+          background-color: rgba(154, 52, 45, 1);
+          font-size: 1em;
+          font-weight: bold;
+          line-height: 2.25em;
+          float: right;
+        }
       }
     }
   }

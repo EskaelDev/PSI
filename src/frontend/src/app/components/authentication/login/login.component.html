@@ -39,7 +39,6 @@
     </svg>
   </div>
 
-<!--  <img class="logo-bez-tla" src="/assets/logo_bez_tla.png">-->
   <div class="login-form-container">
     <img class="logo-bez-tla" src="/assets/logo_bez_tla.png">
     <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
@@ -69,13 +68,15 @@
         <mat-error i18n="Form Login|@@PasswordInvalid">Please provide a valid password</mat-error>
       </mat-form-field>
       <br/>
-      <div class="controls">
-        <a class="password-reset">
-          Przypomnij hasło
-        </a>
-        <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">
-          Zaloguj
-        </button>
+      <div class="controls-container">
+        <div class="controls">
+          <a class="password-reset">
+            Przypomnij hasło
+          </a>
+          <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">
+            Zaloguj
+          </button>
+        </div>
       </div>
     </form>
   </div>

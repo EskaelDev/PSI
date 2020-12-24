@@ -31,5 +31,25 @@
         <target>Nie rozpoznano nazwy użytkownika i hasła</target>
       </segment>
     </unit>
+    <unit id="PasswordPlaceholder">
+      <notes>
+        <note category="location">src/app/components/authentication/login/login.component.html:67</note>
+        <note category="meaning">Form Login</note>
+      </notes>
+      <segment>
+        <source>Password</source>
+        <target>Hasło</target>
+      </segment>
+    </unit>
+    <unit id="EmailPlaceholder">
+      <notes>
+        <note category="location">src/app/components/authentication/login/login.component.html:55</note>
+        <note category="meaning">Form Login</note>
+      </notes>
+      <segment>
+        <source>Email</source>
+        <target>Nazwa użytkownika</target>
+      </segment>
+    </unit>
   </file>
 </xliff>

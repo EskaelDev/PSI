@@ -1,0 +1,4 @@
+<div *ngFor="let user of filteredUsers" (click)="selectUser(user)" [ngClass]="{'selected' : selectedUser.id === user.id}">
+    <p>{{ user.userName }}</p>
+  <p>{{ user.email }}</p>
+</div>

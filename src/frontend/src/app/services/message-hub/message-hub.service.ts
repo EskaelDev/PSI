@@ -6,11 +6,23 @@ import { User } from 'src/app/core/models/user/user';
   providedIn: 'root',
 })
 export class MessageHubService {
-  private userSource = new Subject<User | null>();
+  private loggedInUserSource = new Subject<User | null>();
+  private usersChangedSource = new Subject<boolean>();
+  private selectedUserSource = new Subject<User>();
 
-  public currentUser = this.userSource.asObservable();
+  public loggedInUser = this.loggedInUserSource.asObservable();
+  public usersChanged = this.usersChangedSource.asObservable();
+  public selectedUser = this.selectedUserSource.asObservable();
 
-  notifyUser(user: User | null) {
-    this.userSource.next(user);
+  notifyLoggedInUser(user: User | null) {
+    this.loggedInUserSource.next(user);
+  }
+
+  notifyUsersChanged() {
+    this.usersChangedSource.next(true);
+  }
+
+  notifySelectedUser(user: User) {
+    this.selectedUserSource.next(user);
   }
 }

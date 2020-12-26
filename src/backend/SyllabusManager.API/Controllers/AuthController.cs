@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Models;
@@ -11,9 +12,8 @@ using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : AbstractApiController
     {
         private readonly IAuthService _authService;
         private readonly UserManager<SyllabusManagerUser> _userManager;
@@ -24,9 +24,8 @@ namespace SyllabusManager.API.Controllers
             _userManager = userManager;
         }
 
-        // POST: api/internal/staffauthentication/createstaffaccount
+        
         [HttpPost]
-        [Route("[action]")]
         public async Task<IActionResult> Register([FromBody] RegistrationModel registrationModel)
         {
             var result = await _authService.RegisterUser(registrationModel);
@@ -36,7 +35,6 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpPost]
-        [Route("[action]")]
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
             SyllabusManagerUser user = await _userManager.FindByEmailAsync(loginModel.Email);

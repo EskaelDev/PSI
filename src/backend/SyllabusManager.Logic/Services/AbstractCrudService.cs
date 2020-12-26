@@ -48,6 +48,7 @@ namespace SyllabusManager.Logic.Services
 
         public virtual async Task AddAsync(T entity)
         {
+            if(entity.Id)
             await _dbSet.AddAsync(entity);
         }
     }

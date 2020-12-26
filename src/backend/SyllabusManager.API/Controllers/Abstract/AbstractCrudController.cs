@@ -28,11 +28,5 @@ namespace SyllabusManager.API.Controllers.Abstract
 
         }
 
-        [HttpPost]
-        public async virtual Task Update([FromBody] T entity)
-        {
-
-        }
-
     }
 }

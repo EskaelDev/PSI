@@ -14,6 +14,7 @@ export class SearchableListComponent {
 
   @Output() elementSelected: EventEmitter<any> = new EventEmitter();
   @Output() newElementChosen: EventEmitter<any> = new EventEmitter();
+  @Output() back: EventEmitter<any> = new EventEmitter();
 
   searchPhrase = '';
 
@@ -49,5 +50,9 @@ export class SearchableListComponent {
 
   newElement() {
     this.newElementChosen.emit();
+  }
+
+  goBack() {
+    this.back.emit();
   }
 }

@@ -1,17 +1,14 @@
-<button (click)="resetPassword()">Zresetuj hasło</button>
-<button (click)="saveUser()">Zapisz</button>
-<button (click)="removeUser()" *ngIf="originalUser.id !== guidEmpty">Usuń</button>
-<button (click)="addRole()">Przypisz rolę</button>
-<div>
-    <p>{{ originalUser.id }}</p>
-    <p>{{ originalUser.userName }}</p>
-
-  <mat-form-field class="example-form-field">
-    <mat-label>Imię i nazwisko</mat-label>
-    <input matInput type="text" [(ngModel)]="editableUser.userName">
-  </mat-form-field>
-  <mat-form-field class="example-form-field">
-    <mat-label>Email</mat-label>
-    <input matInput type="email" [(ngModel)]="editableUser.email">
-  </mat-form-field>
-</div>
+<app-element-edit
+  [elementName]="
+    originalUser.userName ? originalUser.userName : 'Nowy użytkownik'
+  "
+  [canDelete]="originalUser.id !== guidEmpty"
+  (save)="saveUser()"
+  (remove)="removeUser()"
+>
+  <app-user-form
+    [userForm]="userForm"
+    (passwordReset)="resetPassword()"
+  ></app-user-form>
+</app-element-edit>
+<app-user-roles></app-user-roles>

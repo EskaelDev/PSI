@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ListElement } from 'src/app/core/models/shared/list-element';
 import { User } from 'src/app/core/models/user/user';
@@ -18,7 +19,8 @@ export class UsersListComponent {
   selectedUser: User = new User();
 
   constructor(private userService: UserService,
-    private readonly messageHub: MessageHubService) {}
+    private readonly messageHub: MessageHubService,
+    private route: Router) {}
   
   ngOnInit(): void {
     this.subscribtions.push(
@@ -71,5 +73,9 @@ export class UsersListComponent {
 
   getElements(users: User[]): ListElement[] {
     return users.map(u => new ListElement(u.id, u.userName));
+  }
+
+  goBack() {
+    this.route.navigate(["/administration"]);
   }
 }

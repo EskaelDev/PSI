@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AppConsts } from 'src/app/core/consts/app-consts';
 import { Role } from 'src/app/core/models/user/role';
@@ -17,21 +18,31 @@ export class UserComponent implements OnInit, OnDestroy {
   guidEmpty = AppConsts.EMPTY_ID;
 
   originalUser: User = new User();
-  editableUser: User = new User();
+
+  userForm: FormGroup;
 
   roles: Role[] = [];
 
   constructor(
     private userService: UserService,
     private readonly messageHub: MessageHubService,
-    private readonly alerts: AlertService
-  ) {}
+    private readonly alerts: AlertService,
+    private readonly fb: FormBuilder
+  ) {
+    this.userForm = this.fb.group({
+      userName: ['', Validators.required],
+      email: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.subscribtions.push(
       this.messageHub.selectedUser.subscribe((user) => {
         this.originalUser = user;
-        this.editableUser = Object.assign([], user);
+        this.userForm.patchValue({
+          userName: user.userName,
+          email: user.email
+        });
       })
     );
   }
@@ -44,7 +55,11 @@ export class UserComponent implements OnInit, OnDestroy {
 
   // USER
   saveUser() {
-    this.userService.saveUser(this.editableUser).subscribe((user) => {
+    const editedUser = Object.assign([], this.originalUser);
+    editedUser.email = this.userForm.get('email')?.value;
+    editedUser.userName = this.userForm.get('userName')?.value;
+
+    this.userService.saveUser(editedUser).subscribe((user) => {
       this.messageHub.notifyUsersChanged();
       this.alerts.showCustomSuccessMessage('Zmiany zapisane');
     });
@@ -64,8 +79,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   // ROLES
-  loadRoles() {}
-
   addRole() {}
 
   removeRole() {}

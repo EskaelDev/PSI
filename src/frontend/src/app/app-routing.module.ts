@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { AdministrationComponent } from './components/admin/administration/administration.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { LogoutComponent } from './components/authentication/logout/logout.component';
@@ -24,6 +25,16 @@ const routes: Routes = [
   { 
     path: 'home', component: HomeComponent,
     canActivate: [AuthGuard]
+  },
+  { 
+    path: 'administration', component: AdministrationComponent,
+    //canActivate: [NgxPermissionsGuard],
+    //data: {
+    //  permissions: {
+    //    only: 'ADMIN',
+    //    redirectTo: '/noaccess'
+    //  }
+    //}
   },
   { 
     path: 'manage-users', component: UsersComponent,

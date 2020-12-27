@@ -6,6 +6,7 @@
     </button>
   </mat-form-field>
   <button (click)="newElement()">New element</button>
+  <button (click)="goBack()">Back</button>
 <div *ngFor="let element of filteredElements" (click)="selectElement(element)" [ngClass]="{'selected' : selectedId === element.id}">
     <p>{{ element.name }}</p>
 </div>

@@ -9,6 +9,7 @@ export class ElementEditComponent implements OnInit {
 
   @Input() elementName: string = '';
   @Input() canDelete: boolean = false;
+  @Input() validForm: boolean = false;
   @Output() remove: EventEmitter<any> = new EventEmitter();
   @Output() save: EventEmitter<any> = new EventEmitter();
 

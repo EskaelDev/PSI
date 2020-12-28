@@ -1,0 +1,14 @@
+<form [formGroup]="fosForm">
+    <mat-form-field class="example-form-field">
+      <mat-label>Kod kierunku</mat-label>
+      <input matInput type="text" placeholder="Kod kierunku" formControlName="code" required [readonly]="!isNew" />
+      <mat-error> Pole wymagane </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-form-field">
+      <mat-label>Nazwa</mat-label>
+      <input matInput type="text" placeholder="Nazwa" formControlName="name" required />
+      <mat-error> Pole wymagane </mat-error>
+    </mat-form-field>
+    <br />
+  </form>

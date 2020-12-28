@@ -3,6 +3,6 @@
     <ng-content></ng-content>
 </div>
 <div>
-<button (click)="onSave()">Zapisz</button>
+<button (click)="onSave()" [disabled]="!validForm">Zapisz</button>
 <button (click)="onRemove()" *ngIf="canDelete">Usuń</button>
 </div>

@@ -78,7 +78,6 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ROLES
   updateRoles(newRoles: string[]) {
     this.originalUser.roles = newRoles;
   }

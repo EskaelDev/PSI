@@ -3,6 +3,7 @@
     originalUser.userName ? originalUser.userName : 'Nowy użytkownik'
   "
   [canDelete]="originalUser.id !== guidEmpty"
+  [validForm]="userForm.valid"
   (save)="saveUser()"
   (remove)="removeUser()"
 >

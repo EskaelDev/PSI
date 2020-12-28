@@ -11,4 +11,4 @@
     (passwordReset)="resetPassword()"
   ></app-user-form>
 </app-element-edit>
-<app-user-roles></app-user-roles>
+<app-user-roles [userRoles]="originalUser.roles" (rolesSaved)="updateRoles($event)"></app-user-roles>

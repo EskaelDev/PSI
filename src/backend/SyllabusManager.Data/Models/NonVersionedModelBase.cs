@@ -12,5 +12,8 @@ namespace SyllabusManager.Data.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Code { get; set; }
         public bool IsDeleted { get; set; }
+
+        [NotMapped]
+        public string Id => Code;
     }
 }

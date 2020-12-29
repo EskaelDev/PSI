@@ -10,5 +10,6 @@ namespace SyllabusManager.Data.Models.User
         public List<SubjectTeacher> SubjectsTeachers { get; set; }
 
         public string Name { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

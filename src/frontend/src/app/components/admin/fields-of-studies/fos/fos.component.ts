@@ -32,6 +32,13 @@ export class FosComponent implements OnInit, OnDestroy {
     this.fosForm = this.fb.group({
       code: ['', Validators.required],
       name: ['', Validators.required],
+      language: ['', Validators.required],
+      level: ['', Validators.required],
+      type: ['', Validators.required],
+      profile: ['', Validators.required],
+      dyscypline: [''],
+      branchOfScience: [''],
+      supervisor: ['', Validators.required],
     });
   }
 
@@ -42,6 +49,13 @@ export class FosComponent implements OnInit, OnDestroy {
         this.fosForm.patchValue({
           code: fos.code,
           name: fos.name,
+          language: fos.language,
+          level: fos.level,
+          type: fos.type,
+          profile: fos.profile,
+          dyscypline: fos.discipline,
+          branchOfScience: fos.branchOfScience,
+          supervisor: fos.supervisor,
         });
       })
     );
@@ -54,9 +68,8 @@ export class FosComponent implements OnInit, OnDestroy {
   }
 
   saveFos() {
-    const editedFos = Object.assign([], this.originalFos);
-    editedFos.code = this.fosForm.get('code')?.value;
-    editedFos.name = this.fosForm.get('name')?.value;
+    let editedFos = Object.assign([], this.originalFos);
+    editedFos = Object.assign(editedFos, this.fosForm.value);
 
     this.fosService.saveFos(editedFos).subscribe((fos) => {
       this.messageHub.notifyFieldsOfStudiesChanged();

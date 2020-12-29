@@ -9,7 +9,7 @@ namespace SyllabusManager.API.Controllers.Abstract
     [ApiController]
     [Route("api/[controller]/[action]")]
 
-    public abstract class AbstractApiController : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
     }
 }

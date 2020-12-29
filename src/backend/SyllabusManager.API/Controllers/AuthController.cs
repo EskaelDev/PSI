@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace SyllabusManager.API.Controllers
 {
     [ApiController]
-    public class AuthController : AbstractApiController
+    public class AuthController : ApiController
     {
         private readonly IAuthService _authService;
         private readonly UserManager<SyllabusManagerUser> _userManager;

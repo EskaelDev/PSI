@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 using Serilog;
 using System.Text.Json;
 using SyllabusManager.API.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SyllabusManager.API
 {
@@ -55,8 +57,11 @@ namespace SyllabusManager.API
                 .AddDefaultTokenProviders();
 
 
-            InjectionHelper.Inject(services, Configuration);
-            
+
+            services.SetDB(Configuration);
+            services.SetServicesDI();
+            services.SetSettings(Configuration);
+            services.SetAuth(Configuration);
 
         }
 

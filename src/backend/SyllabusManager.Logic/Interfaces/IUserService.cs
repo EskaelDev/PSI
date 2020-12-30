@@ -1,18 +1,16 @@
-﻿using SyllabusManager.Data.Models.User;
-using System;
+﻿using SyllabusManager.Logic.Models.DTO;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.Logic.Interfaces
 {
     public interface IUserService
     {
-        Task<SyllabusManagerUser> AddAsync(SyllabusManagerUser user);
-        Task<List<SyllabusManagerUser>> GetAllAsync();
-        Task<SyllabusManagerUser> GetByEmailAsync(string email);
-        Task<SyllabusManagerUser> GetByIdAsync(string id);
-        Task<SyllabusManagerUser> UpdateAsync(SyllabusManagerUser user);
+        Task<UserDTO> AddAsync(UserDTO user);
+        Task<List<UserDTO>> GetAllAsync();
+        Task<UserDTO> GetByEmailAsync(string email);
+        Task<UserDTO> GetByIdAsync(string id);
+        Task<UserDTO> UpdateAsync(UserDTO user);
         Task<bool> DeleteAsync(string id);
     }
 }

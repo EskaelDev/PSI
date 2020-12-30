@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using SyllabusManager.API.Extensions;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Extensions;
+using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Models;
+using SyllabusManager.Logic.Models.DTO;
+using SyllabusManager.Logic.Settings;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,10 +16,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using SyllabusManager.Logic.Settings;
-using Serilog;
-using SyllabusManager.Logic.Interfaces;
-using SyllabusManager.API.Extensions;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -28,7 +30,7 @@ namespace SyllabusManager.Logic.Services
             _authOptions = authOptions;
         }
 
-        public async Task<IdentityResult> RegisterUser(RegistrationModel registrationModel)
+        public async Task<UserDTO> RegisterUser(RegistrationModel registrationModel)
         {
 
             Log.Information($"RegisterUser - attempting for: {registrationModel.Email}");
@@ -38,8 +40,11 @@ namespace SyllabusManager.Logic.Services
                 Name = $"{registrationModel.Name} {registrationModel.Surname}",
                 Email = registrationModel.Email
             };
+            await _userManager.CreateAsync(syllabusUser, registrationModel.Password);
+            await _userManager.AddToRolesAsync(syllabusUser, registrationModel.Roles);
+            List<string> roles = (await _userManager.GetRolesAsync(syllabusUser)).ToList();
 
-            return await _userManager.CreateAsync(syllabusUser, registrationModel.Password);
+            return syllabusUser.MakeDto(roles);
 
         }
 
@@ -47,8 +52,8 @@ namespace SyllabusManager.Logic.Services
         {
             Log.Information($"Login - attempting to log in for user {user.Email}");
 
-            var roles = await _userManager.GetRolesAsync(user);
-            var token = MakeToken(user, roles);
+            IList<string> roles = await _userManager.GetRolesAsync(user);
+            JwtSecurityToken token = MakeToken(user, roles);
             return await MakeUserCredentials(token, user);
 
 
@@ -56,8 +61,8 @@ namespace SyllabusManager.Logic.Services
 
         private JwtSecurityToken MakeToken(SyllabusManagerUser user, IList<string> roles)
         {
-            var claims = MakeClaims(user, roles);
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authOptions.Value.Secret));
+            List<Claim> claims = MakeClaims(user, roles);
+            SymmetricSecurityKey signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authOptions.Value.Secret));
 
             return new JwtSecurityToken(
                 expires: DateTime.UtcNow.AddMinutes(_authOptions.Value.Expiration),

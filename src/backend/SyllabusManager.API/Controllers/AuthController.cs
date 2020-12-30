@@ -5,9 +5,6 @@ using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers
@@ -24,13 +21,13 @@ namespace SyllabusManager.API.Controllers
             _userManager = userManager;
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegistrationModel registrationModel)
         {
-            var result = await _authService.RegisterUser(registrationModel);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, result.Errors);
+            Logic.Models.DTO.UserDTO result = await _authService.RegisterUser(registrationModel);
+            if (result == null)
+                return StatusCode(StatusCodes.Status500InternalServerError);
             return Ok();
         }
 

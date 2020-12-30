@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SyllabusManager.Data.Models;
-using SyllabusManager.Logic.Services;
 using SyllabusManager.Logic.Services.Abstract;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers.Abstract
@@ -20,9 +17,9 @@ namespace SyllabusManager.API.Controllers.Abstract
             _modelService = crudService;
         }
         [HttpPost]
-        public async virtual Task<IActionResult> Add([FromBody] T entity)
+        public virtual async Task<IActionResult> Add([FromBody] T entity)
         {
-            var result = await _modelService.AddAsync(entity);
+            T result = await _modelService.AddAsync(entity);
             if (result == null)
             {
                 return BadRequest();
@@ -32,9 +29,9 @@ namespace SyllabusManager.API.Controllers.Abstract
 
         [HttpGet]
         [Route("/{id}")]
-        public async virtual Task<IActionResult> ById(string id)
+        public virtual async Task<IActionResult> ById(string id)
         {
-            var result = await _modelService.GetByIdAsync(id);
+            T result = await _modelService.GetByIdAsync(id);
             if (result == null)
             {
                 return NotFound();
@@ -44,9 +41,9 @@ namespace SyllabusManager.API.Controllers.Abstract
 
 
         [HttpGet]
-        public async virtual Task<IActionResult> All(string id)
+        public virtual async Task<IActionResult> All(string id)
         {
-            var result = await _modelService.GetAllAsync();
+            List<T> result = await _modelService.GetAllAsync();
             if (result == null)
             {
                 return NotFound();

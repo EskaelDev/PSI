@@ -1,8 +1,6 @@
 ﻿using SyllabusManager.Data.Models.Subjects;
 using SyllabusManager.Data.Models.User;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SyllabusManager.Data.Models.ManyToMany
 {

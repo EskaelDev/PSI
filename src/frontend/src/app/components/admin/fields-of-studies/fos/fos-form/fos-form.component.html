@@ -95,7 +95,7 @@
         *ngFor="let supervisor of filteredSupervisors | async"
         [value]="supervisor"
       >
-        {{ supervisor.userName }}
+        {{ supervisor.name }}
       </mat-option>
     </mat-autocomplete>
     <mat-error> Pole wymagane </mat-error>

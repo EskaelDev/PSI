@@ -13,7 +13,7 @@ export class UserService {
   constructor(private readonly http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl); // not existing
+    return this.http.get<User[]>(this.baseUrl + '/all');
   }
 
   saveUser(user: User): Observable<User> {
@@ -21,10 +21,14 @@ export class UserService {
   }
 
   deleteUser(userId: string): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + `/${userId}`); // not existing
+    return this.http.delete<any>(this.baseUrl + `/delete/${userId}`);
   }
 
   resetPassword(userId: string): Observable<any> {
     return this.http.put<any>(this.baseUrl + `/${userId}`, null); // not existing
+  }
+
+  getPossibleSupervisors(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + '/possiblesupervisors'); // not existing
   }
 }

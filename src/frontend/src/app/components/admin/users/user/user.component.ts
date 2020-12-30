@@ -30,7 +30,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder
   ) {
     this.userForm = this.fb.group({
-      userName: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', Validators.required],
     });
   }
@@ -40,7 +40,7 @@ export class UserComponent implements OnInit, OnDestroy {
       this.messageHub.selectedUser.subscribe((user) => {
         this.originalUser = user;
         this.userForm.patchValue({
-          userName: user.userName,
+          name: user.name,
           email: user.email
         });
       })
@@ -57,7 +57,7 @@ export class UserComponent implements OnInit, OnDestroy {
   saveUser() {
     const editedUser = Object.assign([], this.originalUser);
     editedUser.email = this.userForm.get('email')?.value;
-    editedUser.userName = this.userForm.get('userName')?.value;
+    editedUser.name = this.userForm.get('name')?.value;
 
     this.userService.saveUser(editedUser).subscribe((user) => {
       this.messageHub.notifyUsersChanged();

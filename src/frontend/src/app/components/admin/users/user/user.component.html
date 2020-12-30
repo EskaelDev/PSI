@@ -1,6 +1,6 @@
 <app-element-edit
   [elementName]="
-    originalUser.userName ? originalUser.userName : 'Nowy użytkownik'
+    originalUser.name ? originalUser.name : 'Nowy użytkownik'
   "
   [canDelete]="originalUser.id !== guidEmpty"
   [validForm]="userForm.valid"

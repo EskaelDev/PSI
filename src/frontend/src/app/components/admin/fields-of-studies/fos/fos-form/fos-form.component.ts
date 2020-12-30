@@ -39,15 +39,15 @@ export class FosFormComponent implements OnInit {
   private _filter(value: any): User[] {
     const filterValue =
       value instanceof User
-        ? value.userName.toLowerCase()
+        ? value.name.toLowerCase()
         : value.toLowerCase();
 
     return this.supervisors.filter((supervisor) =>
-      supervisor.userName.toLowerCase().includes(filterValue)
+      supervisor.name.toLowerCase().includes(filterValue)
     );
   }
 
   displayUser(user?: User): string {
-    return user ? user.userName : '';
+    return user ? user.name : '';
   }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SyllabusManager.Data;
+using SyllabusManager.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +8,20 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyllabusManager.Logic.Services
+namespace SyllabusManager.Logic.Services.Abstract
 {
-    public abstract class AbstractCrudService<T> where T : class
+    public abstract class ModelBaseService<T> where T : ModelBase
     {
         private readonly SyllabusManagerDbContext _dbContext;
         private readonly DbSet<T> _dbSet;
 
-        public AbstractCrudService(SyllabusManagerDbContext dbContext)
+        public ModelBaseService(SyllabusManagerDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _dbSet = _dbContext.Set<T>();
         }
 
-        public virtual async Task<List<T>> GetAll()
+        public virtual async Task<List<T>> GetAllAsync()
         {
             return await _dbSet.AsNoTracking().ToListAsync();
         }
@@ -41,15 +42,32 @@ namespace SyllabusManager.Logic.Services
             return await _dbSet.Where(predicate).ToListAsync();
         }
 
-        public async Task<T> FindAsync(params object[] keys)
+        public virtual async Task<T> FindAsync(params object[] keys)
         {
             return await _dbSet.FindAsync(keys);
         }
 
-        public virtual async Task AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
-            if(entity.Id)
             await _dbSet.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
+        }
+        public virtual async Task<T> GetByIdAsync(string id)
+        {
+            return await _dbSet.Where(e => e.Id.ToString() == id).FirstOrDefaultAsync();
+        }
+
+        public virtual async Task<T> Update(T entity)
+        {
+            T dbEntity = await _dbSet.FindAsync(entity.Id);
+            if (dbEntity == null)
+            {
+                return null;
+            }
+            _dbContext.Entry(dbEntity).CurrentValues.SetValues(entity);
+            await _dbContext.SaveChangesAsync();
+            return dbEntity;
         }
     }
 }

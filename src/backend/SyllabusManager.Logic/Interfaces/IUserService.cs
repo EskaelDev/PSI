@@ -10,7 +10,7 @@ namespace SyllabusManager.Logic.Interfaces
         Task<List<UserDTO>> GetAllAsync();
         Task<UserDTO> GetByEmailAsync(string email);
         Task<UserDTO> GetByIdAsync(string id);
-        Task<UserDTO> UpdateAsync(UserDTO user);
+        Task<UserDTO> AddOrUpdateAsync(UserDTO user);
         Task<bool> DeleteAsync(string id);
     }
 }

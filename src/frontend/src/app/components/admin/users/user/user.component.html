@@ -8,8 +8,11 @@
   (remove)="removeUser()"
 >
   <app-user-form
+  [isNew]="!originalUser.name"
     [userForm]="userForm"
     (passwordReset)="resetPassword()"
   ></app-user-form>
+  <app-user-tags [roles]="originalUser.roles" [isEditing]="isEditRoles" (editRoles)="openEditRolesWindow()">
+  </app-user-tags>
 </app-element-edit>
-<app-user-roles [userRoles]="originalUser.roles" (rolesSaved)="updateRoles($event)"></app-user-roles>
+<app-user-roles *ngIf="isEditRoles" [userRoles]="originalUser.roles" (rolesSaved)="updateRoles($event)"></app-user-roles>

@@ -9,5 +9,5 @@
       <mat-error> Pole wymagane </mat-error>
     </mat-form-field>
     <br />
-    <button (click)="resetPassword()">Zresetuj hasło</button>
+    <button *ngIf="!isNew" (click)="resetPassword()">Zresetuj hasło</button>
   </form>

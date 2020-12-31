@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,18 +10,48 @@ using SyllabusManager.Data.ProviderContexts;
 using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Services;
 using System;
+using System.Threading.Tasks;
+using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.API.Helpers
 {
     public static class IServiceCollectionExtension
     {
-        //public static void Inject(IServiceCollection services, IConfiguration configuration)
-        //{
-        //    SetDB(services, configuration);
-        //    SetSettings(services, configuration);
-        //    SetServicesDI(services);
+        public static async Task SetRolesAndAccounts(this IServiceCollection services)
+        {
+            var serviceProvider = services.BuildServiceProvider();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<SyllabusManagerUser>>();
+            string[] roleNames = { "Admin", "Teacher", "StudentGovernment" };
 
-        //}
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            var admin = new SyllabusManagerUser()
+            {
+                Name = "admin",
+                UserName = "admin",
+                Email = "admin@pwr.pl",
+            };
+
+            const string adminPassword = "S4#SAX@2WqS?mkr&";
+            var user = await userManager.FindByEmailAsync(admin.Email);
+
+            if (user == null)
+            {
+                var result = await userManager.CreateAsync(admin, adminPassword);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(admin, "Admin");
+                }
+            }
+        }
 
         public static void SetDB(this IServiceCollection services, IConfiguration configuration)
         {

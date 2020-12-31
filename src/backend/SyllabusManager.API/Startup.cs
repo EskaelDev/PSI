@@ -25,7 +25,7 @@ namespace SyllabusManager.API
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public async void ConfigureServices(IServiceCollection services)
         {
             // cors
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
@@ -49,13 +49,11 @@ namespace SyllabusManager.API
                 .AddEntityFrameworkStores<SyllabusManagerDbContext>()
                 .AddDefaultTokenProviders();
 
-
-
             services.SetDB(Configuration);
             services.SetServicesDI();
             services.SetSettings(Configuration);
             services.SetAuth(Configuration);
-
+            await services.SetRolesAndAccounts();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

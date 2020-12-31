@@ -68,10 +68,9 @@ export class FosComponent implements OnInit, OnDestroy {
   }
 
   saveFos() {
-    let editedFos = Object.assign([], this.originalFos);
-    editedFos = Object.assign(editedFos, this.fosForm.value);
+    const editedFos = Object.assign(this.originalFos, this.fosForm.value);
 
-    this.fosService.saveFos(editedFos).subscribe((fos) => {
+    this.fosService.saveFos(editedFos).subscribe(() => {
       this.messageHub.notifyFieldsOfStudiesChanged();
       this.alerts.showCustomSuccessMessage('Zmiany zapisane');
     });

@@ -16,6 +16,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class UserComponent implements OnInit, OnDestroy {
   subscribtions: Subscription[] = [];
   guidEmpty = AppConsts.EMPTY_ID;
+  isEditRoles = false;
 
   originalUser: User = new User();
 
@@ -53,13 +54,9 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
-  // USER
   saveUser() {
-    const editedUser = Object.assign([], this.originalUser);
-    editedUser.email = this.userForm.get('email')?.value;
-    editedUser.name = this.userForm.get('name')?.value;
-
-    this.userService.saveUser(editedUser).subscribe((user) => {
+    const editedUser = Object.assign(this.originalUser, this.userForm.value);
+    this.userService.saveUser(editedUser).subscribe(() => {
       this.messageHub.notifyUsersChanged();
       this.alerts.showCustomSuccessMessage('Zmiany zapisane');
     });
@@ -78,7 +75,12 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
+  openEditRolesWindow() {
+    this.isEditRoles = true;
+  }
+
   updateRoles(newRoles: string[]) {
     this.originalUser.roles = newRoles;
+    this.isEditRoles = false;
   }
 }

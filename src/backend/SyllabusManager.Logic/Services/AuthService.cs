@@ -92,7 +92,7 @@ namespace SyllabusManager.Logic.Services
                 Account = new AccountModel()
                 {
                     Id = user.Id,
-                    UserName = user.Name,
+                    Name = user.Name,
                     Email = user.Email,
                     Roles = await _userManager.GetRolesAsync(user)
                 }

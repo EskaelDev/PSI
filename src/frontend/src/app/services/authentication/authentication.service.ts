@@ -6,7 +6,6 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { UserCredentials } from 'src/app/core/models/user/user-credentials';
 import { User } from 'src/app/core/models/user/user';
 import { UserContext } from 'src/app/core/models/user/user-context';
-import { NewUser } from 'src/app/core/models/user/new-user';
 import { MessageHubService } from 'src/app/services/message-hub/message-hub.service';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { environment } from 'src/environments/environment';
@@ -50,21 +49,6 @@ export class AuthenticationService {
     this.showSessionExpiredMessage();
   }
 
-  register(newuser: NewUser): Observable<any> {
-    return this.http
-      .post<any>(this.baseUrl + '/register', newuser)
-      .pipe(
-        map((response) => {
-          this.showRegisterSuccessMessage();
-          return response;
-        }),
-        catchError((err) => {
-          this.showRegisterErrorMessage(err);
-          return throwError(err);
-        })
-      );
-  }
-
   public loadLoggedInUser(): void {
     const user = this.tokenStorage.getUser();
     if (user) {
@@ -99,14 +83,6 @@ export class AuthenticationService {
     } else {
       this.alerts.showDefaultErrorMessage();
     }
-  }
-
-  private showRegisterSuccessMessage() {
-    this.alerts.showCustomSuccessMessage('Konto utworzone');
-  }
-
-  private showRegisterErrorMessage(err: any) {
-    this.alerts.showDefaultErrorMessage();
   }
 
   private showLogoutSuccessMessage() {

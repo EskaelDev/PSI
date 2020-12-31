@@ -13,7 +13,7 @@ namespace SyllabusManager.Logic.Extensions
                 Email = syllabusUser.Email,
                 Id = syllabusUser.Id,
                 Roles = roles,
-                UserName = syllabusUser.UserName
+                Name = syllabusUser.Name
 
             };
         }

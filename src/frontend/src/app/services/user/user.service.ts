@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/core/models/user/user';
@@ -17,7 +17,7 @@ export class UserService {
   }
 
   saveUser(user: User): Observable<User> {
-    return this.http.post<User>(this.baseUrl, user); // not existing
+    return this.http.post<User>(this.baseUrl + '/save', user);
   }
 
   deleteUser(userId: string): Observable<any> {
@@ -25,7 +25,7 @@ export class UserService {
   }
 
   resetPassword(userId: string): Observable<any> {
-    return this.http.put<any>(this.baseUrl + `/${userId}`, null); // not existing
+    return this.http.put<any>(this.baseUrl + `/resetpassword/${userId}`, null);
   }
 
   getPossibleSupervisors(): Observable<User[]> {

@@ -11,6 +11,7 @@ export class UserFormComponent implements OnInit {
   constructor() { }
 
   @Input() userForm: FormGroup = new FormGroup({});
+  @Input() isNew: boolean = true;
   @Output() passwordReset: EventEmitter<any> = new EventEmitter();
 
   ngOnInit(): void {

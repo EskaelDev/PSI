@@ -10,5 +10,5 @@
     </mat-form-field>
   </div>
   <button (click)="assignRole()">Add</button>
-  <div *ngFor="let userRole of editableRoles"><div>{{userRole}}<mat-icon (click)="unassignRole(userRole)">close</mat-icon></div></div>
+  <div *ngFor="let userRole of editableRoles"><div>{{"roles." + userRole | translate}}<mat-icon (click)="unassignRole(userRole)">close</mat-icon></div></div>
   <button (click)="saveRoles()">save</button>

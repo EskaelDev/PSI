@@ -13,9 +13,10 @@ import { FosComponent } from './fields-of-studies/fos/fos.component';
 import { FosFormComponent } from './fields-of-studies/fos/fos-form/fos-form.component';
 import { FosSpecializationsComponent } from './fields-of-studies/fos/fos-specializations/fos-specializations.component';
 import { UserTagsComponent } from './users/user/user-tags/user-tags.component';
+import { FosTagsComponent } from './fields-of-studies/fos/fos-tags/fos-tags.component';
 
 @NgModule({
-  declarations: [UsersComponent, UsersListComponent, UserComponent, UserFormComponent, AdministrationComponent, UserRolesComponent, FieldsOfStudiesComponent, FosListComponent, FosComponent, FosFormComponent, FosSpecializationsComponent, UserTagsComponent],
+  declarations: [UsersComponent, UsersListComponent, UserComponent, UserFormComponent, AdministrationComponent, UserRolesComponent, FieldsOfStudiesComponent, FosListComponent, FosComponent, FosFormComponent, FosSpecializationsComponent, UserTagsComponent, FosTagsComponent],
   imports: [SharedModule, SharedComponentsModule],
 })
 export class AdminModule {}

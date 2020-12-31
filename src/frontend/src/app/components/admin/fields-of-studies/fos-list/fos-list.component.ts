@@ -74,8 +74,4 @@ export class FosListComponent implements OnInit, OnDestroy {
   getElements(users: FieldOfStudy[]): ListElement[] {
     return users.map(u => new ListElement(u.code, u.name ?? ''));
   }
-
-  goBack() {
-    this.route.navigate(["/administration"]);
-  }
 }

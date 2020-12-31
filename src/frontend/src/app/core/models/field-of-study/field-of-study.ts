@@ -12,7 +12,7 @@ export class FieldOfStudy extends NonVersionedModelBase {
     profile: StudiesProfile = StudiesProfile.Academic;
     branchOfScience?: string;
     discipline?: string;
-    faculty = '';
+    faculty = 'Informatyka i Zarządzanie';
     type: CourseType = CourseType.FullTime;
     language: MainLanguage = MainLanguage.Polish;
     supervisor?: User;

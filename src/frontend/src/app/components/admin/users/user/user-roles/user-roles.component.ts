@@ -23,7 +23,7 @@ export class UserRolesComponent implements OnInit {
   }
 
   assignRole() {
-    if (this.selectedRole && !this.editableRoles.find(r => r == this.selectedRole?.toString())) {
+    if (!this.editableRoles.find(r => r == this.selectedRole?.toString())) {
       this.editableRoles.push(this.selectedRole?.toString() ?? '');
     }
   }

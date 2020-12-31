@@ -41,7 +41,7 @@ export class FosSpecializationsComponent implements OnInit {
     });
   }
 
-  addSpec() {
+  clearSpec() {
     this.editSpec(new Specialization());
   }
 
@@ -58,7 +58,7 @@ export class FosSpecializationsComponent implements OnInit {
       this.selectedSpec.code = this.specializationForm.get('code')?.value;
       this.editableSpecs.push(this.selectedSpec);
     }
-    this.addSpec();
+    this.clearSpec();
   }
 
   saveSpecs() {

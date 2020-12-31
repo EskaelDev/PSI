@@ -9,7 +9,10 @@
 >
   <app-fos-form
     [fosForm]="fosForm"
+    [supervisors]="supervisors"
     [isNew]="originalFos.code.length === 0"
   ></app-fos-form>
+  <app-fos-tags [specs]="originalFos.specializations" [isEditing]="isEditSpecs" (editSpecs)="openEditSpecsWindow()">
+  </app-fos-tags>
 </app-element-edit>
-<app-fos-specializations [fosSpecs]="originalFos.specializations" (specsSaved)="updateSpecs($event)"></app-fos-specializations>
+<app-fos-specializations *ngIf="isEditSpecs" [fosSpecs]="originalFos.specializations" (specsSaved)="updateSpecs($event)"></app-fos-specializations>

@@ -74,8 +74,4 @@ export class UsersListComponent {
   getElements(users: User[]): ListElement[] {
     return users.map(u => new ListElement(u.id, u.name));
   }
-
-  goBack() {
-    this.route.navigate(["/administration"]);
-  }
 }

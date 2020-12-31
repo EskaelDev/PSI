@@ -22,7 +22,7 @@ export class FosFormComponent implements OnInit {
   types = Object.values(CourseType);
   profiles = Object.values(StudiesProfile);
 
-  supervisors: User[] = [];
+  @Input() supervisors: User[] = [];
   filteredSupervisors: Observable<User[]> = new Observable();
 
   constructor() {}

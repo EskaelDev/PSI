@@ -10,5 +10,6 @@ namespace SyllabusManager.Data.Models.User
 
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
+        public ICollection<SyllabusManagerUserRole> UserRoles { get; set; }
     }
 }

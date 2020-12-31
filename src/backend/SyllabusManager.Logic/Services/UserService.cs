@@ -4,6 +4,7 @@ using SyllabusManager.Data;
 using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Extensions;
 using SyllabusManager.Logic.Interfaces;
+using SyllabusManager.Logic.Models;
 using SyllabusManager.Logic.Models.DTO;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,22 @@ namespace SyllabusManager.Logic.Services
             dbUser.IsDeleted = true;
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<UserDTO>> GetByRoleAsync(string role)
+        {
+
+            List<SyllabusManagerUser> dbUsers = await _userManager.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).Where(u => u.UserRoles.Any(r => r.Role.Name == role)).ToListAsync();
+
+            List<UserDTO> userDtos = new List<UserDTO>();
+            dbUsers.ForEach(u => userDtos.Add(u.MakeDto(new List<string> { role })));
+
+            return userDtos;
+        }
+
+        public async Task<List<UserDTO>> GetTeachers()
+        {
+            return await GetByRoleAsync(UsersRoles.Teacher);
         }
     }
 }

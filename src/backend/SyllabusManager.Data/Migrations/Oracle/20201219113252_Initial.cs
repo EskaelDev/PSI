@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Oracle.EntityFrameworkCore.Metadata;
+using System;
 
 namespace SyllabusManager.Data.Migrations.Oracle
 {

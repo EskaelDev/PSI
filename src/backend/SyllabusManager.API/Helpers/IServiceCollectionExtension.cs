@@ -6,12 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SyllabusManager.Data;
+using SyllabusManager.Data.Models.User;
 using SyllabusManager.Data.ProviderContexts;
 using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Services;
 using System;
 using System.Threading.Tasks;
-using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.API.Helpers
 {
@@ -19,21 +19,21 @@ namespace SyllabusManager.API.Helpers
     {
         public static async Task SetRolesAndAccounts(this IServiceCollection services)
         {
-            var serviceProvider = services.BuildServiceProvider();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<SyllabusManagerUser>>();
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
+            RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            UserManager<SyllabusManagerUser> userManager = serviceProvider.GetRequiredService<UserManager<SyllabusManagerUser>>();
             string[] roleNames = { "Admin", "Teacher", "StudentGovernment" };
 
-            foreach (var roleName in roleNames)
+            foreach (string roleName in roleNames)
             {
-                var roleExist = await roleManager.RoleExistsAsync(roleName);
+                bool roleExist = await roleManager.RoleExistsAsync(roleName);
                 if (!roleExist)
                 {
                     await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
 
-            var admin = new SyllabusManagerUser()
+            SyllabusManagerUser admin = new SyllabusManagerUser()
             {
                 Name = "admin",
                 UserName = "admin",
@@ -41,11 +41,11 @@ namespace SyllabusManager.API.Helpers
             };
 
             const string adminPassword = "S4#SAX@2WqS?mkr&";
-            var user = await userManager.FindByEmailAsync(admin.Email);
+            SyllabusManagerUser user = await userManager.FindByEmailAsync(admin.Email);
 
             if (user == null)
             {
-                var result = await userManager.CreateAsync(admin, adminPassword);
+                IdentityResult result = await userManager.CreateAsync(admin, adminPassword);
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(admin, "Admin");

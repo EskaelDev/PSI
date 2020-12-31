@@ -48,7 +48,7 @@ namespace SyllabusManager.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] User user)
         {
-            var result = await _userService.AddOrUpdateAsync(user);
+            User result = await _userService.AddOrUpdateAsync(user);
             if (result == null)
                 return BadRequest();
             return Ok(result);

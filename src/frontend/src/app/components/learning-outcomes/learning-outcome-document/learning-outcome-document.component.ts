@@ -14,6 +14,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
   title = 'efektów uczenia się';
 
   learningOutcomeDocument: LearningOutcomeDocument = new LearningOutcomeDocument();
+  year: string = '';
   
   constructor(private readonly route: ActivatedRoute,
     private readonly router: Router,
@@ -21,7 +22,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.snapshot.paramMap.get('fosId');
-    decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
+    this.year = decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
   }
 
   save() {

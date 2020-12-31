@@ -9,6 +9,7 @@ import { ControlButtonsPanelComponent } from './document/control-buttons-panel/c
 import { DocumentComponent } from './document/document.component';
 import { FosYearPopupPickerComponent } from './document/fos-year-popup-picker/fos-year-popup-picker.component';
 import { HistoryPopupComponent } from './document/history-popup/history-popup.component';
+import { FosDetailsElementComponent } from './document/fos-details/fos-details-element/fos-details-element.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HistoryPopupComponent } from './document/history-popup/history-popup.co
     DocumentComponent,
     FosYearPopupPickerComponent,
     HistoryPopupComponent,
+    FosDetailsElementComponent,
   ],
   imports: [SharedModule],
   exports: [

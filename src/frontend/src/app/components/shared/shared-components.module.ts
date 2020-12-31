@@ -7,6 +7,8 @@ import { FosYearPickerComponent } from './document/fos-year-picker/fos-year-pick
 import { FosDetailsComponent } from './document/fos-details/fos-details.component';
 import { ControlButtonsPanelComponent } from './document/control-buttons-panel/control-buttons-panel.component';
 import { DocumentComponent } from './document/document.component';
+import { FosYearPopupPickerComponent } from './document/fos-year-popup-picker/fos-year-popup-picker.component';
+import { HistoryPopupComponent } from './document/history-popup/history-popup.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { DocumentComponent } from './document/document.component';
     FosDetailsComponent,
     ControlButtonsPanelComponent,
     DocumentComponent,
+    FosYearPopupPickerComponent,
+    HistoryPopupComponent,
   ],
   imports: [SharedModule],
   exports: [
@@ -27,6 +31,12 @@ import { DocumentComponent } from './document/document.component';
     FosDetailsComponent,
     ControlButtonsPanelComponent,
     DocumentComponent,
+    FosYearPopupPickerComponent,
+    HistoryPopupComponent,
   ],
+  entryComponents: [
+    FosYearPopupPickerComponent,
+    HistoryPopupComponent
+  ]
 })
 export class SharedComponentsModule {}

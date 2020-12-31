@@ -10,10 +10,13 @@ import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-st
 export class FosYearPickerComponent implements OnInit {
 
   @Input() title: string = '';
+  @Input() visibleButtons: boolean = true;
   fieldsOfStudy: FieldOfStudy[] = [];
   years: string[] = ['2015/2016', '2016/2017', '2017/2018', '2018/2019', '2019/2020', '2020/2021', '2021/2022'];
   @Output() downloadDoc: EventEmitter<any> = new EventEmitter();
   @Output() editDoc: EventEmitter<any> = new EventEmitter();
+  @Output() selectFos: EventEmitter<FieldOfStudy | null> = new EventEmitter();
+  @Output() selectYear: EventEmitter<string | null> = new EventEmitter();
 
   selectedFos: FieldOfStudy | null = null;
   selectedYear: string | null = null;

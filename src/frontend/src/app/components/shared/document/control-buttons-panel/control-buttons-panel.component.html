@@ -1,1 +1,9 @@
-<p>control-buttons-panel works!</p>
+<div fxLayoutAlign="space-between" fxLayoutGap="20px">
+  <button (click)="save.emit()">Zapisz</button>
+  <button (click)="saveAs.emit()">Zapisz jako</button>
+  <button (click)="import.emit()">Importuj z</button>
+  <button (click)="close.emit()">Zamknij</button>
+  <button (click)="delete.emit()">Usuń</button>
+  <button (click)="pdf.emit()">PDF</button>
+  <button (click)="history.emit()">Historia</button>
+</div>

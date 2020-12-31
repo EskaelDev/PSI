@@ -9,6 +9,10 @@ import { LogoutComponent } from './components/authentication/logout/logout.compo
 import { HomeComponent } from './components/home/home/home.component';
 import { NoAccessComponent } from './components/home/no-access/no-access.component';
 import { NotFoundComponent } from './components/home/not-found/not-found.component';
+import { LearningOutcomeDocumentComponent } from './components/learning-outcomes/learning-outcome-document/learning-outcome-document.component';
+import { LearningOutcomePickerComponent } from './components/learning-outcomes/learning-outcome-picker/learning-outcome-picker.component';
+import { SyllabusDocumentComponent } from './components/syllabuses/syllabus-document/syllabus-document.component';
+import { SyllabusPickerComponent } from './components/syllabuses/syllabus-picker/syllabus-picker.component';
 import { AuthGuard } from './interceptors/auth.guard';
 
 const routes: Routes = [
@@ -67,6 +71,62 @@ const routes: Routes = [
           }
         }
       }
+    ]
+  },
+  {
+    path: 'syllabus',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'choose',
+        component: SyllabusPickerComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: ['Admin', 'Teacher'],
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+      {
+        path: 'document/:id',
+        component: SyllabusDocumentComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: ['Admin', 'Teacher'],
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+    ]
+  },
+  {
+    path: 'learning-outcome',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'choose',
+        component: LearningOutcomePickerComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: ['Admin', 'Teacher'],
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+      {
+        path: 'document/:id',
+        component: LearningOutcomeDocumentComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: ['Admin', 'Teacher'],
+            redirectTo: '/noaccess'
+          }
+        }
+      },
     ]
   },
   {

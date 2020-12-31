@@ -5,17 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using SyllabusManager.API.Helpers;
 using SyllabusManager.Data;
 using SyllabusManager.Data.Models.User;
-using SyllabusManager.Data.ProviderContexts;
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using Serilog;
-using System.Text.Json;
-using SyllabusManager.API.Helpers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 namespace SyllabusManager.API
 {

@@ -1,69 +1,96 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SyllabusManager.Data;
+using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Extensions;
 using SyllabusManager.Logic.Interfaces;
+using SyllabusManager.Logic.Models.DTO;
 using System;
-using System.Threading.Tasks;
-using System.Linq;
-using User = SyllabusManager.Data.Models.User.SyllabusManagerUser;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SyllabusManager.Logic.Services
 {
     public class UserService : IUserService
     {
+        private readonly UserManager<SyllabusManagerUser> _userManager;
         private readonly SyllabusManagerDbContext _dbContext;
-        private readonly DbSet<User> _dbSet;
+        private readonly DbSet<SyllabusManagerUser> _dbSet;
 
-        public UserService(SyllabusManagerDbContext dbContext)
+        public UserService(UserManager<SyllabusManagerUser> userManager, SyllabusManagerDbContext dbContext)
         {
+            _userManager = userManager;
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _dbSet = _dbContext.Set<User>();
+            _dbSet = _dbContext.Set<SyllabusManagerUser>();
         }
 
-        public async Task<User> GetByIdAsync(string id)
+        public async Task<UserDTO> GetByIdAsync(string id)
         {
-            return await _dbSet.Where(u => u.Id == id).FirstOrDefaultAsync();
+            SyllabusManagerUser syllabusUser = await _dbSet.Where(u => u.Id == id).FirstOrDefaultAsync();
+            List<string> roles = (await _userManager.GetRolesAsync(syllabusUser)).ToList();
+            return syllabusUser.MakeDto(roles);
         }
 
-        public async Task<User> GetByEmailAsync(string email)
+        public async Task<UserDTO> GetByEmailAsync(string email)
         {
-            return await _dbSet.Where(u => u.NormalizedEmail == email.ToUpper()).FirstOrDefaultAsync();
+            SyllabusManagerUser syllabusUser = await _dbSet.Where(u => u.Email.ToUpper() == email.ToUpper()).FirstOrDefaultAsync();
+            List<string> roles = (await _userManager.GetRolesAsync(syllabusUser)).ToList();
+            return syllabusUser?.MakeDto(roles);
         }
 
-        public async Task<User> UpdateAsync(User user)
+        public async Task<UserDTO> UpdateAsync(UserDTO user)
         {
             // ToDo: remove roles from dbUser
-            User dbUser = await _dbSet.FindAsync(user.Id);
+            SyllabusManagerUser dbUser = await _dbSet.FindAsync(user.Id);
             if (dbUser == null)
             {
                 return null;
             }
+            List<string> roles = (await _userManager.GetRolesAsync(dbUser)).ToList();
+            await _userManager.RemoveFromRolesAsync(dbUser, roles);
+            await _userManager.AddToRolesAsync(dbUser, user.Roles);
+
             _dbContext.Entry(dbUser).CurrentValues.SetValues(user);
+
             await _dbContext.SaveChangesAsync();
-            return dbUser;
+
+            roles = (await _userManager.GetRolesAsync(dbUser)).ToList();
+            return dbUser.MakeDto(roles);
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<UserDTO>> GetAllAsync()
         {
-            return await _dbSet.Where(u => !u.IsDeleted).AsNoTracking().ToListAsync();
+            List<SyllabusManagerUser> dbUsers = await _dbSet.Where(u => !u.IsDeleted).AsNoTracking().ToListAsync();
+            List<UserDTO> users = new List<UserDTO>();
+            foreach (SyllabusManagerUser dbuser in dbUsers)
+            {
+                users.Add(dbuser.MakeDto((await _userManager.GetRolesAsync(dbuser)).ToList()));
+            }
+            return users;
         }
 
-        public async Task<User> AddAsync(User user)
+        public async Task<UserDTO> AddAsync(UserDTO user)
         {
-            user.IsDeleted = false;
-            User dbUser = await GetByEmailAsync(user.Email);
+
+            UserDTO dbUser = await GetByEmailAsync(user.Email);
             if (dbUser != null)
             {
                 return null;
             }
-            await _dbSet.AddAsync(user);
+            SyllabusManagerUser syllabusUser = user.MakeSyllabusManagerUser();
+            await _dbSet.AddAsync(syllabusUser);
+            await _userManager.AddToRolesAsync(syllabusUser, user.Roles);
             await _dbContext.SaveChangesAsync();
-            return user;
+
+            List<string> roles = (await _userManager.GetRolesAsync(syllabusUser)).ToList();
+
+            return syllabusUser.MakeDto(roles);
         }
 
         public async Task<bool> DeleteAsync(string id)
         {
-            User dbUser = await _dbSet.FindAsync(id);
+            SyllabusManagerUser dbUser = await _dbSet.FindAsync(id);
             if (dbUser == null)
             {
                 return false;

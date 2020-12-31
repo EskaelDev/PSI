@@ -9,9 +9,6 @@ using SyllabusManager.Data.ProviderContexts;
 using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Helpers
 {
@@ -75,7 +72,8 @@ namespace SyllabusManager.API.Helpers
                    };
                });
 
-            services.AddAuthorization(options => {
+            services.AddAuthorization(options =>
+            {
                 options.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()

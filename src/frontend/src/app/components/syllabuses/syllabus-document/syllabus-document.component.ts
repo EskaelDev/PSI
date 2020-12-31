@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-syllabus-document',
@@ -8,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class SyllabusDocumentComponent implements OnInit {
   title = 'programu studiów';
 
-  constructor() { }
+  constructor(private readonly route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.snapshot.paramMap.get('fosId');
+    decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
   }
 
 }

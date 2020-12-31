@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Route } from '@angular/router';
 
 @Component({
   selector: 'app-learning-outcome-document',
@@ -8,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class LearningOutcomeDocumentComponent implements OnInit {
   title = 'efektów uczenia się';
 
-  constructor() { }
+  constructor(private readonly route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.snapshot.paramMap.get('fosId');
+    decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
   }
 
 }

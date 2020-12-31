@@ -16,6 +16,10 @@ export class FieldOfStudyService {
     return this.http.get<FieldOfStudy[]>(this.baseUrl); // not existing
   }
 
+  getMyFieldsOfStudies(): Observable<FieldOfStudy[]> {
+    return this.http.get<FieldOfStudy[]>(this.baseUrl); // not existing
+  }
+
   saveFos(fos: FieldOfStudy): Observable<FieldOfStudy> {
     return this.http.post<FieldOfStudy>(this.baseUrl, fos); // not existing
   }

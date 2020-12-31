@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-syllabus-picker',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./syllabus-picker.component.scss']
 })
 export class SyllabusPickerComponent implements OnInit {
+  title = 'program studiów';
 
-  constructor() { }
+  constructor(private readonly router: Router) { }
 
   ngOnInit(): void {
   }
 
+  download(choice: any) {
+    choice.fos;
+    choice.year;
+  }
+
+  edit(choice: any) {
+    this.router.navigate([`/syllabus/document/${choice.fos.id}/${encodeURIComponent(choice.year)}`]);
+  }
 }

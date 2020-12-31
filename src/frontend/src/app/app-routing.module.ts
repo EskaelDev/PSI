@@ -89,7 +89,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'document/:id',
+        path: 'document/:fosId/:year',
         component: SyllabusDocumentComponent,
         canActivate: [NgxPermissionsGuard],
         data: {
@@ -117,7 +117,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'document/:id',
+        path: 'document/:fosId/:year',
         component: LearningOutcomeDocumentComponent,
         canActivate: [NgxPermissionsGuard],
         data: {

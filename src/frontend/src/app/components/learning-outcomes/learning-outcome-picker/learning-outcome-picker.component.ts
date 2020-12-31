@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-learning-outcome-picker',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./learning-outcome-picker.component.scss']
 })
 export class LearningOutcomePickerComponent implements OnInit {
+  title = 'efekty uczenia się';
 
-  constructor() { }
+  constructor(private readonly router: Router) { }
 
   ngOnInit(): void {
   }
 
+  download(choice: any) {
+    choice.fos;
+    choice.year;
+  }
+
+  edit(choice: any) {
+    this.router.navigate([`/learning-outcome/document/${choice.fos.id}/${encodeURIComponent(choice.year)}`]);
+  }
 }

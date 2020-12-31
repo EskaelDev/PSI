@@ -10,13 +10,9 @@ import { NoAccessComponent } from './no-access/no-access.component';
     HomeComponent,
     NavbarComponent,
     NotFoundComponent,
-    NoAccessComponent
+    NoAccessComponent,
   ],
-  imports: [
-    SharedModule
-  ],
-  exports: [
-    NavbarComponent
-  ]
+  imports: [SharedModule],
+  exports: [NavbarComponent],
 })
-export class HomeModule { }
+export class HomeModule {}

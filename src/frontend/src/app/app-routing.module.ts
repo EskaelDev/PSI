@@ -17,18 +17,22 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full',
   },
-  { 
-    path: 'login', component: LoginComponent
+  {
+    path: 'login',
+    component: LoginComponent,
   },
-  { 
-    path: 'logout', component: LogoutComponent
+  {
+    path: 'logout',
+    component: LogoutComponent,
   },
-  { 
-    path: 'home', component: HomeComponent,
-    canActivate: [AuthGuard]
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard],
   },
-  { 
-    path: 'administration', component: AdministrationComponent,
+  {
+    path: 'administration',
+    component: AdministrationComponent,
     //canActivate: [NgxPermissionsGuard],
     //data: {
     //  permissions: {
@@ -37,8 +41,9 @@ const routes: Routes = [
     //  }
     //}
   },
-  { 
-    path: 'manage-users', component: UsersComponent,
+  {
+    path: 'manage-users',
+    component: UsersComponent,
     //canActivate: [NgxPermissionsGuard],
     //data: {
     //  permissions: {
@@ -47,8 +52,9 @@ const routes: Routes = [
     //  }
     //}
   },
-  { 
-    path: 'manage-fields-of-studies', component: FieldsOfStudiesComponent,
+  {
+    path: 'manage-fields-of-studies',
+    component: FieldsOfStudiesComponent,
     //canActivate: [NgxPermissionsGuard],
     //data: {
     //  permissions: {
@@ -59,16 +65,16 @@ const routes: Routes = [
   },
   {
     path: 'noaccess',
-    component: NoAccessComponent
+    component: NoAccessComponent,
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

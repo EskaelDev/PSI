@@ -42,7 +42,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.originalUser = user;
         this.userForm.patchValue({
           name: user.name,
-          email: user.email
+          email: user.email,
         });
       })
     );

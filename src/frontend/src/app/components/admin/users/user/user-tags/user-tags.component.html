@@ -4,9 +4,7 @@
       <div *ngFor="let role of roles">
         {{ "roles." + role | translate }}
       </div>
-      <div *ngIf="roles.length === 0">
-          Brak ról
-      </div>
+      <div *ngIf="roles.length === 0">Brak ról</div>
     </div>
     <div *ngIf="!isEditing">
       <mat-icon style="cursor: pointer" (click)="edit()">edit</mat-icon>

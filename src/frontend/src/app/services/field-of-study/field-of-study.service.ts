@@ -5,7 +5,7 @@ import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study'
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FieldOfStudyService {
   baseUrl = environment.baseUrl + '/api/fieldofstudy';

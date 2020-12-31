@@ -1,7 +1,5 @@
 <app-element-edit
-  [elementName]="
-  originalFos.name ? originalFos.name : 'Nowy kierunek'
-  "
+  [elementName]="originalFos.name ? originalFos.name : 'Nowy kierunek'"
   [canDelete]="originalFos && originalFos.code.length > 0"
   [validForm]="fosForm.valid"
   (save)="saveFos()"
@@ -12,7 +10,15 @@
     [supervisors]="supervisors"
     [isNew]="originalFos.code.length === 0"
   ></app-fos-form>
-  <app-fos-tags [specs]="originalFos.specializations" [isEditing]="isEditSpecs" (editSpecs)="openEditSpecsWindow()">
+  <app-fos-tags
+    [specs]="originalFos.specializations"
+    [isEditing]="isEditSpecs"
+    (editSpecs)="openEditSpecsWindow()"
+  >
   </app-fos-tags>
 </app-element-edit>
-<app-fos-specializations *ngIf="isEditSpecs" [fosSpecs]="originalFos.specializations" (specsSaved)="updateSpecs($event)"></app-fos-specializations>
+<app-fos-specializations
+  *ngIf="isEditSpecs"
+  [fosSpecs]="originalFos.specializations"
+  (specsSaved)="updateSpecs($event)"
+></app-fos-specializations>

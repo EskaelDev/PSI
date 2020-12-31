@@ -4,21 +4,18 @@ import { Specialization } from 'src/app/core/models/field-of-study/specializatio
 @Component({
   selector: 'app-fos-tags',
   templateUrl: './fos-tags.component.html',
-  styleUrls: ['./fos-tags.component.scss']
+  styleUrls: ['./fos-tags.component.scss'],
 })
 export class FosTagsComponent implements OnInit {
-
   @Input() specs: Specialization[] = [];
   @Input() isEditing: boolean = false;
   @Output() editSpecs: EventEmitter<any> = new EventEmitter();
-  
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
-  edit(){
+  ngOnInit(): void {}
+
+  edit() {
     this.editSpecs.emit();
   }
-
 }

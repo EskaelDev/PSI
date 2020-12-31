@@ -9,7 +9,7 @@ import { MessageHubService } from 'src/app/services/message-hub/message-hub.serv
 @Component({
   selector: 'app-fos-list',
   templateUrl: './fos-list.component.html',
-  styleUrls: ['./fos-list.component.scss']
+  styleUrls: ['./fos-list.component.scss'],
 })
 export class FosListComponent implements OnInit, OnDestroy {
   subscribtions: Subscription[] = [];
@@ -18,10 +18,12 @@ export class FosListComponent implements OnInit, OnDestroy {
   fieldsOfStudy: FieldOfStudy[] = [];
   selectedFos: FieldOfStudy = new FieldOfStudy();
 
-  constructor(private fosService: FieldOfStudyService,
+  constructor(
+    private fosService: FieldOfStudyService,
     private readonly messageHub: MessageHubService,
-    private route: Router) {}
-  
+    private route: Router
+  ) {}
+
   ngOnInit(): void {
     this.subscribtions.push(
       this.messageHub.selectedFos.subscribe((fos) => {
@@ -48,7 +50,9 @@ export class FosListComponent implements OnInit, OnDestroy {
     this.fosService.getFieldsOfStudies().subscribe(
       (fieldsOfStudies) => {
         this.fieldsOfStudy = fieldsOfStudies;
-        const foundFos = this.fieldsOfStudy.find(u => u.code === selectedFosCode);
+        const foundFos = this.fieldsOfStudy.find(
+          (u) => u.code === selectedFosCode
+        );
         this.messageHub.notifySelectedFos(foundFos ?? new FieldOfStudy());
         this.isLoading = false;
       },
@@ -61,7 +65,7 @@ export class FosListComponent implements OnInit, OnDestroy {
   }
 
   selectFos(code: string) {
-    const fos = this.fieldsOfStudy.find(u => u.code === code);
+    const fos = this.fieldsOfStudy.find((u) => u.code === code);
     if (fos) {
       this.messageHub.notifySelectedFos(fos);
     }
@@ -72,6 +76,6 @@ export class FosListComponent implements OnInit, OnDestroy {
   }
 
   getElements(users: FieldOfStudy[]): ListElement[] {
-    return users.map(u => new ListElement(u.code, u.name ?? ''));
+    return users.map((u) => new ListElement(u.code, u.name ?? ''));
   }
 }

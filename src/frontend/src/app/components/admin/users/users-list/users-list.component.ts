@@ -18,10 +18,12 @@ export class UsersListComponent {
   users: User[] = [];
   selectedUser: User = new User();
 
-  constructor(private userService: UserService,
+  constructor(
+    private userService: UserService,
     private readonly messageHub: MessageHubService,
-    private route: Router) {}
-  
+    private route: Router
+  ) {}
+
   ngOnInit(): void {
     this.subscribtions.push(
       this.messageHub.selectedUser.subscribe((user) => {
@@ -48,7 +50,7 @@ export class UsersListComponent {
     this.userService.getUsers().subscribe(
       (users) => {
         this.users = users;
-        const foundUser = this.users.find(u => u.id === selectedUserId);
+        const foundUser = this.users.find((u) => u.id === selectedUserId);
         this.messageHub.notifySelectedUser(foundUser ?? new User());
         this.isLoading = false;
       },
@@ -61,7 +63,7 @@ export class UsersListComponent {
   }
 
   selectUser(id: string) {
-    const user = this.users.find(u => u.id === id);
+    const user = this.users.find((u) => u.id === id);
     if (user) {
       this.messageHub.notifySelectedUser(user);
     }
@@ -72,6 +74,6 @@ export class UsersListComponent {
   }
 
   getElements(users: User[]): ListElement[] {
-    return users.map(u => new ListElement(u.id, u.name));
+    return users.map((u) => new ListElement(u.id, u.name));
   }
 }

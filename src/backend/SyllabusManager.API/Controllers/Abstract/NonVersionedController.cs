@@ -10,9 +10,9 @@ namespace SyllabusManager.API.Controllers.Abstract
     [Authorize]
     public abstract class NonVersionedController<T> : ApiController where T : NonVersionedModelBase
     {
-        private readonly NonVersionedService<T> _modelService;
+        protected readonly INonVersionedService<T> _modelService;
 
-        public NonVersionedController(NonVersionedService<T> crudService)
+        public NonVersionedController(INonVersionedService<T> crudService)
         {
             _modelService = crudService;
         }
@@ -42,7 +42,7 @@ namespace SyllabusManager.API.Controllers.Abstract
 
 
         [HttpGet]
-        public virtual async Task<IActionResult> All(string id)
+        public virtual async Task<IActionResult> All()
         {
             List<T> result = await _modelService.GetAllAsync();
             if (result == null)

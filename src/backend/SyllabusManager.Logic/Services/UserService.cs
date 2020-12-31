@@ -4,6 +4,7 @@ using SyllabusManager.Data;
 using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Extensions;
 using SyllabusManager.Logic.Interfaces;
+using SyllabusManager.Logic.Models;
 using SyllabusManager.Logic.Models.DTO;
 using System;
 using System.Collections.Generic;
@@ -43,12 +44,12 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<UserDTO> AddOrUpdateAsync(UserDTO user)
         {
-            var dbUser = await _dbSet.FindAsync(user.Id);
+            SyllabusManagerUser dbUser = await _dbSet.FindAsync(user.Id);
             if (dbUser == null)
             {
                 return await AddAsync(user);
             }
-            var roles = (await _userManager.GetRolesAsync(dbUser)).ToList();
+            List<string> roles = (await _userManager.GetRolesAsync(dbUser)).ToList();
             await _userManager.RemoveFromRolesAsync(dbUser, roles);
             await _userManager.AddToRolesAsync(dbUser, user.Roles);
 
@@ -74,12 +75,12 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<UserDTO> AddAsync(UserDTO user)
         {
-            var dbUser = await GetByEmailAsync(user.Email);
+            UserDTO dbUser = await GetByEmailAsync(user.Email);
             if (dbUser != null)
             {
                 return null;
             }
-            var syllabusUser = user.MakeSyllabusManagerUser();
+            SyllabusManagerUser syllabusUser = user.MakeSyllabusManagerUser();
             await _userManager.CreateAsync(syllabusUser, "S4#SAX@2WqS?mkr&");
             await _userManager.AddToRolesAsync(syllabusUser, user.Roles);
             return (await _userManager.FindByEmailAsync(user.Email)).MakeDto(user.Roles);
@@ -92,7 +93,7 @@ namespace SyllabusManager.Logic.Services
             {
                 return false;
             }
-            var roles = (await _userManager.GetRolesAsync(dbUser)).ToList();
+            List<string> roles = (await _userManager.GetRolesAsync(dbUser)).ToList();
             await _userManager.RemoveFromRolesAsync(dbUser, roles);
             dbUser.Email = null;
             dbUser.NormalizedEmail = null;
@@ -100,6 +101,22 @@ namespace SyllabusManager.Logic.Services
             dbUser.IsDeleted = true;
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<UserDTO>> GetByRoleAsync(string role)
+        {
+
+            List<SyllabusManagerUser> dbUsers = await _userManager.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).Where(u => u.UserRoles.Any(r => r.Role.Name == role)).ToListAsync();
+
+            List<UserDTO> userDtos = new List<UserDTO>();
+            dbUsers.ForEach(u => userDtos.Add(u.MakeDto(new List<string> { role })));
+
+            return userDtos;
+        }
+
+        public async Task<List<UserDTO>> GetTeachers()
+        {
+            return await GetByRoleAsync(UsersRoles.Teacher);
         }
     }
 }

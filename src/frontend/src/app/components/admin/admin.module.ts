@@ -5,7 +5,7 @@ import { UserComponent } from './users/user/user.component';
 import { SharedModule } from 'src/app/modules/shared.module';
 import { SharedComponentsModule } from '../shared/shared-components.module';
 import { UserFormComponent } from './users/user/user-form/user-form.component';
-import { AdministrationComponent } from './administration/administration.component';
+import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { UserRolesComponent } from './users/user/user-roles/user-roles.component';
 import { FieldsOfStudiesComponent } from './fields-of-studies/fields-of-studies.component';
 import { FosListComponent } from './fields-of-studies/fos-list/fos-list.component';
@@ -21,7 +21,7 @@ import { FosTagsComponent } from './fields-of-studies/fos/fos-tags/fos-tags.comp
     UsersListComponent,
     UserComponent,
     UserFormComponent,
-    AdministrationComponent,
+    AdminMenuComponent,
     UserRolesComponent,
     FieldsOfStudiesComponent,
     FosListComponent,

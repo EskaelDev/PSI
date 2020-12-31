@@ -3,7 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -27,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxPermissionsModule.forRoot(),
     FlexLayoutModule,
     ReactiveFormsModule,
+    FormsModule,
     ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
@@ -46,6 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    FormsModule,
     TranslateModule,
     ToastrModule
   ],

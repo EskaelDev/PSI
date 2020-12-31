@@ -1,0 +1,15 @@
+<div>
+  <div fxLayoutAlign="center" fxLayoutGap="10px">
+    <div>
+      <div *ngFor="let role of roles">
+        {{ "roles." + role | translate }}
+      </div>
+      <div *ngIf="roles.length === 0">
+          Brak ról
+      </div>
+    </div>
+    <div *ngIf="!isEditing">
+      <mat-icon style="cursor: pointer" (click)="edit()">edit</mat-icon>
+    </div>
+  </div>
+</div>

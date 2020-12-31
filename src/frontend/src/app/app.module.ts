@@ -9,6 +9,7 @@ import { LearningOutcomesModule } from './components/learning-outcomes/learning-
 import { SubjectsModule } from './components/subjects/subjects.module';
 import { SyllabusesModule } from './components/syllabuses/syllabuses.module';
 import { DocumentsModule } from './components/documents/documents.module';
+import { SharedComponentsModule } from './components/shared/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DocumentsModule } from './components/documents/documents.module';
     BrowserModule,
     SharedModule,
     HomeModule,
+    SharedComponentsModule,
     AuthenticationModule,
     AdminModule,
     LearningOutcomesModule,

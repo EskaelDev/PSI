@@ -8,9 +8,6 @@ import { Role } from 'src/app/core/enums/user/role.enum';
 })
 export class HomeComponent implements OnInit {
 
-  selectedRole?: Role;
-  roles = Object.values(Role);
-
   ngOnInit(): void {
   }
 }

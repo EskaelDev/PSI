@@ -46,21 +46,20 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(User user)
+        public async Task<IActionResult> Save([FromBody] User user)
         {
-            User result = await _userService.UpdateAsync(user);
+            var result = await _userService.AddOrUpdateAsync(user);
             if (result == null)
                 return BadRequest();
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add(User user)
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult ResetPassword(string id)
         {
-            User result = await _userService.UpdateAsync(user);
-            if (result == null)
-                return BadRequest();
-            return Created(result.Id, result);
+            // todo: Reset password and send by email
+            return Ok();
         }
 
         [HttpDelete]

@@ -47,7 +47,7 @@ namespace SyllabusManager.API
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
-            services.AddIdentity<SyllabusManagerUser, SyllabusManagerRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<SyllabusManagerUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SyllabusManagerDbContext>()
                 .AddDefaultTokenProviders();
 

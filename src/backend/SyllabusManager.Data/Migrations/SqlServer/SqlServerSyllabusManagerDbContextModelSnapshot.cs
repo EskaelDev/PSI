@@ -19,6 +19,33 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -97,17 +124,11 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -460,9 +481,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -627,33 +645,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.ToTable("SyllabusDescription");
                 });
 
-            modelBuilder.Entity("SyllabusManager.Data.Models.User.SyllabusManagerRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
-                });
-
             modelBuilder.Entity("SyllabusManager.Data.Models.User.SyllabusManagerUser", b =>
                 {
                     b.Property<string>("Id")
@@ -725,26 +716,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("SyllabusManager.Data.Models.User.SyllabusManagerUserRole", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
-
-                    b.Property<string>("RoleId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("RoleId1");
-
-                    b.HasIndex("UserId1");
-
-                    b.HasDiscriminator().HasValue("SyllabusManagerUserRole");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -771,7 +745,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -913,17 +887,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.Specialization", "Specialization")
                         .WithMany()
                         .HasForeignKey("SpecializationCode");
-                });
-
-            modelBuilder.Entity("SyllabusManager.Data.Models.User.SyllabusManagerUserRole", b =>
-                {
-                    b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerRole", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId1");
-
-                    b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerUser", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,12 +16,14 @@ namespace SyllabusManager.Logic.Services
     public class UserService : IUserService
     {
         private readonly UserManager<SyllabusManagerUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SyllabusManagerDbContext _dbContext;
         private readonly DbSet<SyllabusManagerUser> _dbSet;
 
-        public UserService(UserManager<SyllabusManagerUser> userManager, SyllabusManagerDbContext dbContext)
+        public UserService(UserManager<SyllabusManagerUser> userManager, RoleManager<IdentityRole> roleManager, SyllabusManagerDbContext dbContext)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _dbSet = _dbContext.Set<SyllabusManagerUser>();
         }
@@ -105,13 +107,9 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<List<UserDTO>> GetByRoleAsync(string role)
         {
-
-            List<SyllabusManagerUser> dbUsers = await _userManager.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).Where(u => u.UserRoles.Any(r => r.Role.Name == role)).ToListAsync();
-
-            List<UserDTO> userDtos = new List<UserDTO>();
-            dbUsers.ForEach(u => userDtos.Add(u.MakeDto(new List<string> { role })));
-
-            return userDtos;
+            var roleId = (await _roleManager.FindByNameAsync(role))?.Id;
+            return _dbContext.Users.Where(u => _dbContext.UserRoles.Any(r => r.RoleId == roleId && r.UserId == u.Id))
+                .ToList().Select(u => u.MakeDto(null)).ToList();
         }
 
         public async Task<List<UserDTO>> GetTeachers()

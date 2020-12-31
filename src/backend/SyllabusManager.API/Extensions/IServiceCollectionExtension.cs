@@ -21,7 +21,7 @@ namespace SyllabusManager.API.Extensions
         public static async Task SetRolesAndAccounts(this IServiceCollection services)
         {
             ServiceProvider serviceProvider = services.BuildServiceProvider();
-            RoleManager<SyllabusManagerRole> roleManager = serviceProvider.GetRequiredService<RoleManager<SyllabusManagerRole>>();
+            RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             UserManager<SyllabusManagerUser> userManager = serviceProvider.GetRequiredService<UserManager<SyllabusManagerUser>>();
 
             foreach (string roleName in UsersRoles.All)
@@ -29,7 +29,7 @@ namespace SyllabusManager.API.Extensions
                 bool roleExist = await roleManager.RoleExistsAsync(roleName);
                 if (!roleExist)
                 {
-                    await roleManager.CreateAsync(new SyllabusManagerRole(roleName));
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
 

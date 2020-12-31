@@ -9,7 +9,7 @@ using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.Data
 {
-    public class SyllabusManagerDbContext : IdentityDbContext<SyllabusManagerUser, SyllabusManagerRole, string>
+    public class SyllabusManagerDbContext : IdentityDbContext<SyllabusManagerUser>
     {
         public DbSet<FieldOfStudy> FieldsOfStudies { get; set; }
         public DbSet<LearningOutcomeDocument> LearningOutcomeDocuments { get; set; }
@@ -37,10 +37,6 @@ namespace SyllabusManager.Data
                 .HasForeignKey(st => st.TeacherId);
 
             modelBuilder.Entity<Subject>().Ignore(s => s.Teachers);
-
-
-
-
         }
     }
 }

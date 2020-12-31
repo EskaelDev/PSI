@@ -10,7 +10,7 @@ using SyllabusManager.Data.ProviderContexts;
 namespace SyllabusManager.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerSyllabusManagerDbContext))]
-    [Migration("20201219113225_Initial")]
+    [Migration("20201231201123_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,7 +215,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
 
                     b.HasIndex("FieldOfStudyCode");
 
-                    b.ToTable("Specialization");
+                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.LearningOutcomes.LearningOutcome", b =>
@@ -483,9 +483,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -669,11 +666,17 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")

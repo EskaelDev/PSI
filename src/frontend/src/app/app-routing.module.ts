@@ -11,6 +11,8 @@ import { NoAccessComponent } from './components/home/no-access/no-access.compone
 import { NotFoundComponent } from './components/home/not-found/not-found.component';
 import { LearningOutcomeDocumentComponent } from './components/learning-outcomes/learning-outcome-document/learning-outcome-document.component';
 import { LearningOutcomePickerComponent } from './components/learning-outcomes/learning-outcome-picker/learning-outcome-picker.component';
+import { SubjectDocumentComponent } from './components/subjects/subject-document/subject-document.component';
+import { SubjectPickerComponent } from './components/subjects/subject-picker/subject-picker.component';
 import { SyllabusDocumentComponent } from './components/syllabuses/syllabus-document/syllabus-document.component';
 import { SyllabusPickerComponent } from './components/syllabuses/syllabus-picker/syllabus-picker.component';
 import { AuthGuard } from './interceptors/auth.guard';
@@ -119,6 +121,34 @@ const routes: Routes = [
       {
         path: 'document/:fosId/:year',
         component: LearningOutcomeDocumentComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: ['Admin', 'Teacher'],
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+    ]
+  },
+  {
+    path: 'subject',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'choose',
+        component: SubjectPickerComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: ['Admin', 'Teacher'],
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+      {
+        path: 'document/:code/:year',
+        component: SubjectDocumentComponent,
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {

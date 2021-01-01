@@ -11,7 +11,7 @@ import { Specialization } from 'src/app/core/models/field-of-study/specializatio
 export class FosYearPopupPickerComponent implements OnInit {
 
   title: string = '';
-  specializations: boolean = false;
+  isSpec: boolean = false;
   selectedFos: FieldOfStudy | null = null;
   selectedSpec: Specialization | null = null;
   selectedYear: string | null = null;
@@ -20,7 +20,7 @@ export class FosYearPopupPickerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { 
     dialogRef.disableClose = true;
     this.title = data.title;
-    this.specializations = data.specializations ?? false;
+    this.isSpec = data.isSpec ?? false;
   }
 
   ngOnInit(): void {

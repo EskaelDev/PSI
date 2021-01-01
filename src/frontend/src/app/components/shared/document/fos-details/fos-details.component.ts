@@ -9,9 +9,9 @@ import { Specialization } from 'src/app/core/models/field-of-study/specializatio
 })
 export class FosDetailsComponent implements OnInit {
 
-  @Input() fos: FieldOfStudy = new FieldOfStudy();
+  @Input() fos: FieldOfStudy | null = null;
   @Input() year: string = '';
-  @Input() specialization: Specialization | null = new Specialization();
+  @Input() spec: Specialization | null = null;
 
   constructor() { }
 

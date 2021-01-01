@@ -31,10 +31,11 @@ export class SyllabusDocumentComponent implements OnInit {
 
   saveAs() {
     const sub = this.dialog.open(FosYearPopupPickerComponent, {
-      height: '48vh',
+      height: '500px',
       width: '500px',
       data: {
-        title: 'Zapisz jako'
+        title: 'Zapisz jako',
+        isSpec: true
       }
     });
 
@@ -46,10 +47,11 @@ export class SyllabusDocumentComponent implements OnInit {
 
   import() {
     const sub = this.dialog.open(FosYearPopupPickerComponent, {
-      height: '48vh',
+      height: '500px',
       width: '500px',
       data: {
-        title: 'Importuj z'
+        title: 'Importuj z',
+        isSpec: true
       }
     });
 

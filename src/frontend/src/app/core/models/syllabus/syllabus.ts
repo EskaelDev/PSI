@@ -18,6 +18,6 @@ export class Syllabus extends DocumentInAcademicYear {
     intershipType?: string;
     description?: SyllabusDescription;
     subjectDescriptions: SubjectInSyllabusDescription[] = [];
-    fieldOfStudy?: FieldOfStudy;
-    specialization?: Specialization;
+    fieldOfStudy: FieldOfStudy = new FieldOfStudy();
+    specialization: Specialization = new Specialization();
 }

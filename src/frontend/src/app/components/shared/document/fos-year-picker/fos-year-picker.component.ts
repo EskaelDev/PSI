@@ -12,7 +12,7 @@ export class FosYearPickerComponent implements OnInit {
 
   @Input() title: string = '';
   @Input() visibleButtons: boolean = true;
-  @Input() specializations: boolean = false;
+  @Input() isSpec: boolean = false;
   fieldsOfStudy: FieldOfStudy[] = [];
   specs: Specialization[] = [];
   years: string[] = ['2015/2016', '2016/2017', '2017/2018', '2018/2019', '2019/2020', '2020/2021', '2021/2022'];

@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LearningOutcomeDocument } from 'src/app/core/models/learning-outcome/learning-outcome-document';
-import { FosYearPopupPickerComponent } from '../../shared/document/fos-year-popup-picker/fos-year-popup-picker.component';
+import { Subject } from 'src/app/core/models/subject/subject';
 import { HistoryPopupComponent } from '../../shared/document/history-popup/history-popup.component';
+import { YearSubjectPickerComponent } from '../../shared/document/year-subject-picker/year-subject-picker.component';
 
 @Component({
-  selector: 'app-learning-outcome-document',
-  templateUrl: './learning-outcome-document.component.html',
-  styleUrls: ['./learning-outcome-document.component.scss']
+  selector: 'app-subject-document',
+  templateUrl: './subject-document.component.html',
+  styleUrls: ['./subject-document.component.scss']
 })
-export class LearningOutcomeDocumentComponent implements OnInit {
-  title = 'efektów uczenia się';
+export class SubjectDocumentComponent implements OnInit {
+  title = 'przedmiotu';
 
-  learningOutcomeDocument: LearningOutcomeDocument = new LearningOutcomeDocument();
+  subjectDocument: Subject = new Subject();
   year: string = '';
   
   constructor(private readonly route: ActivatedRoute,
@@ -21,7 +21,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.route.snapshot.paramMap.get('fosId');
+    this.route.snapshot.paramMap.get('code');
     this.year = decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
   }
 
@@ -30,7 +30,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
   }
 
   saveAs() {
-    const sub = this.dialog.open(FosYearPopupPickerComponent, {
+    const sub = this.dialog.open(YearSubjectPickerComponent, {
       height: '500px',
       width: '500px',
       data: {
@@ -45,7 +45,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
   }
 
   import() {
-    const sub = this.dialog.open(FosYearPopupPickerComponent, {
+    const sub = this.dialog.open(YearSubjectPickerComponent, {
       height: '500px',
       width: '500px',
       data: {
@@ -60,7 +60,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
   }
 
   close() {
-    this.router.navigate(['/learning-outcome/choose']);
+    this.router.navigate(['/subject/choose']);
   }
 
   delete() {

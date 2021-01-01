@@ -11,6 +11,7 @@ import { FosYearPopupPickerComponent } from './document/fos-year-popup-picker/fo
 import { HistoryPopupComponent } from './document/history-popup/history-popup.component';
 import { FosDetailsElementComponent } from './document/fos-details/fos-details-element/fos-details-element.component';
 import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
+import { YearSubjectPickerComponent } from './document/year-subject-picker/year-subject-picker.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
     HistoryPopupComponent,
     FosDetailsElementComponent,
     YesNoDialogComponent,
+    YearSubjectPickerComponent,
   ],
   imports: [SharedModule],
   exports: [
@@ -42,7 +44,8 @@ import { YesNoDialogComponent } from './yes-no-dialog/yes-no-dialog.component';
   entryComponents: [
     FosYearPopupPickerComponent,
     HistoryPopupComponent,
-    YesNoDialogComponent
+    YesNoDialogComponent,
+    YearSubjectPickerComponent
   ]
 })
 export class SharedComponentsModule {}

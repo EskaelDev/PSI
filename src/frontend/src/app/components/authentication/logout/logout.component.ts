@@ -5,10 +5,9 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss']
+  styleUrls: ['./logout.component.scss'],
 })
 export class LogoutComponent implements OnInit {
-
   constructor(
     private readonly authService: AuthenticationService,
     private readonly router: Router
@@ -22,5 +21,4 @@ export class LogoutComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-
 }

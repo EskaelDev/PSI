@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NgxPermissionsGuard } from 'ngx-permissions';
-import { AdministrationComponent } from './components/admin/administration/administration.component';
+import { AdminMenuComponent } from './components/admin/admin-menu/admin-menu.component';
 import { FieldsOfStudiesComponent } from './components/admin/fields-of-studies/fields-of-studies.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import { LoginComponent } from './components/authentication/login/login.component';
@@ -17,58 +17,70 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full',
   },
-  { 
-    path: 'login', component: LoginComponent
+  {
+    path: 'login',
+    component: LoginComponent,
   },
-  { 
-    path: 'logout', component: LogoutComponent
+  {
+    path: 'logout',
+    component: LogoutComponent,
   },
-  { 
-    path: 'home', component: HomeComponent,
-    canActivate: [AuthGuard]
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard],
   },
-  { 
-    path: 'administration', component: AdministrationComponent,
-    //canActivate: [NgxPermissionsGuard],
-    //data: {
-    //  permissions: {
-    //    only: 'ADMIN',
-    //    redirectTo: '/noaccess'
-    //  }
-    //}
-  },
-  { 
-    path: 'manage-users', component: UsersComponent,
-    //canActivate: [NgxPermissionsGuard],
-    //data: {
-    //  permissions: {
-    //    only: 'ADMIN',
-    //    redirectTo: '/noaccess'
-    //  }
-    //}
-  },
-  { 
-    path: 'manage-fields-of-studies', component: FieldsOfStudiesComponent,
-    //canActivate: [NgxPermissionsGuard],
-    //data: {
-    //  permissions: {
-    //    only: 'ADMIN',
-    //    redirectTo: '/noaccess'
-    //  }
-    //}
+  {
+    path: 'admin',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'menu',
+        component: AdminMenuComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: 'Admin',
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+      {
+        path: 'manage-users',
+        component: UsersComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: 'Admin',
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+      {
+        path: 'manage-fields-of-studies',
+        component: FieldsOfStudiesComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: 'Admin',
+            redirectTo: '/noaccess'
+          }
+        }
+      }
+    ]
   },
   {
     path: 'noaccess',
-    component: NoAccessComponent
+    component: NoAccessComponent,
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

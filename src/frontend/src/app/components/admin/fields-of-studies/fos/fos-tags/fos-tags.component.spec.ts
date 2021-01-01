@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdministrationComponent } from './administration.component';
+import { FosTagsComponent } from './fos-tags.component';
 
-describe('AdministrationComponent', () => {
-  let component: AdministrationComponent;
-  let fixture: ComponentFixture<AdministrationComponent>;
+describe('FosTagsComponent', () => {
+  let component: FosTagsComponent;
+  let fixture: ComponentFixture<FosTagsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdministrationComponent ]
+      declarations: [ FosTagsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdministrationComponent);
+    fixture = TestBed.createComponent(FosTagsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

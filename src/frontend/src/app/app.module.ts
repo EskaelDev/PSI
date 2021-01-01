@@ -12,9 +12,7 @@ import { DocumentsModule } from './components/documents/documents.module';
 import { SharedComponentsModule } from './components/shared/shared-components.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     SharedModule,
@@ -25,9 +23,9 @@ import { SharedComponentsModule } from './components/shared/shared-components.mo
     LearningOutcomesModule,
     SubjectsModule,
     SyllabusesModule,
-    DocumentsModule
+    DocumentsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

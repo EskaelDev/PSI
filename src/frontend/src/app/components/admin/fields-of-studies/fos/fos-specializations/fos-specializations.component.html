@@ -26,11 +26,14 @@
     <br />
   </form>
 </div>
-<button (click)="addSpec()">Add</button>
+<button (click)="clearSpec()">Clear</button>
 <div *ngFor="let spec of editableSpecs">
-  <div > <span (click)="editSpec(spec)">{{ spec.name }}</span>
+  <div>
+    <span (click)="editSpec(spec)">{{ spec.name }}</span>
     <mat-icon (click)="removeSpec(spec)">close</mat-icon>
   </div>
 </div>
-<button (click)="saveCurrent()">save</button>
+<button (click)="saveCurrent()" [disabled]="!specializationForm.valid">
+  save
+</button>
 <button (click)="saveSpecs()">save all</button>

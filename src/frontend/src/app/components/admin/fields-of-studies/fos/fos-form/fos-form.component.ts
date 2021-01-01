@@ -22,7 +22,7 @@ export class FosFormComponent implements OnInit {
   types = Object.values(CourseType);
   profiles = Object.values(StudiesProfile);
 
-  supervisors: User[] = [];
+  @Input() supervisors: User[] = [];
   filteredSupervisors: Observable<User[]> = new Observable();
 
   constructor() {}
@@ -36,11 +36,9 @@ export class FosFormComponent implements OnInit {
       );
   }
 
-  private _filter(value: any): User[] {
+  private _filter(value: any): User[] {   
     const filterValue =
-      value instanceof User
-        ? value.name.toLowerCase()
-        : value.toLowerCase();
+      value instanceof User ? value.name.toLowerCase() : value?.toLowerCase();
 
     return this.supervisors.filter((supervisor) =>
       supervisor.name.toLowerCase().includes(filterValue)

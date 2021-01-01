@@ -27,31 +27,64 @@ namespace SyllabusManager.Logic.Services
 
         public override async Task<List<FieldOfStudy>> GetAllAsync()
         {
-            return await _dbSet.Where(e => !e.IsDeleted).Include(fos => fos.Specializations).Where(fos => fos.Specializations.Any(s => !s.IsDeleted)).AsNoTracking().ToListAsync();
+            var all = await _dbSet.Where(e => !e.IsDeleted)
+                .Include(fos => fos.Specializations)
+                .Include(fos => fos.Supervisor)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return all.Select(f =>
+            {
+                f.Specializations = f.Specializations.Where(s => !s.IsDeleted).ToList();
+                f.Specializations.ForEach(s => s.FieldOfStudy = null);
+                return f;
+            })
+            .ToList();
         }
 
         public override async Task<FieldOfStudy> SaveAsync(FieldOfStudy entity)
         {
-
-            FieldOfStudy entityDb = _dbSet.Find(entity.Id);
+            FieldOfStudy entityDb =
+                _dbContext.FieldsOfStudies.Include(f => f.Specializations).FirstOrDefault(f => f.Code == entity.Code);
             if (entityDb == null)
             {
-                await _dbSet.AddAsync(entity);
+                entity.Supervisor = _dbContext.Users.FirstOrDefault(u => u.Id == entity.Supervisor.Id);
+                _dbContext.FieldsOfStudies.Add(entity);
             }
             else
             {
-                await UpdateSpecializationsAsync(entity, entityDb);
-                _dbSet.Update(entity);
+                _dbContext.Entry(entityDb).CurrentValues.SetValues(entity);
+                UpdateSpecializationsAsync(entity, entityDb);
+                entity.Supervisor = _dbContext.Users.FirstOrDefault(u => u.Id == entity.Supervisor.Id);
             }
             await _dbContext.SaveChangesAsync();
             return entity;
         }
 
-        private async Task UpdateSpecializationsAsync(FieldOfStudy newFos, FieldOfStudy oldFos)
+        private void UpdateSpecializationsAsync(FieldOfStudy newFos, FieldOfStudy oldFos)
         {
-            _dbContext.Specializations.RemoveRange(oldFos.Specializations);
-            await _dbContext.Specializations.AddRangeAsync(newFos.Specializations);
-            await _dbContext.SaveChangesAsync();
+            // delete
+            foreach (var spec in oldFos.Specializations)
+            {
+                if (newFos.Specializations.All(s => s.Code != spec.Code))
+                {
+                    spec.IsDeleted = true;
+                }
+            }
+
+            // add & update
+            foreach (var spec in newFos.Specializations)
+            {
+                var existing = oldFos.Specializations.FirstOrDefault(s => s.Code == spec.Code);
+                if (existing != null)
+                {
+                    existing.Name = spec.Name;
+                }
+                else
+                {
+                    oldFos.Specializations.Add(spec);
+                }
+            }
         }
 
         public override async Task<bool> DeleteAsync(string id)
@@ -86,7 +119,7 @@ namespace SyllabusManager.Logic.Services
 
         public override async Task<FieldOfStudy> GetByIdAsync(string id)
         {
-            return await _dbSet.Where(e => e.Id.ToString() == id).Include(e => e.Specializations).FirstOrDefaultAsync();
+            return await _dbSet.Where(e => e.Code == id).Include(e => e.Specializations).FirstOrDefaultAsync();
         }
     }
 

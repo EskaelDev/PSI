@@ -4,12 +4,7 @@ import { SharedModule } from 'src/app/modules/shared.module';
 import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    LogoutComponent
-  ],
-  imports: [
-    SharedModule
-  ]
+  declarations: [LoginComponent, LogoutComponent],
+  imports: [SharedModule],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

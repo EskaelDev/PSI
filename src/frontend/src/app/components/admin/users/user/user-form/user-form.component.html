@@ -1,13 +1,25 @@
 <form [formGroup]="userForm">
-    <mat-form-field>
-      <input matInput type="text" placeholder="Imię i nazwisko" formControlName="name" required />
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-    <mat-form-field>
-      <input matInput type="text" placeholder="Email" formControlName="email" required />
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-    <button *ngIf="!isNew" (click)="resetPassword()">Zresetuj hasło</button>
-  </form>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Imię i nazwisko"
+      formControlName="name"
+      required
+    />
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Email"
+      formControlName="email"
+      required
+    />
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <button *ngIf="!isNew" (click)="resetPassword()">Zresetuj hasło</button>
+</form>

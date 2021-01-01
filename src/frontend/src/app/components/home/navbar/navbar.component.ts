@@ -6,7 +6,7 @@ import { MessageHubService } from 'src/app/services/message-hub/message-hub.serv
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   subscribtions: Subscription[] = [];
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.messageHub.loggedInUser.subscribe((user) => (this.user = user))
     );
   }
-  
+
   ngOnDestroy(): void {
     this.subscribtions.forEach((s) => {
       s.unsubscribe();

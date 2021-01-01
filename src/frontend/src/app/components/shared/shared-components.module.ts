@@ -6,18 +6,8 @@ import { ElementEditComponent } from './admin/element-edit/element-edit.componen
 import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
-  declarations: [
-    SearchableListComponent,
-    ElementEditComponent,
-    AdminComponent
-  ],
-  imports: [
-    SharedModule
-  ],
-  exports: [
-    SearchableListComponent,
-    ElementEditComponent,
-    AdminComponent
-  ]
+  declarations: [SearchableListComponent, ElementEditComponent, AdminComponent],
+  imports: [SharedModule],
+  exports: [SearchableListComponent, ElementEditComponent, AdminComponent],
 })
-export class SharedComponentsModule { }
+export class SharedComponentsModule {}

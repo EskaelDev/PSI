@@ -1,9 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AppConsts } from 'src/app/core/consts/app-consts';
 import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study';
 import { Specialization } from 'src/app/core/models/field-of-study/specialization';
+import { User } from 'src/app/core/models/user/user';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-study.service';
 import { MessageHubService } from 'src/app/services/message-hub/message-hub.service';
@@ -16,10 +23,12 @@ import { MessageHubService } from 'src/app/services/message-hub/message-hub.serv
 export class FosComponent implements OnInit, OnDestroy {
   subscribtions: Subscription[] = [];
   guidEmpty = AppConsts.EMPTY_ID;
+  isEditSpecs = false;
 
   originalFos: FieldOfStudy = new FieldOfStudy();
 
   fosForm: FormGroup;
+  supervisors: User[] = [];
 
   specializations: Specialization[] = [];
 
@@ -38,11 +47,15 @@ export class FosComponent implements OnInit, OnDestroy {
       profile: ['', Validators.required],
       dyscypline: [''],
       branchOfScience: [''],
-      supervisor: ['', Validators.required],
+      supervisor: [
+        '',
+        [this.autocompleteObjectValidator(), Validators.required],
+      ],
     });
   }
 
   ngOnInit(): void {
+    this.loadSupervisors();
     this.subscribtions.push(
       this.messageHub.selectedFos.subscribe((fos) => {
         this.originalFos = fos;
@@ -67,23 +80,47 @@ export class FosComponent implements OnInit, OnDestroy {
     });
   }
 
+  autocompleteObjectValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value instanceof User) {
+        return null;
+      }
+      return { invalidAutocompleteObject: { value: control.value } };
+    };
+  }
+
+  loadSupervisors() {
+    this.fosService.getPossibleSupervisors().subscribe((supervisors) => {
+      this.supervisors = supervisors;
+    });
+  }
+
   saveFos() {
     const editedFos = Object.assign(this.originalFos, this.fosForm.value);
 
-    this.fosService.saveFos(editedFos).subscribe(() => {
-      this.messageHub.notifyFieldsOfStudiesChanged();
-      this.alerts.showCustomSuccessMessage('Zmiany zapisane');
+    this.fosService.saveFos(editedFos).subscribe((result) => {
+      if (result) {
+        this.messageHub.notifyFieldsOfStudiesChanged();
+        this.alerts.showCustomSuccessMessage('Zmiany zapisane');
+      }
     });
   }
 
   removeFos() {
-    this.fosService.deleteFos(this.originalFos.code).subscribe(() => {
-      this.messageHub.notifyFieldsOfStudiesChanged();
-      this.alerts.showCustomSuccessMessage('Kierunek usunięty');
+    this.fosService.deleteFos(this.originalFos.code).subscribe((result) => {
+      if (result) {
+        this.messageHub.notifyFieldsOfStudiesChanged();
+        this.alerts.showCustomSuccessMessage('Kierunek usunięty');
+      }
     });
+  }
+
+  openEditSpecsWindow() {
+    this.isEditSpecs = true;
   }
 
   updateSpecs(newSpecializations: Specialization[]) {
     this.originalFos.specializations = newSpecializations;
+    this.isEditSpecs = false;
   }
 }

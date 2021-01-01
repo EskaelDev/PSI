@@ -59,7 +59,7 @@ namespace SyllabusManager.API.Controllers
         public IActionResult ResetPassword(string id)
         {
             // todo: Reset password and send by email
-            return Ok(id);
+            return Ok();
         }
 
         [HttpDelete]

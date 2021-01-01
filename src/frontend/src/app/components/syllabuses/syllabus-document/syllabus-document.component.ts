@@ -21,6 +21,7 @@ export class SyllabusDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.snapshot.paramMap.get('fosId');
+    this.route.snapshot.paramMap.get('specId');
     decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
   }
 

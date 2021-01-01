@@ -5,10 +5,11 @@
       [visibleButtons]="false"
       (selectFos)="selectedFos = $event"
       (selectYear)="selectedYear = $event"
+      (selectSpec)="selectedSpec = $event"
     ></app-fos-year-picker>
   </div>
   <mat-dialog-actions align="end">
-    <button mat-button (click)="submit()" [disabled]="!selectedFos || !selectedYear">Zatwierdź</button>
+    <button mat-button (click)="submit()" [disabled]="!selectedFos || !selectedYear || (specializations && !selectedSpec)">Zatwierdź</button>
     <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
       Anuluj
     </button>

@@ -16,10 +16,11 @@ export class SyllabusPickerComponent implements OnInit {
 
   download(choice: any) {
     choice.fos;
+    choice.spec;
     choice.year;
   }
 
   edit(choice: any) {
-    this.router.navigate([`/syllabus/document/${choice.fos.id}/${encodeURIComponent(choice.year)}`]);
+    this.router.navigate([`/syllabus/document/${choice.fos.code}/${choice.spec.code}/${encodeURIComponent(choice.year)}`]);
   }
 }

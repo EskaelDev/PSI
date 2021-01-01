@@ -20,6 +20,6 @@ export class LearningOutcomePickerComponent implements OnInit {
   }
 
   edit(choice: any) {
-    this.router.navigate([`/learning-outcome/document/${choice.fos.id}/${encodeURIComponent(choice.year)}`]);
+    this.router.navigate([`/learning-outcome/document/${choice.fos.code}/${encodeURIComponent(choice.year)}`]);
   }
 }

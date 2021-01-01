@@ -34,6 +34,21 @@ export class FieldOfStudyService {
     );
   }
 
+  getMyFieldsOfStudies(): Observable<FieldOfStudy[]> {
+    return this.http.get<FieldOfStudy[]>(this.baseUrl + '/all').pipe(
+      map((fields) => {
+        return fields.map((f) => {
+          f.supervisor = Object.assign(new User(), f.supervisor);
+          return f;
+        });
+      }),
+      catchError(() => {
+        this.alerts.showDefaultLoadingDataErrorMessage();
+        return of([]);
+      })
+    );
+  }
+
   saveFos(fos: FieldOfStudy): Observable<boolean> {
     return this.http.post<FieldOfStudy>(this.baseUrl + '/save', fos).pipe(
       map(() => {

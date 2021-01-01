@@ -2,9 +2,19 @@
 <div>
   <mat-form-field appearance="fill">
     <mat-label>Wybierz kierunek studiów</mat-label>
-    <mat-select [(value)]="selectedFos" (change)="selectFos.emit(selectedFos)">
+    <mat-select [(value)]="selectedFos" (selectionChange)="selectedFosChanged()">
       <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{
         fos.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div *ngIf="specializations">
+  <mat-form-field appearance="fill">
+    <mat-label>Wybierz specjalizację</mat-label>
+    <mat-select [(value)]="selectedSpec" (selectionChange)="selectSpec.emit(selectedSpec)">
+      <mat-option *ngFor="let spec of specs" [value]="spec">{{
+        spec.name
       }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -12,7 +22,7 @@
 <div>
   <mat-form-field appearance="fill">
     <mat-label>Wybierz rok akademicki</mat-label>
-    <mat-select [(value)]="selectedYear" (change)="selectYear.emit(selectedYear)">
+    <mat-select [(value)]="selectedYear" (selectionChange)="selectYear.emit(selectedYear)">
       <mat-option *ngFor="let year of years" [value]="year">{{
         year
       }}</mat-option>
@@ -20,9 +30,9 @@
   </mat-form-field>
 </div>
 
-<button *ngIf="visibleButtons" (click)="download()" [disabled]="!selectedFos || !selectedYear">
+<button *ngIf="visibleButtons" (click)="download()" [disabled]="!selectedFos || !selectedYear || (specializations && !selectedSpec)">
   Download
 </button>
-<button *ngIf="visibleButtons" (click)="edit()" [disabled]="!selectedFos || !selectedYear">
+<button *ngIf="visibleButtons" (click)="edit()" [disabled]="!selectedFos || !selectedYear || (specializations && !selectedSpec)">
   Edit
 </button>

@@ -213,7 +213,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
 
                     b.HasIndex("FieldOfStudyCode");
 
-                    b.ToTable("Specialization");
+                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.LearningOutcomes.LearningOutcome", b =>
@@ -479,9 +479,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 const ERROR_MESSAGE = 'Coś poszło nie tak, spróbuj ponownie!';
+const LOADING_ERROR_MESSAGE = 'Błąd ładowania danych!';
+const DATA_ERROR_MESSAGE = 'Niepoprawne dane!';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,14 @@ export class AlertService {
 
   public showDefaultErrorMessage() {
     this.showCustomErrorMessage(ERROR_MESSAGE);
+  }
+
+  public showDefaultLoadingDataErrorMessage() {
+    this.showCustomErrorMessage(LOADING_ERROR_MESSAGE);
+  }
+
+  public showDefaultWrongDataErrorMessage() {
+    this.showCustomErrorMessage(DATA_ERROR_MESSAGE);
   }
 
   public showCustomErrorMessage(customMessage: string) {
@@ -29,7 +39,8 @@ export class AlertService {
     this.toastrService.info(customMessage);
   }
 
-  public showYesNoDialog(message: string): any {
+  public showYesNoDialog(message: string): boolean {
     //todo: custom popup
+    return false;
   }
 }

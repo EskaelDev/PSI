@@ -39,7 +39,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,7 +214,6 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     KindOfSubject = table.Column<int>(nullable: false),
                     Language = table.Column<int>(nullable: false),
                     TypeOfSubject = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: true),
                     SupervisorId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -248,7 +249,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 });
 
             migrationBuilder.CreateTable(
-                name: "Specialization",
+                name: "Specializations",
                 columns: table => new
                 {
                     Code = table.Column<string>(nullable: false),
@@ -258,9 +259,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Specialization", x => x.Code);
+                    table.PrimaryKey("PK_Specializations", x => x.Code);
                     table.ForeignKey(
-                        name: "FK_Specialization_FieldsOfStudies_FieldOfStudyCode",
+                        name: "FK_Specializations_FieldsOfStudies_FieldOfStudyCode",
                         column: x => x.FieldOfStudyCode,
                         principalTable: "FieldsOfStudies",
                         principalColumn: "Code",
@@ -408,9 +409,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_LearningOutcome_Specialization_SpecializationCode",
+                        name: "FK_LearningOutcome_Specializations_SpecializationCode",
                         column: x => x.SpecializationCode,
-                        principalTable: "Specialization",
+                        principalTable: "Specializations",
                         principalColumn: "Code",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -453,9 +454,9 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                         principalColumn: "Code",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Syllabuses_Specialization_SpecializationCode",
+                        name: "FK_Syllabuses_Specializations_SpecializationCode",
                         column: x => x.SpecializationCode,
-                        principalTable: "Specialization",
+                        principalTable: "Specializations",
                         principalColumn: "Code",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -617,8 +618,8 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Specialization_FieldOfStudyCode",
-                table: "Specialization",
+                name: "IX_Specializations_FieldOfStudyCode",
+                table: "Specializations",
                 column: "FieldOfStudyCode");
 
             migrationBuilder.CreateIndex(
@@ -717,7 +718,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                 name: "SyllabusDescription");
 
             migrationBuilder.DropTable(
-                name: "Specialization");
+                name: "Specializations");
 
             migrationBuilder.DropTable(
                 name: "FieldsOfStudies");

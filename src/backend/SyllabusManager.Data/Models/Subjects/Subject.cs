@@ -19,7 +19,6 @@ namespace SyllabusManager.Data.Models.Subjects
         public KindOfSubject KindOfSubject { get; set; }
         public MainLanguage Language { get; set; }
         public TypeOfSubject TypeOfSubject { get; set; }
-        public string Discriminator { get; set; }
         public SyllabusManagerUser Supervisor { get; set; }
         public List<Literature> Literature { get; set; }
         public List<Lesson> Lessons { get; set; }

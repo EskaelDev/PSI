@@ -14,7 +14,6 @@ import { User } from 'src/app/core/models/user/user';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-study.service';
 import { MessageHubService } from 'src/app/services/message-hub/message-hub.service';
-import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-fos',
@@ -35,7 +34,6 @@ export class FosComponent implements OnInit, OnDestroy {
 
   constructor(
     private fosService: FieldOfStudyService,
-    private userService: UserService,
     private readonly messageHub: MessageHubService,
     private readonly alerts: AlertService,
     private readonly fb: FormBuilder
@@ -57,6 +55,7 @@ export class FosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadSupervisors();
     this.subscribtions.push(
       this.messageHub.selectedFos.subscribe((fos) => {
         this.originalFos = fos;
@@ -91,7 +90,7 @@ export class FosComponent implements OnInit, OnDestroy {
   }
 
   loadSupervisors() {
-    this.userService.getPossibleSupervisors().subscribe((supervisors) => {
+    this.fosService.getPossibleSupervisors().subscribe((supervisors) => {
       this.supervisors = supervisors;
     });
   }
@@ -99,16 +98,20 @@ export class FosComponent implements OnInit, OnDestroy {
   saveFos() {
     const editedFos = Object.assign(this.originalFos, this.fosForm.value);
 
-    this.fosService.saveFos(editedFos).subscribe(() => {
-      this.messageHub.notifyFieldsOfStudiesChanged();
-      this.alerts.showCustomSuccessMessage('Zmiany zapisane');
+    this.fosService.saveFos(editedFos).subscribe((result) => {
+      if (result) {
+        this.messageHub.notifyFieldsOfStudiesChanged();
+        this.alerts.showCustomSuccessMessage('Zmiany zapisane');
+      }
     });
   }
 
   removeFos() {
-    this.fosService.deleteFos(this.originalFos.code).subscribe(() => {
-      this.messageHub.notifyFieldsOfStudiesChanged();
-      this.alerts.showCustomSuccessMessage('Kierunek usunięty');
+    this.fosService.deleteFos(this.originalFos.code).subscribe((result) => {
+      if (result) {
+        this.messageHub.notifyFieldsOfStudiesChanged();
+        this.alerts.showCustomSuccessMessage('Kierunek usunięty');
+      }
     });
   }
 

@@ -1,5 +1,5 @@
-﻿using System;
-using SyllabusManager.Data.Models.User;
+﻿using SyllabusManager.Data.Models.User;
+using System;
 using System.Collections.Generic;
 
 namespace SyllabusManager.Logic.Models.DTO

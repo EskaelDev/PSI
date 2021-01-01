@@ -12,5 +12,7 @@ namespace SyllabusManager.Logic.Interfaces
         Task<UserDTO> GetByIdAsync(string id);
         Task<UserDTO> AddOrUpdateAsync(UserDTO user);
         Task<bool> DeleteAsync(string id);
+        Task<List<UserDTO>> GetByRoleAsync(string role);
+        Task<List<UserDTO>> GetTeachers();
     }
 }

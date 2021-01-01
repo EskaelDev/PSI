@@ -6,9 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using SyllabusManager.API.Helpers;
+using SyllabusManager.API.Extensions;
 using SyllabusManager.Data;
 using SyllabusManager.Data.Models.User;
+using System.Linq;
 
 namespace SyllabusManager.API
 {
@@ -43,6 +44,7 @@ namespace SyllabusManager.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SyllabusManager.API", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
             services.AddIdentity<SyllabusManagerUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)

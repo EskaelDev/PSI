@@ -8,10 +8,10 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 namespace SyllabusManager.Logic.Services.Abstract
 {
-    public abstract class NonVersionedService<T> where T : NonVersionedModelBase
+    public abstract class NonVersionedService<T> : INonVersionedService<T> where T : NonVersionedModelBase
     {
-        private readonly SyllabusManagerDbContext _dbContext;
-        private readonly DbSet<T> _dbSet;
+        protected readonly SyllabusManagerDbContext _dbContext;
+        protected readonly DbSet<T> _dbSet;
 
         public NonVersionedService(SyllabusManagerDbContext dbContext)
         {
@@ -26,18 +26,18 @@ namespace SyllabusManager.Logic.Services.Abstract
 
         public virtual async Task<T> FirstAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.FirstAsync(predicate);
+            return await _dbSet.AsNoTracking().FirstAsync(predicate);
         }
 
         public virtual async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.FirstOrDefaultAsync(predicate);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
 
         public virtual async Task<List<T>> FindBy(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.Where(predicate).ToListAsync();
+            return await _dbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
         public virtual async Task<T> FindAsync(params object[] keys)
@@ -50,9 +50,28 @@ namespace SyllabusManager.Logic.Services.Abstract
             await _dbSet.AddAsync(entity);
             return entity;
         }
+
+        /// <summary>
+        /// Adds or Updates if entity already in database
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public virtual async Task<T> SaveAsync(T entity)
+        {
+            T entityDb = _dbSet.Find(entity.Id);
+            if (entityDb == null)
+            {
+                await _dbSet.AddAsync(entity);
+            }
+            else
+                _dbSet.Update(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
+        }
+
         public virtual async Task<T> GetByIdAsync(string id)
         {
-            return await _dbSet.Where(e => e.Id.ToString() == id).FirstOrDefaultAsync();
+            return await _dbSet.Where(e => e.Id.ToString() == id).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
@@ -68,9 +87,31 @@ namespace SyllabusManager.Logic.Services.Abstract
         }
 
 
-        public async Task<bool> DeleteAsync(string id)
+        public virtual async Task<bool> DeleteAsync(string id)
         {
             T dbEntity = await _dbSet.FindAsync(id);
+            if (dbEntity == null)
+            {
+                return false;
+            }
+            _dbSet.Remove(dbEntity);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        public virtual async Task<bool> SoftDeleteAsync(string id)
+        {
+            T dbEntity = await _dbSet.FindAsync(id);
+            if (dbEntity == null)
+            {
+                return false;
+            }
+            dbEntity.IsDeleted = true;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+        public virtual async Task<bool> SoftDeleteAsync(T entity)
+        {
+            T dbEntity = await _dbSet.FindAsync(entity.Id);
             if (dbEntity == null)
             {
                 return false;

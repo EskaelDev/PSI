@@ -36,9 +36,9 @@ export class FosFormComponent implements OnInit {
       );
   }
 
-  private _filter(value: any): User[] {
+  private _filter(value: any): User[] {   
     const filterValue =
-      value instanceof User ? value.name.toLowerCase() : value.toLowerCase();
+      value instanceof User ? value.name.toLowerCase() : value?.toLowerCase();
 
     return this.supervisors.filter((supervisor) =>
       supervisor.name.toLowerCase().includes(filterValue)

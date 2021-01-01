@@ -109,7 +109,7 @@ namespace SyllabusManager.Logic.Services
         {
             var roleId = (await _roleManager.FindByNameAsync(role))?.Id;
             return _dbContext.Users.Where(u => _dbContext.UserRoles.Any(r => r.RoleId == roleId && r.UserId == u.Id))
-                .ToList().Select(u => u.MakeDto(null)).ToList();
+                .ToList().Select(u => u.MakeDto(new List<string>())).ToList();
         }
 
         public async Task<List<UserDTO>> GetTeachers()

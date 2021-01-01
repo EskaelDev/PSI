@@ -56,22 +56,28 @@ export class UserComponent implements OnInit, OnDestroy {
 
   saveUser() {
     const editedUser = Object.assign(this.originalUser, this.userForm.value);
-    this.userService.saveUser(editedUser).subscribe(() => {
-      this.messageHub.notifyUsersChanged();
-      this.alerts.showCustomSuccessMessage('Zmiany zapisane');
+    this.userService.saveUser(editedUser).subscribe((result) => {
+      if (result) {
+        this.messageHub.notifyUsersChanged();
+        this.alerts.showCustomSuccessMessage('Zmiany zapisane');
+      }
     });
   }
 
   removeUser() {
-    this.userService.deleteUser(this.originalUser.id).subscribe(() => {
-      this.messageHub.notifyUsersChanged();
-      this.alerts.showCustomSuccessMessage('Użytkownik usunięty');
+    this.userService.deleteUser(this.originalUser.id).subscribe((result) => {
+      if (result) {
+        this.messageHub.notifyUsersChanged();
+        this.alerts.showCustomSuccessMessage('Użytkownik usunięty');
+      }
     });
   }
 
   resetPassword() {
-    this.userService.resetPassword(this.originalUser.id).subscribe(() => {
-      this.alerts.showCustomSuccessMessage('Hasło zresetowane');
+    this.userService.resetPassword(this.originalUser.id).subscribe((result) => {
+      if (result) {
+        this.alerts.showCustomSuccessMessage('Hasło zresetowane');
+      }
     });
   }
 

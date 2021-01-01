@@ -43,7 +43,7 @@ export class AlertService {
 
   public showYesNoDialog(title: string, message: string): Promise<boolean> {
     const sub = this.dialog.open(YesNoDialogComponent, {
-      height: '310px',
+      height: '320px',
       width: '500px',
       data: {
         title: title,

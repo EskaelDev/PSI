@@ -41,6 +41,7 @@ export class SyllabusDocumentComponent implements OnInit {
 
     sub.afterClosed().subscribe(result => {
       result.fos;
+      result.spec;
       result.year;
     });
   }
@@ -57,6 +58,7 @@ export class SyllabusDocumentComponent implements OnInit {
 
     sub.afterClosed().subscribe(result => {
       result.fos;
+      result.spec;
       result.year;
     });
   }

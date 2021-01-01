@@ -34,7 +34,8 @@ export class SubjectDocumentComponent implements OnInit {
       height: '500px',
       width: '500px',
       data: {
-        title: 'Zapisz jako'
+        title: 'Zapisz jako',
+        allowsNew: true
       }
     });
 

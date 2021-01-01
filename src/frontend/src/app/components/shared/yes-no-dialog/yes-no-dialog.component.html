@@ -1,0 +1,13 @@
+<div>
+  <h1 mat-dialog-title class="yes-no-title">{{ title }}</h1>
+  <div mat-dialog-content class="yes-no-message">
+    <div fxLayoutAlign="center">
+      <img src="/assets/question.png"/>
+    </div>
+    <div>{{ message }}</div>
+  </div>
+  <mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Tak</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="false" cdkFocusInitial>Nie</button>
+  </mat-dialog-actions>
+</div>

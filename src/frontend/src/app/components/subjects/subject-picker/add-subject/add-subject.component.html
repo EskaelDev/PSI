@@ -1,0 +1,66 @@
+<div>
+  <h1 mat-dialog-title>Nowy przedmiot</h1>
+  <div mat-dialog-content style="height: 340px" fxLayoutAlign="center center">
+    <form [formGroup]="subjectForm">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Symbol przedmiotu"
+          formControlName="code"
+          required
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Nazwa"
+          formControlName="namePl"
+          required
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz rok akademicki</mat-label>
+        <mat-select formControlName="academicYear" required>
+          <mat-option *ngFor="let year of years" [value]="year">{{
+            year
+          }}</mat-option>
+        </mat-select>
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Opiekun"
+          aria-label="Number"
+          formControlName="supervisor"
+          matInput
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
+          <mat-option
+            *ngFor="let supervisor of filteredSupervisors | async"
+            [value]="supervisor"
+          >
+            {{ supervisor.name }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="submit()" [disabled]="!subjectForm.valid">
+      Dodaj
+    </button>
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
+      Anuluj
+    </button>
+  </mat-dialog-actions>
+</div>

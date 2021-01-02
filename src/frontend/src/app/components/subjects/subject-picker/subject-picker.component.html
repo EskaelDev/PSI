@@ -1,1 +1,38 @@
-<p>subject-picker works!</p>
+<h1>Przedmioty</h1>
+<button (click)="newSubject()">Add</button>
+<div fxLayoutAlign="start center" fxLayoutGap="20px">
+    <mat-form-field>
+        <mat-label>Wyszukaj</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="searchPhrase"
+          (input)="filterSubjects()"
+        />
+        <button
+          mat-button
+          *ngIf="searchPhrase"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="searchPhrase = ''"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz rok akademicki</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="selectedYearChanged()">
+          <mat-option *ngFor="let year of years" [value]="year">{{
+            year
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="onlyMy" (change)="mySubjectsChanged()">Tylko moje</mat-checkbox>
+</div>
+<div>
+    <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">
+        <div>{{subject.code}} {{subject.namePl}}</div>
+        <button (click)="edit(subject)">Edit</button>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<app-frame title="Dokumenty" subtitle="kierunku">
+  <app-fos-year-filter
+    (criteriaChange)="criteriaChanged($event)"
+    [isSpec]="true"
+  ></app-fos-year-filter>
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
+    <app-document-tile
+      *ngFor="let syllabus of syllabuses"
+      [name]="syllabus.fieldOfStudy.name"
+      [spec]="syllabus.specialization.name"
+      [year]="syllabus.academicYear"
+    >
+      <div>
+        <div><button (click)="downloadSyllabus(syllabus)">Program studiów</button></div>
+        <div><button (click)="downloadPlan(syllabus)">Plan studiów</button></div>
+        <div><button (click)="downloadLearningOutcomes(syllabus)">Efekty uczenia się</button></div>
+        <div><button (click)="downloadSubjects(syllabus)">Karty przedmiotów</button></div>
+      </div>
+    </app-document-tile>
+  </div>
+</app-frame>

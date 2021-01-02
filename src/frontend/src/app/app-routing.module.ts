@@ -6,6 +6,7 @@ import { FieldsOfStudiesComponent } from './components/admin/fields-of-studies/f
 import { UsersComponent } from './components/admin/users/users.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { LogoutComponent } from './components/authentication/logout/logout.component';
+import { DocumentsComponent } from './components/documents/documents.component';
 import { HomeComponent } from './components/home/home/home.component';
 import { NoAccessComponent } from './components/home/no-access/no-access.component';
 import { NotFoundComponent } from './components/home/not-found/not-found.component';
@@ -13,6 +14,7 @@ import { LearningOutcomeDocumentComponent } from './components/learning-outcomes
 import { LearningOutcomePickerComponent } from './components/learning-outcomes/learning-outcome-picker/learning-outcome-picker.component';
 import { SubjectDocumentComponent } from './components/subjects/subject-document/subject-document.component';
 import { SubjectPickerComponent } from './components/subjects/subject-picker/subject-picker.component';
+import { SyllabusAcceptanceComponent } from './components/syllabuses/syllabus-acceptance/syllabus-acceptance.component';
 import { SyllabusDocumentComponent } from './components/syllabuses/syllabus-document/syllabus-document.component';
 import { SyllabusPickerComponent } from './components/syllabuses/syllabus-picker/syllabus-picker.component';
 import { AuthGuard } from './interceptors/auth.guard';
@@ -34,6 +36,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'documents',
+    component: DocumentsComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -97,6 +104,17 @@ const routes: Routes = [
         data: {
           permissions: {
             only: ['Admin', 'Teacher'],
+            redirectTo: '/noaccess'
+          }
+        }
+      },
+      {
+        path: 'acceptance',
+        component: SyllabusAcceptanceComponent,
+        canActivate: [NgxPermissionsGuard],
+        data: {
+          permissions: {
+            only: ['Admin', 'StudentGoverment'],
             redirectTo: '/noaccess'
           }
         }

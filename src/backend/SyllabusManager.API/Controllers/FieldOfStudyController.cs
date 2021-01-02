@@ -10,7 +10,7 @@ namespace SyllabusManager.API.Controllers
 {
     [Authorize(Roles = UsersRoles.AdminTeacher)]
     [ApiController]
-    public class FieldOfStudyController : NonVersionedController<FieldOfStudy>
+    public class FieldOfStudyController : NonVersionedControllerBase<FieldOfStudy>
     {
         private readonly IFieldOfStudyService _fieldOfStudyService;
 
@@ -35,7 +35,7 @@ namespace SyllabusManager.API.Controllers
         public async Task<IActionResult> Save([FromBody] FieldOfStudy fos)
         {
             FieldOfStudy result = await _fieldOfStudyService.SaveAsync(fos);
-            if (result == null)
+            if (result is null)
                 return BadRequest();
             return Ok();
         }

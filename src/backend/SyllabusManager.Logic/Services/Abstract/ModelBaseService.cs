@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace SyllabusManager.Logic.Services.Abstract
 {
-    public abstract class ModelBaseService<T> where T : ModelBase
+    public abstract class ModelBaseService<T> : IModelBaseService<T> where T : ModelBase
     {
-        private readonly SyllabusManagerDbContext _dbContext;
-        private readonly DbSet<T> _dbSet;
+        protected readonly SyllabusManagerDbContext _dbContext;
+        protected readonly DbSet<T> _dbSet;
 
         public ModelBaseService(SyllabusManagerDbContext dbContext)
         {

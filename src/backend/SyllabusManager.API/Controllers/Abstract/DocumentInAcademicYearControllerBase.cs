@@ -9,7 +9,7 @@ namespace SyllabusManager.API.Controllers.Abstract
 {
     public abstract class DocumentInAcademicYearControllerBase<T> : ModelBaseControllerBase<T> where T:DocumentInAcademicYearBase
     {
-        public DocumentInAcademicYearControllerBase(DocumentInAcademicYearService<T> service):base(service)
+        public DocumentInAcademicYearControllerBase(IDocumentInAcademicYearService<T> service):base(service)
         {
 
         }

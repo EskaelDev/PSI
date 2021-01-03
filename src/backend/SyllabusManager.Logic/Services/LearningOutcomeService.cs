@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SyllabusManager.Logic.Services
 {
-    public class LearningOutcomeService : DocumentInAcademicYearService<LearningOutcomeDocument>
+    public class LearningOutcomeService : DocumentInAcademicYearService<LearningOutcomeDocument>, ILearningOutcomeService
     {
         public LearningOutcomeService(SyllabusManagerDbContext dbContext) : base(dbContext)
         {

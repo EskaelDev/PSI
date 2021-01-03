@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace SyllabusManager.API.Controllers
 {
     [Authorize(Roles = UsersRoles.AdminTeacher)]
-    [ApiController]
     public class FieldOfStudyController : NonVersionedControllerBase<FieldOfStudy>
     {
         private readonly IFieldOfStudyService _fieldOfStudyService;

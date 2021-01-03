@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SyllabusManager.Logic.Services.Abstract
 {
-    public abstract class DocumentInAcademicYearService<T> : ModelBaseService<T> where T : DocumentInAcademicYearBase
+    public abstract class DocumentInAcademicYearService<T> : ModelBaseService<T>, IDocumentInAcademicYearService<T> where T : DocumentInAcademicYearBase
     {
-        public DocumentInAcademicYearService(SyllabusManagerDbContext dbContext): base(dbContext)
+        public DocumentInAcademicYearService(SyllabusManagerDbContext dbContext) : base(dbContext)
         {
 
         }

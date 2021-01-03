@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class LearningOutcomeController : DocumentInAcademicYearControllerBase<LearningOutcomeDocument>
     {
-        private readonly LearningOutcomeService _learningOutcomeService;
+        private readonly ILearningOutcomeService _learningOutcomeService;
 
-        public LearningOutcomeController(LearningOutcomeService learningOutcomeService) : base(learningOutcomeService)
+        public LearningOutcomeController(ILearningOutcomeService learningOutcomeService) : base(learningOutcomeService)
         {
             _learningOutcomeService = learningOutcomeService;
         }

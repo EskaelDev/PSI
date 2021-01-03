@@ -26,6 +26,7 @@ namespace SyllabusManager.Logic.Services
         public async Task<LearningOutcomeDocument> Latest(string fosCode, string academicYear)
         {
             LearningOutcomeDocument lodDb = await _dbSet.Include(lod => lod.FieldOfStudy)
+                                                        .ThenInclude(fs => fs.Specializations)
                                                         .Include(lod => lod.LearningOutcomes)
                                                         .ThenInclude(lo => lo.Specialization)
                                                         .Where(lod =>
@@ -38,8 +39,13 @@ namespace SyllabusManager.Logic.Services
             {
                 lodDb = new LearningOutcomeDocument();
                 lodDb.AcademicYear = academicYear;
-                lodDb.FieldOfStudy = _dbContext.FieldsOfStudies.Find(fosCode);
+                lodDb.FieldOfStudy = _dbContext.FieldsOfStudies.Include(f => f.Specializations).FirstOrDefault(f => f.Code == fosCode);
+                lodDb.Version = "new";
             }
+
+            lodDb.FieldOfStudy?.Specializations.RemoveAll(s => s.IsDeleted);
+            lodDb.FieldOfStudy?.Specializations?.ForEach(s => s.FieldOfStudy = null);
+            
             return lodDb;
         }
 
@@ -56,6 +62,17 @@ namespace SyllabusManager.Logic.Services
                 learningOutcome.Version = IncreaseVersion(learningOutcome.Version);
 
             learningOutcome.Id = Guid.NewGuid();
+            learningOutcome.LearningOutcomes.ForEach(lo =>
+            {
+                lo.Id = Guid.NewGuid();
+                if (lo.Specialization != null)
+                {
+                    var spec = _dbContext.Specializations.Find(lo.Specialization.Code);
+                    lo.Specialization = spec;
+                }
+            });
+            var fos = _dbContext.FieldsOfStudies.Find(learningOutcome.FieldOfStudy.Code);
+            learningOutcome.FieldOfStudy = fos;
 
             await _dbSet.AddAsync(learningOutcome);
             await _dbContext.SaveChangesAsync();
@@ -65,9 +82,16 @@ namespace SyllabusManager.Logic.Services
 
         private string IncreaseVersion(string version)
         {
-            string currentV = version.Substring(7);
-            int newV = int.Parse(currentV) + 1;
-            return version.Substring(0, 6) + newV.ToString("00");
+            var newVersion = DateTime.UtcNow.ToString("yyyyMMdd"); 
+            
+            if (version.Substring(0, 8) == newVersion)
+            {
+                string currentV = version.Substring(8);
+                int newV = int.Parse(currentV) + 1;
+                return version.Substring(0, 8) + newV.ToString("00");
+            }
+
+            return newVersion + "01";
         }
 
         /// <summary>
@@ -98,10 +122,10 @@ namespace SyllabusManager.Logic.Services
         /// <returns></returns>
         public async Task<LearningOutcomeDocument> ImportFrom(string currentDocId, string fosCode, string academicYear)
         {
-            LearningOutcomeDocument currentLod = await _dbSet.Include(lod => lod.FieldOfStudy)
+            LearningOutcomeDocument currentLod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
                                                              .Include(lod => lod.LearningOutcomes).FirstOrDefaultAsync(l => l.Id.ToString() == currentDocId);
 
-            LearningOutcomeDocument lod = await _dbSet.Include(lod => lod.FieldOfStudy)
+            LearningOutcomeDocument lod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
                                                       .Include(lod => lod.LearningOutcomes)
                                                       .ThenInclude(lo => lo.Specialization)
                                                       .Where(lod =>

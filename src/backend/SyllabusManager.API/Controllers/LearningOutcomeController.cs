@@ -47,7 +47,7 @@ namespace SyllabusManager.API.Controllers
 
             if (result is null)
                 return BadRequest();
-            return Ok(result);
+            return Ok();
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace SyllabusManager.API.Controllers
             LearningOutcomeDocument result = await _learningOutcomeService.SaveAs(fosCode, academicYear, learningOutcome);
             if (result is null)
                 return BadRequest();
-            return Ok(result);
+            return Ok();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace SyllabusManager.API.Controllers
             LearningOutcomeDocument result = await _learningOutcomeService.ImportFrom(currentDocId, fosCode, academicYear);
             if (result is null)
                 return NotFound();
-            return Ok(result);
+            return Ok();
         }
         // todo: /delete/{currentDocId} -> usuwa, ale jako IsDeleted (wszystkie wersje)
         [HttpDelete]

@@ -69,9 +69,9 @@ namespace SyllabusManager.Logic.Services.Abstract
             return entity;
         }
 
-        public virtual async Task<T> GetByIdAsync(string id)
+        public virtual async Task<T> GetByCodeAsync(string code)
         {
-            return await _dbSet.Where(e => e.Id.ToString() == id).AsNoTracking().FirstOrDefaultAsync();
+            return await _dbSet.Where(e => e.Id.ToString() == code).AsNoTracking().FirstOrDefaultAsync();
         }
 
         public virtual async Task<T> UpdateAsync(T entity)

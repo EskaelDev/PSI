@@ -32,7 +32,7 @@ namespace SyllabusManager.API.Controllers.Abstract
         [Route("{id}")]
         public virtual async Task<IActionResult> ById(string id)
         {
-            T result = await _modelService.GetByIdAsync(id);
+            T result = await _modelService.GetByCodeAsync(id);
             if (result == null)
             {
                 return NotFound();

@@ -14,14 +14,26 @@ namespace SyllabusManager.Logic.Services.Abstract
 
         }
 
-        public async Task<bool> Delete(string id)
+        public async Task<bool> Delete(Guid id)
         {
-            var entity = _dbSet.Find(new Guid(id));
+            var entity = _dbSet.Find(id);
             entity.IsDeleted = true;
             var state = await _dbContext.SaveChangesAsync();
             return state > 0;
         }
+        protected string IncreaseVersion(string version)
+        {
+            string newVersion = DateTime.UtcNow.ToString("yyyyMMdd");
 
+            if (version.Substring(0, 8) == newVersion)
+            {
+                string currentV = version.Substring(8);
+                int newV = int.Parse(currentV) + 1;
+                return version.Substring(0, 8) + newV.ToString("00");
+            }
+
+            return newVersion + "01";
+        }
 
     }
 }

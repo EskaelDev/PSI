@@ -1,5 +1,6 @@
 ﻿using SyllabusManager.Data.Enums.FieldOfStudies;
 using SyllabusManager.Data.Enums.Subjects;
+using SyllabusManager.Data.Models.FieldOfStudies;
 using SyllabusManager.Data.Models.ManyToMany;
 using SyllabusManager.Data.Models.User;
 using System.Collections.Generic;
@@ -26,5 +27,7 @@ namespace SyllabusManager.Data.Models.Subjects
         public List<CardEntries> CardEntries { get; set; }
         public List<SubjectTeacher> SubjectsTeachers { get; set; }
         public IEnumerable<SyllabusManagerUser> Teachers => SubjectsTeachers.Select(st => st.Teacher);
+        public FieldOfStudy FieldOfStudy{ get; set; }
+        public Specialization Specialization{ get; set; }
     }
 }

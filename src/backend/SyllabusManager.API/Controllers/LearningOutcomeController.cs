@@ -2,6 +2,7 @@
 using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.Data.Models.LearningOutcomes;
 using SyllabusManager.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -77,7 +78,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> ImportFrom(string currentDocId,
+        public async Task<IActionResult> ImportFrom(Guid currentDocId,
                                                    [FromQuery(Name = "fos")] string fosCode,
                                                    [FromQuery(Name = "year")] string academicYear)
         {
@@ -86,11 +87,16 @@ namespace SyllabusManager.API.Controllers
                 return NotFound();
             return Ok();
         }
-        // todo: /delete/{currentDocId} -> usuwa, ale jako IsDeleted (wszystkie wersje)
+        /// <summary>
+        /// Usuwa, ale jako IsDeleted (wszystkie wersje)
+        /// </summary>
+        /// <param name="currentDocId"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> Delete(string currentDocId)
+        public async Task<IActionResult> Delete(Guid currentDocId)
         {
+            // ToDo: usuwanie wszystkich wersji
             bool result = await _learningOutcomeService.Delete(currentDocId);
             if (result)
                 return Ok();
@@ -101,16 +107,20 @@ namespace SyllabusManager.API.Controllers
         // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
         [HttpGet]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(string currentDocId,
+        public async Task<IActionResult> Pdf(Guid currentDocId,
                                             [FromQuery(Name = "version")] string version)
         {
-            return Ok();
+            return Ok("Not implemented");
         }
-        
-        // todo: /history/{currentDocId} -> pobiera historię wersji (jako lista string z nazwami wersji)
+
+        /// <summary>
+        /// Pobiera historię wersji (jako lista string z nazwami wersji)
+        /// </summary>
+        /// <param name="currentDocId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> History(string currentDocId)
+        public async Task<IActionResult> History(Guid currentDocId)
         {
             List<string> result = await _learningOutcomeService.History(currentDocId);
             if (result is null)

@@ -45,7 +45,7 @@ namespace SyllabusManager.Logic.Services
 
             lodDb.FieldOfStudy?.Specializations.RemoveAll(s => s.IsDeleted);
             lodDb.FieldOfStudy?.Specializations?.ForEach(s => s.FieldOfStudy = null);
-            
+
             return lodDb;
         }
 
@@ -67,11 +67,11 @@ namespace SyllabusManager.Logic.Services
                 lo.Id = Guid.NewGuid();
                 if (lo.Specialization != null)
                 {
-                    var spec = _dbContext.Specializations.Find(lo.Specialization.Code);
+                    Data.Models.FieldOfStudies.Specialization spec = _dbContext.Specializations.Find(lo.Specialization.Code);
                     lo.Specialization = spec;
                 }
             });
-            var fos = _dbContext.FieldsOfStudies.Find(learningOutcome.FieldOfStudy.Code);
+            Data.Models.FieldOfStudies.FieldOfStudy fos = _dbContext.FieldsOfStudies.Find(learningOutcome.FieldOfStudy.Code);
             learningOutcome.FieldOfStudy = fos;
 
             await _dbSet.AddAsync(learningOutcome);
@@ -82,8 +82,8 @@ namespace SyllabusManager.Logic.Services
 
         private string IncreaseVersion(string version)
         {
-            var newVersion = DateTime.UtcNow.ToString("yyyyMMdd"); 
-            
+            string newVersion = DateTime.UtcNow.ToString("yyyyMMdd");
+
             if (version.Substring(0, 8) == newVersion)
             {
                 string currentV = version.Substring(8);
@@ -122,7 +122,12 @@ namespace SyllabusManager.Logic.Services
         /// <returns></returns>
         public async Task<LearningOutcomeDocument> ImportFrom(string currentDocId, string fosCode, string academicYear)
         {
-            LearningOutcomeDocument currentLod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
+            LearningOutcomeDocument currentLod;
+
+            if (currentDocId == Guid.Empty.ToString())
+                currentLod = new LearningOutcomeDocument();
+            else
+                currentLod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
                                                              .Include(lod => lod.LearningOutcomes).FirstOrDefaultAsync(l => l.Id.ToString() == currentDocId);
 
             LearningOutcomeDocument lod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
@@ -132,6 +137,9 @@ namespace SyllabusManager.Logic.Services
                                                                    lod.FieldOfStudy.Code == fosCode
                                                                 && lod.AcademicYear == academicYear)
                                                       .FirstOrDefaultAsync();
+
+            if (lod is null || lod.LearningOutcomes is null)
+                return null;
 
             currentLod.LearningOutcomes = lod.LearningOutcomes;
 

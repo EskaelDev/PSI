@@ -9,7 +9,7 @@ import { ListElement } from 'src/app/core/models/shared/list-element';
 })
 export class HistoryPopupComponent implements OnInit {
 
-  values: ListElement[] = [];
+  values: string[] = [];
   download = new EventEmitter();
 
   constructor(public dialogRef: MatDialogRef<HistoryPopupComponent>,
@@ -20,7 +20,7 @@ export class HistoryPopupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  downloadValue(id: string) {
-    this.download.emit(id);
+  downloadValue(version: string) {
+    this.download.emit(version);
   }
 }

@@ -15,7 +15,7 @@ import { HistoryPopupComponent } from '../../shared/document/history-popup/histo
 export class LearningOutcomeDocumentComponent implements OnInit {
   title = 'efektów uczenia się';
 
-  learningOutcomeDocument: LearningOutcomeDocument = new LearningOutcomeDocument();
+  learningOutcomeDocument: LearningOutcomeDocument | null = null;
   fosId: string = '';
   year: string = '';
 
@@ -46,14 +46,16 @@ export class LearningOutcomeDocumentComponent implements OnInit {
   }
 
   save() {
-    this.learningOutcomeService
-      .save(this.learningOutcomeDocument)
-      .subscribe((result) => {
-        if (result) {
-          this.alerts.showCustomSuccessMessage('Zapisano zmiany');
-          this.loadLearningOutcome();
-        }
-      });
+    if (this.learningOutcomeDocument) {
+      this.learningOutcomeService
+        .save(this.learningOutcomeDocument)
+        .subscribe((result) => {
+          if (result) {
+            this.alerts.showCustomSuccessMessage('Zapisano zmiany');
+            this.loadLearningOutcome();
+          }
+        });
+    }
   }
 
   saveAs() {
@@ -66,7 +68,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
     });
 
     sub.afterClosed().subscribe((result) => {
-      if (result) {
+      if (result && this.learningOutcomeDocument) {
         this.learningOutcomeService
           .saveAs(this.learningOutcomeDocument, result.fos.code, result.year)
           .subscribe((result) => {
@@ -89,7 +91,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
     });
 
     sub.afterClosed().subscribe((result) => {
-      if (result) {
+      if (result && this.learningOutcomeDocument) {
         this.learningOutcomeService
           .importFrom(
             this.learningOutcomeDocument.id,
@@ -110,22 +112,43 @@ export class LearningOutcomeDocumentComponent implements OnInit {
     this.router.navigate(['/learning-outcome/choose']);
   }
 
-  delete() {}
+  delete() {
+    if (this.learningOutcomeDocument) {
+      this.learningOutcomeService.delete(this.learningOutcomeDocument.id).subscribe(result => {
+        if (result) {
+          this.alerts.showCustomSuccessMessage('Usunięto dokument');
+        }
+      });
+    }
+  }
 
-  pdf() {}
+  pdf() {
+    if (this.learningOutcomeDocument) {
+      this.learningOutcomeService.pdf(this.learningOutcomeDocument.id, null).subscribe(() => {
+
+      });
+    }
+  }
 
   history() {
-    const sub = this.dialog.open(HistoryPopupComponent, {
-      height: '500px',
-      width: '400px',
-      data: {
-        // todo: pass history
-        values: [],
-      },
-    });
+    if (this.learningOutcomeDocument) {
+      this.learningOutcomeService
+        .history(this.learningOutcomeDocument.id)
+        .subscribe(history => {
+          const sub = this.dialog.open(HistoryPopupComponent, {
+            height: '500px',
+            width: '400px',
+            data: {
+              values: history,
+            },
+          });
 
-    sub.componentInstance.download.subscribe(() => {
-      // todo: download document pdf
-    });
+          sub.componentInstance.download.subscribe((version: string) => {
+            this.learningOutcomeService.pdf(this.learningOutcomeDocument?.id ?? '', version).subscribe(() => {
+
+            });
+          });
+        });
+    }
   }
 }

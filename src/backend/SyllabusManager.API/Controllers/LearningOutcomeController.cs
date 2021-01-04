@@ -97,14 +97,7 @@ namespace SyllabusManager.API.Controllers
             return NotFound();
 
         }
-        // todo: /pdf/{currentDocId} -> generuje pdf
 
-        [HttpGet]
-        [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(string currentDocId)
-        {
-            return Ok();
-        }
         // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
         [HttpGet]
         [Route("{currentDocId}")]
@@ -113,6 +106,7 @@ namespace SyllabusManager.API.Controllers
         {
             return Ok();
         }
+        
         // todo: /history/{currentDocId} -> pobiera historię wersji (jako lista string z nazwami wersji)
         [HttpGet]
         [Route("{currentDocId}")]
@@ -121,7 +115,7 @@ namespace SyllabusManager.API.Controllers
             List<string> result = await _learningOutcomeService.History(currentDocId);
             if (result is null)
                 return NotFound();
-            return Ok();
+            return Ok(result);
         }
     }
 }

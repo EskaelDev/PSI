@@ -17,6 +17,7 @@ import { SubjectPickerComponent } from './components/subjects/subject-picker/sub
 import { SyllabusAcceptanceComponent } from './components/syllabuses/syllabus-acceptance/syllabus-acceptance.component';
 import { SyllabusDocumentComponent } from './components/syllabuses/syllabus-document/syllabus-document.component';
 import { SyllabusPickerComponent } from './components/syllabuses/syllabus-picker/syllabus-picker.component';
+import { AccountComponent } from './components/user/account/account.component';
 import { AuthGuard } from './interceptors/auth.guard';
 
 const routes: Routes = [
@@ -36,6 +37,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
     canActivate: [AuthGuard],
   },
   {

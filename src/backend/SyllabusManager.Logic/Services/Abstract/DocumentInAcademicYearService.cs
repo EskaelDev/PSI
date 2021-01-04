@@ -16,7 +16,7 @@ namespace SyllabusManager.Logic.Services.Abstract
 
         public async Task<bool> Delete(string id)
         {
-            var entity = _dbSet.Find(id);
+            var entity = _dbSet.Find(new Guid(id));
             entity.IsDeleted = true;
             var state = await _dbContext.SaveChangesAsync();
             return state > 0;

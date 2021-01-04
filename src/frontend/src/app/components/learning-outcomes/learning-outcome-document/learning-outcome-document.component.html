@@ -1,15 +1,23 @@
-<app-document [title]="title"
-  ><app-control-buttons-panel
-    (save)="save()"
-    (saveAs)="saveAs()"
-    (import)="import()"
-    (close)="close()"
-    (delete)="delete()"
-    (pdf)="pdf()"
-    (history)="history()"
-  ></app-control-buttons-panel>
-  <div fxLayoutAlign="start start" fxLayoutGap="30px">
-    <app-fos-details [fos]="learningOutcomeDocument.fieldOfStudy" [year]="year"></app-fos-details>
-    <div>document body</div>
+<app-document [title]="title">
+  <div *ngIf="learningOutcomeDocument">
+    <app-control-buttons-panel
+      (save)="save()"
+      (saveAs)="saveAs()"
+      (import)="import()"
+      (close)="close()"
+      (delete)="delete()"
+      (pdf)="pdf()"
+      (history)="history()"
+    ></app-control-buttons-panel>
+    <div fxLayoutAlign="start start" fxLayoutGap="30px">
+      <app-fos-details
+        [fos]="learningOutcomeDocument.fieldOfStudy"
+        [year]="year"
+      ></app-fos-details>
+      <div>document body</div>
+    </div>
+  </div>
+  <div *ngIf="!learningOutcomeDocument">
+    Błąd wczytywania dokumentu
   </div>
 </app-document>

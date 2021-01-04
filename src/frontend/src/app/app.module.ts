@@ -10,6 +10,7 @@ import { SubjectsModule } from './components/subjects/subjects.module';
 import { SyllabusesModule } from './components/syllabuses/syllabuses.module';
 import { DocumentsModule } from './components/documents/documents.module';
 import { SharedComponentsModule } from './components/shared/shared-components.module';
+import { UserModule } from './components/user/user.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { SharedComponentsModule } from './components/shared/shared-components.mo
     SubjectsModule,
     SyllabusesModule,
     DocumentsModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent],

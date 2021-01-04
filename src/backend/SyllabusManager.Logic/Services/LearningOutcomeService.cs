@@ -154,8 +154,8 @@ namespace SyllabusManager.Logic.Services
             List<string> versions = await _dbSet.Include(lod => lod.FieldOfStudy)
                                                 .Where(lod =>
                                                              lod.AcademicYear == lod.AcademicYear
-                                                          && lod.FieldOfStudy == lodDb.FieldOfStudy)
-                                                .Select(lod => lod.Version).ToListAsync();
+                                                          && lod.FieldOfStudy == lodDb.FieldOfStudy && !lod.IsDeleted)
+                                                .Select(lod => lod.Version).OrderBy(l => l).ToListAsync();
             return versions;
         }
     }

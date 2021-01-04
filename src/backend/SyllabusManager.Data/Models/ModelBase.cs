@@ -9,10 +9,5 @@ namespace SyllabusManager.Data.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid Id { get; set; }
-
-        public ModelBase()
-        {
-            Id = Guid.NewGuid();
-        }
     }
 }

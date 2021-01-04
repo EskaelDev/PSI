@@ -1,0 +1,18 @@
+<div>
+  <h1 mat-dialog-title>Historia</h1>
+  <div mat-dialog-content>
+    <mat-list role="list" style="height: 330px; overflow: auto">
+      <mat-list-item role="listitem" class="history-item" *ngFor="let value of values"
+        ><div><span class="round-title">{{value}}</span></div>
+        <button mat-mini-fab color="accent" class="download-btn" (click)="downloadValue(value)">
+          <mat-icon>get_app</mat-icon>
+        </button></mat-list-item
+      >
+    </mat-list>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+      Zamknij
+    </button>
+  </mat-dialog-actions>
+</div>

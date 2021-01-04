@@ -1,0 +1,26 @@
+<div fxLayoutAlign="start center" fxLayoutGap="20px">
+    <mat-form-field appearance="fill">
+        <mat-label>Wybierz kierunek studiów</mat-label>
+        <mat-select [(value)]="selectedFos" (selectionChange)="selectedFosChanged()">
+          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{
+            fos.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" *ngIf="isSpec">
+        <mat-label>Wybierz specjalizację</mat-label>
+        <mat-select [(value)]="selectedSpec" (selectionChange)="selectionChanged()">
+          <mat-option *ngFor="let spec of specs" [value]="spec">{{
+            spec.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz rok akademicki</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="selectionChanged()">
+          <mat-option *ngFor="let year of years" [value]="year">{{
+            year
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+</div>

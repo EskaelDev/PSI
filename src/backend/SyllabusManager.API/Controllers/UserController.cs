@@ -8,7 +8,7 @@ using User = SyllabusManager.Logic.Models.DTO.UserDTO;
 namespace SyllabusManager.API.Controllers
 {
 
-    public class UserController : ApiController
+    public class UserController : ApiControllerBase
     {
         private readonly IUserService _userService;
 

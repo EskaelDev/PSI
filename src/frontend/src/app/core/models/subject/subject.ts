@@ -3,6 +3,8 @@ import { KindOfSubject } from "../../enums/subject/kind-of-subject.enum";
 import { ModuleType } from "../../enums/subject/module-type.enum";
 import { TypeOfSubject } from "../../enums/subject/type-of-subject.enum";
 import { DocumentInAcademicYear } from "../document-in-academic-year";
+import { FieldOfStudy } from "../field-of-study/field-of-study";
+import { Specialization } from "../field-of-study/specialization";
 import { User } from "../user/user";
 import { CardEntries } from "./card-entries";
 import { LearningOutcomeEvaluation } from "./learning-outcome-evaluation";
@@ -24,4 +26,6 @@ export class Subject extends DocumentInAcademicYear {
     learningOutcomeEvaluations: LearningOutcomeEvaluation[] = [];
     cardEntries: CardEntries[] = [];
     teachers: User[] = [];
+    fieldOfStudy: FieldOfStudy = new FieldOfStudy();
+    specialization: Specialization = new Specialization();
 }

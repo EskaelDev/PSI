@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 namespace SyllabusManager.API.Controllers.Abstract
 {
     [Authorize]
-    public abstract class NonVersionedController<T> : ApiController where T : NonVersionedModelBase
+    public abstract class ModelBaseControllerBase<T> : ApiControllerBase where T : ModelBase
     {
-        protected readonly INonVersionedService<T> _modelService;
+        private readonly IModelBaseService<T> _modelService;
 
-        public NonVersionedController(INonVersionedService<T> crudService)
+        public ModelBaseControllerBase(IModelBaseService<T> crudService)
         {
             _modelService = crudService;
         }
-
         [HttpPost]
         public virtual async Task<IActionResult> Add([FromBody] T entity)
         {
@@ -29,7 +28,7 @@ namespace SyllabusManager.API.Controllers.Abstract
         }
 
         [HttpGet]
-        [Route("/{id}")]
+        [Route("{id}")]
         public virtual async Task<IActionResult> ById(string id)
         {
             T result = await _modelService.GetByIdAsync(id);
@@ -42,7 +41,7 @@ namespace SyllabusManager.API.Controllers.Abstract
 
 
         [HttpGet]
-        public virtual async Task<IActionResult> All()
+        public virtual async Task<IActionResult> All(string id)
         {
             List<T> result = await _modelService.GetAllAsync();
             if (result == null)
@@ -51,6 +50,5 @@ namespace SyllabusManager.API.Controllers.Abstract
             }
             return Ok(result);
         }
-
     }
 }

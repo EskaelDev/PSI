@@ -4,8 +4,8 @@ import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LearningOutcomeDocument } from '../core/models/learning-outcome/learning-outcome-document';
-import { AlertService } from './alerts/alert.service';
+import { LearningOutcomeDocument } from '../../core/models/learning-outcome/learning-outcome-document';
+import { AlertService } from '../alerts/alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +56,14 @@ export class LearningOutcomeService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
+      catchError(err => {
+        if (err.status == 404) {
+          this.alerts.showCustomErrorMessage('Wybrany dokument do zaimportowania nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultWrongDataErrorMessage();
+        }
+        
         return of(false);
       })
     );

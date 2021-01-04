@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LearningOutcomeDocument } from 'src/app/core/models/learning-outcome/learning-outcome-document';
 import { AlertService } from 'src/app/services/alerts/alert.service';
-import { LearningOutcomeService } from 'src/app/services/learning-outcome.service';
+import { LearningOutcomeService } from 'src/app/services/learning-outcome/learning-outcome.service';
 import { FosYearPopupPickerComponent } from '../../shared/document/fos-year-popup-picker/fos-year-popup-picker.component';
 import { HistoryPopupComponent } from '../../shared/document/history-popup/history-popup.component';
 

@@ -1,0 +1,4 @@
+<div *ngIf="elems.length > 0">
+  <app-lo-list-elem *ngFor="let elem of elems" [elem]="elem" [selected]="selected" (selectedElem)="select($event)"></app-lo-list-elem>
+</div>
+<div *ngIf="elems.length === 0">Brak wpisów</div>

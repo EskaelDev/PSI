@@ -1,5 +1,5 @@
 <app-document [title]="title">
-  <div *ngIf="learningOutcomeDocument">
+  <div *ngIf="learningOutcomeDocument && !isLoading">
     <app-control-buttons-panel
       (save)="save()"
       (saveAs)="saveAs()"
@@ -14,10 +14,13 @@
         [fos]="learningOutcomeDocument.fieldOfStudy"
         [year]="year"
       ></app-fos-details>
-      <div>document body</div>
+      <app-lo-doc-edit [document]="learningOutcomeDocument"></app-lo-doc-edit>
     </div>
   </div>
-  <div *ngIf="!learningOutcomeDocument">
+  <div *ngIf="!learningOutcomeDocument && !isLoading">
     Błąd wczytywania dokumentu
+  </div>
+  <div *ngIf="isLoading" style="margin-top: 50px;">
+    <mat-spinner></mat-spinner>
   </div>
 </app-document>

@@ -14,6 +14,7 @@ import { HistoryPopupComponent } from '../../shared/document/history-popup/histo
 })
 export class LearningOutcomeDocumentComponent implements OnInit {
   title = 'efektów uczenia się';
+  isLoading = true;
 
   learningOutcomeDocument: LearningOutcomeDocument | null = null;
   fosId: string = '';
@@ -42,6 +43,10 @@ export class LearningOutcomeDocumentComponent implements OnInit {
         if (lo) {
           this.learningOutcomeDocument = lo;
         }
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
       });
   }
 

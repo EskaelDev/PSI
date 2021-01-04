@@ -20,5 +20,10 @@
   "profiles": {
     "Academic": "ogólnoakademicki",
     "Practical": "praktyczny"
+  },
+  "categories": {
+    "Knowledge": "Wiedza",
+    "Skills": "Umiejętności",
+    "SocialCompetences": "Kompetencje społeczne"
   }
 }

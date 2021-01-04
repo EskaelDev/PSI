@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
     );
     this.authService.login(credentials).subscribe(
       () => {
-        this.router.navigate([this.navigateUrl]);
+        this.router.navigate([decodeURIComponent(this.navigateUrl)]);
       },
       () => {
         this.isLoading = false;

@@ -46,19 +46,7 @@ export class SyllabusDocumentComponent implements OnInit {
       .subscribe(
         (syl) => {
           if (syl) {
-            console.log(syl);
             this.syllabusDocument = syl;
-            this.syllabusDocument.deanName = 'Axd';
-            if (this.syllabusDocument.description)
-            {
-              this.syllabusDocument.description.ects = 15;
-              this.syllabusDocument.description.prerequisites = 'iii';
-              this.syllabusDocument.description.employmentOpportunities = 'uuu';
-              this.syllabusDocument.description.possibilityOfContinuation = 'sss';
-            }
-            
-            this.syllabusDocument.intershipType = 'zzz';
-            this.syllabusDocument.scopeOfDiplomaExam = "ooo";
           }
           this.isLoading = false;
         },

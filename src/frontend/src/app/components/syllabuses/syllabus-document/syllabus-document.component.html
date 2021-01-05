@@ -16,7 +16,7 @@
         [spec]="syllabusDocument.specialization"
         [year]="syllabusDocument.academicYear"
       ></app-fos-details>
-      <div>document body</div>
+      <app-syl-doc-edit [document]="syllabusDocument"></app-syl-doc-edit>
     </div>
   </div>
   <div *ngIf="!syllabusDocument && !isLoading">

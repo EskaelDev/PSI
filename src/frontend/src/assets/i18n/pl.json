@@ -25,5 +25,14 @@
     "Knowledge": "Wiedza",
     "Skills": "Umiejętności",
     "SocialCompetences": "Kompetencje społeczne"
+  },
+  "titles": {
+    "MasterOfScience": "Magister inżynier",
+    "BachelorOfScience": "Inżynier",
+    "MasterOfArts": "Magister",
+    "BachelorOfArts": "Licencjat"
+  },
+  "graduations": {
+    "DiplomaExam": "Egzamin dyplomowy"
   }
 }

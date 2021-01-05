@@ -21,6 +21,7 @@ namespace SyllabusManager.Logic.Services
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
                                        .Include(s => s.Specialization)
+                                       .Include(s => s.Description)
                                        .Include(s => s.SubjectDescriptions)
                                        .ThenInclude(sd => sd.Subject)
                                        .OrderByDescending(s => s.Version)

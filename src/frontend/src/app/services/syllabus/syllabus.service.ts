@@ -49,8 +49,13 @@ export class SyllabusService {
         map(() => {
           return true;
         }),
-        catchError(() => {
-          this.alerts.showDefaultWrongDataErrorMessage();
+        catchError(err => {
+          if (err.status == 400) {
+            this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
+          }
+          else {
+            this.alerts.showDefaultWrongDataErrorMessage();
+          }
           return of(false);
         })
       );
@@ -74,8 +79,13 @@ export class SyllabusService {
         map(() => {
           return true;
         }),
-        catchError(() => {
-          this.alerts.showDefaultWrongDataErrorMessage();
+        catchError(err => {
+          if (err.status == 400) {
+            this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
+          }
+          else {
+            this.alerts.showDefaultWrongDataErrorMessage();
+          }
           return of(false);
         })
       );

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-control-buttons-panel',
@@ -7,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class ControlButtonsPanelComponent implements OnInit {
 
+  @Input() isNew: boolean = true;
   @Output() save: EventEmitter<any> = new EventEmitter();
   @Output() saveAs: EventEmitter<any> = new EventEmitter();
   @Output() import: EventEmitter<any> = new EventEmitter();

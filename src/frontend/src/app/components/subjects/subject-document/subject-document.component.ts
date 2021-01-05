@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppConsts } from 'src/app/core/consts/app-consts';
 import { Subject } from 'src/app/core/models/subject/subject';
 import { HistoryPopupComponent } from '../../shared/document/history-popup/history-popup.component';
 import { YearSubjectPickerComponent } from '../../shared/document/year-subject-picker/year-subject-picker.component';
@@ -11,9 +12,12 @@ import { YearSubjectPickerComponent } from '../../shared/document/year-subject-p
   styleUrls: ['./subject-document.component.scss']
 })
 export class SubjectDocumentComponent implements OnInit {
+  guidEmpty = AppConsts.EMPTY_ID;
   title = 'przedmiotu';
+  isLoading = true;
 
   subjectDocument: Subject = new Subject();
+  code: string = '';
   year: string = '';
   
   constructor(private readonly route: ActivatedRoute,
@@ -21,7 +25,7 @@ export class SubjectDocumentComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.route.snapshot.paramMap.get('code');
+    this.code = this.route.snapshot.paramMap.get('code') ?? '';
     this.year = decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
   }
 

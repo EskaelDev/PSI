@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -22,16 +23,21 @@ namespace SyllabusManager.Logic.Services
                                        .Include(s => s.Specialization)
                                        .Include(s => s.SubjectDescriptions)
                                        .ThenInclude(sd => sd.Subject)
-                                       .Include(s => s.Description)
                                        .OrderByDescending(s => s.Version)
                                        .FirstOrDefaultAsync(s =>
-                                                                s.FieldOfStudy.Id == fos
-                                                             && s.Specialization.Id == spec
-                                                             && s.AcademicYear == year
-                                                             && !s.IsDeleted);
+                                           s.FieldOfStudy.Code == fos
+                                           && s.Specialization.Code == spec
+                                           && s.AcademicYear == year
+                                           && !s.IsDeleted);
             if (syllabus is null)
             {
-                syllabus = new Syllabus();
+                syllabus = new Syllabus
+                {
+                    FieldOfStudy = _dbContext.FieldsOfStudies.Include(f => f.Specializations).FirstOrDefault(f => f.Code == fos),
+                    Specialization = _dbContext.Specializations.Find(spec),
+                    AcademicYear = year,
+                    Version = "new"
+                };
             }
 
             return syllabus;
@@ -42,10 +48,14 @@ namespace SyllabusManager.Logic.Services
         /// </summary>
         /// <param name="syllabus"></param>
         /// <returns></returns>
-        public async Task<Syllabus> Save(Syllabus syllabus)
+        public async Task<Syllabus> Save(Syllabus syllabus, SyllabusManagerUser user)
         {
             if (syllabus.Id == Guid.Empty)
+            {
                 syllabus.Version = DateTime.UtcNow.ToString("yyyyMMdd") + "01";
+                syllabus.CreationDate = DateTime.Now;
+                syllabus.AuthorName = user.Name;
+            }
             else
                 syllabus.Version = IncreaseVersion(syllabus.Version);
 
@@ -61,9 +71,11 @@ namespace SyllabusManager.Logic.Services
                 }
             });
 
+            syllabus.Description.Id = Guid.NewGuid();
 
             Data.Models.FieldOfStudies.FieldOfStudy fos = _dbContext.FieldsOfStudies.Find(syllabus.FieldOfStudy.Code);
             syllabus.FieldOfStudy = fos;
+            syllabus.Specialization = _dbContext.Specializations.Find(syllabus.Specialization.Code);
 
             syllabus.IsDeleted = false;
 
@@ -81,19 +93,18 @@ namespace SyllabusManager.Logic.Services
         /// <param name="year"></param>
         /// <param name="syllabus"></param>
         /// <returns></returns>
-        public async Task<Syllabus> SaveAs(string fosCode, string specCode, string academicYear, Syllabus syllabus)
+        public async Task<Syllabus> SaveAs(string fosCode, string specCode, string academicYear, Syllabus syllabus, SyllabusManagerUser user)
         {
-            Data.Models.FieldOfStudies.FieldOfStudy fos = _dbContext.FieldsOfStudies.Find(fosCode);
-            if (fos != null)
-                syllabus.FieldOfStudy = fos;
+            var currentSyllabus = await Latest(fosCode, specCode, academicYear);
 
-            Data.Models.FieldOfStudies.Specialization spec = _dbContext.Specializations.Find(specCode);
-            if (spec != null)
-                syllabus.Specialization = spec;
+            currentSyllabus.DeanName = syllabus.DeanName;
+            currentSyllabus.Description = syllabus.Description;
+            currentSyllabus.IntershipType = syllabus.IntershipType;
+            currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;
+            currentSyllabus.ScopeOfDiplomaExam = syllabus.ScopeOfDiplomaExam;
+            currentSyllabus.SubjectDescriptions = syllabus.SubjectDescriptions;
 
-            syllabus.AcademicYear = academicYear;
-
-            return await Save(syllabus);
+            return await Save(currentSyllabus, user);
         }
 
         /// <summary>
@@ -104,14 +115,9 @@ namespace SyllabusManager.Logic.Services
         /// <param name="spec"></param>
         /// <param name="year"></param>
         /// <returns></returns>
-        public async Task<Syllabus> ImportFrom(Guid currentDocId, string fosCode, string specCode, string academicYear)
+        public async Task<Syllabus> ImportFrom(Guid currentDocId, string fosCode, string specCode, string academicYear, SyllabusManagerUser user)
         {
-            Syllabus currentSyllabus;
-
-            if (currentDocId == Guid.Empty)
-                currentSyllabus = new Syllabus();
-            else
-                currentSyllabus = await _dbSet.AsNoTracking()
+            Syllabus currentSyllabus = await _dbSet.AsNoTracking()
                                               .Include(s => s.FieldOfStudy)
                                               .Include(s => s.Specialization)
                                               .Include(s => s.SubjectDescriptions)
@@ -133,13 +139,17 @@ namespace SyllabusManager.Logic.Services
                                                                   && s.Specialization.Code == specCode
                                                                   && !s.IsDeleted);
 
-            if (syllabus is null || syllabus.FieldOfStudy is null || syllabus.Specialization is null)
+            if (currentSyllabus is null || syllabus?.FieldOfStudy is null || syllabus.Specialization is null)
                 return null;
 
-            currentSyllabus.FieldOfStudy = syllabus.FieldOfStudy;
-            currentSyllabus.Specialization = syllabus.Specialization;
+            currentSyllabus.DeanName = syllabus.DeanName;
+            currentSyllabus.Description = syllabus.Description;
+            currentSyllabus.IntershipType = syllabus.IntershipType;
+            currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;
+            currentSyllabus.ScopeOfDiplomaExam = syllabus.ScopeOfDiplomaExam;
+            currentSyllabus.SubjectDescriptions = syllabus.SubjectDescriptions;
 
-            return await Save(currentSyllabus);
+            return await Save(currentSyllabus, user);
         }
 
         /// <summary>

@@ -5,16 +5,21 @@ using SyllabusManager.Logic.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using SyllabusManager.API.Helpers;
+using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.API.Controllers
 {
     public class SyllabusController : DocumentInAcademicYearControllerBase<Syllabus>
     {
         private readonly ISyllabusService _syllabusService;
+        private readonly UserManager<SyllabusManagerUser> _userManager;
 
-        public SyllabusController(ISyllabusService syllabusService) : base(syllabusService)
+        public SyllabusController(ISyllabusService syllabusService, UserManager<SyllabusManagerUser> userManager) : base(syllabusService)
         {
             _syllabusService = syllabusService;
+            _userManager = userManager;
         }
 
         // todo: /latest?fos={fosCode}&spec={specCode}&year={academicYear} -> zwraca obiekt Syllabus o najnowszej wersji dla podanych parametrów (jeżeli nie istnieje to zwraca nowy obiekt)
@@ -46,7 +51,8 @@ namespace SyllabusManager.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] Syllabus syllabus)
         {
-            Syllabus result = await _syllabusService.Save(syllabus);
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            Syllabus result = await _syllabusService.Save(syllabus, user);
             if (result is null)
                 return BadRequest();
 
@@ -68,7 +74,8 @@ namespace SyllabusManager.API.Controllers
                                                 [FromQuery] string year,
                                                 [FromBody] Syllabus syllabus)
         {
-            Syllabus result = await _syllabusService.SaveAs(fos, spec, year, syllabus);
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            Syllabus result = await _syllabusService.SaveAs(fos, spec, year, syllabus, user);
             if (result is null)
                 return BadRequest();
             return Ok();
@@ -90,7 +97,8 @@ namespace SyllabusManager.API.Controllers
                                                    [FromQuery] string spec,
                                                    [FromQuery] string year)
         {
-            Syllabus result = await _syllabusService.ImportFrom(currentDocId, fos, spec, year);
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            Syllabus result = await _syllabusService.ImportFrom(currentDocId, fos, spec, year, user);
             if (result is null)
                 return NotFound();
             return Ok();

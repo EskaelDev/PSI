@@ -5,7 +5,7 @@ import { ModelBase } from "../model-base";
 export class SyllabusDescription extends ModelBase {
     numOfSemesters: number = 0;
     ects: number = 0;
-    prerequisities: string = '';
+    prerequisites: string = '';
     professionalTitleAfterGraduation: ProfessionalTitle = ProfessionalTitle.BachelorOfScience;
     employmentOpportunities: string = '';
     possibilityOfContinuation: string = '';

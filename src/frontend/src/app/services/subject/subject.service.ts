@@ -1,25 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Subject } from 'src/app/core/models/subject/subject';
 import { environment } from 'src/environments/environment';
-import { LearningOutcomeDocument } from '../../core/models/learning-outcome/learning-outcome-document';
 import { AlertService } from '../alerts/alert.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LearningOutcomeService {
-  baseUrl = environment.baseUrl + '/api/learningoutcome';
+export class SubjectService {
+  baseUrl = environment.baseUrl + '/api/subject';
 
   constructor(
     private readonly http: HttpClient,
     private readonly alerts: AlertService
   ) {}
 
-  getLatest(fosCode: string, year: string): Observable<LearningOutcomeDocument | null> {
-    return this.http.get<LearningOutcomeDocument>(this.baseUrl + `/latest?fos=${fosCode}&year=${encodeURIComponent(year)}`).pipe(
+  getLatest(fosCode: string, specCode: string, year: string): Observable<Subject | null> {
+    return this.http.get<Subject>(this.baseUrl + `/latest?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`).pipe(
       catchError(() => {
         this.alerts.showDefaultLoadingDataErrorMessage();
         return of(null);
@@ -27,8 +26,8 @@ export class LearningOutcomeService {
     );
   }
 
-  save(lo: LearningOutcomeDocument): Observable<boolean> {
-    return this.http.post<any>(this.baseUrl + '/save', lo).pipe(
+  save(sub: Subject): Observable<boolean> {
+    return this.http.post<any>(this.baseUrl + '/save', sub).pipe(
       map(() => {
         return true;
       }),
@@ -39,8 +38,8 @@ export class LearningOutcomeService {
     );
   }
 
-  saveAs(lo: LearningOutcomeDocument, fosCode: string, year: string): Observable<boolean> {
-    return this.http.post<any>(this.baseUrl + `/saveas?fos=${fosCode}&year=${encodeURIComponent(year)}`, lo).pipe(
+  saveAs(sub: Subject, fosCode: string, specCode: string, year: string): Observable<boolean> {
+    return this.http.post<any>(this.baseUrl + `/saveas?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`, sub).pipe(
       map(() => {
         return true;
       }),
@@ -51,8 +50,8 @@ export class LearningOutcomeService {
     );
   }
 
-  importFrom(id: string, fosCode: string, year: string): Observable<boolean> {
-    return this.http.get<any>(this.baseUrl + `/importFrom/${id}?fos=${fosCode}&year=${encodeURIComponent(year)}`).pipe(
+  importFrom(id: string, fosCode: string, specCode: string, year: string): Observable<boolean> {
+    return this.http.get<any>(this.baseUrl + `/importFrom/${id}?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`).pipe(
       map(() => {
         return true;
       }),

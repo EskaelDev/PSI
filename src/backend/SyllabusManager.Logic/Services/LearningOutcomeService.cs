@@ -39,10 +39,12 @@ namespace SyllabusManager.Logic.Services
                                                         .FirstOrDefaultAsync();
             if (lodDb == null)
             {
-                lodDb = new LearningOutcomeDocument();
-                lodDb.AcademicYear = academicYear;
-                lodDb.FieldOfStudy = _dbContext.FieldsOfStudies.Include(f => f.Specializations).FirstOrDefault(f => f.Code == fosCode);
-                lodDb.Version = "new";
+                lodDb = new LearningOutcomeDocument
+                {
+                    AcademicYear = academicYear,
+                    FieldOfStudy = _dbContext.FieldsOfStudies.Include(f => f.Specializations).FirstOrDefault(f => f.Code == fosCode),
+                    Version = "new"
+                };
             }
 
             lodDb.FieldOfStudy?.Specializations.RemoveAll(s => s.IsDeleted);
@@ -110,12 +112,7 @@ namespace SyllabusManager.Logic.Services
         /// <returns></returns>
         public async Task<LearningOutcomeDocument> ImportFrom(Guid currentDocId, string fosCode, string academicYear)
         {
-            LearningOutcomeDocument currentLod;
-
-            if (currentDocId == Guid.Empty)
-                currentLod = new LearningOutcomeDocument();
-            else
-                currentLod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
+            LearningOutcomeDocument currentLod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
                                                         .Include(lod => lod.LearningOutcomes)
                                                         .FirstOrDefaultAsync(l =>
                                                                                  l.Id == currentDocId
@@ -130,7 +127,7 @@ namespace SyllabusManager.Logic.Services
                                                                 && !lod.IsDeleted)
                                                       .FirstOrDefaultAsync();
 
-            if (lod is null || lod.LearningOutcomes is null)
+            if (currentLod is null || lod?.LearningOutcomes is null)
                 return null;
 
             currentLod.LearningOutcomes = lod.LearningOutcomes;

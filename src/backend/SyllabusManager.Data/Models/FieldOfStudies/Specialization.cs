@@ -7,7 +7,5 @@ namespace SyllabusManager.Data.Models.FieldOfStudies
         [Required]
         public string Name { get; set; }
 
-        public FieldOfStudy FieldOfStudy { get; set; }
-
     }
 }

@@ -5,6 +5,7 @@ using SyllabusManager.Data.Models.FieldOfStudies;
 using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Models.DTO;
 using SyllabusManager.Logic.Services.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,7 +37,6 @@ namespace SyllabusManager.Logic.Services
             return all.Select(f =>
             {
                 f.Specializations = f.Specializations.Where(s => !s.IsDeleted).ToList();
-                f.Specializations.ForEach(s => s.FieldOfStudy = null);
                 return f;
             })
             .ToList();
@@ -89,7 +89,7 @@ namespace SyllabusManager.Logic.Services
 
         public override async Task<bool> DeleteAsync(string id)
         {
-            FieldOfStudy fos = await GetByIdAsync(id);
+            FieldOfStudy fos = await base.GetByCodeAsync(id);
             _dbContext.Specializations.RemoveRange(fos.Specializations);
             EntityEntry<FieldOfStudy> result = _dbSet.Remove(fos);
 
@@ -104,7 +104,7 @@ namespace SyllabusManager.Logic.Services
 
         public override async Task<bool> SoftDeleteAsync(string id)
         {
-            FieldOfStudy fos = await GetByIdAsync(id);
+            FieldOfStudy fos = await GetByCodeAsync(id);
             if (fos == null)
                 return false;
 
@@ -117,7 +117,7 @@ namespace SyllabusManager.Logic.Services
 
         }
 
-        public override async Task<FieldOfStudy> GetByIdAsync(string id)
+        public override async Task<FieldOfStudy> GetByCodeAsync(string id)
         {
             return await _dbSet.Where(e => e.Code == id).Include(e => e.Specializations).FirstOrDefaultAsync();
         }

@@ -98,7 +98,7 @@ namespace SyllabusManager.Logic.Services
         {
             var currentSyllabus = await Latest(fosCode, specCode, academicYear);
 
-            currentSyllabus.DeanName = syllabus.DeanName;
+            currentSyllabus.ThesisCourse = syllabus.ThesisCourse;
             currentSyllabus.Description = syllabus.Description;
             currentSyllabus.IntershipType = syllabus.IntershipType;
             currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;
@@ -143,7 +143,7 @@ namespace SyllabusManager.Logic.Services
             if (currentSyllabus is null || syllabus?.FieldOfStudy is null || syllabus.Specialization is null)
                 return null;
 
-            currentSyllabus.DeanName = syllabus.DeanName;
+            currentSyllabus.ThesisCourse = syllabus.ThesisCourse;
             currentSyllabus.Description = syllabus.Description;
             currentSyllabus.IntershipType = syllabus.IntershipType;
             currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;

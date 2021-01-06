@@ -17,6 +17,8 @@ export class SubjectDocumentComponent implements OnInit {
   isLoading = true;
 
   subjectDocument: Subject = new Subject();
+  fosId: string = '';
+  specId: string = '';
   code: string = '';
   year: string = '';
   
@@ -25,6 +27,8 @@ export class SubjectDocumentComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.fosId = this.route.snapshot.paramMap.get('fosId') ?? '';
+    this.specId = this.route.snapshot.paramMap.get('specId') ?? '';
     this.code = this.route.snapshot.paramMap.get('code') ?? '';
     this.year = decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
   }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study';
+import { Specialization } from 'src/app/core/models/field-of-study/specialization';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-study.service';
 import { AddSubjectComponent } from './add-subject/add-subject.component';
 
 @Component({
@@ -14,15 +17,21 @@ export class SubjectPickerComponent implements OnInit {
   searchPhrase = '';
   subjects: Subject[] = [];
   filteredSubjects: Subject[] = [];
+  fieldsOfStudy: FieldOfStudy[] = [];
+  specs: Specialization[] = [];
   years: string[] = ['2015/2016', '2016/2017', '2017/2018', '2018/2019', '2019/2020', '2020/2021', '2021/2022'];
+  
+  selectedFos: FieldOfStudy | null = null;
+  selectedSpec: Specialization | null = null;
   selectedYear: string | null = null;
   onlyMy: boolean = false;
 
   constructor(private readonly router: Router,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private fosService: FieldOfStudyService) { }
 
   ngOnInit(): void {
-    this.loadSubjects();
+    this.loadFieldsOfStudy();
   }
 
   filterSubjects() {
@@ -38,20 +47,33 @@ export class SubjectPickerComponent implements OnInit {
     }
   }
 
+  loadFieldsOfStudy() {
+    this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
+      this.fieldsOfStudy = fieldsOfStudy;
+    });
+  }
+
+  selectedFosChanged() {
+    this.selectedSpec = null;
+    
+    if (this.selectedFos) {
+      this.specs = this.selectedFos.specializations;
+    }
+    else {
+      this.specs = [];
+    }
+    this.loadSubjects();
+  }
+
   loadSubjects() {
+    this.subjects = [];
+    if (this.selectedSpec && this.selectedYear) {
 
-  }
-
-  selectedYearChanged() {
-    this.loadSubjects();
-  }
-
-  mySubjectsChanged() {
-    this.loadSubjects();
+    }
   }
 
   edit(subject: Subject) {
-    this.router.navigate([`/subject/document/${subject.code}/${encodeURIComponent(subject.academicYear)}`]);
+    this.router.navigate([`/subject/document/${subject.code}/${this.selectedFos?.code}/${this.selectedSpec?.code}/${encodeURIComponent(subject.academicYear)}`]);
   }
 
   newSubject() {

@@ -171,7 +171,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'document/:code/:year',
+        path: 'document/:code/:fosId/:specId/:year',
         component: SubjectDocumentComponent,
         canActivate: [NgxPermissionsGuard],
         data: {

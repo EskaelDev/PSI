@@ -3,8 +3,11 @@ import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study';
+import { Specialization } from 'src/app/core/models/field-of-study/specialization';
 import { Subject } from 'src/app/core/models/subject/subject';
 import { AlertService } from 'src/app/services/alerts/alert.service';
+import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-study.service';
 
 @Component({
   selector: 'app-year-subject-picker',
@@ -15,9 +18,13 @@ export class YearSubjectPickerComponent implements OnInit {
   title: string = '';
   allowsNew: boolean = false;
   selectedSubject: string | null = null;
+  selectedFos: FieldOfStudy | null = null;
+  selectedSpec: Specialization | null = null;
   selectedYear: string | null = null;
 
   subjects: Subject[] = [];
+  fieldsOfStudy: FieldOfStudy[] = [];
+  specs: Specialization[] = [];
   years: string[] = [
     '2015/2016',
     '2016/2017',
@@ -34,7 +41,8 @@ export class YearSubjectPickerComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<YearSubjectPickerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private readonly alerts: AlertService
+    private readonly alerts: AlertService,
+    private fosService: FieldOfStudyService
   ) {
     dialogRef.disableClose = true;
     this.title = data.title;
@@ -42,7 +50,7 @@ export class YearSubjectPickerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadSubjects();
+    this.loadFieldsOfStudy();
     this.filteredSubjects = this.subjectControl.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value))
@@ -102,6 +110,32 @@ export class YearSubjectPickerComponent implements OnInit {
         return true;
     }
     return false;
+  }
+  
+  loadFieldsOfStudy() {
+    this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
+      this.fieldsOfStudy = fieldsOfStudy;
+    });
+  }
+
+  selectedFosChanged() {
+    this.selectedSpec = null;
+    
+    if (this.selectedFos) {
+      this.specs = this.selectedFos.specializations;
+    }
+    else {
+      this.specs = [];
+    }
+  }
+
+  selectedSpecChanged() {
+    if (this.selectedSpec) {
+      this.loadSubjects();
+    }
+    else {
+      this.subjects = [];
+    }
   }
 
   loadSubjects() {

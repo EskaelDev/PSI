@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { User } from 'src/app/core/models/user/user';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../alerts/alert.service';
 
@@ -17,8 +18,35 @@ export class SubjectService {
     private readonly alerts: AlertService
   ) {}
 
-  getLatest(fosCode: string, specCode: string, year: string): Observable<Subject | null> {
-    return this.http.get<Subject>(this.baseUrl + `/latest?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`).pipe(
+  getAll(fosCode: string, specCode: string, year: string): Observable<Subject[]> {
+    return this.http.get<Subject[]>(this.baseUrl + `/all?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`).pipe(
+      catchError(() => {
+        this.alerts.showDefaultLoadingDataErrorMessage();
+        return of([]);
+      })
+    );
+  }
+
+  getAllEditable(fosCode: string, specCode: string, year: string, onlyMy: boolean): Observable<Subject[]> {
+    return this.http.get<Subject[]>(this.baseUrl + `/alleditable?fos=${fosCode}&spec=${specCode}&onlyMy=${onlyMy}&year=${encodeURIComponent(year)}`).pipe(
+      catchError(() => {
+        this.alerts.showDefaultLoadingDataErrorMessage();
+        return of([]);
+      })
+    );
+  }
+
+  getPossibleTeachers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + '/possibleteachers').pipe(
+      catchError(() => {
+        this.alerts.showDefaultLoadingDataErrorMessage();
+        return of([]);
+      })
+    );
+  }
+
+  getLatest(fosCode: string, specCode: string, code: string, year: string): Observable<Subject | null> {
+    return this.http.get<Subject>(this.baseUrl + `/latest?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`).pipe(
       catchError(() => {
         this.alerts.showDefaultLoadingDataErrorMessage();
         return of(null);
@@ -38,8 +66,8 @@ export class SubjectService {
     );
   }
 
-  saveAs(sub: Subject, fosCode: string, specCode: string, year: string): Observable<boolean> {
-    return this.http.post<any>(this.baseUrl + `/saveas?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`, sub).pipe(
+  saveAs(sub: Subject, fosCode: string, specCode: string, code: string, year: string): Observable<boolean> {
+    return this.http.post<any>(this.baseUrl + `/saveas?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`, sub).pipe(
       map(() => {
         return true;
       }),
@@ -50,8 +78,8 @@ export class SubjectService {
     );
   }
 
-  importFrom(id: string, fosCode: string, specCode: string, year: string): Observable<boolean> {
-    return this.http.get<any>(this.baseUrl + `/importFrom/${id}?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`).pipe(
+  importFrom(id: string, fosCode: string, specCode: string, code: string, year: string): Observable<boolean> {
+    return this.http.get<any>(this.baseUrl + `/importFrom/${id}?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`).pipe(
       map(() => {
         return true;
       }),

@@ -9,6 +9,7 @@ import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
 })
 export class SylDocEditComponent implements OnInit {
 
+  @Input() disabled: boolean = false;
   _document: Syllabus = new Syllabus();
   @Input() set document(doc: Syllabus) {
     this._document = doc;

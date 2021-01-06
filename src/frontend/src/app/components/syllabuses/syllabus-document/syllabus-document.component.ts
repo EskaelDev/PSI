@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConsts } from 'src/app/core/consts/app-consts';
+import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
+import { State } from 'src/app/core/enums/syllabus/state.enum';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { SyllabusService } from 'src/app/services/syllabus/syllabus.service';
@@ -169,5 +171,9 @@ export class SyllabusDocumentComponent implements OnInit {
           });
         });
     }
+  }
+
+  isInEditMode(document: Syllabus) {
+    return document.state === State.Draft || (document.state === State.Rejected && document.studentGovernmentOpinion === Opinion.Rejected);
   }
 }

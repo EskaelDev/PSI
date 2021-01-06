@@ -34,5 +34,16 @@
   },
   "graduations": {
     "DiplomaExam": "Egzamin dyplomowy"
+  },
+  "states": {
+    "Draft": "wersja robocza",
+    "SentToAcceptance": "wysłano do akceptacji",
+    "Approved": "zaakceptowane",
+    "Rejected": "odrzucone"
+  },
+  "opinions": {
+    "Pending": "oczekuje na decyzję",
+    "Approved": "zaakceptowane",
+    "Rejected": "odrzucone"
   }
 }

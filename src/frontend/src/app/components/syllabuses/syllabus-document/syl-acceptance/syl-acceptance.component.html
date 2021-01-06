@@ -1,0 +1,22 @@
+<div>
+    <div>
+        <span>Status dokumentu:</span>
+        <span>{{"states." + document.state | translate}}</span>
+    </div>
+    <div>
+        <span>Status akceptacji:</span>
+        <span *ngIf="document.studentGovernmentOpinion">{{"opinions." + document.studentGovernmentOpinion | translate}}</span>
+        <span *ngIf="!document.studentGovernmentOpinion">brak oceny</span>
+    </div>
+    <div>
+        <span>Oceniający:</span>
+        <span *ngIf="document.studentGovernmentOpinion">{{document.studentRepresentativeName ? document.studentRepresentativeName : 'nieznany'}}</span>
+        <span *ngIf="!document.studentGovernmentOpinion">brak oceny</span>
+    </div>
+    <div *ngIf="canSend(document)">
+        <button (click)="send()">{{getActionText(document)}}</button>
+    </div>
+    <div>
+        <button (click)="verify()">Sprawdź poprawność dokumentu</button>
+    </div>
+</div>

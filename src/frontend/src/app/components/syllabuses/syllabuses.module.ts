@@ -9,9 +9,10 @@ import { SylDescriptionComponent } from './syllabus-document/syl-doc-edit/syl-de
 import { SylSubjectComponent } from './syllabus-document/syl-doc-edit/syl-subject/syl-subject.component';
 import { SylSubjectEditComponent } from './syllabus-document/syl-doc-edit/syl-subject/syl-subject-edit/syl-subject-edit.component';
 import { SylSubjectListElemComponent } from './syllabus-document/syl-doc-edit/syl-subject/syl-subject-list-elem/syl-subject-list-elem.component';
+import { SylAcceptanceComponent } from './syllabus-document/syl-acceptance/syl-acceptance.component';
 
 @NgModule({
-  declarations: [SyllabusPickerComponent, SyllabusDocumentComponent, SyllabusAcceptanceComponent, SylDocEditComponent, SylDescriptionComponent, SylSubjectComponent, SylSubjectEditComponent, SylSubjectListElemComponent],
+  declarations: [SyllabusPickerComponent, SyllabusDocumentComponent, SyllabusAcceptanceComponent, SylDocEditComponent, SylDescriptionComponent, SylSubjectComponent, SylSubjectEditComponent, SylSubjectListElemComponent, SylAcceptanceComponent],
   imports: [SharedModule, SharedComponentsModule],
 })
 export class SyllabusesModule {}

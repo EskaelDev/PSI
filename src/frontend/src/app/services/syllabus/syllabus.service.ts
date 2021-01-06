@@ -55,7 +55,7 @@ export class SyllabusService {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
           else {
-            this.alerts.showDefaultWrongDataErrorMessage();
+            this.alerts.showDefaultErrorMessage();
           }
           return of(false);
         })
@@ -160,8 +160,66 @@ export class SyllabusService {
     );
   }
 
+  sendToAcceptance(syl: Syllabus): Observable<boolean> {
+    return this.http
+      .post<any>(this.baseUrl + '/sendtoacceptance', syl)
+      .pipe(
+        map(() => {
+          return true;
+        }),
+        catchError(err => {
+          if (err.status == 400) {
+            this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
+          }
+          else {
+            this.alerts.showDefaultErrorMessage();
+          }
+          return of(false);
+        })
+      );
+  }
+
+  accept(syllabusId: string): Observable<boolean> {
+    return this.http
+      .put<any>(this.baseUrl + '/accept/' + syllabusId, null)
+      .pipe(
+        map(() => {
+          return true;
+        }),
+        catchError(() => {
+            this.alerts.showDefaultErrorMessage();
+          return of(false);
+        })
+      );
+  }
+
+  reject(syllabusId: string): Observable<boolean> {
+    return this.http
+      .put<any>(this.baseUrl + '/reject/' + syllabusId, null)
+      .pipe(
+        map(() => {
+          return true;
+        }),
+        catchError(() => {
+            this.alerts.showDefaultErrorMessage();
+          return of(false);
+        })
+      );
+  }
+
+  verify(syllabus: Syllabus): Observable<string[] | null> {
+    return this.http
+      .put<any>(this.baseUrl + '/verify', syllabus)
+      .pipe(
+        catchError(() => {
+            this.alerts.showDefaultErrorMessage();
+          return of(null);
+        })
+      );
+  }
+
   private fixMissingFields(syl: Syllabus): Syllabus {
-    if (syl.state == State.Draft || (syl.state == State.Rejected && syl?.studentGovernmentOpinion == Opinion.Rejected)) {
+    if (syl.state === State.Draft || (syl.state === State.Rejected && syl?.studentGovernmentOpinion === Opinion.Rejected)) {
       if (
         !syl.scopeOfDiplomaExam ||
         syl.scopeOfDiplomaExam.trim().length === 0

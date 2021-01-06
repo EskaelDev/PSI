@@ -8,6 +8,16 @@
     />
   </mat-form-field>
   <br />
+  <mat-form-field>
+    <mat-label>Liczba ECTS</mat-label>
+    <input
+      matInput
+      readonly
+      type="number"
+      [(ngModel)]="document.description.ects"
+    />
+  </mat-form-field>
+  <br />
   <mat-form-field appearance="fill">
     <mat-label>Tytuł zawodowy</mat-label>
     <mat-select [(value)]="document.description.professionalTitleAfterGraduation">

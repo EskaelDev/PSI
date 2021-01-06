@@ -2,6 +2,7 @@
   <div *ngIf="syllabusDocument && !isLoading">
     <app-control-buttons-panel
       [isNew]="syllabusDocument.id === guidEmpty"
+      [canSave]="isInEditMode(syllabusDocument)"
       (save)="save()"
       (saveAs)="saveAs()"
       (import)="import()"
@@ -11,17 +12,21 @@
       (history)="history()"
     ></app-control-buttons-panel>
     <div fxLayoutAlign="start start" fxLayoutGap="30px">
-      <app-fos-details
+      <div>
+        <app-fos-details
         [fos]="syllabusDocument.fieldOfStudy"
         [spec]="syllabusDocument.specialization"
         [year]="syllabusDocument.academicYear"
-      ></app-fos-details>
-      <app-syl-doc-edit [document]="syllabusDocument"></app-syl-doc-edit>
+        ></app-fos-details>
+        <app-syl-acceptance
+          [document]="syllabusDocument"
+          (changed)="loadSyllabus()"
+        ></app-syl-acceptance>
+      </div>
+      <app-syl-doc-edit [disabled]="!isInEditMode(syllabusDocument)" [document]="syllabusDocument"></app-syl-doc-edit>
     </div>
   </div>
-  <div *ngIf="!syllabusDocument && !isLoading">
-    Błąd wczytywania dokumentu
-  </div>
+  <div *ngIf="!syllabusDocument && !isLoading">Błąd wczytywania dokumentu</div>
   <div *ngIf="isLoading" style="margin-top: 50px">
     <mat-spinner></mat-spinner>
   </div>

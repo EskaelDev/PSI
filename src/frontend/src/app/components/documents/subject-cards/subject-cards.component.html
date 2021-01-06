@@ -1,0 +1,20 @@
+<div>
+    <h1 mat-dialog-title>Karty przedmiotów</h1>
+    <div mat-dialog-content>
+      <mat-list role="list" style="height: 330px; overflow: auto" *ngIf="subjects.length > 0">
+        <mat-list-item role="listitem" *ngFor="let subject of subjects"
+          ><div><span class="round-title">{{subject.namePl}}</span></div>
+          <button mat-mini-fab color="accent" class="download-btn" (click)="downloadSubject(subject)">
+            <mat-icon>get_app</mat-icon>
+          </button></mat-list-item
+        >
+      </mat-list>
+      <div *ngIf="subjects.length === 0">Brak przedmiotów</div>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+        Zamknij
+      </button>
+    </mat-dialog-actions>
+  </div>
+  

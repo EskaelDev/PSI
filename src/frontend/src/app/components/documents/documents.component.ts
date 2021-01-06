@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study';
-import { Specialization } from 'src/app/core/models/field-of-study/specialization';
+import { MatDialog } from '@angular/material/dialog';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
+import { SubjectCardsComponent } from './subject-cards/subject-cards.component';
 
 @Component({
   selector: 'app-documents',
@@ -12,7 +12,7 @@ export class DocumentsComponent implements OnInit {
 
   syllabuses: Syllabus[] = [];
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -36,6 +36,12 @@ export class DocumentsComponent implements OnInit {
   }
 
   downloadSubjects(syllabus: Syllabus) {
-
+    const sub = this.dialog.open(SubjectCardsComponent, {
+      height: '500px',
+      width: '400px',
+      data: {
+        subjects: syllabus.subjectDescriptions.map(sd => sd.subject),
+      },
+    });
   }
 }

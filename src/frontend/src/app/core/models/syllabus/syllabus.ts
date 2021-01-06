@@ -7,6 +7,7 @@ import { SubjectInSyllabusDescription } from "./subject-in-syllabus-description"
 import { SyllabusDescription } from "./syllabus-description";
 
 export class Syllabus extends DocumentInAcademicYear {
+    name?: string;
     state: State = State.Draft;
     studentGovernmentOpinion?: Opinion;
     opinionDeadline?: Date;
@@ -14,7 +15,7 @@ export class Syllabus extends DocumentInAcademicYear {
     approvalDate?: Date;
     validFrom?: Date;
     studentRepresentativeName: string = '';
-    deanName?: string;
+    thesisCourse?: string;
     authorName: string = '';
     scopeOfDiplomaExam: string = '';
     intershipType?: string;

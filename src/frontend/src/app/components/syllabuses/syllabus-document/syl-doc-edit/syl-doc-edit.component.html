@@ -4,7 +4,7 @@
       <app-syl-description [document]="_document"></app-syl-description>
     </mat-tab>
     <mat-tab label="Lista kursów">
-        <div></div>
+        <app-syl-subject [document]="_document"></app-syl-subject>
     </mat-tab>
     <mat-tab label="Limit punktów">
         <div></div>
@@ -18,7 +18,7 @@
     <mat-tab label="Praca dyplomowa">
         <mat-form-field>
             <mat-label>Kurs praca dyplomowa</mat-label>
-            <textarea matInput [(ngModel)]="_document.deanName"></textarea>
+            <textarea matInput [(ngModel)]="_document.thesisCourse"></textarea>
           </mat-form-field>
     </mat-tab>
     <mat-tab label="Praktyki">

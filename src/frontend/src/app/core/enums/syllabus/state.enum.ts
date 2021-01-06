@@ -1,6 +1,6 @@
 export enum State {
     Draft = 'Draft',
-    Verified = 'Verified',
+    SentToAcceptance = 'SentToAcceptance',
     Approved = 'Approved',
     Rejected = 'Rejected'
 }

@@ -19,7 +19,8 @@ namespace SyllabusManager.Data.Models.Syllabuses
         public DateTime? ApprovalDate { get; set; }
         public DateTime? ValidFrom { get; set; }
         public string StudentRepresentativeName { get; set; }
-        public string DeanName { get; set; }
+        public string Name { get; set; }
+        public string ThesisCourse { get; set; }
         [Required] 
         public string AuthorName { get; set; } = "unknown";
         [Required]

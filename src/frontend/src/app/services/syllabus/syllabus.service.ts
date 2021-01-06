@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
 import { State } from 'src/app/core/enums/syllabus/state.enum';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
 import { environment } from 'src/environments/environment';
@@ -160,7 +161,7 @@ export class SyllabusService {
   }
 
   private fixMissingFields(syl: Syllabus): Syllabus {
-    if (syl.state !== State.Verified && syl.state !== State.Approved) {
+    if (syl.state == State.Draft || (syl.state == State.Rejected && syl?.studentGovernmentOpinion == Opinion.Rejected)) {
       if (
         !syl.scopeOfDiplomaExam ||
         syl.scopeOfDiplomaExam.trim().length === 0

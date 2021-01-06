@@ -3,8 +3,8 @@
     public enum State
     {
         Draft,
-        Verified,
-        Spproved,
+        SentToAcceptance,
+        Approved,
         Rejected
     }
 }

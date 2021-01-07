@@ -15,7 +15,7 @@ namespace SyllabusManager.Logic.Services.Abstract
         Task<T> FirstAsync(Expression<Func<T, bool>> predicate);
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
         Task<List<T>> GetAllAsync();
-        Task<T> GetByIdAsync(string id);
+        Task<T> GetByCodeAsync(string id);
         Task<T> SaveAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<bool> SoftDeleteAsync(string id);

@@ -1,0 +1,34 @@
+<div>
+  <form [formGroup]="learnForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Sposób oceniania</mat-label>
+      <mat-select formControlName="gradingSystem">
+        <mat-option *ngFor="let grading of gradings" [value]="grading">{{
+          "gradings." + grading | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+        <mat-label>Symbol efektu</mat-label>
+        <mat-select formControlName="learningOutcomeSymbol">
+          <mat-option *ngFor="let lo of learningOutcomes" [value]="lo.symbol">{{
+            lo.symbol
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+    <mat-form-field>
+      <textarea
+        matInput
+        type="text"
+        placeholder="Opis"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+  </form>
+  <div>
+    <button (click)="delete()">Usuń</button>
+    <button (click)="save()" [disabled]="!learnForm.valid">Zapisz</button>
+  </div>
+</div>

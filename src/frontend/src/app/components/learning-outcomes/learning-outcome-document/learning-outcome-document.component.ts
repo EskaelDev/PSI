@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppConsts } from 'src/app/core/consts/app-consts';
 import { LearningOutcomeDocument } from 'src/app/core/models/learning-outcome/learning-outcome-document';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { LearningOutcomeService } from 'src/app/services/learning-outcome/learning-outcome.service';
@@ -13,6 +14,7 @@ import { HistoryPopupComponent } from '../../shared/document/history-popup/histo
   styleUrls: ['./learning-outcome-document.component.scss'],
 })
 export class LearningOutcomeDocumentComponent implements OnInit {
+  guidEmpty = AppConsts.EMPTY_ID;
   title = 'efektów uczenia się';
   isLoading = true;
 

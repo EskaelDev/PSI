@@ -1,0 +1,66 @@
+<div fxLayoutAlign="start" fxLayoutGap="30px">
+  <div>
+    <mat-form-field>
+      <mat-label>Kod</mat-label>
+      <input matInput readonly type="text" [(ngModel)]="document.code" />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Nazwa polska</mat-label>
+      <input matInput required type="text" [(ngModel)]="document.namePl" />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Nazwa angielska</mat-label>
+      <input matInput type="text" [(ngModel)]="document.nameEng" />
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Rodzaj modułu</mat-label>
+      <mat-select [(value)]="document.moduleType">
+        <mat-option *ngFor="let module of modules" [value]="module">{{
+          "modules." + module | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Rodzaj</mat-label>
+      <mat-select [(value)]="document.kindOfSubject">
+        <mat-option *ngFor="let kind of kinds" [value]="kind">{{
+          "kinds." + kind | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Typ</mat-label>
+      <mat-select [(value)]="document.typeOfSubject">
+        <mat-option *ngFor="let subType of subTypes" [value]="subType">{{
+          "subTypes." + subType | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Język</mat-label>
+      <mat-select [(value)]="document.language">
+        <mat-option *ngFor="let language of languages" [value]="language">{{
+          "languages." + language | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <h2>Opiekun</h2>
+    <mat-form-field>
+        <input
+          matInput
+          readonly
+          type="text"
+          [value]="document.supervisor?.name"
+        />
+      </mat-form-field>
+      <h2>Możliwi prowadzący</h2>
+  </div>
+</div>

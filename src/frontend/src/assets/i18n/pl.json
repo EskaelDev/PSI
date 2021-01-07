@@ -25,5 +25,50 @@
     "Knowledge": "Wiedza",
     "Skills": "Umiejętności",
     "SocialCompetences": "Kompetencje społeczne"
+  },
+  "titles": {
+    "MasterOfScience": "Magister inżynier",
+    "BachelorOfScience": "Inżynier",
+    "MasterOfArts": "Magister",
+    "BachelorOfArts": "Licencjat"
+  },
+  "graduations": {
+    "DiplomaExam": "Egzamin dyplomowy"
+  },
+  "states": {
+    "Draft": "wersja robocza",
+    "SentToAcceptance": "wysłano do akceptacji",
+    "Approved": "zaakceptowane",
+    "Rejected": "odrzucone"
+  },
+  "opinions": {
+    "Pending": "oczekuje na decyzję",
+    "Approved": "zaakceptowane",
+    "Rejected": "odrzucone"
+  },
+  "modules": {
+    "Specialization": "specjalościowy",
+    "General": "ogólny",
+    "FieldOfStudy": "kierunkowy",
+    "BasicScience": "ogólnonaukowy",
+    "Thesis": "praca dyplomowa",
+    "Internship": "praktyki"
+  },
+  "kinds": {
+    "ForeignLanguage": "język obcy",
+    "Humanistic": "humanistyczny",
+    "InformationTechnology": "technologie informacyjne",
+    "Sport": "sport",
+    "Physics": "fizyka",
+    "Maths": "matematyka",
+    "ElectronicsAndMetrology": "elektronika"
+  },
+  "subTypes": {
+    "Obligatory": "obowiązkowy",
+    "Elective": "wybieralny"
+  },
+  "gradings": {
+    "DuringSemester": "w trakcie semestru",
+    "Final": "końcowa"
   }
 }

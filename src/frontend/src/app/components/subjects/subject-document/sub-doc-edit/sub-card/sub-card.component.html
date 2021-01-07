@@ -1,0 +1,17 @@
+<div>
+  <h2>{{ card.name }}</h2>
+  <div>
+    <div *ngFor="let entry of card.entries">
+      <mat-form-field>
+        <mat-label>Id</mat-label>
+        <input matInput [(ngModel)]="entry.code"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Opis</mat-label>
+        <textarea matInput [(ngModel)]="entry.description"></textarea>
+      </mat-form-field>
+      <button (click)="remove(entry)">Usuń</button>
+    </div>
+  </div>
+  <button (click)="add()">Dodaj</button>
+</div>

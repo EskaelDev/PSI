@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,12 +16,14 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { ErrorInterceptor } from '../interceptors/error.interceptor';
+import { DisableDirective } from '../helpers/disable.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 @NgModule({
+  declarations: [DisableDirective],
   imports: [
     CommonModule,
     MaterialModule,
@@ -31,12 +37,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
       },
-      defaultLanguage: 'pl'
-  }),
+      defaultLanguage: 'pl',
+    }),
   ],
   exports: [
     CommonModule,
@@ -49,7 +55,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     FormsModule,
     TranslateModule,
-    ToastrModule
+    ToastrModule,
+    DisableDirective
   ],
   providers: [
     DatePipe,
@@ -65,4 +72,4 @@ export function HttpLoaderFactory(http: HttpClient) {
     },
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -19,7 +19,6 @@ export class Subject extends DocumentInAcademicYear {
     kindOfSubject: KindOfSubject = KindOfSubject.InformationTechnology;
     language: MainLanguage = MainLanguage.Polish;
     typeOfSubject: TypeOfSubject = TypeOfSubject.Obligatory;
-    discriminator?: string;
     supervisor?: User;
     literature: Literature[] = [];
     lessons: Lesson[] = [];

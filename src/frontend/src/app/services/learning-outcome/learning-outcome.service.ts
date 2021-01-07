@@ -28,7 +28,7 @@ export class LearningOutcomeService {
   }
 
   save(lo: LearningOutcomeDocument): Observable<boolean> {
-    return this.http.post<LearningOutcomeDocument>(this.baseUrl + '/save', lo).pipe(
+    return this.http.post<any>(this.baseUrl + '/save', lo).pipe(
       map(() => {
         return true;
       }),
@@ -40,7 +40,7 @@ export class LearningOutcomeService {
   }
 
   saveAs(lo: LearningOutcomeDocument, fosCode: string, year: string): Observable<boolean> {
-    return this.http.post<LearningOutcomeDocument>(this.baseUrl + `/saveas?fos=${fosCode}&year=${encodeURIComponent(year)}`, lo).pipe(
+    return this.http.post<any>(this.baseUrl + `/saveas?fos=${fosCode}&year=${encodeURIComponent(year)}`, lo).pipe(
       map(() => {
         return true;
       }),
@@ -52,7 +52,7 @@ export class LearningOutcomeService {
   }
 
   importFrom(id: string, fosCode: string, year: string): Observable<boolean> {
-    return this.http.get<LearningOutcomeDocument>(this.baseUrl + `/importFrom/${id}?fos=${fosCode}&year=${encodeURIComponent(year)}`).pipe(
+    return this.http.get<any>(this.baseUrl + `/importFrom/${id}?fos=${fosCode}&year=${encodeURIComponent(year)}`).pipe(
       map(() => {
         return true;
       }),
@@ -94,7 +94,7 @@ export class LearningOutcomeService {
   }
 
   history(id: string): Observable<string[]> {
-    return this.http.get<any>(this.baseUrl + `/history/${id}`).pipe(
+    return this.http.get<string[]>(this.baseUrl + `/history/${id}`).pipe(
       catchError(() => {
         this.alerts.showDefaultErrorMessage();
         return of([]);

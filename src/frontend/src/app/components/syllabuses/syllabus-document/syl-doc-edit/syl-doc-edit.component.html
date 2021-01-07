@@ -1,0 +1,31 @@
+<div fxLayoutAlign="start start" fxLayoutGap="30px" [appDisable]="disabled">
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Opis">
+      <app-syl-description [document]="_document"></app-syl-description>
+    </mat-tab>
+    <mat-tab label="Lista kursów">
+        <app-syl-subject [document]="_document"></app-syl-subject>
+    </mat-tab>
+    <mat-tab label="Limit punktów">
+        <div></div>
+    </mat-tab>
+    <mat-tab label="Zakres egzaminu dyplomowego">
+        <mat-form-field>
+            <mat-label>Zakres egzaminu dyplomowego</mat-label>
+            <textarea matInput [(ngModel)]="_document.scopeOfDiplomaExam"></textarea>
+          </mat-form-field>
+    </mat-tab>
+    <mat-tab label="Praca dyplomowa">
+        <mat-form-field>
+            <mat-label>Kurs praca dyplomowa</mat-label>
+            <textarea matInput [(ngModel)]="_document.thesisCourse"></textarea>
+          </mat-form-field>
+    </mat-tab>
+    <mat-tab label="Praktyki">
+        <mat-form-field>
+            <mat-label>Praktyki</mat-label>
+            <textarea matInput [(ngModel)]="_document.intershipType"></textarea>
+          </mat-form-field>
+    </mat-tab>
+  </mat-tab-group>
+</div>

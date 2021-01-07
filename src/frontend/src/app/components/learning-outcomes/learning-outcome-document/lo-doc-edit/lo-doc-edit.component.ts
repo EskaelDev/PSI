@@ -52,7 +52,6 @@ export class LoDocEditComponent implements OnInit {
   }
 
   saveLo(lo: LearningOutcome) {
-    console.log(lo);
     this.deleteLo();
     this._document.learningOutcomes.push(lo);
     this._document.learningOutcomes = this._document.learningOutcomes.sort((lo1, lo2) => lo1.symbol < lo2.symbol ? 1 : 0);

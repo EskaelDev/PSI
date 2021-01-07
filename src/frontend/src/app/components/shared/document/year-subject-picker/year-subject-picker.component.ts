@@ -66,6 +66,8 @@ export class YearSubjectPickerComponent implements OnInit {
         ))
     ) {
       this.dialogRef.close({
+        fos: this.selectedFos,
+        spec: this.selectedSpec,
         year: this.selectedYear,
         subject: this.selectedSubject,
       });
@@ -78,6 +80,8 @@ export class YearSubjectPickerComponent implements OnInit {
         .then((result) => {
           if (result) {
             this.dialogRef.close({
+              fos: this.selectedFos,
+              spec: this.selectedSpec,
               year: this.selectedYear,
               subject: this.selectedSubject,
             });
@@ -111,20 +115,19 @@ export class YearSubjectPickerComponent implements OnInit {
     }
     return false;
   }
-  
+
   loadFieldsOfStudy() {
-    this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
+    this.fosService.getFieldsOfStudies().subscribe((fieldsOfStudy) => {
       this.fieldsOfStudy = fieldsOfStudy;
     });
   }
 
   selectedFosChanged() {
     this.selectedSpec = null;
-    
+
     if (this.selectedFos) {
       this.specs = this.selectedFos.specializations;
-    }
-    else {
+    } else {
       this.specs = [];
     }
   }
@@ -132,12 +135,10 @@ export class YearSubjectPickerComponent implements OnInit {
   selectedSpecChanged() {
     if (this.selectedSpec) {
       this.loadSubjects();
-    }
-    else {
+    } else {
       this.subjects = [];
     }
   }
 
-  loadSubjects() {
-  }
+  loadSubjects() {}
 }

@@ -16,7 +16,7 @@
         [spec]="subjectDocument.specialization"
         [year]="subjectDocument.academicYear"
       ></app-fos-details>
-      <div>document body</div>
+      <app-sub-doc-edit [document]="subjectDocument"></app-sub-doc-edit>
     </div>
   </div>
   <div *ngIf="!subjectDocument && !isLoading">

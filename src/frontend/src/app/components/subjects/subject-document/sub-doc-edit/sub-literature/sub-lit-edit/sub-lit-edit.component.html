@@ -1,0 +1,61 @@
+<div>
+  <form [formGroup]="litForm">
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Autorzy"
+        formControlName="authors"
+        required
+      />
+      <mat-error> Pole wymagane </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Tytuł"
+        formControlName="title"
+        required
+      />
+      <mat-error> Pole wymagane </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Wydawca"
+        formControlName="distributor"
+      />
+    </mat-form-field>
+    <br />
+    <mat-checkbox formControlName="isPrimary">podstawowa</mat-checkbox>
+    <br />
+    <mat-form-field>
+      <input
+        matInput
+        type="number"
+        placeholder="Rok wydania"
+        formControlName="year"
+      />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        placeholder="Number ISBN"
+        formControlName="isbn"
+        required
+      />
+      <mat-error> Pole wymagane </mat-error>
+    </mat-form-field>
+    <br />
+  </form>
+  <div>
+    <button (click)="delete()">Usuń</button>
+    <button (click)="save()" [disabled]="!litForm.valid">Zapisz</button>
+  </div>
+</div>

@@ -20,7 +20,7 @@ export class SyllabusDocumentComponent implements OnInit {
   title = 'programu studiów';
   isLoading = true;
 
-  syllabusDocument: Syllabus = new Syllabus();
+  syllabusDocument: Syllabus | null = null;
   fosId: string = '';
   specId: string = '';
   year: string = '';

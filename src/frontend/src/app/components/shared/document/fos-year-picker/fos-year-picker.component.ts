@@ -33,12 +33,7 @@ export class FosYearPickerComponent implements OnInit {
   }
 
   loadFieldsOfStudy() {
-    /*this.fosService.getMyFieldsOfStudies().subscribe(fieldsOfStudy => {
-      this.fieldsOfStudy = fieldsOfStudy;
-    });*/
-    // todo: replace
-
-    this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
+    this.fosService.getMyFieldsOfStudies().subscribe(fieldsOfStudy => {
       this.fieldsOfStudy = fieldsOfStudy;
     });
   }

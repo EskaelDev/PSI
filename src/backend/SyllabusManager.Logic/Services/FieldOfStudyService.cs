@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -24,6 +25,23 @@ namespace SyllabusManager.Logic.Services
         public async Task<List<UserDTO>> GetPossibleSupervisors()
         {
             return await _userService.GetTeachers();
+        }
+
+        public async Task<List<FieldOfStudy>> GetAllMy(SyllabusManagerUser user)
+        {
+            var all = await _dbSet.Where(e => !e.IsDeleted)
+                .Include(fos => fos.Specializations)
+                .Include(fos => fos.Supervisor)
+                .Where(f => f.Supervisor.Id == user.Id)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return all.Select(f =>
+                {
+                    f.Specializations = f.Specializations.Where(s => !s.IsDeleted).ToList();
+                    return f;
+                })
+                .ToList();
         }
 
         public override async Task<List<FieldOfStudy>> GetAllAsync()

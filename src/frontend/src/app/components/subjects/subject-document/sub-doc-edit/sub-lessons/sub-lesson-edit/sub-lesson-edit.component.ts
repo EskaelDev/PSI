@@ -22,14 +22,14 @@ export class SubLessonEditComponent implements OnInit {
     this.lesForm = this.fb.group({
       lessonType: [les.lessonType, Validators.required],
       hoursAtUniversity: [les.hoursAtUniversity, Validators.required],
-      studentWorkloadHours: [les.hoursAtUniversity, Validators.required],
-      formOfCrediting: [les.hoursAtUniversity, Validators.required],
-      ects: [les.hoursAtUniversity, Validators.required],
-      ectsinclPracticalClasses: [les.hoursAtUniversity, Validators.required],
-      ectsinclDirectTeacherStudentContactClasses: [les.hoursAtUniversity, Validators.required],
-      isFinal: [les.hoursAtUniversity, Validators.required],
-      isScientific: [les.hoursAtUniversity, Validators.required],
-      isGroup: [les.hoursAtUniversity, Validators.required],
+      studentWorkloadHours: [les.studentWorkloadHours, Validators.required],
+      formOfCrediting: [les.formOfCrediting, Validators.required],
+      ects: [les.ects, Validators.required],
+      ectsinclPracticalClasses: [les.ectsinclPracticalClasses, Validators.required],
+      ectsinclDirectTeacherStudentContactClasses: [les.ectsinclDirectTeacherStudentContactClasses, Validators.required],
+      isFinal: [les.isFinal, Validators.required],
+      isScientific: [les.isScientific, Validators.required],
+      isGroup: [les.isGroup, Validators.required],
     });
     this.editableClassForms = Object.assign([], les.classForms);
   }

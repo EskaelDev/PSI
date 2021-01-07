@@ -73,6 +73,11 @@
         <mat-error> Pole wymagane </mat-error>
       </mat-form-field>
       <br />
+      <mat-checkbox formControlName="isFinal">końcowy</mat-checkbox>
+      <br/>
+      <mat-checkbox formControlName="isScientific">naukowy</mat-checkbox>
+      <br/>
+      <mat-checkbox formControlName="isGroup">grupa kursów</mat-checkbox>
     </form>
     <div>
       <button (click)="delete()">Usuń</button>

@@ -15,6 +15,6 @@ namespace SyllabusManager.Data.Models.Subjects
         public bool IsFinal { get; set; }
         public bool IsScientific { get; set; }
         public bool IsGroup { get; set; }
-        public List<ClassForm> ClassForms { get; set; }
+        public List<ClassForm> ClassForms { get; set; } = new List<ClassForm>();
     }
 }

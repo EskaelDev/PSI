@@ -83,6 +83,7 @@ namespace SyllabusManager.API.Extensions
             services.AddTransient<IFieldOfStudyService, FieldOfStudyService>();
             services.AddTransient<ILearningOutcomeService, LearningOutcomeService>();
             services.AddTransient<ISyllabusService, SyllabusService>();
+            services.AddTransient<ISubjectService, SubjectService>();
         }
 
         public static void SetAuth(this IServiceCollection services, IConfiguration configuration)

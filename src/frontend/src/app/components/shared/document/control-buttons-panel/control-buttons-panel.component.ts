@@ -9,6 +9,7 @@ export class ControlButtonsPanelComponent implements OnInit {
 
   @Input() isNew: boolean = true;
   @Input() canSave: boolean = true;
+  @Input() blockSaveAs: boolean = false;
   @Output() save: EventEmitter<any> = new EventEmitter();
   @Output() saveAs: EventEmitter<any> = new EventEmitter();
   @Output() import: EventEmitter<any> = new EventEmitter();

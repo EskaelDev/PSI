@@ -73,36 +73,6 @@ export class SubjectDocumentComponent implements OnInit {
     }
   }
 
-  saveAs() {
-    const sub = this.dialog.open(YearSubjectPickerComponent, {
-      height: '500px',
-      width: '500px',
-      data: {
-        title: 'Zapisz jako',
-        allowsNew: true,
-      },
-    });
-
-    sub.afterClosed().subscribe((result) => {
-      if (result && this.subjectDocument) {
-        this.subjectService
-          .saveAs(
-            this.subjectDocument,
-            result.fos.code,
-            result.spec.code,
-            result.subject,
-            result.year
-          )
-          .subscribe((result) => {
-            if (result) {
-              this.alerts.showCustomSuccessMessage('Zapisano jako');
-              this.loadSubject();
-            }
-          });
-      }
-    });
-  }
-
   import() {
     const sub = this.dialog.open(YearSubjectPickerComponent, {
       height: '500px',

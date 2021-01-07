@@ -170,14 +170,34 @@ namespace SyllabusManager.Logic.Services
                                                                   && !s.IsDeleted);
 
             List<string> versions = await _dbSet.Include(s => s.FieldOfStudy)
+                                                .Include(s => s.Specialization)
                                                 .Where(s =>
                                                            s.AcademicYear == syllabus.AcademicYear
                                                         && s.FieldOfStudy == syllabus.FieldOfStudy
-                                                        && !s.IsDeleted)
+                                                           && s.Specialization == syllabus.Specialization
+                                                           && !s.IsDeleted)
                                                 .Select(s => s.Version)
                                                 .OrderBy(s => s)
                                                 .ToListAsync();
             return versions;
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var entity = _dbSet.Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization).FirstOrDefault(f => f.Id == id);
+
+            var syllabuses = await _dbSet.Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Where(s =>
+                    s.FieldOfStudy == entity.FieldOfStudy
+                    && s.Specialization == entity.Specialization
+                    && s.AcademicYear == entity.AcademicYear
+                    && !s.IsDeleted).ToListAsync();
+
+            syllabuses.ForEach(s => s.IsDeleted = true);
+            var state = await _dbContext.SaveChangesAsync();
+            return state > 0;
         }
     }
 }

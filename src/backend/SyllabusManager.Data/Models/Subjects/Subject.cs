@@ -21,12 +21,12 @@ namespace SyllabusManager.Data.Models.Subjects
         public MainLanguage Language { get; set; }
         public TypeOfSubject TypeOfSubject { get; set; }
         public SyllabusManagerUser Supervisor { get; set; }
-        public List<Literature> Literature { get; set; }
-        public List<Lesson> Lessons { get; set; }
-        public List<LearningOutcomeEvaluation> LearningOutcomeEvaluations { get; set; }
-        public List<CardEntries> CardEntries { get; set; }
-        public List<SubjectTeacher> SubjectsTeachers { get; set; }
-        public IEnumerable<SyllabusManagerUser> Teachers => SubjectsTeachers.Select(st => st.Teacher);
+        public List<Literature> Literature { get; set; } = new List<Literature>();
+        public List<Lesson> Lessons { get; set; } = new List<Lesson>();
+        public List<LearningOutcomeEvaluation> LearningOutcomeEvaluations { get; set; } = new List<LearningOutcomeEvaluation>();
+        public List<CardEntries> CardEntries { get; set; } = new List<CardEntries>();
+        public List<SubjectTeacher> SubjectsTeachers { get; set; } = new List<SubjectTeacher>();
+        public List<SyllabusManagerUser> Teachers { get; set; } = new List<SyllabusManagerUser>();
         public FieldOfStudy FieldOfStudy{ get; set; }
         public Specialization Specialization{ get; set; }
     }

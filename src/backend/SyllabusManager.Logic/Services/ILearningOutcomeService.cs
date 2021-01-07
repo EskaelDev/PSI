@@ -13,5 +13,6 @@ namespace SyllabusManager.Logic.Services
         Task<LearningOutcomeDocument> Latest(string fosCode, string academicYear);
         Task<LearningOutcomeDocument> Save(LearningOutcomeDocument learningOutcome);
         Task<LearningOutcomeDocument> SaveAs(string fosCode, string academicYear, LearningOutcomeDocument learningOutcome);
+        Task<bool> Delete(Guid id);
     }
 }

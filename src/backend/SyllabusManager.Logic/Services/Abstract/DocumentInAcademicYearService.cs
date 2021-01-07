@@ -14,13 +14,6 @@ namespace SyllabusManager.Logic.Services.Abstract
 
         }
 
-        public async Task<bool> Delete(Guid id)
-        {
-            var entity = _dbSet.Find(id);
-            entity.IsDeleted = true;
-            var state = await _dbContext.SaveChangesAsync();
-            return state > 0;
-        }
         protected string IncreaseVersion(string version)
         {
             string newVersion = DateTime.UtcNow.ToString("yyyyMMdd");

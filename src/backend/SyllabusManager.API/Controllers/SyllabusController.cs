@@ -113,7 +113,6 @@ namespace SyllabusManager.API.Controllers
         [Route("{currentDocId}")]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
-            // ToDo: usuwanie wszystkich wersji
             bool result = await _syllabusService.Delete(currentDocId);
             if (result)
                 return Ok();

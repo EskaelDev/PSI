@@ -5,6 +5,7 @@ import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study'
 import { Specialization } from 'src/app/core/models/field-of-study/specialization';
 import { Subject } from 'src/app/core/models/subject/subject';
 import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-study.service';
+import { SubjectService } from 'src/app/services/subject/subject.service';
 import { AddSubjectComponent } from './add-subject/add-subject.component';
 
 @Component({
@@ -28,7 +29,8 @@ export class SubjectPickerComponent implements OnInit {
 
   constructor(private readonly router: Router,
     public dialog: MatDialog,
-    private fosService: FieldOfStudyService) { }
+    private fosService: FieldOfStudyService,
+    private subjectService: SubjectService) { }
 
   ngOnInit(): void {
     this.loadFieldsOfStudy();
@@ -68,7 +70,10 @@ export class SubjectPickerComponent implements OnInit {
   loadSubjects() {
     this.subjects = [];
     if (this.selectedSpec && this.selectedYear) {
-
+      this.subjectService.getAllEditable(this.selectedFos?.code ?? '', this.selectedSpec.code, this.selectedYear, this.onlyMy).subscribe(subjects => {
+        this.subjects = subjects;
+        this.filterSubjects();
+      });
     }
   }
 
@@ -78,7 +83,7 @@ export class SubjectPickerComponent implements OnInit {
 
   newSubject() {
     const sub = this.dialog.open(AddSubjectComponent, {
-      height: '500px',
+      height: '700px',
       width: '500px'
     });
 

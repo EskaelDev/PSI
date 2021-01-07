@@ -35,7 +35,7 @@ export class FieldOfStudyService {
   }
 
   getMyFieldsOfStudies(): Observable<FieldOfStudy[]> {
-    return this.http.get<FieldOfStudy[]>(this.baseUrl + '/all').pipe(
+    return this.http.get<FieldOfStudy[]>(this.baseUrl + '/allmy').pipe(
       map((fields) => {
         return fields.map((f) => {
           f.supervisor = Object.assign(new User(), f.supervisor);

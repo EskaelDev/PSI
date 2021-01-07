@@ -9,6 +9,6 @@ namespace SyllabusManager.Data.Models.Subjects
         [Required]
         public string Name { get; set; }
         public SubjectCardEntryType Type { get; set; }
-        public List<CardEntry> Entries { get; set; }
+        public List<CardEntry> Entries { get; set; } = new List<CardEntry>();
     }
 }

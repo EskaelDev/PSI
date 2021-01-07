@@ -22,6 +22,6 @@ namespace SyllabusManager.Data.Models.FieldOfStudies
         public CourseType Type { get; set; }
         public MainLanguage Language { get; set; }
         public SyllabusManagerUser Supervisor { get; set; }
-        public List<Specialization> Specializations { get; set; }
+        public List<Specialization> Specializations { get; set; } = new List<Specialization>();
     }
 }

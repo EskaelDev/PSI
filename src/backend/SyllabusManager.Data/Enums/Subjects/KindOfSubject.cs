@@ -2,7 +2,7 @@
 {
     public enum KindOfSubject
     {
-        ForeignLanguages,
+        ForeignLanguage,
         Humanistic,
         InformationTechnology,
         Sport,

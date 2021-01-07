@@ -38,6 +38,9 @@ export class SubjectService {
 
   getPossibleTeachers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + '/possibleteachers').pipe(
+      map((users) => {
+        return users.map((u) => Object.assign(new User(), u));
+      }),
       catchError(() => {
         this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);
@@ -47,8 +50,13 @@ export class SubjectService {
 
   getLatest(fosCode: string, specCode: string, code: string, year: string): Observable<Subject | null> {
     return this.http.get<Subject>(this.baseUrl + `/latest?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`).pipe(
-      catchError(() => {
-        this.alerts.showDefaultLoadingDataErrorMessage();
+      catchError(err => {
+        if (err.status == 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultLoadingDataErrorMessage();
+        }
         return of(null);
       })
     );
@@ -59,20 +67,13 @@ export class SubjectService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
-        return of(false);
-      })
-    );
-  }
-
-  saveAs(sub: Subject, fosCode: string, specCode: string, code: string, year: string): Observable<boolean> {
-    return this.http.post<any>(this.baseUrl + `/saveas?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`, sub).pipe(
-      map(() => {
-        return true;
-      }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
+      catchError(err => {
+        if (err.status === 409) {
+          this.alerts.showCustomErrorMessage('Przedmiot o podanym kodzie już istnieje!');
+        }
+        else {
+          this.alerts.showDefaultWrongDataErrorMessage();
+        }
         return of(false);
       })
     );

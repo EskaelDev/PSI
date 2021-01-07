@@ -2,8 +2,8 @@
   <div *ngIf="subjectDocument && !isLoading">
     <app-control-buttons-panel
       [isNew]="subjectDocument.id === guidEmpty"
+      [blockSaveAs]="true"
       (save)="save()"
-      (saveAs)="saveAs()"
       (import)="import()"
       (close)="close()"
       (delete)="delete()"

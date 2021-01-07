@@ -153,5 +153,20 @@ namespace SyllabusManager.Logic.Services
                                                 .Select(lod => lod.Version).OrderBy(l => l).ToListAsync();
             return versions;
         }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var entity = _dbSet.Include(lod => lod.FieldOfStudy).FirstOrDefault(f => f.Id == id);
+
+            var learningOutcomes = await _dbSet.Include(s => s.FieldOfStudy)
+                .Where(s =>
+                    s.FieldOfStudy == entity.FieldOfStudy
+                    && s.AcademicYear == entity.AcademicYear
+                    && !s.IsDeleted).ToListAsync();
+
+            learningOutcomes.ForEach(s => s.IsDeleted = true);
+            var state = await _dbContext.SaveChangesAsync();
+            return state > 0;
+        }
     }
 }

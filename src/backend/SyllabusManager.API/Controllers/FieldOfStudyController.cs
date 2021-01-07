@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SyllabusManager.API.Controllers.Abstract;
+using SyllabusManager.API.Helpers;
 using SyllabusManager.Data.Models.FieldOfStudies;
 using SyllabusManager.Logic.Models;
 using SyllabusManager.Logic.Services;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -12,10 +15,20 @@ namespace SyllabusManager.API.Controllers
     public class FieldOfStudyController : NonVersionedControllerBase<FieldOfStudy>
     {
         private readonly IFieldOfStudyService _fieldOfStudyService;
+        private readonly UserManager<SyllabusManagerUser> _userManager;
 
-        public FieldOfStudyController(IFieldOfStudyService fieldOfStudyService) : base(fieldOfStudyService)
+        public FieldOfStudyController(IFieldOfStudyService fieldOfStudyService, UserManager<SyllabusManagerUser> userManager) : base(fieldOfStudyService)
         {
             _fieldOfStudyService = fieldOfStudyService;
+            _userManager = userManager;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AllMy()
+        {
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            if (await AuthenticationHelper.CheckIfAdmin(user, _userManager)) return Ok(await _modelService.GetAllAsync());
+            return Ok(await _fieldOfStudyService.GetAllMy(user));
         }
 
         [HttpGet]

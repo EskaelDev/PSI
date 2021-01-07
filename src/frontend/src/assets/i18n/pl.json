@@ -66,5 +66,9 @@
   "subTypes": {
     "Obligatory": "obowiązkowy",
     "Elective": "wybieralny"
+  },
+  "gradings": {
+    "DuringSemester": "w trakcie semestru",
+    "Final": "końcowa"
   }
 }

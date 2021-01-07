@@ -24,8 +24,6 @@ export class SubLitEditComponent implements OnInit {
       isbn: [lit.isbn, Validators.required],
     });
   }
-  @Input() isNew: boolean = true;
-
   litForm: FormGroup = this.fb.group({});
 
   @Output() deleted: EventEmitter<any> = new EventEmitter();

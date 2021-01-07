@@ -10,6 +10,12 @@ import { SubDescriptionComponent } from './subject-document/sub-doc-edit/sub-des
 import { SubLiteratureComponent } from './subject-document/sub-doc-edit/sub-literature/sub-literature.component';
 import { SubLitElemComponent } from './subject-document/sub-doc-edit/sub-literature/sub-lit-elem/sub-lit-elem.component';
 import { SubLitEditComponent } from './subject-document/sub-doc-edit/sub-literature/sub-lit-edit/sub-lit-edit.component';
+import { SubLearnOutcComponent } from './subject-document/sub-doc-edit/sub-learn-outc/sub-learn-outc.component';
+import { SubLessonsComponent } from './subject-document/sub-doc-edit/sub-lessons/sub-lessons.component';
+import { SubLearnOutcElemComponent } from './subject-document/sub-doc-edit/sub-learn-outc/sub-learn-outc-elem/sub-learn-outc-elem.component';
+import { SubLearnOutcEditComponent } from './subject-document/sub-doc-edit/sub-learn-outc/sub-learn-outc-edit/sub-learn-outc-edit.component';
+import { SubLessonElemComponent } from './subject-document/sub-doc-edit/sub-lessons/sub-lesson-elem/sub-lesson-elem.component';
+import { SubLessonEditComponent } from './subject-document/sub-doc-edit/sub-lessons/sub-lesson-edit/sub-lesson-edit.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +28,12 @@ import { SubLitEditComponent } from './subject-document/sub-doc-edit/sub-literat
     SubLiteratureComponent,
     SubLitElemComponent,
     SubLitEditComponent,
+    SubLearnOutcComponent,
+    SubLessonsComponent,
+    SubLearnOutcElemComponent,
+    SubLearnOutcEditComponent,
+    SubLessonElemComponent,
+    SubLessonEditComponent,
   ],
   imports: [SharedModule, SharedComponentsModule],
   entryComponents: [AddSubjectComponent],

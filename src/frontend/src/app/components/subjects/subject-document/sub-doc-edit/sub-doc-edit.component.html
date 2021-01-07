@@ -4,11 +4,13 @@
         <app-sub-description [document]="_document"></app-sub-description>
       </mat-tab>
       <mat-tab label="Zajęcia">
+        <app-sub-lessons [document]="_document"></app-sub-lessons>
       </mat-tab>
       <mat-tab label="Literatura">
         <app-sub-literature [document]="_document"></app-sub-literature>
       </mat-tab>
       <mat-tab label="Efekty uczenia się">
+        <app-sub-learn-outc [document]="_document"></app-sub-learn-outc>
       </mat-tab>
       <mat-tab label="Wymagania wstępne">
         <app-sub-card [card]="getCardEntry(preEntry)"></app-sub-card>

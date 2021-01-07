@@ -1,1 +1,98 @@
-<p>sub-lesson-edit works!</p>
+<div fxLayoutAlign="center" fxLayoutGap="20px">
+  <div>
+    <form [formGroup]="lesForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Typ zajęć</mat-label>
+        <mat-select formControlName="lessonType" required>
+          <mat-option *ngFor="let lesson of lessons" [value]="lesson">{{
+            "lessons." + lesson | translate
+          }}</mat-option>
+        </mat-select>
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Forma zaliczenia</mat-label>
+        <mat-select formControlName="formOfCrediting" required>
+          <mat-option
+            *ngFor="let crediting of creditings"
+            [value]="crediting"
+            >{{ "creditings." + crediting | translate }}</mat-option
+          >
+        </mat-select>
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Liczba ZZU</mat-label>
+        <input
+          required
+          matInput
+          type="number"
+          formControlName="hoursAtUniversity"
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Liczba CNPS</mat-label>
+        <input
+          required
+          matInput
+          type="number"
+          formControlName="studentWorkloadHours"
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Liczba ECTS</mat-label>
+        <input required matInput type="number" formControlName="ects" />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Punkty ECTS P</mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          formControlName="ectsinclPracticalClasses"
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Punkty ECTS BK</mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          formControlName="ectsinclDirectTeacherStudentContactClasses"
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+    </form>
+    <div>
+      <button (click)="delete()">Usuń</button>
+      <button (click)="save()" [disabled]="!lesForm.valid || !checkClassForm(editableClassForms)">Zapisz</button>
+    </div>
+  </div>
+  <div>
+    <h2>Treści programowe</h2>
+    <div *ngFor="let entry of editableClassForms">
+      <mat-form-field>
+        <mat-label>Opis</mat-label>
+        <textarea required matInput [(ngModel)]="entry.description" ></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Liczba godzin</mat-label>
+        <input required matInput type="number" [(ngModel)]="entry.hours"/>
+      </mat-form-field>
+      <button (click)="remove(entry)">Usuń</button>
+    </div>
+    <button (click)="add()">Dodaj</button>
+  </div>
+  
+</div>

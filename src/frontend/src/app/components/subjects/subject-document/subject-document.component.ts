@@ -15,7 +15,7 @@ import { YearSubjectPickerComponent } from '../../shared/document/year-subject-p
 @Component({
   selector: 'app-subject-document',
   templateUrl: './subject-document.component.html',
-  styleUrls: ['./subject-document.component.scss']
+  styleUrls: ['./subject-document.component.scss'],
 })
 export class SubjectDocumentComponent implements OnInit {
   guidEmpty = AppConsts.EMPTY_ID;
@@ -27,23 +27,26 @@ export class SubjectDocumentComponent implements OnInit {
   specId: string = '';
   code: string = '';
   year: string = '';
-  
-  constructor(private readonly route: ActivatedRoute,
+
+  constructor(
+    private readonly route: ActivatedRoute,
     private readonly router: Router,
     public dialog: MatDialog,
     private subjectService: SubjectService,
-    private readonly alerts: AlertService) { }
+    private readonly alerts: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.fosId = this.route.snapshot.paramMap.get('fosId') ?? '';
     this.specId = this.route.snapshot.paramMap.get('specId') ?? '';
     this.code = this.route.snapshot.paramMap.get('code') ?? '';
-    this.year = decodeURIComponent(this.route.snapshot.paramMap.get('year') ?? '');
+    this.year = decodeURIComponent(
+      this.route.snapshot.paramMap.get('year') ?? ''
+    );
     this.loadSubject();
   }
 
   loadSubject() {
-    
     this.subjectService
       .getLatest(this.fosId, this.specId, this.code, this.year)
       .subscribe(
@@ -76,11 +79,11 @@ export class SubjectDocumentComponent implements OnInit {
       width: '500px',
       data: {
         title: 'Zapisz jako',
-        allowsNew: true
-      }
+        allowsNew: true,
+      },
     });
 
-    sub.afterClosed().subscribe(result => {
+    sub.afterClosed().subscribe((result) => {
       if (result && this.subjectDocument) {
         this.subjectService
           .saveAs(
@@ -105,11 +108,11 @@ export class SubjectDocumentComponent implements OnInit {
       height: '500px',
       width: '500px',
       data: {
-        title: 'Importuj z'
-      }
+        title: 'Importuj z',
+      },
     });
 
-    sub.afterClosed().subscribe(result => {
+    sub.afterClosed().subscribe((result) => {
       if (result && this.subjectDocument) {
         this.subjectService
           .importFrom(

@@ -70,5 +70,16 @@
   "gradings": {
     "DuringSemester": "w trakcie semestru",
     "Final": "końcowa"
+  },
+  "lessons": {
+    "Lecture": "wykład",
+    "Classes": "ćwiczenia",
+    "Laboratory": "laboratoria",
+    "Project": "projekt",
+    "Seminar": "seminarium"
+  },
+  "creditings": {
+    "Examination": "egzamin",
+    "CreditingWithGrade": "zaliczenie"
   }
 }

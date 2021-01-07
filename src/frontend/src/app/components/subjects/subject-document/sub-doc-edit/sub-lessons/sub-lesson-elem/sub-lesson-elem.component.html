@@ -1,1 +1,3 @@
-<p>sub-lesson-elem works!</p>
+<div (click)="select()" [ngClass]="{ selected: selected === elem }">
+    {{"lessons." + elem.lessonType | translate}}
+</div>

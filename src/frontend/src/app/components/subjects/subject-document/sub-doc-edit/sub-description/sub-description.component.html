@@ -17,7 +17,7 @@
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Rodzaj modułu</mat-label>
-      <mat-select [(value)]="document.moduleType">
+      <mat-select [(value)]="document.moduleType" required>
         <mat-option *ngFor="let module of modules" [value]="module">{{
           "modules." + module | translate
         }}</mat-option>
@@ -26,7 +26,7 @@
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Rodzaj</mat-label>
-      <mat-select [(value)]="document.kindOfSubject">
+      <mat-select [(value)]="document.kindOfSubject" required>
         <mat-option *ngFor="let kind of kinds" [value]="kind">{{
           "kinds." + kind | translate
         }}</mat-option>
@@ -35,7 +35,7 @@
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Typ</mat-label>
-      <mat-select [(value)]="document.typeOfSubject">
+      <mat-select [(value)]="document.typeOfSubject" required>
         <mat-option *ngFor="let subType of subTypes" [value]="subType">{{
           "subTypes." + subType | translate
         }}</mat-option>
@@ -44,7 +44,7 @@
     <br />
     <mat-form-field appearance="fill">
       <mat-label>Język</mat-label>
-      <mat-select [(value)]="document.language">
+      <mat-select [(value)]="document.language" required>
         <mat-option *ngFor="let language of languages" [value]="language">{{
           "languages." + language | translate
         }}</mat-option>

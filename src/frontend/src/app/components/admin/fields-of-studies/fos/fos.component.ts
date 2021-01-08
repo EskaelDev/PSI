@@ -45,7 +45,7 @@ export class FosComponent implements OnInit, OnDestroy {
       level: ['', Validators.required],
       type: ['', Validators.required],
       profile: ['', Validators.required],
-      dyscypline: [''],
+      discipline: [''],
       branchOfScience: [''],
       supervisor: [
         '',
@@ -66,7 +66,7 @@ export class FosComponent implements OnInit, OnDestroy {
           level: fos.level,
           type: fos.type,
           profile: fos.profile,
-          dyscypline: fos.discipline,
+          discipline: fos.discipline,
           branchOfScience: fos.branchOfScience,
           supervisor: fos.supervisor,
         });

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.Data.Models.LearningOutcomes;
+using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Services;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers
@@ -12,10 +13,11 @@ namespace SyllabusManager.API.Controllers
     {
         private readonly ILearningOutcomeService _learningOutcomeService;
 
-        public LearningOutcomeController(ILearningOutcomeService learningOutcomeService) : base(learningOutcomeService)
+        public LearningOutcomeController(ILearningOutcomeService learningOutcomeService, UserManager<SyllabusManagerUser> userManager) : base(learningOutcomeService, userManager)
         {
             _learningOutcomeService = learningOutcomeService;
         }
+
         /// <summary>
         /// Zwraca obiekt LearningOutcomeDocument o najnowszej wersji dla podanych parametrów (jeżeli nie istnieje to zwraca nowy obiekt)
         /// </summary>
@@ -26,15 +28,14 @@ namespace SyllabusManager.API.Controllers
         public async Task<IActionResult> Latest([FromQuery(Name = "fos")] string fosCode,
                                                 [FromQuery(Name = "year")] string academicYear)
         {
-            LearningOutcomeDocument result = await _learningOutcomeService.Latest(fosCode, academicYear);
+            if (!await CheckIfUserIsFosSupervisor(fosCode)) return Forbid();
 
-            if (result is null)
-                return NotFound();
+            var result = await _learningOutcomeService.Latest(fosCode, academicYear);
+
+            if (result is null) return NotFound();
 
             return Ok(result);
         }
-
-
 
         /// <summary>
         /// Zapisuje obiekt w najnowszej wersji
@@ -44,10 +45,11 @@ namespace SyllabusManager.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(LearningOutcomeDocument learningOutcome)
         {
-            LearningOutcomeDocument result = await _learningOutcomeService.Save(learningOutcome);
+            if (!await CheckIfUserIsFosSupervisor(learningOutcome.FieldOfStudy.Code)) return Forbid();
 
-            if (result is null)
-                return BadRequest();
+            var result = await _learningOutcomeService.Save(learningOutcome);
+
+            if (result is null) return BadRequest();
             return Ok();
         }
 
@@ -63,9 +65,11 @@ namespace SyllabusManager.API.Controllers
                                                 [FromQuery(Name = "year")] string academicYear,
                                                 [FromBody] LearningOutcomeDocument learningOutcome)
         {
-            LearningOutcomeDocument result = await _learningOutcomeService.SaveAs(fosCode, academicYear, learningOutcome);
-            if (result is null)
-                return BadRequest();
+            if (!await CheckIfUserIsFosSupervisor(fosCode)) return Forbid();
+
+            var result = await _learningOutcomeService.SaveAs(fosCode, academicYear, learningOutcome);
+            
+            if (result is null) return BadRequest();
             return Ok();
         }
 
@@ -82,11 +86,14 @@ namespace SyllabusManager.API.Controllers
                                                    [FromQuery(Name = "fos")] string fosCode,
                                                    [FromQuery(Name = "year")] string academicYear)
         {
-            LearningOutcomeDocument result = await _learningOutcomeService.ImportFrom(currentDocId, fosCode, academicYear);
-            if (result is null)
-                return NotFound();
+            if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
+
+            var result = await _learningOutcomeService.ImportFrom(currentDocId, fosCode, academicYear);
+            
+            if (result is null) return NotFound();
             return Ok();
         }
+
         /// <summary>
         /// Usuwa, ale jako IsDeleted (wszystkie wersje)
         /// </summary>
@@ -96,12 +103,12 @@ namespace SyllabusManager.API.Controllers
         [Route("{currentDocId}")]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
-            // ToDo: usuwanie wszystkich wersji
-            bool result = await _learningOutcomeService.Delete(currentDocId);
-            if (result)
-                return Ok();
-            return NotFound();
+            if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
 
+            var result = await _learningOutcomeService.Delete(currentDocId);
+            
+            if (result) return Ok();
+            return NotFound();
         }
 
         // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
@@ -122,9 +129,9 @@ namespace SyllabusManager.API.Controllers
         [Route("{currentDocId}")]
         public async Task<IActionResult> History(Guid currentDocId)
         {
-            List<string> result = await _learningOutcomeService.History(currentDocId);
-            if (result is null)
-                return NotFound();
+            var result = await _learningOutcomeService.History(currentDocId);
+            
+            if (result is null) return NotFound();
             return Ok(result);
         }
     }

@@ -8,7 +8,7 @@
           [(value)]="selectedFos"
           (selectionChange)="selectedFosChanged()"
         >
-          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{
+          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
             fos.name
           }}</mat-option>
         </mat-select>
@@ -20,7 +20,7 @@
           [(value)]="selectedSpec"
           (selectionChange)="selectedSpecChanged()"
         >
-          <mat-option *ngFor="let spec of specs" [value]="spec">{{
+          <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
             spec.name
           }}</mat-option>
         </mat-select>

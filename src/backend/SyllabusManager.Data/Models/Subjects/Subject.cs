@@ -27,7 +27,6 @@ namespace SyllabusManager.Data.Models.Subjects
         public List<CardEntries> CardEntries { get; set; } = new List<CardEntries>();
         public List<SubjectTeacher> SubjectsTeachers { get; set; } = new List<SubjectTeacher>();
         public List<SyllabusManagerUser> Teachers { get; set; } = new List<SyllabusManagerUser>();
-        public FieldOfStudy FieldOfStudy{ get; set; }
         public Specialization Specialization{ get; set; }
     }
 }

@@ -8,6 +8,7 @@ using SyllabusManager.Logic.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -15,13 +16,11 @@ namespace SyllabusManager.API.Controllers
     {
         private readonly ISubjectService _subjectService;
         private readonly IFieldOfStudyService _fosService;
-        private readonly UserManager<SyllabusManagerUser> _userManager;
 
-        public SubjectController(ISubjectService subjectService, IFieldOfStudyService fosService, UserManager<SyllabusManagerUser> userManager) : base(subjectService)
+        public SubjectController(ISubjectService subjectService, IFieldOfStudyService fosService, UserManager<SyllabusManagerUser> userManager) : base(subjectService, userManager)
         {
             _subjectService = subjectService;
             _fosService = fosService;
-            _userManager = userManager;
         }
 
         [HttpGet]
@@ -45,7 +44,7 @@ namespace SyllabusManager.API.Controllers
             [FromQuery] bool onlyMy)
         {
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            if (await AuthenticationHelper.CheckIfAdmin(user, _userManager)) return Ok(await _subjectService.GetAll(fos, spec, year));
+            if (await AuthorizationHelper.CheckIfAdmin(user, _userManager)) return Ok(await _subjectService.GetAll(fos, spec, year));
             return Ok(await _subjectService.GetAllForUser(fos, spec, year, user, onlyMy));
         }
 

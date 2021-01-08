@@ -7,7 +7,7 @@
           (selectedElem)="selectLo($event)"
         ></app-lo-list>
         <div>
-          <button (click)="newLo(null)">Dodaj</button>
+          <button mat-icon-button (click)="newLo(null)"><mat-icon>add</mat-icon></button>
         </div>
       </div>
     </mat-tab>
@@ -16,7 +16,7 @@
         <div>
           <mat-form-field appearance="fill">
             <mat-label>Wybierz specjalizację</mat-label>
-            <mat-select [(value)]="selectedSpec">
+            <mat-select [(value)]="selectedSpec" (selectionChange)="selectedLo = null">
               <mat-option *ngFor="let spec of specs" [value]="spec">{{
                 spec.name
               }}</mat-option>
@@ -28,7 +28,7 @@
           (selectedElem)="selectLo($event)"
           [selected]="selectedLo"
         ></app-lo-list><div>
-            <button [disabled]="!selectedSpec" (click)="newLo(selectedSpec)">Dodaj</button>
+            <button mat-icon-button [disabled]="!selectedSpec" (click)="newLo(selectedSpec)"><mat-icon>add</mat-icon></button>
           </div></div
     ></mat-tab>
   </mat-tab-group>

@@ -14,12 +14,10 @@ namespace SyllabusManager.API.Controllers
     public class SyllabusController : DocumentInAcademicYearControllerBase<Syllabus>
     {
         private readonly ISyllabusService _syllabusService;
-        private readonly UserManager<SyllabusManagerUser> _userManager;
 
-        public SyllabusController(ISyllabusService syllabusService, UserManager<SyllabusManagerUser> userManager) : base(syllabusService)
+        public SyllabusController(ISyllabusService syllabusService, UserManager<SyllabusManagerUser> userManager) : base(syllabusService, userManager)
         {
             _syllabusService = syllabusService;
-            _userManager = userManager;
         }
 
         // todo: /latest?fos={fosCode}&spec={specCode}&year={academicYear} -> zwraca obiekt Syllabus o najnowszej wersji dla podanych parametrów (jeżeli nie istnieje to zwraca nowy obiekt)

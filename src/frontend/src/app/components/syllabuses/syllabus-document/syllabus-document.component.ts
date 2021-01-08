@@ -138,6 +138,7 @@ export class SyllabusDocumentComponent implements OnInit {
         .subscribe((result) => {
           if (result) {
             this.alerts.showCustomSuccessMessage('Usunięto dokument');
+            this.close();
           }
         });
     }

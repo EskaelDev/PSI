@@ -1,9 +1,9 @@
 <div fxLayoutAlign="space-between" fxLayoutGap="20px">
-  <button (click)="save.emit()" [disabled]="!canSave">Zapisz</button>
-  <button *ngIf="!blockSaveAs" (click)="saveAs.emit()">Zapisz jako</button>
-  <button (click)="import.emit()" [disabled]="isNew || !canSave">Importuj z</button>
-  <button (click)="close.emit()">Zamknij</button>
-  <button (click)="delete.emit()" [disabled]="!canSave">Usuń</button>
-  <button (click)="pdf.emit()">PDF</button>
-  <button (click)="history.emit()">Historia</button>
+  <button mat-raised-button color="primary" (click)="save.emit()" [disabled]="!canSave">Zapisz</button>
+  <button mat-raised-button color="primary" *ngIf="!blockSaveAs" (click)="saveAs.emit()">Zapisz jako</button>
+  <button mat-raised-button color="primary" (click)="import.emit()" [disabled]="isNew || !canSave">Importuj z</button>
+  <button mat-raised-button color="primary" (click)="close.emit()">Zamknij</button>
+  <button mat-raised-button color="primary" (click)="askToDelete()" [disabled]="isNew || !canSave">Usuń</button>
+  <button mat-raised-button color="primary" (click)="pdf.emit()" [disabled]="isNew">PDF</button>
+  <button mat-raised-button color="primary" (click)="history.emit()" [disabled]="isNew">Historia</button>
 </div>

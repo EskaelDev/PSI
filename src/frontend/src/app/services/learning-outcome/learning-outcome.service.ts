@@ -20,8 +20,13 @@ export class LearningOutcomeService {
 
   getLatest(fosCode: string, year: string): Observable<LearningOutcomeDocument | null> {
     return this.http.get<LearningOutcomeDocument>(this.baseUrl + `/latest?fos=${fosCode}&year=${encodeURIComponent(year)}`).pipe(
-      catchError(() => {
-        this.alerts.showDefaultLoadingDataErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else {
+          this.alerts.showDefaultLoadingDataErrorMessage();
+        }
         return of(null);
       })
     );
@@ -32,8 +37,13 @@ export class LearningOutcomeService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else {
+          this.alerts.showDefaultWrongDataErrorMessage();
+        }
         return of(false);
       })
     );
@@ -44,8 +54,13 @@ export class LearningOutcomeService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do docelowego dokumentu');
+        }
+        else {
+          this.alerts.showDefaultWrongDataErrorMessage();
+        }
         return of(false);
       })
     );
@@ -59,6 +74,9 @@ export class LearningOutcomeService {
       catchError(err => {
         if (err.status == 404) {
           this.alerts.showCustomErrorMessage('Wybrany dokument do zaimportowania nie istnieje!');
+        }
+        else if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
         }
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
@@ -74,8 +92,13 @@ export class LearningOutcomeService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else {
+          this.alerts.showDefaultErrorMessage();
+        }  
         return of(false);
       })
     );

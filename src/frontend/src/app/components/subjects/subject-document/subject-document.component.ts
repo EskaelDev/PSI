@@ -113,6 +113,7 @@ export class SubjectDocumentComponent implements OnInit {
         .subscribe((result) => {
           if (result) {
             this.alerts.showCustomSuccessMessage('Usunięto dokument');
+            this.close();
           }
         });
     }

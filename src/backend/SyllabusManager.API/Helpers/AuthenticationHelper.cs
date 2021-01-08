@@ -22,12 +22,5 @@ namespace SyllabusManager.API.Helpers
                 return null;
             }
         }
-
-        public static async Task<bool> CheckIfAdmin(SyllabusManagerUser user,
-            UserManager<SyllabusManagerUser> userManager)
-        {
-            var roles = await userManager.GetRolesAsync(user);
-            return roles.Contains(UsersRoles.Admin);
-        }
     }
 }

@@ -21,6 +21,7 @@ export class YearSubjectPickerComponent implements OnInit {
   selectedFos: FieldOfStudy | null = null;
   selectedSpec: Specialization | null = null;
   selectedYear: string | null = null;
+  allFields: boolean = false;
 
   subjects: Subject[] = [];
   fieldsOfStudy: FieldOfStudy[] = [];
@@ -47,6 +48,7 @@ export class YearSubjectPickerComponent implements OnInit {
     dialogRef.disableClose = true;
     this.title = data.title;
     this.allowsNew = data.allowsNew ?? false;
+    this.allFields = data.allFields ?? false;
   }
 
   ngOnInit(): void {
@@ -117,9 +119,16 @@ export class YearSubjectPickerComponent implements OnInit {
   }
 
   loadFieldsOfStudy() {
-    this.fosService.getFieldsOfStudies().subscribe((fieldsOfStudy) => {
-      this.fieldsOfStudy = fieldsOfStudy;
-    });
+    if (this.allFields) {
+      this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
+        this.fieldsOfStudy = fieldsOfStudy;
+      });
+    }
+    else {
+      this.fosService.getMyFieldsOfStudies().subscribe(fieldsOfStudy => {
+        this.fieldsOfStudy = fieldsOfStudy;
+      });
+    }
   }
 
   selectedFosChanged() {

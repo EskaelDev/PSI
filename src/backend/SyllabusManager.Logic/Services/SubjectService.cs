@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using SyllabusManager.Data.Enums.Subjects;
 using SyllabusManager.Data.Models.User;
 
@@ -14,7 +15,7 @@ namespace SyllabusManager.Logic.Services
 {
     public class SubjectService : DocumentInAcademicYearService<Subject>, ISubjectService
     {
-        public SubjectService(SyllabusManagerDbContext dbContext) : base(dbContext)
+        public SubjectService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager) : base(dbContext, userManager)
         {
 
         }

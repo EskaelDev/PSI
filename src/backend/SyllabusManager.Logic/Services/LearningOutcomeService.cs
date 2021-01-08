@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.Logic.Services
 {
     public class LearningOutcomeService : DocumentInAcademicYearService<LearningOutcomeDocument>, ILearningOutcomeService
     {
-        public LearningOutcomeService(SyllabusManagerDbContext dbContext) : base(dbContext)
+        public LearningOutcomeService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager) : base(dbContext, userManager)
         {
 
         }

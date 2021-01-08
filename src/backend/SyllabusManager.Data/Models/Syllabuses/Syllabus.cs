@@ -28,7 +28,6 @@ namespace SyllabusManager.Data.Models.Syllabuses
         public string IntershipType { get; set; }
         public SyllabusDescription Description { get; set; } = new SyllabusDescription();
         public List<SubjectInSyllabusDescription> SubjectDescriptions { get; set; } = new List<SubjectInSyllabusDescription>();
-        public FieldOfStudy FieldOfStudy { get; set; }
         public Specialization Specialization { get; set; }
     }
 }

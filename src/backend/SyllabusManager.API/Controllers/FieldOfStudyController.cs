@@ -8,6 +8,7 @@ using SyllabusManager.Logic.Services;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -27,7 +28,7 @@ namespace SyllabusManager.API.Controllers
         public async Task<IActionResult> AllMy()
         {
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            if (await AuthenticationHelper.CheckIfAdmin(user, _userManager)) return Ok(await _modelService.GetAllAsync());
+            if (await AuthorizationHelper.CheckIfAdmin(user, _userManager)) return Ok(await _modelService.GetAllAsync());
             return Ok(await _fieldOfStudyService.GetAllMy(user));
         }
 

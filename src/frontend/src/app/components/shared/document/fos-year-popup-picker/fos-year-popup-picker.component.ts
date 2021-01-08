@@ -15,12 +15,14 @@ export class FosYearPopupPickerComponent implements OnInit {
   selectedFos: FieldOfStudy | null = null;
   selectedSpec: Specialization | null = null;
   selectedYear: string | null = null;
+  allFields: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<FosYearPopupPickerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
     dialogRef.disableClose = true;
     this.title = data.title;
     this.isSpec = data.isSpec ?? false;
+    this.allFields = data.allFields ?? false;
   }
 
   ngOnInit(): void {

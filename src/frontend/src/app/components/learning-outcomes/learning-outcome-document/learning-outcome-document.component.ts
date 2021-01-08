@@ -94,6 +94,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
       width: '500px',
       data: {
         title: 'Importuj z',
+        allFields: true
       },
     });
 
@@ -124,6 +125,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
       this.learningOutcomeService.delete(this.learningOutcomeDocument.id).subscribe(result => {
         if (result) {
           this.alerts.showCustomSuccessMessage('Usunięto dokument');
+          this.close();
         }
       });
     }

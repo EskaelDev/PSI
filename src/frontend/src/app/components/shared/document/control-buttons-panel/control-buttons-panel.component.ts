@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 
 @Component({
   selector: 'app-control-buttons-panel',
@@ -18,9 +19,15 @@ export class ControlButtonsPanelComponent implements OnInit {
   @Output() pdf: EventEmitter<any> = new EventEmitter();
   @Output() history: EventEmitter<any> = new EventEmitter();
   
-  constructor() { }
+  constructor(private alerts: AlertService) { }
 
-  ngOnInit() {
-    
+  ngOnInit() {}
+
+  askToDelete() {
+    this.alerts.showYesNoDialog('Usunięcie', 'Czy potwierdzasz usunięcie dokumentu?').then(result => {
+      if (result) {
+        this.delete.emit();
+      }
+    })
   }
 }

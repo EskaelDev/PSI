@@ -30,7 +30,7 @@
           formControlName="fieldOfStudy"
           (selectionChange)="selectedFosChanged()"
         >
-          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{
+          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
             fos.name
           }}</mat-option>
         </mat-select>
@@ -41,7 +41,7 @@
         <mat-select
           formControlName="specialization"
         >
-          <mat-option *ngFor="let spec of specs" [value]="spec">{{
+          <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
             spec.name
           }}</mat-option>
         </mat-select>
@@ -80,10 +80,10 @@
   </div>
   <mat-dialog-actions align="end">
     <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
-    <button mat-button (click)="submit()" [disabled]="!subjectForm.valid || isLoading">
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="!subjectForm.valid || isLoading">
       Dodaj
     </button>
-    <button mat-button [mat-dialog-close]="false" cdkFocusInitial [disabled]="isLoading">
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial [disabled]="isLoading">
       Anuluj
     </button>
   </mat-dialog-actions>

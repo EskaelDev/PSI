@@ -24,6 +24,23 @@ export class LearningOutcomeService {
         if (err.status === 403) {
           this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
         }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Podany kierunek studiów nie istnieje');
+        }
+        else {
+          this.alerts.showDefaultLoadingDataErrorMessage();
+        }
+        return of(null);
+      })
+    );
+  }
+
+  getLatestReadOnly(fosCode: string, year: string): Observable<LearningOutcomeDocument | null> {
+    return this.http.get<LearningOutcomeDocument>(this.baseUrl + `/latest?fos=${fosCode}&year=${encodeURIComponent(year)}&readOnly=true`).pipe(
+      catchError(err => {
+        if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Brak dostępnych efektów uczenia się');
+        }
         else {
           this.alerts.showDefaultLoadingDataErrorMessage();
         }
@@ -95,6 +112,9 @@ export class LearningOutcomeService {
       catchError(err => {
         if (err.status === 403) {
           this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje');
         }
         else {
           this.alerts.showDefaultErrorMessage();

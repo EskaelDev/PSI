@@ -12,9 +12,10 @@ namespace SyllabusManager.Logic.Services
         Task<List<Subject>> GetAll(string fos, string spec, string year);
         Task<List<Subject>> GetAllForUser(string fos, string spec, string year, SyllabusManagerUser user, bool onlyMy);
         Task<List<string>> History(Guid id);
-        Task<Subject> ImportFrom(Guid currentDocId, string fosCode, string specCode, string code, string academicYear);
+        Task<int> ImportFrom(Guid currentDocId, string fosCode, string specCode, string code, string academicYear);
         Task<Subject> Latest(string fos, string spec, string code, string year);
-        Task<Subject> Save(Subject syllabus);
+        Task<int> Save(Subject syllabus);
         Task<bool> Delete(Guid id);
+        string GetSupervisorId(Guid documentId);
     }
 }

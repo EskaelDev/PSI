@@ -25,7 +25,7 @@ namespace SyllabusManager.Logic.Services
         /// <param name="fosCode">Kod FieldOfStudy(Kierunku studiów)</param>
         /// <param name="academicYear">Rok akademicki</param>
         /// <returns>LearningOutcomeDocument o najwyższej wersji</returns>
-        public async Task<LearningOutcomeDocument> Latest(string fosCode, string academicYear)
+        public async Task<LearningOutcomeDocument> Latest(string fosCode, string academicYear, bool isReadOnly = false)
         {
             LearningOutcomeDocument lodDb = await _dbSet.Include(lod => lod.FieldOfStudy)
                                                         .ThenInclude(fs => fs.Specializations)
@@ -41,6 +41,8 @@ namespace SyllabusManager.Logic.Services
                                                         .FirstOrDefaultAsync();
             if (lodDb == null)
             {
+                if (isReadOnly) return null;
+
                 lodDb = new LearningOutcomeDocument
                 {
                     AcademicYear = academicYear,
@@ -48,6 +50,8 @@ namespace SyllabusManager.Logic.Services
                     Version = "new"
                 };
             }
+
+            if (lodDb.FieldOfStudy is null) return null;
 
             lodDb.FieldOfStudy?.Specializations.RemoveAll(s => s.IsDeleted);
 

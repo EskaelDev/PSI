@@ -27,8 +27,8 @@ export class SubjectService {
     );
   }
 
-  getAllEditable(fosCode: string, specCode: string, year: string, onlyMy: boolean): Observable<Subject[]> {
-    return this.http.get<Subject[]>(this.baseUrl + `/alleditable?fos=${fosCode}&spec=${specCode}&onlyMy=${onlyMy}&year=${encodeURIComponent(year)}`).pipe(
+  getEditable(fosCode: string, specCode: string, year: string, onlyMy: boolean): Observable<Subject[]> {
+    return this.http.get<Subject[]>(this.baseUrl + `/editable?fos=${fosCode}&spec=${specCode}&onlyMy=${onlyMy}&year=${encodeURIComponent(year)}`).pipe(
       catchError(() => {
         this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);
@@ -51,7 +51,10 @@ export class SubjectService {
   getLatest(fosCode: string, specCode: string, code: string, year: string): Observable<Subject | null> {
     return this.http.get<Subject>(this.baseUrl + `/latest?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`).pipe(
       catchError(err => {
-        if (err.status == 404) {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
           this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
         }
         else {
@@ -63,13 +66,19 @@ export class SubjectService {
   }
 
   save(sub: Subject): Observable<boolean> {
-    return this.http.post<any>(this.baseUrl + '/save', sub).pipe(
+    return this.http.post<any>(this.baseUrl + '/saveaaaaaa', sub).pipe(
       map(() => {
         return true;
       }),
       catchError(err => {
-        if (err.status === 409) {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 409) {
           this.alerts.showCustomErrorMessage('Przedmiot o podanym kodzie już istnieje!');
+        }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Podany kierunek studiów lub specjalizacja nie istnieje');
         }
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
@@ -85,7 +94,10 @@ export class SubjectService {
         return true;
       }),
       catchError(err => {
-        if (err.status == 404) {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
           this.alerts.showCustomErrorMessage('Wybrany dokument do zaimportowania nie istnieje!');
         }
         else {
@@ -102,8 +114,16 @@ export class SubjectService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje');
+        }
+        else {
+          this.alerts.showDefaultErrorMessage();
+        }
         return of(false);
       })
     );

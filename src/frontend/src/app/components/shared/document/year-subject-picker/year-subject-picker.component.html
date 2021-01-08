@@ -8,9 +8,9 @@
           [(value)]="selectedFos"
           (selectionChange)="selectedFosChanged()"
         >
-          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
-            fos.name
-          }}</mat-option>
+          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos"
+            >{{ fos.code }}: {{ fos.name }}</mat-option
+          >
         </mat-select>
       </mat-form-field>
       <br />
@@ -20,15 +20,15 @@
           [(value)]="selectedSpec"
           (selectionChange)="selectedSpecChanged()"
         >
-          <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
-            spec.name
-          }}</mat-option>
+          <mat-option *ngFor="let spec of specs" [value]="spec"
+            >{{ spec.code }}: {{ spec.name }}</mat-option
+          >
         </mat-select>
       </mat-form-field>
       <br />
       <mat-form-field appearance="fill">
         <mat-label>Wybierz rok akademicki</mat-label>
-        <mat-select [(value)]="selectedYear">
+        <mat-select [(value)]="selectedYear" (selectionChange)="loadSubjects()">
           <mat-option *ngFor="let year of years" [value]="year">{{
             year
           }}</mat-option>
@@ -57,13 +57,14 @@
   </div>
   <mat-dialog-actions align="end">
     <button
-      mat-button
+      mat-raised-button
+      color="primary"
       (click)="submit()"
       [disabled]="!validateSubject(selectedSubject) || !selectedYear"
     >
       Zatwierdź
     </button>
-    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
       Anuluj
     </button>
   </mat-dialog-actions>

@@ -36,8 +36,16 @@ export class SyllabusService {
         map((syl) => {
           return this.emptyFields(syl);
         }),
-        catchError(() => {
-          this.alerts.showDefaultLoadingDataErrorMessage();
+        catchError(err => {
+          if (err.status === 403) {
+            this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+          }
+          else if (err.status === 404) {
+            this.alerts.showCustomErrorMessage('Podany kierunek studiów lub specjalizacja nie istnieje');
+          }
+          else {
+            this.alerts.showDefaultLoadingDataErrorMessage();
+          }
           return of(null);
         })
       );
@@ -51,7 +59,7 @@ export class SyllabusService {
           return true;
         }),
         catchError(err => {
-          if (err.status == 400) {
+          if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
           else {
@@ -81,7 +89,7 @@ export class SyllabusService {
           return true;
         }),
         catchError(err => {
-          if (err.status == 400) {
+          if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
           else {
@@ -110,7 +118,7 @@ export class SyllabusService {
           return true;
         }),
         catchError((err) => {
-          if (err.status == 404) {
+          if (err.status === 404) {
             this.alerts.showCustomErrorMessage(
               'Wybrany dokument do zaimportowania nie istnieje!'
             );
@@ -168,7 +176,7 @@ export class SyllabusService {
           return true;
         }),
         catchError(err => {
-          if (err.status == 400) {
+          if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
           else {

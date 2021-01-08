@@ -4,11 +4,10 @@ using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.API.Helpers;
 using SyllabusManager.Data.Models.Subjects;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 using SyllabusManager.Logic.Services;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -38,13 +37,16 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllEditable([FromQuery] string fos,
+        public async Task<IActionResult> Editable([FromQuery] string fos,
             [FromQuery] string spec,
             [FromQuery] string year,
             [FromQuery] bool onlyMy)
         {
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            if (await AuthorizationHelper.CheckIfAdmin(user, _userManager)) return Ok(await _subjectService.GetAll(fos, spec, year));
+            if (await AuthorizationHelper.CheckIfAdmin(user, _userManager))
+            {
+                return Ok(await _subjectService.GetAll(fos, spec, year));
+            }
             return Ok(await _subjectService.GetAllForUser(fos, spec, year, user, onlyMy));
         }
 
@@ -56,8 +58,11 @@ namespace SyllabusManager.API.Controllers
                                                 [FromQuery] string year)
         {
             var result = await _subjectService.Latest(fos, spec, code, year);
-            if (result is null)
-                return NotFound();
+            
+            if (result is null) return NotFound();
+
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            if (!await CheckIfUserIsFosSupervisor(fos) && result.Supervisor?.Id != user.Id) return Forbid();
 
             return Ok(result);
         }
@@ -65,11 +70,25 @@ namespace SyllabusManager.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] Subject subject)
         {
+            if (subject.Id == Guid.Empty)
+            {
+                if (!await CheckIfUserIsFosSupervisor(subject.FieldOfStudy.Code)) return Forbid();
+            }
+            else
+            {
+                var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+                var supervisor = _subjectService.GetSupervisorId(subject.Id);
+                if (!await CheckIfUserIsFosSupervisor(subject.FieldOfStudy.Code) && supervisor != user.Id) return Forbid();
+            }
+            
             var result = await _subjectService.Save(subject);
-            if (result is null)
-                return Conflict();
-
-            return Ok(result);
+            return result switch
+            {
+                0 => Ok(),
+                1 => NotFound(),
+                2 => Conflict(),
+                _ => BadRequest()
+            };
         }
 
         [HttpGet]
@@ -80,29 +99,34 @@ namespace SyllabusManager.API.Controllers
                                                    [FromQuery] string code,
                                                    [FromQuery] string year)
         {
+
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var supervisor = _subjectService.GetSupervisorId(currentDocId);
+            if (!await CheckIfUserIsFosSupervisor(currentDocId) && supervisor != user.Id) return Forbid();
+
             var result = await _subjectService.ImportFrom(currentDocId, fos, spec, code, year);
-            if (result is null)
-                return NotFound();
-            return Ok();
+
+            return result switch
+            {
+                0 => Ok(),
+                1 => NotFound(),
+                2 => Conflict(),
+                _ => BadRequest()
+            };
         }
 
         [HttpDelete]
         [Route("{currentDocId}")]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var supervisor = _subjectService.GetSupervisorId(currentDocId);
+            if (!await CheckIfUserIsFosSupervisor(currentDocId) && supervisor != user.Id) return Forbid();
+            
             bool result = await _subjectService.Delete(currentDocId);
-            if (result)
-                return Ok();
+            
+            if (result) return Ok();
             return NotFound();
-
-        }
-
-        // todo: / pdf /{currentDocId} -> generuje pdf
-        [HttpGet]
-        [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(Guid currentDocId)
-        {
-            return Ok("Not implemented");
         }
 
         // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
@@ -118,9 +142,9 @@ namespace SyllabusManager.API.Controllers
         [Route("{currentDocId}")]
         public async Task<IActionResult> History(Guid currentDocId)
         {
-            List<string> result = await _subjectService.History(currentDocId);
-            if (result is null)
-                return NotFound();
+            var result = await _subjectService.History(currentDocId);
+            
+            if (result is null) return NotFound();
             return Ok(result);
         }
     }

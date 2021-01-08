@@ -23,14 +23,16 @@ namespace SyllabusManager.API.Controllers
         /// </summary>
         /// <param name="fosCode">Kod FieldOfStudy(Kierunku studiów)</param>
         /// <param name="academicYear">Rok akademicki</param>
+        /// <param name="readOnly">Tylko do odczytu</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Latest([FromQuery(Name = "fos")] string fosCode,
-                                                [FromQuery(Name = "year")] string academicYear)
+                                                [FromQuery(Name = "year")] string academicYear,
+                                                [FromQuery(Name = "readOnly")] bool readOnly)
         {
-            if (!await CheckIfUserIsFosSupervisor(fosCode)) return Forbid();
+            if (!readOnly && !await CheckIfUserIsFosSupervisor(fosCode)) return Forbid();
 
-            var result = await _learningOutcomeService.Latest(fosCode, academicYear);
+            var result = await _learningOutcomeService.Latest(fosCode, academicYear, readOnly);
 
             if (result is null) return NotFound();
 

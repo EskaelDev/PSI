@@ -69,6 +69,8 @@ namespace SyllabusManager.Logic.Services
 
             if (subject != null)
             {
+                if (subject.FieldOfStudy is null || subject.Specialization is null) return null;
+
                 subject.Teachers = subject.SubjectsTeachers.Select(st => st.Teacher).ToList();
             }
 
@@ -76,7 +78,7 @@ namespace SyllabusManager.Logic.Services
         }
 
 
-        public async Task<Subject> Save(Subject subject)
+        public async Task<int> Save(Subject subject)
         {
             if (subject.Id == Guid.Empty)
             {
@@ -89,7 +91,7 @@ namespace SyllabusManager.Logic.Services
                         && s.Code == subject.Code
                         && !s.IsDeleted);
 
-                if (existing != null) return null;
+                if (existing != null) return 2;
 
                 subject.Version = DateTime.UtcNow.ToString("yyyyMMdd") + "01";
                 subject.CardEntries.Add(new CardEntries()
@@ -139,15 +141,18 @@ namespace SyllabusManager.Logic.Services
             subject.Specialization = _dbContext.Specializations.Find(subject.Specialization.Code);
             subject.Supervisor = _dbContext.Users.Find(subject.Supervisor.Id);
 
+            if (subject.FieldOfStudy is null || subject.Specialization is null || subject.Supervisor is null)
+                return 1;
+            
             subject.IsDeleted = false;
 
             await _dbSet.AddAsync(subject);
             await _dbContext.SaveChangesAsync();
 
-            return subject;
+            return 0;
         }
 
-        public async Task<Subject> ImportFrom(Guid currentDocId, string fosCode, string specCode, string code, string academicYear)
+        public async Task<int> ImportFrom(Guid currentDocId, string fosCode, string specCode, string code, string academicYear)
         {
             var currentSubject = await _dbSet.AsNoTracking()
                                               .Include(s => s.FieldOfStudy)
@@ -173,8 +178,7 @@ namespace SyllabusManager.Logic.Services
                                                                   && s.Specialization.Code == specCode
                                                                   && !s.IsDeleted);
 
-            if (currentSubject is null || subject?.FieldOfStudy is null || subject.Specialization is null)
-                return null;
+            if (currentSubject is null || subject is null) return 1;
 
             currentSubject.NamePl = subject.NamePl;
             currentSubject.NameEng = subject.NameEng;
@@ -229,6 +233,12 @@ namespace SyllabusManager.Logic.Services
             subjects.ForEach(s => s.IsDeleted = true);
             var state = await _dbContext.SaveChangesAsync();
             return state > 0;
+        }
+
+        public string GetSupervisorId(Guid documentId)
+        {
+            return _dbSet.Include(s => s.Supervisor)
+                .FirstOrDefault(s => s.Id == documentId)?.Supervisor?.Id;
         }
     }
 }

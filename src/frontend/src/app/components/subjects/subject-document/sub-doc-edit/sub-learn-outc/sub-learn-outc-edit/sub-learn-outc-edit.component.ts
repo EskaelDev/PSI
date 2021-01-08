@@ -37,7 +37,7 @@ export class SubLearnOutcEditComponent implements OnInit {
   ngOnInit(): void {}
 
   save() {
-    this.saved.emit(Object.assign(this._elem, this.learnForm.value));
+    this.saved.emit(Object.assign(new LearningOutcome(), this.learnForm.value));
   }
 
   delete() {

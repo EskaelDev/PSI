@@ -42,6 +42,8 @@ namespace SyllabusManager.Logic.Services
                 };
             }
 
+            if (syllabus.FieldOfStudy is null || syllabus.Specialization is null) return null;
+
             return syllabus;
         }
 

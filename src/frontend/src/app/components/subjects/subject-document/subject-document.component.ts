@@ -63,13 +63,16 @@ export class SubjectDocumentComponent implements OnInit {
   }
 
   save() {
-    if (this.subjectDocument) {
+    if (this.subjectDocument && this.validateDocument()) {
       this.subjectService.save(this.subjectDocument).subscribe((result) => {
         if (result) {
           this.alerts.showCustomSuccessMessage('Zapisano zmiany');
           this.loadSubject();
         }
       });
+    }
+    else {
+      this.alerts.showCustomErrorMessage('Zapis nieudany!');
     }
   }
 
@@ -79,6 +82,7 @@ export class SubjectDocumentComponent implements OnInit {
       width: '500px',
       data: {
         title: 'Importuj z',
+        allFields: true
       },
     });
 
@@ -147,5 +151,33 @@ export class SubjectDocumentComponent implements OnInit {
           });
         });
     }
+  }
+
+  validateDocument(): boolean {
+    let isValid = true;
+    if (!this.subjectDocument?.namePl) {
+      this.alerts.showCustomWarningMessage('Formularz Dane posiada niepoprawne pola!');
+      isValid = false;
+    }
+    if (!this.validateCardEntry(SubjectCardEntryType.Prerequisite)) {
+      this.alerts.showCustomWarningMessage('Tabela Wymagania wstępne posiada nieuzupełnione pola!');
+      isValid = false;
+    }
+    if (!this.validateCardEntry(SubjectCardEntryType.Goal)) {
+      this.alerts.showCustomWarningMessage('Tabela Cele przedmiotu posiada nieuzupełnione pola!');
+      isValid = false;
+    }
+    if (!this.validateCardEntry(SubjectCardEntryType.TeachingTools)) {
+      this.alerts.showCustomWarningMessage('Tabela Narzędzia dydaktyczne posiada nieuzupełnione pola!');
+      isValid = false;
+    }
+    return isValid;
+  }
+
+  validateCardEntry(type: SubjectCardEntryType): boolean {
+    if (this.subjectDocument?.cardEntries.find(e => e.type === SubjectCardEntryType.Prerequisite)?.entries.find(e => !e.code || !e.description)) {
+      return false;
+    }
+    return true;
   }
 }

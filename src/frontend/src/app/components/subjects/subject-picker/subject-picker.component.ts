@@ -70,7 +70,7 @@ export class SubjectPickerComponent implements OnInit {
   loadSubjects() {
     this.subjects = [];
     if (this.selectedSpec && this.selectedYear) {
-      this.subjectService.getAllEditable(this.selectedFos?.code ?? '', this.selectedSpec.code, this.selectedYear, this.onlyMy).subscribe(subjects => {
+      this.subjectService.getEditable(this.selectedFos?.code ?? '', this.selectedSpec.code, this.selectedYear, this.onlyMy).subscribe(subjects => {
         this.subjects = subjects;
         this.filterSubjects();
       });

@@ -57,7 +57,6 @@ export class LoDocEditComponent implements OnInit {
       this.deleteLo();
       this._document.learningOutcomes.push(lo);
       this._document.learningOutcomes = this._document.learningOutcomes.sort((lo1, lo2) => lo1.symbol > lo2.symbol ? 1 : -1);
-      this.selectedLo = null;
     }
     else {
       this.alerts.showCustomErrorMessage('Efekt o podanym symbolu już istnieje!');
@@ -72,7 +71,6 @@ export class LoDocEditComponent implements OnInit {
   }
 
   checkLoIsUnique(lo: LearningOutcome): boolean {
-    console.log(this.selectedLo);
     if(this._document.learningOutcomes.find(l => l.symbol === lo.symbol) && this.selectedLo?.symbol !== lo.symbol) {
       return false;
     }

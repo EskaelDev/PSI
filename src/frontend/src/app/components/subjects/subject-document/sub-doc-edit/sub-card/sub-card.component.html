@@ -4,14 +4,14 @@
     <div *ngFor="let entry of card.entries">
       <mat-form-field>
         <mat-label>Id</mat-label>
-        <input matInput [(ngModel)]="entry.code"/>
+        <input matInput [(ngModel)]="entry.code" required/>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Opis</mat-label>
-        <textarea matInput [(ngModel)]="entry.description"></textarea>
+        <textarea matInput [(ngModel)]="entry.description" required></textarea>
       </mat-form-field>
-      <button (click)="remove(entry)">Usuń</button>
+      <button mat-icon-button (click)="remove(entry)"><mat-icon>remove</mat-icon></button>
     </div>
   </div>
-  <button (click)="add()">Dodaj</button>
+  <button mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
 </div>

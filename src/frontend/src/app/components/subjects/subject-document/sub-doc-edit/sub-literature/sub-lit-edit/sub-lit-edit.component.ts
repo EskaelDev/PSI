@@ -9,6 +9,8 @@ import { Literature } from 'src/app/core/models/subject/literature';
 })
 export class SubLitEditComponent implements OnInit {
 
+  currentYear = new Date().getFullYear();
+
   _elem: Literature | null = null;
   editableElem: Literature | null = null;
 
@@ -19,7 +21,7 @@ export class SubLitEditComponent implements OnInit {
       authors: [lit.authors, Validators.required],
       title: [lit.title, Validators.required],
       distributor: [lit.distributor],
-      year: [lit.year],
+      year: [lit.year, [Validators.min(1), Validators.max(new Date().getFullYear())]],
       isPrimary: [lit.isPrimary],
       isbn: [lit.isbn, Validators.required],
     });
@@ -34,7 +36,7 @@ export class SubLitEditComponent implements OnInit {
   ngOnInit(): void {}
 
   save() {
-    this.saved.emit(Object.assign(this._elem, this.litForm.value));
+    this.saved.emit(Object.assign(new Literature(), this.litForm.value));
   }
 
   delete() {

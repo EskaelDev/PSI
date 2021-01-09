@@ -199,12 +199,12 @@ namespace SyllabusManager.Logic.Services
                 return false;
 
             Data.Models.FieldOfStudies.FieldOfStudy fos = lod.FieldOfStudy;
-            List<LearningOutcome> lods = lod.LearningOutcomes;
+            List<LearningOutcome> lods = lod.LearningOutcomes.OrderBy(l=>l.Category).ToList();
             using (Document doc = PdfHelper.Document())
             {
                 doc.SetFont(PdfHelper.FONT);
 
-                doc.Add(new Paragraph("ZAKŁADANE EFEKTY UCZENIA SIĘ"));
+                doc.Add(new Paragraph("ZAKŁADANE EFEKTY UCZENIA SIĘ").SetFontSize(48));
                 doc.Add(new Paragraph($"Rok akademicki: {lod.AcademicYear}"));
                 doc.Add(new Paragraph($"Kierunek"));
 
@@ -220,23 +220,12 @@ namespace SyllabusManager.Logic.Services
                             doc.Add(new Paragraph(EnumTranslator.Translate(propName) + " - " + EnumTranslator.Translate(value)));
                         }
                     }
-                    //doc.Add(new Paragraph($"Nazwa: {fos.Name}"));
-                    //doc.Add(new Paragraph($"Kod: {fos.Code}"));
-                    //doc.Add(new Paragraph($"Poziom: {fos.Level}"));
-                    //doc.Add(new Paragraph($"Profil: {fos.Profile}"));
-                    //doc.Add(new Paragraph($"Gałąź nauki: {fos.BranchOfScience}"));
-                    //doc.Add(new Paragraph($"Dziedzina: {fos.Discipline}"));
-                    //doc.Add(new Paragraph($"Wydział: {fos.Faculty}"));
-                    //doc.Add(new Paragraph($"Typ kursu: {fos.Type}"));
-                    //doc.Add(new Paragraph($"Język główny: {fos.Language}"));
-
                 }
 
                 if (lods != null)
                 {
                     List<string> headers = new List<string>();
                     List<List<string>> cells = new List<List<string>>();
-
 
                     foreach (PropertyInfo prop in typeof(LearningOutcome).GetProperties())
                     {
@@ -246,8 +235,6 @@ namespace SyllabusManager.Logic.Services
                             headers.Add(propName);
                         }
                     }
-
-
 
                     lods.ForEach(l =>
                     {
@@ -262,10 +249,8 @@ namespace SyllabusManager.Logic.Services
                         cells.Add(cell);
                     });
 
-                    doc.Add(PdfHelper.Table(headers, cells));
+                    doc.Add(PdfHelper.Table(headers, cells).SetFontSize(9));
                 }
-
-
             }
             return true;
         }

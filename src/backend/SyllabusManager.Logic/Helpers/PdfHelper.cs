@@ -12,15 +12,59 @@ using iText.Kernel.Font;
 using PdfDocument = iText.Kernel.Pdf.PdfDocument;
 using PdfWriter = iText.Kernel.Pdf.PdfWriter;
 using iText.IO.Font;
+using iText.IO.Font.Constants;
+using iText.Kernel.Events;
 
 namespace SyllabusManager.Logic.Helpers
 {
     public static class PdfHelper
     {
+        public static readonly PdfNumber PORTRAIT = new PdfNumber(0);
+        public static readonly PdfNumber LANDSCAPE = new PdfNumber(90);
+        public static readonly PdfNumber INVERTEDPORTRAIT = new PdfNumber(180);
+        public static readonly PdfNumber SEASCAPE = new PdfNumber(270);
+
+        private static PdfFont FONT => PdfFontFactory.CreateFont(StandardFonts.HELVETICA, PdfEncodings.CP1250);
         public static string PATH => Directory.GetCurrentDirectory() + "/temp.pdf";
-        //https://www.c-sharpcorner.com/blogs/create-table-in-pdf-using-c-sharp-and-itextsharp
+        public static Document Document(bool horizontal = false)
+        {
+            PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileStream(PATH, FileMode.Create, FileAccess.Write)));
+
+            if (horizontal) { pdfDocument.SetDefaultPageSize(pdfDocument.GetDefaultPageSize().Rotate()); }
+
+            Document doc = new Document(pdfDocument);
+            doc.SetFont(PdfHelper.FONT);
+            return doc;
+        }
+
+        public static Table Table(List<string> headers, List<List<string>> cells)
+        {
+
+            Table table = new Table(headers.Count);
+
+            headers.ForEach(h => table.AddHeaderCell(h));
+            cells.ForEach(c =>
+            {
+                foreach (var item in c)
+                {
+                    table.AddCell(new Cell().Add(new Paragraph(item)));
+                }
+            });
+
+            return table;
+        }
+
+        public static List List(List<string> items, ListNumberingType type = ListNumberingType.DECIMAL)
+        {
+            List list = new List(type);
+            items.ForEach(i => list.Add(new ListItem(i)));
+            return list;
+        }
+
+
         public static void test()
         {
+            //https://www.c-sharpcorner.com/blogs/create-table-in-pdf-using-c-sharp-and-itextsharp
             //PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileStream(Directory.GetCurrentDirectory() + "/temp.pdf", FileMode.Create, FileAccess.Write)));
             //Document document = new Document(pdfDocument);
             using (Document document = Document())
@@ -76,39 +120,6 @@ namespace SyllabusManager.Logic.Helpers
             //document.Close();
             Console.WriteLine("Awesome PDF just got created.");
         }
-
-        //        private static BaseFont _baseFont => BaseFont.CreateFont("c:/windows/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-        //      public static Font FONT new Font(bf, 12);
-        public static PdfFont FONT => PdfFontFactory.CreateFont("c:/windows/fonts/arial.ttf", PdfEncodings.IDENTITY_H);
-        public static Document Document()
-        {
-            PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileStream(PATH, FileMode.Create, FileAccess.Write)));
-            return new Document(pdfDocument);
-        }
-
-        public static Table Table(List<string> headers, List<List<string>> cells)
-        {
-
-            Table table = new Table(headers.Count);
-
-            headers.ForEach(h => table.AddHeaderCell(h));
-            cells.ForEach(c =>
-            {
-                foreach (var item in c)
-                {
-                    table.AddCell(new Cell().Add(new Paragraph(item)));
-                }
-            });
-
-            return table;
-        }
-
-        public static List List(List<string> items, ListNumberingType type = ListNumberingType.DECIMAL)
-        {
-            List list = new List(type);
-            items.ForEach(i => list.Add(new ListItem(i)));
-            return list;
-        }
-
     }
+
 }

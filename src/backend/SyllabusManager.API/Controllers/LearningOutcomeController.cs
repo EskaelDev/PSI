@@ -118,11 +118,10 @@ namespace SyllabusManager.API.Controllers
         // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
         [HttpGet]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(Guid currentDocId,
-                                            [FromQuery(Name = "version")] string version)
+        public async Task<IActionResult> Pdf(Guid currentDocId)
         {
 
-            var result = await _learningOutcomeService.Pdf(currentDocId, version);
+            var result = await _learningOutcomeService.Pdf(currentDocId);
             if (result==false)
             {
                 return NotFound();

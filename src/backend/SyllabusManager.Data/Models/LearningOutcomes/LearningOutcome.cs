@@ -10,7 +10,6 @@ namespace SyllabusManager.Data.Models.LearningOutcomes
         [Required]
         [PdfName("Symbol kierunkowych efektów uczenia się")]
         public string Symbol { get; set; }
-        [PdfName("Kategoria")]
         public LearningOutcomeCategory Category { get; set; }
         [PdfName("Opis efektów uczenia się dla kierunku studiów")]
         public string Description { get; set; }

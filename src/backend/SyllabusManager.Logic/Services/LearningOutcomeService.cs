@@ -14,6 +14,7 @@ using iText.Layout.Element;
 using System.Reflection;
 using SyllabusManager.Data.Attributes;
 using SyllabusManager.Data.Models.FieldOfStudies;
+using SyllabusManager.Data.Enums.LearningOutcomes;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -184,7 +185,7 @@ namespace SyllabusManager.Logic.Services
         }
 
 
-        public async Task<bool> Pdf(Guid currentDocId, string version)
+        public async Task<bool> Pdf(Guid currentDocId)
         {
             var lod = await _dbSet.AsNoTracking()
                                   .Include(lod => lod.FieldOfStudy)
@@ -192,18 +193,18 @@ namespace SyllabusManager.Logic.Services
                                   .Include(lod => lod.LearningOutcomes)
                                   .ThenInclude(lo => lo.Specialization)
                                   .FirstOrDefaultAsync(l =>
-                                      (version == null ? l.Id == currentDocId : l.Version == version)
-                                      && l.IsDeleted == false);
+                                                           l.Id == currentDocId
+                                                        && l.IsDeleted == false);
             if (lod is null)
                 return false;
 
             Data.Models.FieldOfStudies.FieldOfStudy fos = lod.FieldOfStudy;
-            List<LearningOutcome> lods = lod.LearningOutcomes.OrderBy(l=>l.Category).ToList();
-            using (Document doc = PdfHelper.Document())
+            List<LearningOutcome> lods = lod.LearningOutcomes;
+            using (Document doc = PdfHelper.Document(true))
             {
-                doc.SetFont(PdfHelper.FONT);
+                
 
-                doc.Add(new Paragraph("ZAKŁADANE EFEKTY UCZENIA SIĘ").SetFontSize(48));
+                doc.Add(new Paragraph("ZAKŁADANE EFEKTY UCZENIA SIĘ").SetFontSize(20));
                 doc.Add(new Paragraph($"Rok akademicki: {lod.AcademicYear}"));
                 doc.Add(new Paragraph($"Kierunek"));
 
@@ -224,7 +225,15 @@ namespace SyllabusManager.Logic.Services
                 if (lods != null)
                 {
                     List<string> headers = new List<string>();
-                    List<List<string>> cells = new List<List<string>>();
+                    List<List<string>> cellsKnowelage = new List<List<string>>();
+                    List<List<string>> cellsSkills = new List<List<string>>();
+                    List<List<string>> cellsSocialCompetences = new List<List<string>>();
+
+                    List<List<string>> specKnowelage = new List<List<string>>();
+                    List<List<string>> specSkills = new List<List<string>>();
+                    List<List<string>> specSocialCompetences = new List<List<string>>();
+
+                    string spec = string.Empty;
 
                     foreach (PropertyInfo prop in typeof(LearningOutcome).GetProperties())
                     {
@@ -242,16 +251,90 @@ namespace SyllabusManager.Logic.Services
                         {
                             if (Attribute.IsDefined(prop, typeof(PdfNameAttribute)))
                             {
-                                cell.Add(prop.GetValue(l)?.ToString() ?? "");
+                                cell.Add(EnumTranslator.Translate(prop.GetValue(l)?.ToString() ?? ""));
                             }
                         }
-                        cells.Add(cell);
+                        if (l.Specialization is null)
+                            switch (l.Category)
+                            {
+                                case LearningOutcomeCategory.Knowledge:
+                                    cellsKnowelage.Add(cell);
+                                    break;
+                                case LearningOutcomeCategory.Skills:
+                                    cellsSkills.Add(cell);
+                                    break;
+                                case LearningOutcomeCategory.SocialCompetences:
+                                    cellsSocialCompetences.Add(cell);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        else
+                        {
+                            spec = l.Specialization.Name;
+                            switch (l.Category)
+                            {
+                                case LearningOutcomeCategory.Knowledge:
+                                    specKnowelage.Add(cell);
+                                    break;
+                                case LearningOutcomeCategory.Skills:
+                                    specSkills.Add(cell);
+                                    break;
+                                case LearningOutcomeCategory.SocialCompetences:
+                                    specSocialCompetences.Add(cell);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
+
+
                     });
 
-                    doc.Add(PdfHelper.Table(headers, cells).SetFontSize(9));
+                    Table loTable = new Table(headers.Count);
+                    headers.ForEach(h => loTable.AddHeaderCell(h));
+
+
+                    setCells(LearningOutcomeCategory.Knowledge, cellsKnowelage, headers.Count, loTable);
+                    setCells(LearningOutcomeCategory.Skills, cellsSkills, headers.Count, loTable);
+                    setCells(LearningOutcomeCategory.SocialCompetences, cellsSocialCompetences, headers.Count, loTable);
+
+                    doc.Add(loTable.SetFontSize(9));
+
+                    Table specTable = new Table(headers.Count);
+                    setCells(LearningOutcomeCategory.Knowledge, specKnowelage, headers.Count, specTable);
+                    setCells(LearningOutcomeCategory.Skills, specSkills, headers.Count, specTable);
+                    setCells(LearningOutcomeCategory.SocialCompetences, specSocialCompetences, headers.Count, specTable);
+
+                    if (spec != string.Empty)
+                        doc.Add(new Paragraph("Specjalność - " + spec));
+                    doc.Add(specTable.SetFontSize(9));
+
                 }
             }
             return true;
+        }
+
+        private void setCells(LearningOutcomeCategory enm, List<List<string>> items, int headers, Table tab)
+        {
+            if (items.Count > 0)
+            {
+                Cell categoryCell = new Cell(1, headers);
+                categoryCell.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER)
+                            .SetVerticalAlignment(iText.Layout.Properties.VerticalAlignment.MIDDLE)
+                            .SetFontSize(12);
+
+                categoryCell.Add(new Paragraph(EnumTranslator.Translate(enm.ToString())));
+                tab.AddCell(categoryCell);
+                items.ForEach(c =>
+                {
+                    foreach (var item in c)
+                    {
+                        tab.AddCell(new Cell().Add(new Paragraph(item)));
+                    }
+                });
+            }
         }
     }
 }

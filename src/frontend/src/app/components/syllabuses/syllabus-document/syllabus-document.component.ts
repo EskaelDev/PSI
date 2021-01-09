@@ -5,6 +5,7 @@ import { AppConsts } from 'src/app/core/consts/app-consts';
 import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
 import { State } from 'src/app/core/enums/syllabus/state.enum';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
+import { FileHelper } from 'src/app/helpers/FileHelper';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { SyllabusService } from 'src/app/services/syllabus/syllabus.service';
 import { FosYearPopupPickerComponent } from '../../shared/document/fos-year-popup-picker/fos-year-popup-picker.component';
@@ -30,7 +31,8 @@ export class SyllabusDocumentComponent implements OnInit {
     private readonly router: Router,
     public dialog: MatDialog,
     private readonly alerts: AlertService,
-    private syllabusService: SyllabusService
+    private syllabusService: SyllabusService,
+    private fileHelper: FileHelper
   ) {}
 
   ngOnInit(): void {
@@ -146,9 +148,9 @@ export class SyllabusDocumentComponent implements OnInit {
 
   pdf() {
     if (this.syllabusDocument) {
-      this.syllabusService
-        .pdf(this.syllabusDocument.id, null)
-        .subscribe(() => {});
+      this.syllabusService.pdf(this.syllabusDocument.id).subscribe(res => {
+        this.fileHelper.downloadItem(res.body, `Program_Studiów_${this.syllabusDocument?.fieldOfStudy.code}_${this.syllabusDocument?.specialization.code}_${this.syllabusDocument?.academicYear}_${this.syllabusDocument?.version}`);
+      });
     }
   }
 
@@ -166,9 +168,9 @@ export class SyllabusDocumentComponent implements OnInit {
           });
 
           sub.componentInstance.download.subscribe((version: string) => {
-            this.syllabusService
-              .pdf(this.syllabusDocument?.id ?? '', version)
-              .subscribe(() => {});
+            this.syllabusService.pdf(version.split(':')[0]).subscribe(res => {
+              this.fileHelper.downloadItem(res.body, `Program_Studiów_${this.syllabusDocument?.fieldOfStudy.code}_${this.syllabusDocument?.specialization.code}_${this.syllabusDocument?.academicYear}_${version.split(':')[1]}`);
+            });
           });
         });
     }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppConsts } from 'src/app/core/consts/app-consts';
 import { SubjectCardEntryType } from 'src/app/core/enums/subject/subject-card-entry-type.enum';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { FileHelper } from 'src/app/helpers/FileHelper';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { SubjectService } from 'src/app/services/subject/subject.service';
 import { HistoryPopupComponent } from '../../shared/document/history-popup/history-popup.component';
@@ -32,7 +33,8 @@ export class SubjectDocumentComponent implements OnInit {
     private readonly router: Router,
     public dialog: MatDialog,
     private subjectService: SubjectService,
-    private readonly alerts: AlertService
+    private readonly alerts: AlertService,
+    private fileHelper: FileHelper
   ) {}
 
   ngOnInit(): void {
@@ -125,9 +127,9 @@ export class SubjectDocumentComponent implements OnInit {
 
   pdf() {
     if (this.subjectDocument) {
-      this.subjectService
-        .pdf(this.subjectDocument.id, null)
-        .subscribe(() => {});
+      this.subjectService.pdf(this.subjectDocument.id).subscribe(res => {
+        this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}_${this.subjectDocument?.version}`);
+      });
     }
   }
 
@@ -145,9 +147,9 @@ export class SubjectDocumentComponent implements OnInit {
           });
 
           sub.componentInstance.download.subscribe((version: string) => {
-            this.subjectService
-              .pdf(this.subjectDocument?.id ?? '', version)
-              .subscribe(() => {});
+            this.subjectService.pdf(version.split(':')[0]).subscribe(res => {
+              this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}_${version.split(':')[1]}`);
+            });
           });
         });
     }

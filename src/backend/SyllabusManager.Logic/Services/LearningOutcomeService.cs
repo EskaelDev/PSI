@@ -156,7 +156,7 @@ namespace SyllabusManager.Logic.Services
                                                              lod.AcademicYear == lodDb.AcademicYear
                                                           && lod.FieldOfStudy == lodDb.FieldOfStudy
                                                           && !lod.IsDeleted)
-                                                .Select(lod => lod.Version).OrderBy(l => l).ToListAsync();
+                                                .OrderByDescending(l => l.Version).Select(lod => $"{lod.Id}:{lod.Version}").ToListAsync();
             return versions;
         }
 

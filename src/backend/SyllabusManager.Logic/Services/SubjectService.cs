@@ -221,8 +221,8 @@ namespace SyllabusManager.Logic.Services
                                                            && s.Specialization == subject.Specialization
                                                            && s.Code == subject.Code
                                                         && !s.IsDeleted)
-                                                .Select(s => s.Version)
-                                                .OrderBy(s => s)
+                                                .OrderByDescending(s => s.Version)
+                                                .Select(s => $"{s.Id}:{s.Version}")
                                                 .ToListAsync();
         }
 

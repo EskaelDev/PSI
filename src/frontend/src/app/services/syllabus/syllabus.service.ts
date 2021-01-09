@@ -143,20 +143,13 @@ export class SyllabusService {
     );
   }
 
-  pdf(id: string, version: string | null): Observable<boolean> {
-    return this.http
-      .get<any>(
-        this.baseUrl + `/pdf/${id}` + (version ? `?version=${version}` : '')
-      )
-      .pipe(
-        map(() => {
-          return true;
-        }),
-        catchError(() => {
-          this.alerts.showDefaultErrorMessage();
-          return of(false);
-        })
-      );
+  pdf(id: string): Observable<any> {
+    return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
+      catchError(() => {
+        this.alerts.showDefaultErrorMessage();
+        return of(false);
+      })
+    );
   }
 
   history(id: string): Observable<string[]> {

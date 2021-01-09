@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.Data.Models.LearningOutcomes;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 using SyllabusManager.Logic.Services;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers
@@ -119,7 +121,21 @@ namespace SyllabusManager.API.Controllers
         public async Task<IActionResult> Pdf(Guid currentDocId,
                                             [FromQuery(Name = "version")] string version)
         {
-            return Ok("Not implemented");
+
+            var result = await _learningOutcomeService.Pdf(currentDocId, version);
+            if (result==false)
+            {
+                return NotFound();
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(PdfHelper.PATH, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
         }
 
         /// <summary>

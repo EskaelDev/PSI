@@ -8,6 +8,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
+using iText.Layout;
+using iText.Layout.Element;
+using System.Reflection;
+using SyllabusManager.Data.Attributes;
+using SyllabusManager.Data.Models.FieldOfStudies;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -118,13 +124,15 @@ namespace SyllabusManager.Logic.Services
         /// <returns></returns>
         public async Task<LearningOutcomeDocument> ImportFrom(Guid currentDocId, string fosCode, string academicYear)
         {
-            LearningOutcomeDocument currentLod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
-                                                        .Include(lod => lod.LearningOutcomes)
-                                                        .FirstOrDefaultAsync(l =>
-                                                                                 l.Id == currentDocId
-                                                                              && !l.IsDeleted);
+            LearningOutcomeDocument currentLod = await _dbSet.AsNoTracking()
+                                                             .Include(lod => lod.FieldOfStudy)
+                                                             .Include(lod => lod.LearningOutcomes)
+                                                             .FirstOrDefaultAsync(l =>
+                                                                                      l.Id == currentDocId
+                                                                                   && !l.IsDeleted);
 
-            LearningOutcomeDocument lod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
+            LearningOutcomeDocument lod = await _dbSet.AsNoTracking()
+                                                      .Include(lod => lod.FieldOfStudy)
                                                       .Include(lod => lod.LearningOutcomes)
                                                       .ThenInclude(lo => lo.Specialization)
                                                       .Where(lod =>
@@ -173,6 +181,93 @@ namespace SyllabusManager.Logic.Services
             learningOutcomes.ForEach(s => s.IsDeleted = true);
             var state = await _dbContext.SaveChangesAsync();
             return state > 0;
+        }
+
+
+        public async Task<bool> Pdf(Guid currentDocId, string version)
+        {
+            var lod = await _dbSet.AsNoTracking()
+                                  .Include(lod => lod.FieldOfStudy)
+                                  .ThenInclude(fos => fos.Supervisor)
+                                  .Include(lod => lod.LearningOutcomes)
+                                  .ThenInclude(lo => lo.Specialization)
+                                  .FirstOrDefaultAsync(l =>
+                                                           l.Id == currentDocId
+                                                        && l.IsDeleted == false
+                                                        && l.Version == version);
+            if (lod is null)
+                return false;
+
+            Data.Models.FieldOfStudies.FieldOfStudy fos = lod.FieldOfStudy;
+            List<LearningOutcome> lods = lod.LearningOutcomes;
+            using (Document doc = PdfHelper.Document())
+            {
+                doc.SetFont(PdfHelper.FONT);
+
+                doc.Add(new Paragraph("ZAKŁADANE EFEKTY UCZENIA SIĘ"));
+                doc.Add(new Paragraph($"Rok akademicki: {lod.AcademicYear}"));
+                doc.Add(new Paragraph($"Kierunek"));
+
+                if (fos != null)
+                {
+                    foreach (PropertyInfo prop in typeof(FieldOfStudy).GetProperties())
+                    {
+                        if (Attribute.IsDefined(prop, typeof(PdfNameAttribute)))
+                        {
+                            var propName = ((PdfNameAttribute)prop.GetCustomAttribute(typeof(PdfNameAttribute), true)).name;
+                            var value = prop.GetValue(fos)?.ToString() ?? "";
+
+                            doc.Add(new Paragraph(EnumTranslator.Translate(propName) + " - " + EnumTranslator.Translate(value)));
+                        }
+                    }
+                    //doc.Add(new Paragraph($"Nazwa: {fos.Name}"));
+                    //doc.Add(new Paragraph($"Kod: {fos.Code}"));
+                    //doc.Add(new Paragraph($"Poziom: {fos.Level}"));
+                    //doc.Add(new Paragraph($"Profil: {fos.Profile}"));
+                    //doc.Add(new Paragraph($"Gałąź nauki: {fos.BranchOfScience}"));
+                    //doc.Add(new Paragraph($"Dziedzina: {fos.Discipline}"));
+                    //doc.Add(new Paragraph($"Wydział: {fos.Faculty}"));
+                    //doc.Add(new Paragraph($"Typ kursu: {fos.Type}"));
+                    //doc.Add(new Paragraph($"Język główny: {fos.Language}"));
+
+                }
+
+                if (lods != null)
+                {
+                    List<string> headers = new List<string>();
+                    List<List<string>> cells = new List<List<string>>();
+
+
+                    foreach (PropertyInfo prop in typeof(LearningOutcome).GetProperties())
+                    {
+                        if (Attribute.IsDefined(prop, typeof(PdfNameAttribute)))
+                        {
+                            var propName = ((PdfNameAttribute)prop.GetCustomAttribute(typeof(PdfNameAttribute), false)).name;
+                            headers.Add(propName);
+                        }
+                    }
+
+
+
+                    lods.ForEach(l =>
+                    {
+                        List<string> cell = new List<string>();
+                        foreach (PropertyInfo prop in typeof(LearningOutcome).GetProperties())
+                        {
+                            if (Attribute.IsDefined(prop, typeof(PdfNameAttribute)))
+                            {
+                                cell.Add(prop.GetValue(l)?.ToString() ?? "");
+                            }
+                        }
+                        cells.Add(cell);
+                    });
+
+                    doc.Add(PdfHelper.Table(headers, cells));
+                }
+
+
+            }
+            return true;
         }
     }
 }

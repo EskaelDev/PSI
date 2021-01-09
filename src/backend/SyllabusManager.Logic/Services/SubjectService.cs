@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SyllabusManager.Data.Enums.Subjects;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -46,7 +47,7 @@ namespace SyllabusManager.Logic.Services
                     && !s.IsDeleted).ToListAsync();
         }
 
-        public async Task<Subject> Latest(string fos, string spec, string code, string year)
+        public async Task<Subject> Latest(string fos, string spec, string code, string year, SyllabusManagerUser user)
         {
             var subject = await _dbSet.Include(s => s.FieldOfStudy)
                                        .Include(s => s.Specialization)
@@ -72,6 +73,8 @@ namespace SyllabusManager.Logic.Services
                 if (subject.FieldOfStudy is null || subject.Specialization is null) return null;
 
                 subject.Teachers = subject.SubjectsTeachers.Select(st => st.Teacher).ToList();
+                subject.IsSupervisor = subject.Supervisor.Id == user.Id;
+                subject.IsTeacher = subject.Teachers.Any(t => t.Id == user.Id);
             }
 
             return subject;

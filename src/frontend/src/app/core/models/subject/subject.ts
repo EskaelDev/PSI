@@ -27,4 +27,7 @@ export class Subject extends DocumentInAcademicYear {
     teachers: User[] = [];
     fieldOfStudy: FieldOfStudy = new FieldOfStudy();
     specialization: Specialization = new Specialization();
+    isAdmin: boolean = false;
+    isSupervisor: boolean = false;
+    isTeacher: boolean = false;
 }

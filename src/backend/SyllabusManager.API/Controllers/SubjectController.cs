@@ -57,13 +57,12 @@ namespace SyllabusManager.API.Controllers
                                                 [FromQuery] string code,
                                                 [FromQuery] string year)
         {
-            var result = await _subjectService.Latest(fos, spec, code, year);
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = await _subjectService.Latest(fos, spec, code, year, user);
             
             if (result is null) return NotFound();
 
-            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            if (!await CheckIfUserIsFosSupervisor(fos) && result.Supervisor?.Id != user.Id) return Forbid();
-
+            result.IsAdmin = await CheckIfUserIsFosSupervisor(result.FieldOfStudy.Code);
             return Ok(result);
         }
 

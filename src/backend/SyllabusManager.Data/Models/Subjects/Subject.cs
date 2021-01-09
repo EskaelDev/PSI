@@ -5,6 +5,7 @@ using SyllabusManager.Data.Models.ManyToMany;
 using SyllabusManager.Data.Models.User;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace SyllabusManager.Data.Models.Subjects
@@ -26,7 +27,14 @@ namespace SyllabusManager.Data.Models.Subjects
         public List<LearningOutcomeEvaluation> LearningOutcomeEvaluations { get; set; } = new List<LearningOutcomeEvaluation>();
         public List<CardEntries> CardEntries { get; set; } = new List<CardEntries>();
         public List<SubjectTeacher> SubjectsTeachers { get; set; } = new List<SubjectTeacher>();
+        [NotMapped]
         public List<SyllabusManagerUser> Teachers { get; set; } = new List<SyllabusManagerUser>();
         public Specialization Specialization{ get; set; }
+        [NotMapped]
+        public bool IsAdmin { get; set; }
+        [NotMapped]
+        public bool IsSupervisor { get; set; }
+        [NotMapped]
+        public bool IsTeacher { get; set; }
     }
 }

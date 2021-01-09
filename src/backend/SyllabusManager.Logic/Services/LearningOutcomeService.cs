@@ -254,6 +254,7 @@ namespace SyllabusManager.Logic.Services
                                 cell.Add(EnumTranslator.Translate(prop.GetValue(l)?.ToString() ?? ""));
                             }
                         }
+                        // Todo: obsługa wielu specjalności
                         if (l.Specialization is null)
                             switch (l.Category)
                             {

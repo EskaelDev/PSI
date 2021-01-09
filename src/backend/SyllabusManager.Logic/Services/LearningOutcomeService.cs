@@ -192,9 +192,8 @@ namespace SyllabusManager.Logic.Services
                                   .Include(lod => lod.LearningOutcomes)
                                   .ThenInclude(lo => lo.Specialization)
                                   .FirstOrDefaultAsync(l =>
-                                                           l.Id == currentDocId
-                                                        && l.IsDeleted == false
-                                                        && l.Version == version);
+                                      (version == null ? l.Id == currentDocId : l.Version == version)
+                                      && l.IsDeleted == false);
             if (lod is null)
                 return false;
 

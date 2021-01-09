@@ -27,15 +27,6 @@ export class SubjectService {
     );
   }
 
-  getEditable(fosCode: string, specCode: string, year: string, onlyMy: boolean): Observable<Subject[]> {
-    return this.http.get<Subject[]>(this.baseUrl + `/editable?fos=${fosCode}&spec=${specCode}&onlyMy=${onlyMy}&year=${encodeURIComponent(year)}`).pipe(
-      catchError(() => {
-        this.alerts.showDefaultLoadingDataErrorMessage();
-        return of([]);
-      })
-    );
-  }
-
   getPossibleTeachers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + '/possibleteachers').pipe(
       map((users) => {
@@ -66,7 +57,7 @@ export class SubjectService {
   }
 
   save(sub: Subject): Observable<boolean> {
-    return this.http.post<any>(this.baseUrl + '/saveaaaaaa', sub).pipe(
+    return this.http.post<any>(this.baseUrl + '/save', sub).pipe(
       map(() => {
         return true;
       }),

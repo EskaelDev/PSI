@@ -3,9 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConsts } from 'src/app/core/consts/app-consts';
 import { SubjectCardEntryType } from 'src/app/core/enums/subject/subject-card-entry-type.enum';
-import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study';
-import { Specialization } from 'src/app/core/models/field-of-study/specialization';
-import { CardEntries } from 'src/app/core/models/subject/card-entries';
 import { Subject } from 'src/app/core/models/subject/subject';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { SubjectService } from 'src/app/services/subject/subject.service';
@@ -27,6 +24,8 @@ export class SubjectDocumentComponent implements OnInit {
   specId: string = '';
   code: string = '';
   year: string = '';
+
+  readOnly: boolean = true;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -53,6 +52,7 @@ export class SubjectDocumentComponent implements OnInit {
         (sub) => {
           if (sub) {
             this.subjectDocument = sub;
+            this.readOnly = !sub.isAdmin && !sub.isSupervisor;
           }
           this.isLoading = false;
         },

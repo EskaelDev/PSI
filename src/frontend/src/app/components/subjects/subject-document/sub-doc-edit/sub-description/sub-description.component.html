@@ -1,5 +1,5 @@
 <div fxLayoutAlign="start" fxLayoutGap="30px">
-  <div>
+  <div [appDisable]="readOnly">
     <mat-form-field>
       <mat-label>Kod</mat-label>
       <input matInput readonly type="text" [(ngModel)]="document.code" />
@@ -59,7 +59,7 @@
     <div *ngIf="document.teachers.length > 0">
       <div *ngFor="let teacher of document.teachers">
         <span>{{ teacher.name }}</span
-        ><button mat-icon-button (click)="removeTeacher(teacher)">
+        ><button mat-icon-button (click)="removeTeacher(teacher)" *ngIf="!readOnly">
           <mat-icon>remove</mat-icon>
         </button>
       </div>
@@ -67,7 +67,7 @@
     <div *ngIf="document.teachers.length === 0">
       Brak przypisanych prowadzących
     </div>
-    <div>
+    <div *ngIf="!readOnly">
       <mat-form-field>
         <input
           type="text"

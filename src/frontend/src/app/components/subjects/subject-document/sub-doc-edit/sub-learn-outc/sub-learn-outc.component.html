@@ -9,10 +9,11 @@
         ></app-sub-learn-outc-elem>
       </div>
       <div *ngIf="_document.learningOutcomeEvaluations.length === 0">Brak wpisów</div>
-      <button mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+      <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
     </div>
     <div>
       <app-sub-learn-outc-edit
+        [readOnly]="readOnly"
         [learningOutcomes]="learningOutcomes"
         *ngIf="selected"
         [elem]="selected"

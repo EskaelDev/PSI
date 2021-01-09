@@ -19,6 +19,7 @@ import { SubChangeSupervisorComponent } from './sub-change-supervisor/sub-change
 })
 export class SubDescriptionComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   @Input() document: Subject = new Subject();
   modules = Object.values(ModuleType);
   kinds = Object.values(KindOfSubject);

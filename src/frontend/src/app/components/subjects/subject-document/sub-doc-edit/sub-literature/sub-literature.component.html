@@ -9,10 +9,11 @@
       ></app-sub-lit-elem>
     </div>
     <div *ngIf="document.literature.length === 0">Brak wpisów</div>
-    <button mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+    <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
   </div>
   <div>
     <app-sub-lit-edit
+      [readOnly]="readOnly"
       *ngIf="selected"
       [elem]="selected"
       (deleted)="delete()"

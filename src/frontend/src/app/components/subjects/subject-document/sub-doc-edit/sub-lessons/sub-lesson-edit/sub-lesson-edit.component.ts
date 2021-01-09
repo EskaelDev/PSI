@@ -13,6 +13,7 @@ import { AlertService } from 'src/app/services/alerts/alert.service';
 })
 export class SubLessonEditComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   _elem: Lesson | null = null;
   editableElem: Lesson | null = null;
   editableClassForms: ClassForm[] = [];

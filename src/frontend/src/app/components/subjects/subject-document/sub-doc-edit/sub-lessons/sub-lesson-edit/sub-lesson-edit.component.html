@@ -1,6 +1,6 @@
 <div fxLayoutAlign="center" fxLayoutGap="20px">
   <div>
-    <form [formGroup]="lesForm">
+    <form [formGroup]="lesForm" [appDisable]="readOnly">
       <mat-form-field appearance="fill">
         <mat-label>Typ zajęć</mat-label>
         <mat-select formControlName="lessonType" required>
@@ -79,14 +79,14 @@
       <br/>
       <mat-checkbox formControlName="isGroup">grupa kursów</mat-checkbox>
     </form>
-    <div>
+    <div *ngIf="!readOnly">
       <button mat-icon-button (click)="delete()"><mat-icon>delete_outline</mat-icon></button>
       <button mat-icon-button (click)="save()" [disabled]="!lesForm.valid || !checkClassForm(editableClassForms)"><mat-icon>done</mat-icon></button>
     </div>
   </div>
   <div>
     <h2>Treści programowe</h2>
-    <div *ngFor="let entry of editableClassForms">
+    <div *ngFor="let entry of editableClassForms" [appDisable]="readOnly">
       <mat-form-field>
         <mat-label>Opis</mat-label>
         <textarea required matInput [(ngModel)]="entry.description" ></textarea>
@@ -96,9 +96,9 @@
         <input required matInput type="number" [(ngModel)]="entry.hours" />
         <mat-hint align="start">Dopuszczalny przedział 1 - 200</mat-hint>
       </mat-form-field>
-      <button mat-icon-button (click)="remove(entry)"><mat-icon>remove</mat-icon></button>
+      <button *ngIf="!readOnly" mat-icon-button (click)="remove(entry)"><mat-icon>remove</mat-icon></button>
     </div>
-    <button mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+    <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
   </div>
   
 </div>

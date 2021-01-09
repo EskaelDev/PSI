@@ -9,6 +9,7 @@ import { Literature } from 'src/app/core/models/subject/literature';
 })
 export class SubLitEditComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   currentYear = new Date().getFullYear();
 
   _elem: Literature | null = null;

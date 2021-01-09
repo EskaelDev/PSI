@@ -9,6 +9,7 @@ import { CardEntry } from 'src/app/core/models/subject/card-entry';
 })
 export class SubCardComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   @Input() card: CardEntries = new CardEntries();
 
   constructor() { }

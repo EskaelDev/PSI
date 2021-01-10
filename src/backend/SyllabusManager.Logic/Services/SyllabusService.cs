@@ -106,7 +106,6 @@ namespace SyllabusManager.Logic.Services
             currentSyllabus.IntershipType = syllabus.IntershipType;
             currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;
             currentSyllabus.ScopeOfDiplomaExam = syllabus.ScopeOfDiplomaExam;
-            currentSyllabus.SubjectDescriptions = syllabus.SubjectDescriptions;
 
             return await Save(currentSyllabus, user);
         }
@@ -151,7 +150,6 @@ namespace SyllabusManager.Logic.Services
             currentSyllabus.IntershipType = syllabus.IntershipType;
             currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;
             currentSyllabus.ScopeOfDiplomaExam = syllabus.ScopeOfDiplomaExam;
-            currentSyllabus.SubjectDescriptions = syllabus.SubjectDescriptions;
 
             return await Save(currentSyllabus, user);
         }

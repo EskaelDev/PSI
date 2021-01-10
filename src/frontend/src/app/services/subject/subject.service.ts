@@ -20,6 +20,9 @@ export class SubjectService {
 
   getAll(fosCode: string, specCode: string, year: string): Observable<Subject[]> {
     return this.http.get<Subject[]>(this.baseUrl + `/all?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`).pipe(
+      map((subjects) => {
+        return subjects.map((s) => Object.assign(new Subject(), s));
+      }),
       catchError(() => {
         this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);

@@ -1,1 +1,3 @@
-<p>syl-subject-list-elem works!</p>
+<div (click)="select()" [ngClass]="{ selected: selected === elem }">
+    {{elem.subject?.code}}: {{elem.subject?.namePl}} s: {{elem.assignedSemester}}
+</div>

@@ -29,5 +29,6 @@ namespace SyllabusManager.Data.Models.Syllabuses
         public SyllabusDescription Description { get; set; } = new SyllabusDescription();
         public List<SubjectInSyllabusDescription> SubjectDescriptions { get; set; } = new List<SubjectInSyllabusDescription>();
         public Specialization Specialization { get; set; }
+        public List<PointLimit> PointLimits { get; set; } = new List<PointLimit>();
     }
 }

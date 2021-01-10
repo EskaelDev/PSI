@@ -5,6 +5,7 @@
       matInput
       type="number"
       [(ngModel)]="document.description.numOfSemesters"
+      (change)="semesterNumChanged()"
     />
   </mat-form-field>
   <br />

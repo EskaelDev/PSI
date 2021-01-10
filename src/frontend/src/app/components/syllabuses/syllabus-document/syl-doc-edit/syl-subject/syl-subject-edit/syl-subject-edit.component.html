@@ -1,1 +1,52 @@
-<p>syl-subject-edit works!</p>
+<div fxLayoutAlign="center" fxLayoutGap="20px">
+    <div>
+      <form [formGroup]="subForm">
+        <mat-form-field>
+            <input
+              type="text"
+              placeholder="Przedmiot"
+              aria-label="Number"
+              formControlName="subject"
+              matInput
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySubject">
+              <mat-option
+                *ngFor="let subject of filteredSubjects | async"
+                [value]="subject"
+              >
+                {{ subject.code }} : {{ subject.namePl }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error> Pole wymagane </mat-error>
+          </mat-form-field>
+          <br/>
+          <mat-form-field appearance="fill">
+            <mat-label>Semestr</mat-label>
+            <mat-select formControlName="assignedSemester" required>
+              <mat-option *ngFor="let sem of semesters" [value]="sem.id">{{
+                sem.name
+              }}</mat-option>
+            </mat-select>
+            <mat-error> Pole wymagane </mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>Max semestr ukończenia (opcjonalne)</mat-label>
+            <mat-select formControlName="completionSemester">
+              <mat-option *ngFor="let sem of semesters" [value]="sem.id">{{
+                sem.name
+              }}</mat-option>
+            </mat-select>
+            <mat-error> Semestr ukończenia nie może być mniejszy niż przypisany semestr </mat-error>
+          </mat-form-field>
+      </form>
+      <div>
+        <button mat-icon-button (click)="delete()"><mat-icon>delete_outline</mat-icon></button>
+        <button mat-icon-button (click)="save()" [disabled]="!subForm.valid"><mat-icon>done</mat-icon></button>
+      </div>
+    </div>
+    <div>Szczegóły</div>
+    
+  </div>
+  

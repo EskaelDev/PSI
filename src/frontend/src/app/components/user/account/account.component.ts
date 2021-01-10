@@ -15,7 +15,6 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.tokenService.getUser();
-    console.log(this.user);
   }
 
 }

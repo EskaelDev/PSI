@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LearningOutcome } from 'src/app/core/models/learning-outcome/learning-outcome';
 import { LearningOutcomeEvaluation } from 'src/app/core/models/subject/learning-outcome-evaluation';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 import { LearningOutcomeService } from 'src/app/services/learning-outcome/learning-outcome.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { LearningOutcomeService } from 'src/app/services/learning-outcome/learni
 })
 export class SubLearnOutcComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   _document: Subject = new Subject();
   @Input() set document(doc: Subject) {
     this._document = doc;
@@ -21,15 +23,17 @@ export class SubLearnOutcComponent implements OnInit {
   
   learningOutcomes: LearningOutcome[] = [];
   
-  constructor(private readonly learningOutcomeService: LearningOutcomeService) { }
+  constructor(private readonly learningOutcomeService: LearningOutcomeService,
+    private alerts: AlertService) { }
 
   ngOnInit(): void {
   }
 
   loadLearningOutcomes() {
     this.learningOutcomes = [];
-    this.learningOutcomeService.getLatest(this._document.fieldOfStudy.code, this._document.academicYear).subscribe(outcomes => {
+    this.learningOutcomeService.getLatestReadOnly(this._document.fieldOfStudy.code, this._document.academicYear).subscribe(outcomes => {
       this.learningOutcomes = outcomes?.learningOutcomes ?? [];
+      this.learningOutcomes = this.learningOutcomes.filter(lo => !lo.specialization || lo.specialization.code === this._document.specialization.code);
     })
   }
 
@@ -47,8 +51,19 @@ export class SubLearnOutcComponent implements OnInit {
   }
 
   save(learn: LearningOutcomeEvaluation) {
-    this.delete();
+    if (this.checkLoIsUnique(learn)) {
+      this.delete();
     this._document.learningOutcomeEvaluations.push(learn);
+    }
+    else {
+      this.alerts.showCustomErrorMessage('Literatura o podanym numerze ISBN już istnieje!');
+    }
   }
 
+  checkLoIsUnique(lo: LearningOutcomeEvaluation): boolean {
+    if(this._document.learningOutcomeEvaluations.find(l => l.learningOutcomeSymbol === lo.learningOutcomeSymbol) && this.selected?.learningOutcomeSymbol !== lo.learningOutcomeSymbol) {
+      return false;
+    }
+    return true;
+  }
 }

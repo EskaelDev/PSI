@@ -1,5 +1,5 @@
 <div>
-  <form [formGroup]="learnForm">
+  <form [formGroup]="learnForm" [appDisable]="readOnly">
     <mat-form-field appearance="fill">
       <mat-label>Sposób oceniania</mat-label>
       <mat-select formControlName="gradingSystem" required>
@@ -29,8 +29,8 @@
       ></textarea>
     </mat-form-field>
   </form>
-  <div>
-    <button (click)="delete()">Usuń</button>
-    <button (click)="save()" [disabled]="!learnForm.valid">Zapisz</button>
+  <div *ngIf="!readOnly">
+    <button mat-icon-button (click)="delete()"><mat-icon>delete_outline</mat-icon></button>
+    <button mat-icon-button (click)="save()" [disabled]="!learnForm.valid"><mat-icon>done</mat-icon></button>
   </div>
 </div>

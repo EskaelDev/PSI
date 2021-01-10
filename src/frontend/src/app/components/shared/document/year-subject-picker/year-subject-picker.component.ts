@@ -8,6 +8,7 @@ import { Specialization } from 'src/app/core/models/field-of-study/specializatio
 import { Subject } from 'src/app/core/models/subject/subject';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-study.service';
+import { SubjectService } from 'src/app/services/subject/subject.service';
 
 @Component({
   selector: 'app-year-subject-picker',
@@ -21,6 +22,7 @@ export class YearSubjectPickerComponent implements OnInit {
   selectedFos: FieldOfStudy | null = null;
   selectedSpec: Specialization | null = null;
   selectedYear: string | null = null;
+  allFields: boolean = false;
 
   subjects: Subject[] = [];
   fieldsOfStudy: FieldOfStudy[] = [];
@@ -42,11 +44,13 @@ export class YearSubjectPickerComponent implements OnInit {
     public dialogRef: MatDialogRef<YearSubjectPickerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly alerts: AlertService,
-    private fosService: FieldOfStudyService
+    private fosService: FieldOfStudyService,
+    private subjectService: SubjectService
   ) {
     dialogRef.disableClose = true;
     this.title = data.title;
     this.allowsNew = data.allowsNew ?? false;
+    this.allFields = data.allFields ?? false;
   }
 
   ngOnInit(): void {
@@ -117,13 +121,21 @@ export class YearSubjectPickerComponent implements OnInit {
   }
 
   loadFieldsOfStudy() {
-    this.fosService.getFieldsOfStudies().subscribe((fieldsOfStudy) => {
-      this.fieldsOfStudy = fieldsOfStudy;
-    });
+    if (this.allFields) {
+      this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
+        this.fieldsOfStudy = fieldsOfStudy;
+      });
+    }
+    else {
+      this.fosService.getMyFieldsOfStudies().subscribe(fieldsOfStudy => {
+        this.fieldsOfStudy = fieldsOfStudy;
+      });
+    }
   }
 
   selectedFosChanged() {
     this.selectedSpec = null;
+    this.clearSubjects();
 
     if (this.selectedFos) {
       this.specs = this.selectedFos.specializations;
@@ -136,9 +148,23 @@ export class YearSubjectPickerComponent implements OnInit {
     if (this.selectedSpec) {
       this.loadSubjects();
     } else {
-      this.subjects = [];
+      this.clearSubjects();
     }
   }
 
-  loadSubjects() {}
+  loadSubjects() {
+    this.clearSubjects();
+    if (this.selectedFos && this.selectedSpec && this.selectedYear) {
+      this.subjectService.getAll(this.selectedFos.code, this.selectedSpec.code, this.selectedYear).subscribe(subs => {
+        this.subjects = subs;
+        this._filter(this.subjectControl.value);
+      })
+    }
+  }
+
+  clearSubjects() {
+    this.subjects = [];
+    this.selectedSubject = null;
+    this.subjectControl.patchValue('');
+  }
 }

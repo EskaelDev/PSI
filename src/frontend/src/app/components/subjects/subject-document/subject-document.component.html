@@ -2,8 +2,9 @@
   <div *ngIf="subjectDocument && !isLoading">
     <app-control-buttons-panel
       [isNew]="subjectDocument.id === guidEmpty"
+      [canSave]="!readOnly"
+      [blockSaveAs]="true"
       (save)="save()"
-      (saveAs)="saveAs()"
       (import)="import()"
       (close)="close()"
       (delete)="delete()"
@@ -16,7 +17,7 @@
         [spec]="subjectDocument.specialization"
         [year]="subjectDocument.academicYear"
       ></app-fos-details>
-      <app-sub-doc-edit [document]="subjectDocument"></app-sub-doc-edit>
+      <app-sub-doc-edit [document]="subjectDocument" [readOnly]="readOnly"></app-sub-doc-edit>
     </div>
   </div>
   <div *ngIf="!subjectDocument && !isLoading">

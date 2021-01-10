@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SyllabusManager.Data.Models.FieldOfStudies;
 
 namespace SyllabusManager.Data.Models
 {
@@ -11,6 +12,7 @@ namespace SyllabusManager.Data.Models
         /// </summary>
         [Required]
         public string Version { get; set; }
+        public FieldOfStudy FieldOfStudy { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

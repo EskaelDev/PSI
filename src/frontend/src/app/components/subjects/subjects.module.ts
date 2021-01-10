@@ -16,6 +16,9 @@ import { SubLearnOutcElemComponent } from './subject-document/sub-doc-edit/sub-l
 import { SubLearnOutcEditComponent } from './subject-document/sub-doc-edit/sub-learn-outc/sub-learn-outc-edit/sub-learn-outc-edit.component';
 import { SubLessonElemComponent } from './subject-document/sub-doc-edit/sub-lessons/sub-lesson-elem/sub-lesson-elem.component';
 import { SubLessonEditComponent } from './subject-document/sub-doc-edit/sub-lessons/sub-lesson-edit/sub-lesson-edit.component';
+import { SubChangeSupervisorComponent } from './subject-document/sub-doc-edit/sub-description/sub-change-supervisor/sub-change-supervisor.component';
+import { SubLessonsProgramComponent } from './subject-document/sub-doc-edit/sub-lessons/sub-lesson-edit/sub-lessons-program/sub-lessons-program.component';
+import { SubCardElemComponent } from './subject-document/sub-doc-edit/sub-card/sub-card-elem/sub-card-elem.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +37,11 @@ import { SubLessonEditComponent } from './subject-document/sub-doc-edit/sub-less
     SubLearnOutcEditComponent,
     SubLessonElemComponent,
     SubLessonEditComponent,
+    SubChangeSupervisorComponent,
+    SubLessonsProgramComponent,
+    SubCardElemComponent,
   ],
   imports: [SharedModule, SharedComponentsModule],
-  entryComponents: [AddSubjectComponent],
+  entryComponents: [AddSubjectComponent, SubChangeSupervisorComponent],
 })
 export class SubjectsModule {}

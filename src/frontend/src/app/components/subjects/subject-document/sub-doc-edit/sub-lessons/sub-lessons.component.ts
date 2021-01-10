@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Lesson } from 'src/app/core/models/subject/lesson';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 
 @Component({
   selector: 'app-sub-lessons',
@@ -9,10 +10,11 @@ import { Subject } from 'src/app/core/models/subject/subject';
 })
 export class SubLessonsComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   @Input() document: Subject = new Subject();
   selected: Lesson | null = null;
   
-  constructor() { }
+  constructor(private alerts: AlertService) { }
 
   ngOnInit(): void {
   }
@@ -31,8 +33,19 @@ export class SubLessonsComponent implements OnInit {
   }
 
   save(les: Lesson) {
-    this.delete();
-    this.document.lessons.push(les);
+    if (this.checkLessonIsUnique(les)) {
+      this.delete();
+      this.document.lessons.push(les);
+    }
+    else {
+      this.alerts.showCustomErrorMessage('Zajęcia tego typu już istnieją!');
+    }
   }
 
+  checkLessonIsUnique(le: Lesson): boolean {
+    if(this.document.lessons.find(l => l.lessonType === le.lessonType) && this.selected?.lessonType !== le.lessonType) {
+      return false;
+    }
+    return true;
+  }
 }

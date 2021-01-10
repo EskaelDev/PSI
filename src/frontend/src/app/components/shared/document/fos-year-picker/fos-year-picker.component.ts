@@ -13,6 +13,7 @@ export class FosYearPickerComponent implements OnInit {
   @Input() title: string = '';
   @Input() visibleButtons: boolean = true;
   @Input() isSpec: boolean = false;
+  @Input() allFields: boolean = false;
   fieldsOfStudy: FieldOfStudy[] = [];
   specs: Specialization[] = [];
   years: string[] = ['2015/2016', '2016/2017', '2017/2018', '2018/2019', '2019/2020', '2020/2021', '2021/2022'];
@@ -33,14 +34,16 @@ export class FosYearPickerComponent implements OnInit {
   }
 
   loadFieldsOfStudy() {
-    /*this.fosService.getMyFieldsOfStudies().subscribe(fieldsOfStudy => {
-      this.fieldsOfStudy = fieldsOfStudy;
-    });*/
-    // todo: replace
-
-    this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
-      this.fieldsOfStudy = fieldsOfStudy;
-    });
+    if (this.allFields) {
+      this.fosService.getFieldsOfStudies().subscribe(fieldsOfStudy => {
+        this.fieldsOfStudy = fieldsOfStudy;
+      });
+    }
+    else {
+      this.fosService.getMyFieldsOfStudies().subscribe(fieldsOfStudy => {
+        this.fieldsOfStudy = fieldsOfStudy;
+      });
+    }
   }
 
   selectedFosChanged() {

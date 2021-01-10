@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
@@ -36,8 +36,16 @@ export class SyllabusService {
         map((syl) => {
           return this.emptyFields(syl);
         }),
-        catchError(() => {
-          this.alerts.showDefaultLoadingDataErrorMessage();
+        catchError(err => {
+          if (err.status === 403) {
+            this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+          }
+          else if (err.status === 404) {
+            this.alerts.showCustomErrorMessage('Podany kierunek studiów lub specjalizacja nie istnieje');
+          }
+          else {
+            this.alerts.showDefaultLoadingDataErrorMessage();
+          }
           return of(null);
         })
       );
@@ -51,7 +59,7 @@ export class SyllabusService {
           return true;
         }),
         catchError(err => {
-          if (err.status == 400) {
+          if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
           else {
@@ -81,7 +89,7 @@ export class SyllabusService {
           return true;
         }),
         catchError(err => {
-          if (err.status == 400) {
+          if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
           else {
@@ -110,7 +118,7 @@ export class SyllabusService {
           return true;
         }),
         catchError((err) => {
-          if (err.status == 404) {
+          if (err.status === 404) {
             this.alerts.showCustomErrorMessage(
               'Wybrany dokument do zaimportowania nie istnieje!'
             );
@@ -135,20 +143,13 @@ export class SyllabusService {
     );
   }
 
-  pdf(id: string, version: string | null): Observable<boolean> {
-    return this.http
-      .get<any>(
-        this.baseUrl + `/pdf/${id}` + (version ? `?version=${version}` : '')
-      )
-      .pipe(
-        map(() => {
-          return true;
-        }),
-        catchError(() => {
-          this.alerts.showDefaultErrorMessage();
-          return of(false);
-        })
-      );
+  pdf(id: string): Observable<any> {
+    return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
+      catchError(() => {
+        this.alerts.showDefaultErrorMessage();
+        return of(false);
+      })
+    );
   }
 
   history(id: string): Observable<string[]> {
@@ -168,7 +169,7 @@ export class SyllabusService {
           return true;
         }),
         catchError(err => {
-          if (err.status == 400) {
+          if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
           else {

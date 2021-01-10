@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.Logic.Services
 {
     public class LearningOutcomeService : DocumentInAcademicYearService<LearningOutcomeDocument>, ILearningOutcomeService
     {
-        public LearningOutcomeService(SyllabusManagerDbContext dbContext) : base(dbContext)
+        public LearningOutcomeService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager) : base(dbContext, userManager)
         {
 
         }
@@ -23,7 +25,7 @@ namespace SyllabusManager.Logic.Services
         /// <param name="fosCode">Kod FieldOfStudy(Kierunku studiów)</param>
         /// <param name="academicYear">Rok akademicki</param>
         /// <returns>LearningOutcomeDocument o najwyższej wersji</returns>
-        public async Task<LearningOutcomeDocument> Latest(string fosCode, string academicYear)
+        public async Task<LearningOutcomeDocument> Latest(string fosCode, string academicYear, bool isReadOnly = false)
         {
             LearningOutcomeDocument lodDb = await _dbSet.Include(lod => lod.FieldOfStudy)
                                                         .ThenInclude(fs => fs.Specializations)
@@ -39,6 +41,8 @@ namespace SyllabusManager.Logic.Services
                                                         .FirstOrDefaultAsync();
             if (lodDb == null)
             {
+                if (isReadOnly) return null;
+
                 lodDb = new LearningOutcomeDocument
                 {
                     AcademicYear = academicYear,
@@ -46,6 +50,8 @@ namespace SyllabusManager.Logic.Services
                     Version = "new"
                 };
             }
+
+            if (lodDb.FieldOfStudy is null) return null;
 
             lodDb.FieldOfStudy?.Specializations.RemoveAll(s => s.IsDeleted);
 
@@ -150,8 +156,23 @@ namespace SyllabusManager.Logic.Services
                                                              lod.AcademicYear == lodDb.AcademicYear
                                                           && lod.FieldOfStudy == lodDb.FieldOfStudy
                                                           && !lod.IsDeleted)
-                                                .Select(lod => lod.Version).OrderBy(l => l).ToListAsync();
+                                                .OrderByDescending(l => l.Version).Select(lod => $"{lod.Id}:{lod.Version}").ToListAsync();
             return versions;
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var entity = _dbSet.Include(lod => lod.FieldOfStudy).FirstOrDefault(f => f.Id == id);
+
+            var learningOutcomes = await _dbSet.Include(s => s.FieldOfStudy)
+                .Where(s =>
+                    s.FieldOfStudy == entity.FieldOfStudy
+                    && s.AcademicYear == entity.AcademicYear
+                    && !s.IsDeleted).ToListAsync();
+
+            learningOutcomes.ForEach(s => s.IsDeleted = true);
+            var state = await _dbContext.SaveChangesAsync();
+            return state > 0;
         }
     }
 }

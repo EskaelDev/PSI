@@ -1,5 +1,5 @@
 <div>
-  <form [formGroup]="litForm">
+  <form [formGroup]="litForm" [appDisable]="readOnly">
     <mat-form-field>
       <input
         matInput
@@ -40,6 +40,7 @@
         placeholder="Rok wydania"
         formControlName="year"
       />
+      <mat-error> Rok nie może być ujemny i nie może przekraczać obecnego </mat-error>
     </mat-form-field>
     <br />
     <mat-form-field>
@@ -49,13 +50,14 @@
         placeholder="Number ISBN"
         formControlName="isbn"
         required
+        pattern="^(?:ISBN(?:-13)?:?\ )?(?=[0-9]{13}$|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17}$)97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]$"
       />
-      <mat-error> Pole wymagane </mat-error>
+      <mat-error> Niepoprawny format </mat-error>
     </mat-form-field>
     <br />
   </form>
-  <div>
-    <button (click)="delete()">Usuń</button>
-    <button (click)="save()" [disabled]="!litForm.valid">Zapisz</button>
+  <div *ngIf="!readOnly">
+    <button mat-icon-button (click)="delete()"><mat-icon>delete_outline</mat-icon></button>
+    <button mat-icon-button (click)="save()" [disabled]="!litForm.valid"><mat-icon>done</mat-icon></button>
   </div>
 </div>

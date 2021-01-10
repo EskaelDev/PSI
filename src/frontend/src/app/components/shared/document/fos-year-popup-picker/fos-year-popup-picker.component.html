@@ -4,14 +4,15 @@
     <app-fos-year-picker
       [visibleButtons]="false"
       [isSpec]="isSpec"
+      [allFields]="allFields"
       (selectFos)="selectedFos = $event"
       (selectYear)="selectedYear = $event"
       (selectSpec)="selectedSpec = $event"
     ></app-fos-year-picker>
   </div>
   <mat-dialog-actions align="end">
-    <button mat-button (click)="submit()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">Zatwierdź</button>
-    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">Zatwierdź</button>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
       Anuluj
     </button>
   </mat-dialog-actions>

@@ -1,6 +1,6 @@
 <div>
   <h1 mat-dialog-title>Nowy przedmiot</h1>
-  <div mat-dialog-content style="height: 340px" fxLayoutAlign="center center">
+  <div mat-dialog-content style="height: 540px" fxLayoutAlign="center center">
     <form [formGroup]="subjectForm">
       <mat-form-field>
         <input
@@ -12,7 +12,7 @@
         />
         <mat-error> Pole wymagane </mat-error>
       </mat-form-field>
-      <br/>
+      <br />
       <mat-form-field>
         <input
           matInput
@@ -23,7 +23,30 @@
         />
         <mat-error> Pole wymagane </mat-error>
       </mat-form-field>
-      <br/>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz kierunek studiów</mat-label>
+        <mat-select
+          formControlName="fieldOfStudy"
+          (selectionChange)="selectedFosChanged()"
+        >
+          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
+            fos.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz specjalizację</mat-label>
+        <mat-select
+          formControlName="specialization"
+        >
+          <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
+            spec.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
       <mat-form-field appearance="fill">
         <mat-label>Wybierz rok akademicki</mat-label>
         <mat-select formControlName="academicYear" required>
@@ -56,10 +79,11 @@
     </form>
   </div>
   <mat-dialog-actions align="end">
-    <button mat-button (click)="submit()" [disabled]="!subjectForm.valid">
+    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="!subjectForm.valid || isLoading">
       Dodaj
     </button>
-    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial [disabled]="isLoading">
       Anuluj
     </button>
   </mat-dialog-actions>

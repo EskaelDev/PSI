@@ -22,7 +22,7 @@ export class SubjectCardsComponent implements OnInit {
   }
 
   downloadSubject(subject: Subject) {
-    this.subjectService.pdf(subject.id, null).subscribe(() => {
+    this.subjectService.pdf(subject.id).subscribe(() => {
 
     });
   }

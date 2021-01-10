@@ -527,6 +527,33 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.PointLimit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("KindOfSubject")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModuleType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("SyllabusId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TypeOfSubject")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SyllabusId");
+
+                    b.ToTable("PointLimit");
+                });
+
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SubjectInSyllabusDescription", b =>
                 {
                     b.Property<Guid>("Id")
@@ -882,6 +909,13 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerUser", "Supervisor")
                         .WithMany()
                         .HasForeignKey("SupervisorId");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.PointLimit", b =>
+                {
+                    b.HasOne("SyllabusManager.Data.Models.Syllabuses.Syllabus", null)
+                        .WithMany("PointLimits")
+                        .HasForeignKey("SyllabusId");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SubjectInSyllabusDescription", b =>

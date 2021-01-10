@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SubjectCardEntryType } from 'src/app/core/enums/subject/subject-card-entry-type.enum';
 import { CardEntries } from 'src/app/core/models/subject/card-entries';
-import { CardEntry } from 'src/app/core/models/subject/card-entry';
 import { Subject } from 'src/app/core/models/subject/subject';
 
 @Component({
@@ -14,6 +13,7 @@ export class SubDocEditComponent implements OnInit {
   preEntry = SubjectCardEntryType.Prerequisite;
   teachEntry = SubjectCardEntryType.TeachingTools;
 
+  @Input() readOnly: boolean = true;
   _document: Subject = new Subject();
   @Input() set document(doc: Subject) {
     this._document = doc;

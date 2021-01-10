@@ -14,15 +14,12 @@ namespace SyllabusManager.API.Controllers
     public class SyllabusController : DocumentInAcademicYearControllerBase<Syllabus>
     {
         private readonly ISyllabusService _syllabusService;
-        private readonly UserManager<SyllabusManagerUser> _userManager;
 
-        public SyllabusController(ISyllabusService syllabusService, UserManager<SyllabusManagerUser> userManager) : base(syllabusService)
+        public SyllabusController(ISyllabusService syllabusService, UserManager<SyllabusManagerUser> userManager) : base(syllabusService, userManager)
         {
             _syllabusService = syllabusService;
-            _userManager = userManager;
         }
 
-        // todo: /latest?fos={fosCode}&spec={specCode}&year={academicYear} -> zwraca obiekt Syllabus o najnowszej wersji dla podanych parametrów (jeżeli nie istnieje to zwraca nowy obiekt)
         /// <summary>
         /// 
         /// </summary>
@@ -36,10 +33,11 @@ namespace SyllabusManager.API.Controllers
                                                 [FromQuery] string spec,
                                                 [FromQuery] string year)
         {
-            Syllabus result = await _syllabusService.Latest(fos, spec, year);
-            if (result is null)
-                return NotFound();
+            if (!await CheckIfUserIsFosSupervisor(fos)) return Forbid();
 
+            var result = await _syllabusService.Latest(fos, spec, year);
+            
+            if (result is null) return NotFound();
             return Ok(result);
         }
 
@@ -51,11 +49,12 @@ namespace SyllabusManager.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] Syllabus syllabus)
         {
-            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            Syllabus result = await _syllabusService.Save(syllabus, user);
-            if (result is null)
-                return BadRequest();
+            if (!await CheckIfUserIsFosSupervisor(syllabus.FieldOfStudy.Code)) return Forbid();
 
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = await _syllabusService.Save(syllabus, user);
+            
+            if (result is null) return BadRequest();
             return Ok(result);
         }
 
@@ -74,10 +73,12 @@ namespace SyllabusManager.API.Controllers
                                                 [FromQuery] string year,
                                                 [FromBody] Syllabus syllabus)
         {
+            if (!await CheckIfUserIsFosSupervisor(fos)) return Forbid();
+
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            Syllabus result = await _syllabusService.SaveAs(fos, spec, year, syllabus, user);
-            if (result is null)
-                return BadRequest();
+            var result = await _syllabusService.SaveAs(fos, spec, year, syllabus, user);
+            
+            if (result is null) return BadRequest();
             return Ok();
         }
 
@@ -97,10 +98,12 @@ namespace SyllabusManager.API.Controllers
                                                    [FromQuery] string spec,
                                                    [FromQuery] string year)
         {
+            if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
+
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            Syllabus result = await _syllabusService.ImportFrom(currentDocId, fos, spec, year, user);
-            if (result is null)
-                return NotFound();
+            var result = await _syllabusService.ImportFrom(currentDocId, fos, spec, year, user);
+            
+            if (result is null) return NotFound();
             return Ok();
         }
 
@@ -113,20 +116,12 @@ namespace SyllabusManager.API.Controllers
         [Route("{currentDocId}")]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
-            // ToDo: usuwanie wszystkich wersji
+            if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
+
             bool result = await _syllabusService.Delete(currentDocId);
-            if (result)
-                return Ok();
+            
+            if (result) return Ok();
             return NotFound();
-
-        }
-
-        // todo: / pdf /{currentDocId} -> generuje pdf
-        [HttpGet]
-        [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(Guid currentDocId)
-        {
-            return Ok("Not implemented");
         }
 
         // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji

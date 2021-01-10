@@ -14,5 +14,6 @@ namespace SyllabusManager.Logic.Services
         Task<Syllabus> Latest(string fos, string spec, string year);
         Task<Syllabus> Save(Syllabus syllabus, SyllabusManagerUser user);
         Task<Syllabus> SaveAs(string fosCode, string specCode, string academicYear, Syllabus syllabus, SyllabusManagerUser user);
+        Task<bool> Delete(Guid id);
     }
 }

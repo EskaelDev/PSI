@@ -2,6 +2,7 @@
 using SyllabusManager.Data.Models.User;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using SyllabusManager.Logic.Models;
 
 namespace SyllabusManager.API.Helpers
 {

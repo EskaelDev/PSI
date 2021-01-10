@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class FrameComponent implements OnInit {
 
-  @Input() title: string = '';
+  @Input() mainTitle: string = '';
   @Input() subtitle: string = '';
 
   constructor() { }

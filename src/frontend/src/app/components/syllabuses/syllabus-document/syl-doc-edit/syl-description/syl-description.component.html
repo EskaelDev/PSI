@@ -5,7 +5,10 @@
       matInput
       type="number"
       [(ngModel)]="document.description.numOfSemesters"
+      (change)="semesterNumChanged()"
+      [formControl]="numOfSem"
     />
+    <mat-error>Dopuszczalne wartości 1-10</mat-error>
   </mat-form-field>
   <br />
   <mat-form-field>
@@ -20,7 +23,9 @@
   <br />
   <mat-form-field appearance="fill">
     <mat-label>Tytuł zawodowy</mat-label>
-    <mat-select [(value)]="document.description.professionalTitleAfterGraduation">
+    <mat-select
+      [(value)]="document.description.professionalTitleAfterGraduation"
+    >
       <mat-option *ngFor="let title of titles" [value]="title">{{
         "titles." + title | translate
       }}</mat-option>
@@ -38,28 +43,34 @@
   <br />
   <mat-form-field>
     <mat-label>Prerekwizyty</mat-label>
-    <input
+    <textarea
       matInput
       type="text"
+      [formControl]="preq"
       [(ngModel)]="document.description.prerequisites"
-    />
+    ></textarea>
+    <mat-error>Pole wymagane</mat-error>
   </mat-form-field>
   <br />
   <mat-form-field>
     <mat-label>Sylwetka absolwenta</mat-label>
-    <input
+    <textarea
       matInput
       type="text"
+      [formControl]="finish"
       [(ngModel)]="document.description.employmentOpportunities"
-    />
+    ></textarea>
+    <mat-error>Pole wymagane</mat-error>
   </mat-form-field>
   <br />
   <mat-form-field>
     <mat-label>Możliwość kontynuacji studiów</mat-label>
-    <input
+    <textarea
       matInput
       type="text"
+      [formControl]="cont"
       [(ngModel)]="document.description.possibilityOfContinuation"
-    />
+    ></textarea>
+    <mat-error>Pole wymagane</mat-error>
   </mat-form-field>
 </div>

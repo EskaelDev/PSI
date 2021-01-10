@@ -11,6 +11,7 @@ import { LearningOutcomeEvaluation } from 'src/app/core/models/subject/learning-
 })
 export class SubLearnOutcEditComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   _elem: LearningOutcomeEvaluation | null = null;
   editableElem: LearningOutcomeEvaluation | null = null;
 
@@ -37,7 +38,7 @@ export class SubLearnOutcEditComponent implements OnInit {
   ngOnInit(): void {}
 
   save() {
-    this.saved.emit(Object.assign(this._elem, this.learnForm.value));
+    this.saved.emit(Object.assign(new LearningOutcome(), this.learnForm.value));
   }
 
   delete() {

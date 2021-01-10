@@ -1,10 +1,10 @@
 <div>
   <h1 mat-dialog-title>Historia</h1>
-  <div mat-dialog-content>
+  <div mat-dialog-content fxLayoutAlign="center">
     <mat-list role="list" style="height: 330px; overflow: auto" *ngIf="values.length > 0">
       <mat-list-item role="listitem" *ngFor="let value of values"
-        ><div><span class="round-title">{{value}}</span></div>
-        <button mat-mini-fab color="accent" class="download-btn" (click)="downloadValue(value)">
+        ><div><span style="font-weight: bold; margin-right: 10px;">{{value.split(':')[1]}}</span></div>
+        <button mat-icon-button color="secondary" class="download-btn" (click)="downloadValue(value)">
           <mat-icon>get_app</mat-icon>
         </button></mat-list-item
       >
@@ -12,7 +12,7 @@
     <div *ngIf="values.length === 0">Brak historii</div>
   </div>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+    <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial>
       Zamknij
     </button>
   </mat-dialog-actions>

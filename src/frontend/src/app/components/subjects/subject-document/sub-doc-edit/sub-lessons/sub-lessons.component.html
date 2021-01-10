@@ -9,10 +9,11 @@
         ></app-sub-lesson-elem>
       </div>
       <div *ngIf="document.lessons.length === 0">Brak wpisów</div>
-      <button (click)="add()">Dodaj</button>
+      <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
     </div>
     <div>
       <app-sub-lesson-edit
+        [readOnly]="readOnly"
         *ngIf="selected"
         [elem]="selected"
         (deleted)="delete()"

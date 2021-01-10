@@ -3,10 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConsts } from 'src/app/core/consts/app-consts';
 import { SubjectCardEntryType } from 'src/app/core/enums/subject/subject-card-entry-type.enum';
-import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study';
-import { Specialization } from 'src/app/core/models/field-of-study/specialization';
-import { CardEntries } from 'src/app/core/models/subject/card-entries';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { FileHelper } from 'src/app/helpers/FileHelper';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { SubjectService } from 'src/app/services/subject/subject.service';
 import { HistoryPopupComponent } from '../../shared/document/history-popup/history-popup.component';
@@ -28,12 +26,15 @@ export class SubjectDocumentComponent implements OnInit {
   code: string = '';
   year: string = '';
 
+  readOnly: boolean = true;
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     public dialog: MatDialog,
     private subjectService: SubjectService,
-    private readonly alerts: AlertService
+    private readonly alerts: AlertService,
+    private fileHelper: FileHelper
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +54,7 @@ export class SubjectDocumentComponent implements OnInit {
         (sub) => {
           if (sub) {
             this.subjectDocument = sub;
+            this.readOnly = !sub.isAdmin && !sub.isSupervisor;
           }
           this.isLoading = false;
         },
@@ -63,7 +65,7 @@ export class SubjectDocumentComponent implements OnInit {
   }
 
   save() {
-    if (this.subjectDocument) {
+    if (this.subjectDocument && this.validateDocument()) {
       this.subjectService.save(this.subjectDocument).subscribe((result) => {
         if (result) {
           this.alerts.showCustomSuccessMessage('Zapisano zmiany');
@@ -71,36 +73,9 @@ export class SubjectDocumentComponent implements OnInit {
         }
       });
     }
-  }
-
-  saveAs() {
-    const sub = this.dialog.open(YearSubjectPickerComponent, {
-      height: '500px',
-      width: '500px',
-      data: {
-        title: 'Zapisz jako',
-        allowsNew: true,
-      },
-    });
-
-    sub.afterClosed().subscribe((result) => {
-      if (result && this.subjectDocument) {
-        this.subjectService
-          .saveAs(
-            this.subjectDocument,
-            result.fos.code,
-            result.spec.code,
-            result.subject,
-            result.year
-          )
-          .subscribe((result) => {
-            if (result) {
-              this.alerts.showCustomSuccessMessage('Zapisano jako');
-              this.loadSubject();
-            }
-          });
-      }
-    });
+    else {
+      this.alerts.showCustomErrorMessage('Zapis nieudany!');
+    }
   }
 
   import() {
@@ -109,6 +84,7 @@ export class SubjectDocumentComponent implements OnInit {
       width: '500px',
       data: {
         title: 'Importuj z',
+        allFields: true
       },
     });
 
@@ -143,6 +119,7 @@ export class SubjectDocumentComponent implements OnInit {
         .subscribe((result) => {
           if (result) {
             this.alerts.showCustomSuccessMessage('Usunięto dokument');
+            this.close();
           }
         });
     }
@@ -150,9 +127,9 @@ export class SubjectDocumentComponent implements OnInit {
 
   pdf() {
     if (this.subjectDocument) {
-      this.subjectService
-        .pdf(this.subjectDocument.id, null)
-        .subscribe(() => {});
+      this.subjectService.pdf(this.subjectDocument.id).subscribe(res => {
+        this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}_${this.subjectDocument?.version}`);
+      });
     }
   }
 
@@ -170,11 +147,48 @@ export class SubjectDocumentComponent implements OnInit {
           });
 
           sub.componentInstance.download.subscribe((version: string) => {
-            this.subjectService
-              .pdf(this.subjectDocument?.id ?? '', version)
-              .subscribe(() => {});
+            this.subjectService.pdf(version.split(':')[0]).subscribe(res => {
+              this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}_${version.split(':')[1]}`);
+            });
           });
         });
     }
+  }
+
+  validateDocument(): boolean {
+    let isValid = true;
+    if (!this.subjectDocument?.namePl) {
+      this.alerts.showCustomWarningMessage('Formularz Dane posiada niepoprawne pola!');
+      isValid = false;
+    }
+    if (!this.validateCardEntry(SubjectCardEntryType.Prerequisite)) {
+      this.alerts.showCustomWarningMessage('Tabela Wymagania wstępne posiada nieuzupełnione pola!');
+      isValid = false;
+    }
+    if (!this.validateCardEntry(SubjectCardEntryType.Goal)) {
+      this.alerts.showCustomWarningMessage('Tabela Cele przedmiotu posiada nieuzupełnione pola!');
+      isValid = false;
+    }
+    if (!this.validateCardEntry(SubjectCardEntryType.TeachingTools)) {
+      this.alerts.showCustomWarningMessage('Tabela Narzędzia dydaktyczne posiada nieuzupełnione pola!');
+      isValid = false;
+    }
+    if (!this.validateLessons()) {
+      this.alerts.showCustomWarningMessage('Do grupy kursów muszą należeć min 2 zajęcia');
+      isValid = false;
+    }
+    return isValid;
+  }
+
+  validateCardEntry(type: SubjectCardEntryType): boolean {
+    if (this.subjectDocument?.cardEntries.find(e => e.type === SubjectCardEntryType.Prerequisite)?.entries.find(e => !e.code || !e.description)) {
+      return false;
+    }
+    return true;
+  }
+
+  validateLessons(): boolean {
+    const courseGroups = this.subjectDocument?.lessons.filter(l => l.isGroup);
+    return courseGroups?.length !== 1;
   }
 }

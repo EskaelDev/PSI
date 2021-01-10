@@ -20,15 +20,9 @@ export class SubjectService {
 
   getAll(fosCode: string, specCode: string, year: string): Observable<Subject[]> {
     return this.http.get<Subject[]>(this.baseUrl + `/all?fos=${fosCode}&spec=${specCode}&year=${encodeURIComponent(year)}`).pipe(
-      catchError(() => {
-        this.alerts.showDefaultLoadingDataErrorMessage();
-        return of([]);
-      })
-    );
-  }
-
-  getAllEditable(fosCode: string, specCode: string, year: string, onlyMy: boolean): Observable<Subject[]> {
-    return this.http.get<Subject[]>(this.baseUrl + `/alleditable?fos=${fosCode}&spec=${specCode}&onlyMy=${onlyMy}&year=${encodeURIComponent(year)}`).pipe(
+      map((subjects) => {
+        return subjects.map((s) => Object.assign(new Subject(), s));
+      }),
       catchError(() => {
         this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);
@@ -38,6 +32,9 @@ export class SubjectService {
 
   getPossibleTeachers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + '/possibleteachers').pipe(
+      map((users) => {
+        return users.map((u) => Object.assign(new User(), u));
+      }),
       catchError(() => {
         this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);
@@ -47,8 +44,16 @@ export class SubjectService {
 
   getLatest(fosCode: string, specCode: string, code: string, year: string): Observable<Subject | null> {
     return this.http.get<Subject>(this.baseUrl + `/latest?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`).pipe(
-      catchError(() => {
-        this.alerts.showDefaultLoadingDataErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultLoadingDataErrorMessage();
+        }
         return of(null);
       })
     );
@@ -59,20 +64,19 @@ export class SubjectService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
-        return of(false);
-      })
-    );
-  }
-
-  saveAs(sub: Subject, fosCode: string, specCode: string, code: string, year: string): Observable<boolean> {
-    return this.http.post<any>(this.baseUrl + `/saveas?fos=${fosCode}&spec=${specCode}&code=${code}&year=${encodeURIComponent(year)}`, sub).pipe(
-      map(() => {
-        return true;
-      }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 409) {
+          this.alerts.showCustomErrorMessage('Przedmiot o podanym kodzie już istnieje!');
+        }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Podany kierunek studiów lub specjalizacja nie istnieje');
+        }
+        else {
+          this.alerts.showDefaultWrongDataErrorMessage();
+        }
         return of(false);
       })
     );
@@ -84,7 +88,10 @@ export class SubjectService {
         return true;
       }),
       catchError(err => {
-        if (err.status == 404) {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
           this.alerts.showCustomErrorMessage('Wybrany dokument do zaimportowania nie istnieje!');
         }
         else {
@@ -101,18 +108,23 @@ export class SubjectService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje');
+        }
+        else {
+          this.alerts.showDefaultErrorMessage();
+        }
         return of(false);
       })
     );
   }
 
-  pdf(id: string, version: string | null): Observable<boolean> {
-    return this.http.get<any>(this.baseUrl + `/pdf/${id}` + (version ? `?version=${version}` : '')).pipe(
-      map(() => {
-        return true;
-      }),
+  pdf(id: string): Observable<any> {
+    return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
       catchError(() => {
         this.alerts.showDefaultErrorMessage();
         return of(false);

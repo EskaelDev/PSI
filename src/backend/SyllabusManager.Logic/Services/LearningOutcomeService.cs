@@ -202,7 +202,7 @@ namespace SyllabusManager.Logic.Services
             List<LearningOutcome> lods = lod.LearningOutcomes;
             using (Document doc = PdfHelper.Document(true))
             {
-                
+
 
                 doc.Add(new Paragraph("ZAKŁADANE EFEKTY UCZENIA SIĘ").SetFontSize(20));
                 doc.Add(new Paragraph($"Rok akademicki: {lod.AcademicYear}"));
@@ -225,15 +225,12 @@ namespace SyllabusManager.Logic.Services
                 if (lods != null)
                 {
                     List<string> headers = new List<string>();
-                    List<List<string>> cellsKnowelage = new List<List<string>>();
+                    List<List<string>> cellsKnowledge = new List<List<string>>();
                     List<List<string>> cellsSkills = new List<List<string>>();
                     List<List<string>> cellsSocialCompetences = new List<List<string>>();
 
-                    List<List<string>> specKnowelage = new List<List<string>>();
-                    List<List<string>> specSkills = new List<List<string>>();
-                    List<List<string>> specSocialCompetences = new List<List<string>>();
+                    List<CategoryTableModel> categoryTableModels = new List<CategoryTableModel>();
 
-                    string spec = string.Empty;
 
                     foreach (PropertyInfo prop in typeof(LearningOutcome).GetProperties())
                     {
@@ -254,12 +251,12 @@ namespace SyllabusManager.Logic.Services
                                 cell.Add(EnumTranslator.Translate(prop.GetValue(l)?.ToString() ?? ""));
                             }
                         }
-                        // Todo: obsługa wielu specjalności
+
                         if (l.Specialization is null)
                             switch (l.Category)
                             {
                                 case LearningOutcomeCategory.Knowledge:
-                                    cellsKnowelage.Add(cell);
+                                    cellsKnowledge.Add(cell);
                                     break;
                                 case LearningOutcomeCategory.Skills:
                                     cellsSkills.Add(cell);
@@ -272,17 +269,23 @@ namespace SyllabusManager.Logic.Services
                             }
                         else
                         {
-                            spec = l.Specialization.Name;
+
+                            if (categoryTableModels.Any(x => x.Name == l.Specialization.Name) == false)
+                            {
+                                categoryTableModels.Add(new CategoryTableModel(l.Specialization.Name));
+                            }
+                            CategoryTableModel categoryTableModel = categoryTableModels.FirstOrDefault(x => x.Name == l.Specialization.Name);
+
                             switch (l.Category)
                             {
                                 case LearningOutcomeCategory.Knowledge:
-                                    specKnowelage.Add(cell);
+                                    categoryTableModel.SpecKnowledge.Add(cell);
                                     break;
                                 case LearningOutcomeCategory.Skills:
-                                    specSkills.Add(cell);
+                                    categoryTableModel.SpecSkills.Add(cell);
                                     break;
                                 case LearningOutcomeCategory.SocialCompetences:
-                                    specSocialCompetences.Add(cell);
+                                    categoryTableModel.SpecSocialCompetences.Add(cell);
                                     break;
                                 default:
                                     break;
@@ -297,19 +300,22 @@ namespace SyllabusManager.Logic.Services
                     headers.ForEach(h => loTable.AddHeaderCell(h));
 
 
-                    setCells(LearningOutcomeCategory.Knowledge, cellsKnowelage, headers.Count, loTable);
+                    setCells(LearningOutcomeCategory.Knowledge, cellsKnowledge, headers.Count, loTable);
                     setCells(LearningOutcomeCategory.Skills, cellsSkills, headers.Count, loTable);
                     setCells(LearningOutcomeCategory.SocialCompetences, cellsSocialCompetences, headers.Count, loTable);
 
                     doc.Add(loTable.SetFontSize(9));
 
                     Table specTable = new Table(headers.Count);
-                    setCells(LearningOutcomeCategory.Knowledge, specKnowelage, headers.Count, specTable);
-                    setCells(LearningOutcomeCategory.Skills, specSkills, headers.Count, specTable);
-                    setCells(LearningOutcomeCategory.SocialCompetences, specSocialCompetences, headers.Count, specTable);
 
-                    if (spec != string.Empty)
-                        doc.Add(new Paragraph("Specjalność - " + spec));
+                    categoryTableModels.ForEach(ctm =>
+                    {
+                        doc.Add(new Paragraph("Specjalność - " + ctm.Name));
+                        setCells(LearningOutcomeCategory.Knowledge, ctm.SpecKnowledge, headers.Count, specTable);
+                        setCells(LearningOutcomeCategory.Skills, ctm.SpecSkills, headers.Count, specTable);
+                        setCells(LearningOutcomeCategory.SocialCompetences, ctm.SpecSocialCompetences, headers.Count, specTable);
+                    });
+                       
                     doc.Add(specTable.SetFontSize(9));
 
                 }
@@ -336,6 +342,27 @@ namespace SyllabusManager.Logic.Services
                     }
                 });
             }
+        }
+    }
+    class CategoryTableModel
+    {
+        public string Name { get; set; }
+        public List<List<string>> SpecKnowledge { get; set; }
+        public List<List<string>> SpecSkills { get; set; }
+        public List<List<string>> SpecSocialCompetences { get; set; }
+        public CategoryTableModel(string name)
+        {
+            SpecKnowledge = new List<List<string>>();
+            SpecSkills = new List<List<string>>();
+            SpecSocialCompetences = new List<List<string>>();
+            Name = name;
+        }
+        public CategoryTableModel()
+        {
+            SpecKnowledge = new List<List<string>>();
+            SpecSkills = new List<List<string>>();
+            SpecSocialCompetences = new List<List<string>>();
+            Name = string.Empty;
         }
     }
 }

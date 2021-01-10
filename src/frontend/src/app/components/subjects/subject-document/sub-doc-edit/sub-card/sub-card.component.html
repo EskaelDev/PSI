@@ -1,0 +1,11 @@
+<div>
+  <h2>{{ card.name }}</h2>
+  <div *ngIf="card.entries.length > 0">
+    <div *ngFor="let entry of card.entries" [appDisable]="readOnly">
+      <app-sub-card-elem [entry]="entry"></app-sub-card-elem>
+      <button *ngIf="!readOnly" mat-icon-button (click)="remove(entry)"><mat-icon>remove</mat-icon></button>
+    </div>
+  </div>
+  <div *ngIf="card.entries.length === 0">Brak wpisów</div>
+  <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+</div>

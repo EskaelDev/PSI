@@ -1,0 +1,71 @@
+<div>
+  <h1 mat-dialog-title>{{ title }}</h1>
+  <div mat-dialog-content style="height: 340px" fxLayoutAlign="center center">
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz kierunek studiów</mat-label>
+        <mat-select
+          [(value)]="selectedFos"
+          (selectionChange)="selectedFosChanged()"
+        >
+          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos"
+            >{{ fos.code }}: {{ fos.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz specjalizację</mat-label>
+        <mat-select
+          [(value)]="selectedSpec"
+          (selectionChange)="selectedSpecChanged()"
+        >
+          <mat-option *ngFor="let spec of specs" [value]="spec"
+            >{{ spec.code }}: {{ spec.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <mat-form-field appearance="fill">
+        <mat-label>Wybierz rok akademicki</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="loadSubjects()">
+          <mat-option *ngFor="let year of years" [value]="year">{{
+            year
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Przedmiot"
+          aria-label="Number"
+          [formControl]="subjectControl"
+          matInput
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let subject of filteredSubjects | async"
+            [value]="subject.code"
+          >
+            {{ subject.code }} - {{ subject.namePl }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="submit()"
+      [disabled]="!validateSubject(selectedSubject) || !selectedYear"
+    >
+      Zatwierdź
+    </button>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
+      Anuluj
+    </button>
+  </mat-dialog-actions>
+</div>

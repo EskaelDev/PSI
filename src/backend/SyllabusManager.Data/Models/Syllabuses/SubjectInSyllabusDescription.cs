@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using SyllabusManager.Data.Models.Subjects;
+﻿using SyllabusManager.Data.Models.Subjects;
 
 namespace SyllabusManager.Data.Models.Syllabuses
 {

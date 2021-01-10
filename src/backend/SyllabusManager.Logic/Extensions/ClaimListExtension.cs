@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Extensions
 {
@@ -10,7 +7,7 @@ namespace SyllabusManager.API.Extensions
     {
         public static void AddRoles(this List<Claim> claims, IList<string> roles)
         {
-            foreach (var role in roles)
+            foreach (string role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }

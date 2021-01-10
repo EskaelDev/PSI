@@ -1,0 +1,7 @@
+<app-searchable-list
+  [elements]="getElements(fieldsOfStudy)"
+  [selectedId]="selectedFos.code"
+  [isLoading]="isLoading"
+  (elementSelected)="selectFos($event)"
+  (newElementChosen)="newFos()"
+></app-searchable-list>

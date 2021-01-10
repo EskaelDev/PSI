@@ -1,0 +1,39 @@
+<h3>Zarządzaj specjalizacjami</h3>
+<div>
+  <form [formGroup]="specializationForm">
+    <mat-form-field class="example-form-field">
+      <input
+        matInput
+        type="text"
+        placeholder="Kod specjalizacji"
+        formControlName="code"
+        required
+        [readonly]="!isNew"
+      />
+      <mat-error> Pole wymagane </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field class="example-form-field">
+      <input
+        matInput
+        type="text"
+        placeholder="Nazwa"
+        formControlName="name"
+        required
+      />
+      <mat-error> Pole wymagane </mat-error>
+    </mat-form-field>
+    <br />
+  </form>
+</div>
+<button (click)="clearSpec()">Clear</button>
+<div *ngFor="let spec of editableSpecs">
+  <div>
+    <span (click)="editSpec(spec)">{{ spec.name }}</span>
+    <mat-icon (click)="removeSpec(spec)">close</mat-icon>
+  </div>
+</div>
+<button (click)="saveCurrent()" [disabled]="!specializationForm.valid">
+  save
+</button>
+<button (click)="saveSpecs()">save all</button>

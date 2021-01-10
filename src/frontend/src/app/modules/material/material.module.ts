@@ -12,6 +12,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -28,7 +30,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSortModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatToolbarModule,
@@ -43,7 +47,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSortModule,
     MatCheckboxModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule
   ]
 })
 

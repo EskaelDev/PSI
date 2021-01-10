@@ -15,8 +15,7 @@ namespace SyllabusManager.Data
         public DbSet<LearningOutcomeDocument> LearningOutcomeDocuments { get; set; }
         public DbSet<Syllabus> Syllabuses { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-
-        //public DbSet<SubjectTeacher> SubjectTeachers { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
 
         public SyllabusManagerDbContext(DbContextOptions options) : base(options) { }
 
@@ -36,8 +35,6 @@ namespace SyllabusManager.Data
                 .HasOne(st => st.Teacher)
                 .WithMany(u => u.SubjectsTeachers)
                 .HasForeignKey(st => st.TeacherId);
-
-            modelBuilder.Entity<Subject>().Ignore(s => s.Teachers);
         }
     }
 }

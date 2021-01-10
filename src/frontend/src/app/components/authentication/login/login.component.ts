@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserCredentials } from 'src/app/core/models/user/user-credentials';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -47,16 +43,17 @@ export class LoginComponent implements OnInit {
   login() {
     this.isLoading = true;
     this.loginInvalid = false;
-    const credentials = new UserCredentials(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value);
-    this.authService
-      .login(credentials)
-      .subscribe(
-        () => {
-          this.router.navigate([this.navigateUrl]);
-        },
-        () => {
-          this.isLoading = false;
-        }
-      );
+    const credentials = new UserCredentials(
+      this.loginForm.get('email')?.value,
+      this.loginForm.get('password')?.value
+    );
+    this.authService.login(credentials).subscribe(
+      () => {
+        this.router.navigate([decodeURIComponent(this.navigateUrl)]);
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
   }
 }

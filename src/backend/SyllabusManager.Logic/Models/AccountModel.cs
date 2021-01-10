@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SyllabusManager.Logic.Models
 {
@@ -8,7 +6,7 @@ namespace SyllabusManager.Logic.Models
     {
         public string Id { get; set; }
 
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         public string Email { get; set; }
 

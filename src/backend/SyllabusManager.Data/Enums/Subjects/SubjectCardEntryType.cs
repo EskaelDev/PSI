@@ -4,7 +4,6 @@
     {
         Prerequisite,
         Goal,
-        LearningOutcome,
         TeachingTools
     }
 }

@@ -17,11 +17,11 @@ namespace SyllabusManager.Data.Models.FieldOfStudies
         public StudiesProfile Profile { get; set; }
         public string BranchOfScience { get; set; }
         public string Discipline { get; set; }
-        [Required]
-        public string Faculty { get; set; }
+        [Required] 
+        public string Faculty { get; set; } = "Informatyka i Zarządzanie";
         public CourseType Type { get; set; }
         public MainLanguage Language { get; set; }
         public SyllabusManagerUser Supervisor { get; set; }
-        public List<Specialization> Specializations { get; set; }
+        public List<Specialization> Specializations { get; set; } = new List<Specialization>();
     }
 }

@@ -1,0 +1,13 @@
+<div>
+  <div fxLayoutAlign="center" fxLayoutGap="10px">
+    <div>
+      <div *ngFor="let spec of specs">
+        {{ spec.name }}
+      </div>
+      <div *ngIf="specs.length === 0">Brak specjalizacji</div>
+    </div>
+    <div *ngIf="!isEditing">
+      <mat-icon style="cursor: pointer" (click)="edit()">edit</mat-icon>
+    </div>
+  </div>
+</div>

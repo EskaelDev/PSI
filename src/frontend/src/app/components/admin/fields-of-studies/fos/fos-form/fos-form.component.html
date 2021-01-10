@@ -1,0 +1,104 @@
+<form [formGroup]="fosForm">
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Kod kierunku"
+      formControlName="code"
+      required
+      [readonly]="!isNew"
+    />
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Tytuł kierunku"
+      formControlName="name"
+      required
+    />
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>Język</mat-label>
+    <mat-select formControlName="language" required>
+      <mat-option *ngFor="let lang of languages" [value]="lang">{{
+        "languages." + lang | translate
+      }}</mat-option>
+    </mat-select>
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>Stopień</mat-label>
+    <mat-select formControlName="level" required>
+      <mat-option *ngFor="let level of levels" [value]="level">{{
+        "levels." + level | translate
+      }}</mat-option>
+    </mat-select>
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>Forma</mat-label>
+    <mat-select formControlName="type" required>
+      <mat-option *ngFor="let type of types" [value]="type">{{
+        "types." + type | translate
+      }}</mat-option>
+    </mat-select>
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <mat-label>Profil</mat-label>
+    <mat-select formControlName="profile" required>
+      <mat-option *ngFor="let profile of profiles" [value]="profile">{{
+        "profiles." + profile | translate
+      }}</mat-option>
+    </mat-select>
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Dyscyplina"
+      formControlName="discipline"
+    />
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Dziedzina nauki"
+      formControlName="branchOfScience"
+    />
+  </mat-form-field>
+  <br />
+  <mat-form-field>
+    <input
+      type="text"
+      placeholder="Opienkun"
+      aria-label="Number"
+      matInput
+      formControlName="supervisor"
+      required
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
+      <mat-option
+        *ngFor="let supervisor of filteredSupervisors | async"
+        [value]="supervisor"
+      >
+        {{ supervisor.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error> Pole wymagane </mat-error>
+  </mat-form-field>
+  <br />
+</form>

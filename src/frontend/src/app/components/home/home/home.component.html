@@ -1,10 +1,14 @@
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Rola</mat-label>
-    <mat-select [(value)]="selectedRole">
-      <mat-option *ngFor="let role of roles" [value]="role">{{
-        "roles." + role | translate
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+<ng-template ngxPermissionsOnly="Admin"
+  ><button [routerLink]="'/admin/menu'">Administracja</button></ng-template
+>
+<ng-template [ngxPermissionsOnly]="['Admin', 'Teacher']"
+  ><button [routerLink]="'/learning-outcome/choose'">Efekty uczenia się</button>
+  <button [routerLink]="'/subject/choose'">Przedmioty</button>
+  <button [routerLink]="'/syllabus/choose'">Programy studiów (edycja)</button></ng-template
+>
+<ng-template [ngxPermissionsOnly]="['Admin', 'StudentGovernment']"
+  ><button [routerLink]="'/syllabus/acceptance'">
+    Programy studiów (akceptacja)
+  </button></ng-template
+>
+<button [routerLink]="'/documents'">Dokumenty</button>

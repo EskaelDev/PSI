@@ -1,0 +1,7 @@
+<app-searchable-list
+  [elements]="getElements(users)"
+  [selectedId]="selectedUser.id"
+  [isLoading]="isLoading"
+  (elementSelected)="selectUser($event)"
+  (newElementChosen)="newUser()"
+></app-searchable-list>

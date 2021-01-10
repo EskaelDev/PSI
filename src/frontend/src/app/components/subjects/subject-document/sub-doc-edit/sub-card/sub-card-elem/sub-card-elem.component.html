@@ -1,0 +1,8 @@
+<mat-form-field>
+    <mat-label>Id</mat-label>
+    <input matInput [(ngModel)]="entry.code" required [formControl]="idControl"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Opis</mat-label>
+    <textarea matInput [(ngModel)]="entry.description" required [formControl]="descControl"></textarea>
+  </mat-form-field>

@@ -1,0 +1,45 @@
+<app-document [title]="title">
+  <div *ngIf="learningOutcomeDocument && !isLoading">
+    <app-control-buttons-panel
+      [isNew]="learningOutcomeDocument.id === guidEmpty"
+      (save)="save()"
+      (saveAs)="saveAs()"
+      (import)="import()"
+      (close)="close()"
+      (delete)="delete()"
+      (pdf)="pdf()"
+      (history)="history()"
+    ></app-control-buttons-panel>
+    <div fxLayoutAlign="start start" fxLayoutGap="30px">
+      <div>
+        <app-fos-details
+          [fos]="learningOutcomeDocument.fieldOfStudy"
+          [year]="learningOutcomeDocument.academicYear"
+        ></app-fos-details>
+        <br/>
+        <h3>Objaśnienia:</h3>
+        <textarea style="font-size: 10px; width: 100%; height: 300px" matInput readonly> P6U – charakterystyki uniwersalne odpowiadające kształceniu na studiach pierwszego stopnia - 6 poziom PRK*
+P7U – charakterystyki uniwersalne odpowiadające kształceniu na studiach drugiego stopnia - 7 poziom PRK*
+P6S – charakterystyki drugiego stopnia odpowiadające kształceniu na studiach pierwszego stopnia studiów - 6 poziom PRK *
+P7S – charakterystyki drugiego stopnia odpowiadające kształceniu na studiach drugiego stopnia/ jednolitych magisterskich – 7 poziom PRK*
+W – kategoria „wiedza”
+U – kategoria „umiejętności”
+K – kategoria „kompetencje społeczne”
+K(symbol kierunku)_W1, K(symbol kierunku)_W2, K(symbol kierunku)_W3, …- efekty kierunkowe dot. kategorii „wiedza”
+K(symbol kierunku)_U1, K(symbol kierunku)_U2, K(symbol kierunku)_U3, …- efekty kierunkowe dot. kategorii „umiejętności”
+K(symbol kierunku)_K1, K(symbol kierunku)_K2, K(symbol kierunku)_K3, …- efekty kierunkowe dot. kategorii „kompetencje społeczne”
+S(symbol specjalności)_W…, S(symbol specjalności)_W…, S(symbol specjalności)_W…, …- efekty specjalnościowe dot. kategorii „wiedza”
+S(symbol specjalności)_U…, S(symbol specjalności)_U…, S(symbol specjalności)_U…, …- efekty specjalnościowe dot. kategorii „umiejętności”
+S(symbol specjalności)_K…, S(symbol specjalności)_K…, S(symbol specjalności)_K…, …- efekty specjalnościowe dot. kategorii „kompetencje społeczne”
+ …._inż – efekty uczenia się umożliwiające uzyskanie kompetencji inżynierskich</textarea>
+      </div>
+      <app-lo-doc-edit [document]="learningOutcomeDocument"></app-lo-doc-edit>
+    </div>
+  </div>
+  <div *ngIf="!learningOutcomeDocument && !isLoading">
+    Błąd wczytywania dokumentu
+  </div>
+  <div *ngIf="isLoading" style="margin-top: 50px">
+    <mat-spinner></mat-spinner>
+  </div>
+</app-document>

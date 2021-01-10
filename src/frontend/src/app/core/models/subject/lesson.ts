@@ -4,7 +4,7 @@ import { ModelBase } from "../model-base";
 import { ClassForm } from "./class-form";
 
 export class Lesson extends ModelBase {
-    lessonType: LessonType = LessonType.Lecture;
+    lessonType?: LessonType;
     hoursAtUniversity: number = 0;
     studentWorkloadHours: number = 0;
     formOfCrediting: FormOfCrediting = FormOfCrediting.CreditingWithGrade;

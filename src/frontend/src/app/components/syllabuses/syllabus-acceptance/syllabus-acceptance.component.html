@@ -1,0 +1,20 @@
+<app-frame mainTitle="Akceptacja" subtitle="programu studiów">
+  <app-fos-year-filter
+    [isSpec]="true"
+    (criteriaChange)="criteriaChanged($event)"
+  ></app-fos-year-filter>
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
+    <app-document-tile
+      (click)="download(syllabus)"
+      *ngFor="let syllabus of syllabuses"
+      [name]="syllabus.fieldOfStudy.name"
+      [spec]="syllabus.specialization.name"
+      [year]="syllabus.academicYear"
+    >
+      <div fxLayoutAlign="center center" fxLayoutGap="30px">
+        <button (click)="reject(syllabus)">Odrzuć</button
+        ><button (click)="accept(syllabus)">Zaakceptuj</button>
+      </div>
+    </app-document-tile>
+  </div>
+</app-frame>

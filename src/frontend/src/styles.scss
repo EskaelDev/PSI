@@ -99,6 +99,10 @@ $syllabus-manager-theme: mat-dark-theme((
 
 @include angular-material-theme($syllabus-manager-theme);
 
+[app-disabled] {
+  opacity: 0.96;
+  pointer-events: none;
+}
 
 html, body, app-root, .app-frame {
   overflow: auto;

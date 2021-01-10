@@ -7,12 +7,12 @@ import { User } from "../user/user";
 import { Specialization } from "./specialization";
 
 export class FieldOfStudy extends NonVersionedModelBase {
-    name?: string;
+    name: string = '';
     level: DegreeLevel = DegreeLevel.FirstLevel;
     profile: StudiesProfile = StudiesProfile.Academic;
     branchOfScience?: string;
     discipline?: string;
-    faculty = '';
+    faculty = 'Informatyka i Zarządzanie';
     type: CourseType = CourseType.FullTime;
     language: MainLanguage = MainLanguage.Polish;
     supervisor?: User;

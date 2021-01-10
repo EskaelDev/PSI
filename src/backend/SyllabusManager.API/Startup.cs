@@ -5,15 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using SyllabusManager.API.Extensions;
 using SyllabusManager.Data;
 using SyllabusManager.Data.Models.User;
-using SyllabusManager.Data.ProviderContexts;
-using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using Serilog;
-using System.Text.Json;
-using SyllabusManager.API.Helpers;
+using System.Linq;
 
 namespace SyllabusManager.API
 {
@@ -30,7 +26,7 @@ namespace SyllabusManager.API
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public async void ConfigureServices(IServiceCollection services)
         {
             // cors
             services.AddCors(o => o.AddPolicy("AllowAll", builder =>
@@ -48,16 +44,18 @@ namespace SyllabusManager.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SyllabusManager.API", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
             services.AddIdentity<SyllabusManagerUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SyllabusManagerDbContext>()
                 .AddDefaultTokenProviders();
 
-
-            InjectionHelper.Inject(services, Configuration);
-            
-
+            services.SetDB(Configuration);
+            services.SetServicesDI();
+            services.SetSettings(Configuration);
+            services.SetAuth(Configuration);
+            await services.SetRolesAndAccounts();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

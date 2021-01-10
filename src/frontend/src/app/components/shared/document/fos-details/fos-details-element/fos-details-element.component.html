@@ -1,0 +1,9 @@
+<div fxLayoutAlign="space-between" fxLayoutGap="20px">
+  <div>{{ name }}:</div>
+  <div *ngIf="!translatedContent">
+    {{ content }}
+  </div>
+  <div *ngIf="translatedContent">
+    {{ translatedContent | translate }}
+  </div>
+</div>

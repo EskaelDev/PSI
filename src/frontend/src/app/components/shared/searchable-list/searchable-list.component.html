@@ -1,0 +1,27 @@
+<mat-form-field>
+  <mat-label>Wyszukaj</mat-label>
+  <input
+    matInput
+    type="text"
+    [(ngModel)]="searchPhrase"
+    (input)="filterElements()"
+  />
+  <button
+    mat-button
+    *ngIf="searchPhrase"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    (click)="searchPhrase = ''"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<button (click)="newElement()">New element</button>
+<div
+  *ngFor="let element of filteredElements"
+  (click)="selectElement(element)"
+  [ngClass]="{ selected: selectedId === element.id }"
+>
+  <p>{{ element.name }}</p>
+</div>

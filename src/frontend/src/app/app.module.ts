@@ -9,23 +9,25 @@ import { LearningOutcomesModule } from './components/learning-outcomes/learning-
 import { SubjectsModule } from './components/subjects/subjects.module';
 import { SyllabusesModule } from './components/syllabuses/syllabuses.module';
 import { DocumentsModule } from './components/documents/documents.module';
+import { SharedComponentsModule } from './components/shared/shared-components.module';
+import { UserModule } from './components/user/user.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     SharedModule,
     HomeModule,
+    SharedComponentsModule,
     AuthenticationModule,
     AdminModule,
     LearningOutcomesModule,
     SubjectsModule,
     SyllabusesModule,
-    DocumentsModule
+    DocumentsModule,
+    UserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

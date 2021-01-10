@@ -1,32 +1,54 @@
-<div class="login-card">
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <h2 class="login-text">Log In</h2>
-    <mat-error *ngIf="loginInvalid">
-      The username and password were not recognised
-    </mat-error>
-    <mat-form-field class="login-element">
-      <input matInput placeholder="Email" formControlName="email" required />
-      <mat-error> Please provide a valid email address </mat-error>
-    </mat-form-field>
-    <br />
-    <mat-form-field class="login-element">
-      <input
-        matInput
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-        required
-      />
-      <mat-error> Please provide a valid password </mat-error>
-    </mat-form-field>
-    <br />
-    <button
-      mat-raised-button
-      color="primary"
-      class="login-button"
-      [disabled]="!loginForm.valid"
-    >
-      Login
-    </button>
-  </form>
+<div class="container">
+  <div class="background">
+    <svg class="polygon-left" viewBox="0 0 1454 809" preserveAspectRatio="xMidYMin slice">
+      <path d="M 726.9999389648438 0 L 1454 809 L 0 809 Z">
+      </path>
+    </svg>
+    <svg class="polygon-right" viewBox="0 0 2840 1092" preserveAspectRatio="xMidYMin slice">
+      <path d="M 1419.999877929688 0 L 2840 1092 L 0 1092 Z">
+      </path>
+    </svg>
+  </div>
+
+  <div class="login-form-container">
+    <img class="logo-bez-tla" src="/assets/logo_bez_tla.png">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-error *ngIf="loginInvalid" i18n="Form Login|@@LoginNotFound">
+        The username and password were not recognised
+      </mat-error>
+      <mat-form-field class="login-element">
+        <input
+          matInput
+          placeholder="Email"
+          i18n-placeholder="Form Login|@@EmailPlaceholder"
+          formControlName="email"
+          required
+        />
+        <mat-error i18n="Form Login|@@EmailInvalid">Please provide a valid email address</mat-error>
+      </mat-form-field>
+      <br/>
+      <mat-form-field class="login-element">
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          i18n-placeholder="Form Login|@@PasswordPlaceholder"
+          formControlName="password"
+          required
+        />
+        <mat-error i18n="Form Login|@@PasswordInvalid">Please provide a valid password</mat-error>
+      </mat-form-field>
+      <br/>
+      <div class="controls-container">
+        <div class="controls">
+          <a class="password-reset">
+            Przypomnij hasło
+          </a>
+          <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">
+            Zaloguj
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

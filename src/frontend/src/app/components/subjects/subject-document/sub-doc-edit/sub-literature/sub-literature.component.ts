@@ -10,6 +10,7 @@ import { AlertService } from 'src/app/services/alerts/alert.service';
 })
 export class SubLiteratureComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   @Input() document: Subject = new Subject();
   selected: Literature | null = null;
   

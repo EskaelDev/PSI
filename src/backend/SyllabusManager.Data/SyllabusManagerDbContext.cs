@@ -35,8 +35,6 @@ namespace SyllabusManager.Data
                 .HasOne(st => st.Teacher)
                 .WithMany(u => u.SubjectsTeachers)
                 .HasForeignKey(st => st.TeacherId);
-
-            modelBuilder.Entity<Subject>().Ignore(s => s.Teachers);
         }
     }
 }

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppConsts } from 'src/app/core/consts/app-consts';
 import { LearningOutcomeDocument } from 'src/app/core/models/learning-outcome/learning-outcome-document';
+import { FileHelper } from 'src/app/helpers/FileHelper';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { LearningOutcomeService } from 'src/app/services/learning-outcome/learning-outcome.service';
 import { FosYearPopupPickerComponent } from '../../shared/document/fos-year-popup-picker/fos-year-popup-picker.component';
@@ -27,7 +28,8 @@ export class LearningOutcomeDocumentComponent implements OnInit {
     private readonly router: Router,
     public dialog: MatDialog,
     private readonly alerts: AlertService,
-    private learningOutcomeService: LearningOutcomeService
+    private learningOutcomeService: LearningOutcomeService,
+    private fileHelper: FileHelper
   ) {}
 
   ngOnInit(): void {
@@ -133,8 +135,8 @@ export class LearningOutcomeDocumentComponent implements OnInit {
 
   pdf() {
     if (this.learningOutcomeDocument) {
-      this.learningOutcomeService.pdf(this.learningOutcomeDocument.id, null).subscribe(() => {
-
+      this.learningOutcomeService.pdf(this.learningOutcomeDocument.id).subscribe(res => {
+        this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}_${this.learningOutcomeDocument?.version}`);
       });
     }
   }
@@ -153,8 +155,8 @@ export class LearningOutcomeDocumentComponent implements OnInit {
           });
 
           sub.componentInstance.download.subscribe((version: string) => {
-            this.learningOutcomeService.pdf(this.learningOutcomeDocument?.id ?? '', version).subscribe(() => {
-
+            this.learningOutcomeService.pdf(version.split(':')[0]).subscribe(res => {
+              this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}_${version.split(':')[1]}`);
             });
           });
         });

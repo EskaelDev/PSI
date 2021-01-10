@@ -6,10 +6,12 @@ using SyllabusManager.Logic.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SyllabusManager.Data.Enums.Subjects;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -20,33 +22,34 @@ namespace SyllabusManager.Logic.Services
 
         }
 
-        public async Task<List<Subject>> GetAll(string fos, string spec, string year)
+        public async Task<List<Subject>> GetAll(string fos, string spec, string year, SyllabusManagerUser user)
         {
-            return await _dbSet.Include(s => s.FieldOfStudy)
+            var latestIds = _dbSet.AsNoTracking().Where(s =>
+                s.FieldOfStudy.Code == fos
+                && s.Specialization.Code == spec
+                && s.AcademicYear == year
+                && !s.IsDeleted).ToList()
+                .GroupBy(s => new { s.FieldOfStudy, s.Specialization, s.AcademicYear })
+                .Select(g => g.OrderByDescending(s => s.Version)
+                    .First().Id);
+
+            var result = await _dbSet.Include(s => s.FieldOfStudy)
                 .Include(s => s.Specialization)
-                .OrderByDescending(s => s.Version)
-                .Where(s =>
-                    s.FieldOfStudy.Code == fos
-                    && s.Specialization.Code == spec
-                    && s.AcademicYear == year
-                    && !s.IsDeleted).ToListAsync();
+                .Include(s => s.Supervisor)
+                .Include(s => s.SubjectsTeachers)
+                .ThenInclude(st => st.Teacher)
+                .Where(s => latestIds.Contains(s.Id)).ToListAsync();
+            
+            return result.Select(r =>
+            {
+                r.IsSupervisor = r.Supervisor.Id == user.Id;
+                r.IsTeacher = r.SubjectsTeachers.Any(t => t.Teacher.Id == user.Id);
+                r.SubjectsTeachers = new List<SubjectTeacher>();
+                return r;
+            }).ToList();
         }
 
-        public async Task<List<Subject>> GetAllForUser(string fos, string spec, string year, SyllabusManagerUser user, bool onlyMy)
-        {
-            return await _dbSet.Include(s => s.FieldOfStudy)
-                .ThenInclude(f => f.Supervisor)
-                .Include(s => s.Specialization)
-                .OrderByDescending(s => s.Version)
-                .Where(s =>
-                    s.FieldOfStudy.Code == fos
-                    && s.Specialization.Code == spec
-                    && s.AcademicYear == year
-                    && (s.Supervisor.Id == user.Id || (!onlyMy && s.FieldOfStudy.Supervisor.Id == user.Id))
-                    && !s.IsDeleted).ToListAsync();
-        }
-
-        public async Task<Subject> Latest(string fos, string spec, string code, string year)
+        public async Task<Subject> Latest(string fos, string spec, string code, string year, SyllabusManagerUser user)
         {
             var subject = await _dbSet.Include(s => s.FieldOfStudy)
                                        .Include(s => s.Specialization)
@@ -71,7 +74,14 @@ namespace SyllabusManager.Logic.Services
             {
                 if (subject.FieldOfStudy is null || subject.Specialization is null) return null;
 
-                subject.Teachers = subject.SubjectsTeachers.Select(st => st.Teacher).ToList();
+                subject.Teachers = subject.SubjectsTeachers.Select(st =>
+                {
+                    st.Teacher.SubjectsTeachers = new List<SubjectTeacher>();
+                    return st.Teacher;
+                }).ToList();
+                subject.SubjectsTeachers = new List<SubjectTeacher>();
+                subject.IsSupervisor = subject.Supervisor.Id == user.Id;
+                subject.IsTeacher = subject.Teachers.Any(t => t.Id == user.Id);
             }
 
             return subject;
@@ -211,8 +221,8 @@ namespace SyllabusManager.Logic.Services
                                                            && s.Specialization == subject.Specialization
                                                            && s.Code == subject.Code
                                                         && !s.IsDeleted)
-                                                .Select(s => s.Version)
-                                                .OrderBy(s => s)
+                                                .OrderByDescending(s => s.Version)
+                                                .Select(s => $"{s.Id}:{s.Version}")
                                                 .ToListAsync();
         }
 

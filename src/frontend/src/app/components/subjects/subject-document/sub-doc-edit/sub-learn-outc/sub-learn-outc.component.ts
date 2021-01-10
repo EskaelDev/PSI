@@ -12,6 +12,7 @@ import { LearningOutcomeService } from 'src/app/services/learning-outcome/learni
 })
 export class SubLearnOutcComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   _document: Subject = new Subject();
   @Input() set document(doc: Subject) {
     this._document = doc;
@@ -32,6 +33,7 @@ export class SubLearnOutcComponent implements OnInit {
     this.learningOutcomes = [];
     this.learningOutcomeService.getLatestReadOnly(this._document.fieldOfStudy.code, this._document.academicYear).subscribe(outcomes => {
       this.learningOutcomes = outcomes?.learningOutcomes ?? [];
+      this.learningOutcomes = this.learningOutcomes.filter(lo => !lo.specialization || lo.specialization.code === this._document.specialization.code);
     })
   }
 

@@ -1,7 +1,7 @@
 <div>
   <h2>{{ card.name }}</h2>
-  <div>
-    <div *ngFor="let entry of card.entries">
+  <div *ngIf="card.entries.length > 0">
+    <div *ngFor="let entry of card.entries" [appDisable]="readOnly">
       <mat-form-field>
         <mat-label>Id</mat-label>
         <input matInput [(ngModel)]="entry.code" required/>
@@ -10,8 +10,9 @@
         <mat-label>Opis</mat-label>
         <textarea matInput [(ngModel)]="entry.description" required></textarea>
       </mat-form-field>
-      <button mat-icon-button (click)="remove(entry)"><mat-icon>remove</mat-icon></button>
+      <button *ngIf="!readOnly" mat-icon-button (click)="remove(entry)"><mat-icon>remove</mat-icon></button>
     </div>
   </div>
-  <button mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+  <div *ngIf="card.entries.length === 0">Brak wpisów</div>
+  <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
 </div>

@@ -33,21 +33,13 @@ namespace SyllabusManager.API.Controllers
             [FromQuery] string spec,
             [FromQuery] string year)
         {
-            return Ok(await _subjectService.GetAll(fos, spec, year));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Editable([FromQuery] string fos,
-            [FromQuery] string spec,
-            [FromQuery] string year,
-            [FromQuery] bool onlyMy)
-        {
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            if (await AuthorizationHelper.CheckIfAdmin(user, _userManager))
+            var result = await _subjectService.GetAll(fos, spec, year, user);
+            foreach (var r in result)
             {
-                return Ok(await _subjectService.GetAll(fos, spec, year));
+                r.IsAdmin = await CheckIfUserIsFosSupervisor(r.FieldOfStudy.Code);
             }
-            return Ok(await _subjectService.GetAllForUser(fos, spec, year, user, onlyMy));
+            return Ok(result);
         }
 
         [HttpGet]
@@ -57,13 +49,12 @@ namespace SyllabusManager.API.Controllers
                                                 [FromQuery] string code,
                                                 [FromQuery] string year)
         {
-            var result = await _subjectService.Latest(fos, spec, code, year);
+            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = await _subjectService.Latest(fos, spec, code, year, user);
             
             if (result is null) return NotFound();
 
-            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            if (!await CheckIfUserIsFosSupervisor(fos) && result.Supervisor?.Id != user.Id) return Forbid();
-
+            result.IsAdmin = await CheckIfUserIsFosSupervisor(result.FieldOfStudy.Code);
             return Ok(result);
         }
 

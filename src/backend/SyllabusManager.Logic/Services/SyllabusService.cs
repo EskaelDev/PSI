@@ -179,8 +179,8 @@ namespace SyllabusManager.Logic.Services
                                                         && s.FieldOfStudy == syllabus.FieldOfStudy
                                                            && s.Specialization == syllabus.Specialization
                                                            && !s.IsDeleted)
-                                                .Select(s => s.Version)
-                                                .OrderBy(s => s)
+                                                .OrderByDescending(s => s.Version)
+                                                .Select(s => $"{s.Id}:{s.Version}")
                                                 .ToListAsync();
             return versions;
         }

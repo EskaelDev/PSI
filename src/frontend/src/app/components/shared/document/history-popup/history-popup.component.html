@@ -3,7 +3,7 @@
   <div mat-dialog-content fxLayoutAlign="center">
     <mat-list role="list" style="height: 330px; overflow: auto" *ngIf="values.length > 0">
       <mat-list-item role="listitem" *ngFor="let value of values"
-        ><div><span style="font-weight: bold; margin-right: 10px;">{{value}}</span></div>
+        ><div><span style="font-weight: bold; margin-right: 10px;">{{value.split(':')[1]}}</span></div>
         <button mat-icon-button color="secondary" class="download-btn" (click)="downloadValue(value)">
           <mat-icon>get_app</mat-icon>
         </button></mat-list-item

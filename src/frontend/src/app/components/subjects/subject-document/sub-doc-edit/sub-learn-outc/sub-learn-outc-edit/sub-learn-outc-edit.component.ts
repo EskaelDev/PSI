@@ -11,6 +11,7 @@ import { LearningOutcomeEvaluation } from 'src/app/core/models/subject/learning-
 })
 export class SubLearnOutcEditComponent implements OnInit {
 
+  @Input() readOnly: boolean = true;
   _elem: LearningOutcomeEvaluation | null = null;
   editableElem: LearningOutcomeEvaluation | null = null;
 

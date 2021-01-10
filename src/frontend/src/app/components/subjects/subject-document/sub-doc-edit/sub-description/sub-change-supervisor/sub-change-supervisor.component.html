@@ -1,0 +1,36 @@
+<div>
+  <h1 mat-dialog-title>Zmień opiekuna</h1>
+  <div mat-dialog-content fxLayoutAlign="center center" style="height: 140px;">
+    <mat-form-field style="width: 350px;">
+      <input
+        type="text"
+        placeholder="Prowadzący"
+        aria-label="Number"
+        [formControl]="teacherControl"
+        matInput
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
+        <mat-option
+          *ngFor="let teacher of filteredTeachers | async"
+          [value]="teacher"
+        >
+          {{ teacher.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <mat-dialog-actions align="end">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="submit()"
+      [disabled]="!validateTeacher(selectedTeacher)"
+    >
+      Zatwierdź
+    </button>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
+      Anuluj
+    </button>
+  </mat-dialog-actions>
+</div>

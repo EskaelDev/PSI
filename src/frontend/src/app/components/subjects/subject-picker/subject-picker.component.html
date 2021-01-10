@@ -1,5 +1,7 @@
-<app-frame title="Przedmioty">
-  <button mat-raised-button color="primary" (click)="newSubject()">Nowy przedmiot<mat-icon style="margin-right: 5px;">add</mat-icon></button>
+<app-frame mainTitle="Przedmioty">
+  <button mat-raised-button color="primary" (click)="newSubject()">
+    Nowy przedmiot<mat-icon style="margin-right: 5px">add</mat-icon>
+  </button>
   <div fxLayoutAlign="start center" fxLayoutGap="20px">
     <mat-form-field>
       <mat-label>Wyszukaj</mat-label>
@@ -26,20 +28,17 @@
         [(value)]="selectedFos"
         (selectionChange)="selectedFosChanged()"
       >
-        <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
-          fos.name
-        }}</mat-option>
+        <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos"
+          >{{ fos.code }}: {{ fos.name }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Wybierz specjalizację</mat-label>
-      <mat-select
-        [(value)]="selectedSpec"
-        (selectionChange)="loadSubjects()"
-      >
-        <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
-          spec.name
-        }}</mat-option>
+      <mat-select [(value)]="selectedSpec" (selectionChange)="loadSubjects()">
+        <mat-option *ngFor="let spec of specs" [value]="spec"
+          >{{ spec.code }}: {{ spec.name }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
@@ -50,20 +49,47 @@
         }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-checkbox [(ngModel)]="onlyMy" (change)="loadSubjects()"
-      >Tylko gdzie jestem opiekunem</mat-checkbox
-    >
+    <div>
+      <mat-checkbox [(ngModel)]="whereSupervisor" (change)="filterSubjects()"
+        >Gdzie jestem opiekunem</mat-checkbox
+      ><br/>
+      <mat-checkbox [(ngModel)]="whereTeacher" (change)="filterSubjects()"
+        >Gdzie jestem współprowadzącym</mat-checkbox
+      >
+    </div>
   </div>
   <div *ngIf="filteredSubjects.length > 0">
     <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">
       <div>{{ subject.code }}: {{ subject.namePl }}</div>
-      <button mat-raised-button color="primary" (click)="edit(subject)"><mat-icon style="margin-right: 5px;">edit</mat-icon>Edytuj</button>
+      <button mat-raised-button color="primary" (click)="edit(subject)" *ngIf="subject.isAdmin || subject.isSupervisor">
+        <mat-icon style="margin-right: 5px">edit</mat-icon>Edytuj
+      </button>
+      <button mat-raised-button color="primary" (click)="edit(subject)" *ngIf="!subject.isAdmin && !subject.isSupervisor">
+        <mat-icon style="margin-right: 5px">visibility</mat-icon>Podgląd
+      </button>
     </div>
   </div>
-  <div *ngIf="filteredSubjects.length === 0 && (!selectedFos || !selectedSpec || !selectedYear)">
+  <div
+    *ngIf="
+      filteredSubjects.length === 0 &&
+      (!selectedFos || !selectedSpec || !selectedYear)
+      && !isLoading
+    "
+  >
     Wypełnij wszystkie filtry aby załadować listę przedmiotów
   </div>
-  <div *ngIf="filteredSubjects.length === 0 && selectedFos && selectedSpec && selectedYear">
+  <div
+    *ngIf="
+      filteredSubjects.length === 0 &&
+      selectedFos &&
+      selectedSpec &&
+      selectedYear &&
+      !isLoading
+    "
+  >
     Brak pasujących przedmiotów
+  </div>
+  <div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
   </div>
 </app-frame>

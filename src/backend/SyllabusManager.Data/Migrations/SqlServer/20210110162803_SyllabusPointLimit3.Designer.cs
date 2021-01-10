@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SyllabusManager.Data.ProviderContexts;
 
 namespace SyllabusManager.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerSyllabusManagerDbContext))]
-    partial class SqlServerSyllabusManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210110162803_SyllabusPointLimit3")]
+    partial class SyllabusPointLimit3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

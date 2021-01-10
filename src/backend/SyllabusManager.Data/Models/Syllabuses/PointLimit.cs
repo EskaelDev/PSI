@@ -6,6 +6,7 @@ namespace SyllabusManager.Data.Models.Syllabuses
     {
         public int Points { get; set; } = 0;
         public ModuleType ModuleType { get; set; }
-        public KindOfSubject KindOfSubject { get; set; }
+        public KindOfSubject? KindOfSubject { get; set; }
+        public TypeOfSubject? TypeOfSubject { get; set; }
     }
 }

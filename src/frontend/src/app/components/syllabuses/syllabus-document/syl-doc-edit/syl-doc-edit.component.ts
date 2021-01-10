@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ListElement } from 'src/app/core/models/shared/list-element';
 import { Subject } from 'src/app/core/models/subject/subject';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
@@ -19,6 +20,10 @@ export class SylDocEditComponent implements OnInit {
   subjects: Subject[] = [];
   semesters: ListElement[] = [];
 
+  examControl = new FormControl("", Validators.required);
+  internControl = new FormControl("", Validators.required);
+  thesisControl = new FormControl("", Validators.required);
+
   updateSemesters() {
     this.semesters = this.createSemestersList(this._document.description?.numOfSemesters);
   }
@@ -35,5 +40,9 @@ export class SylDocEditComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.examControl.markAsTouched();
+    this.internControl.markAsTouched();
+    this.thesisControl.markAsTouched();
+  }
 }

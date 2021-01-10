@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SyllabusManager.Data.ProviderContexts;
 
 namespace SyllabusManager.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerSyllabusManagerDbContext))]
-    partial class SqlServerSyllabusManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210110162532_SyllabusPointLimit2")]
+    partial class SyllabusPointLimit2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -532,7 +534,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("KindOfSubject")
+                    b.Property<int>("KindOfSubject")
                         .HasColumnType("int");
 
                     b.Property<int>("ModuleType")
@@ -544,7 +546,7 @@ namespace SyllabusManager.Data.Migrations.SqlServer
                     b.Property<Guid?>("SyllabusId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("TypeOfSubject")
+                    b.Property<int>("TypeOfSubject")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

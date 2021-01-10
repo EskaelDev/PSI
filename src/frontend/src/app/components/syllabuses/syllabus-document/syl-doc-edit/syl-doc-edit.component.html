@@ -7,24 +7,27 @@
         <app-syl-subject [document]="_document" [semesters]="semesters"></app-syl-subject>
     </mat-tab>
     <mat-tab label="Limit punktów">
-        <div></div>
+        <app-points-limit [document]="_document"></app-points-limit>
     </mat-tab>
     <mat-tab label="Zakres egzaminu dyplomowego">
         <mat-form-field>
             <mat-label>Zakres egzaminu dyplomowego</mat-label>
-            <textarea matInput [(ngModel)]="_document.scopeOfDiplomaExam"></textarea>
+            <textarea matInput [(ngModel)]="_document.scopeOfDiplomaExam" [formControl]="examControl"></textarea>
+            <mat-error>Pole wymagane</mat-error>
           </mat-form-field>
     </mat-tab>
     <mat-tab label="Praca dyplomowa">
         <mat-form-field>
             <mat-label>Kurs praca dyplomowa</mat-label>
-            <textarea matInput [(ngModel)]="_document.thesisCourse"></textarea>
+            <textarea matInput [(ngModel)]="_document.thesisCourse" [formControl]="thesisControl"></textarea>
+            <mat-error>Pole wymagane</mat-error>
           </mat-form-field>
     </mat-tab>
     <mat-tab label="Praktyki">
         <mat-form-field>
             <mat-label>Praktyki</mat-label>
-            <textarea matInput [(ngModel)]="_document.intershipType"></textarea>
+            <textarea matInput [(ngModel)]="_document.intershipType" [formControl]="internControl"></textarea>
+            <mat-error>Pole wymagane</mat-error>
           </mat-form-field>
     </mat-tab>
   </mat-tab-group>

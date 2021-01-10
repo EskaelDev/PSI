@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SyllabusManager.Data;
 using SyllabusManager.Data.Models.Syllabuses;
+using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 using SyllabusManager.Logic.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using SyllabusManager.Data.Models.User;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -25,6 +26,7 @@ namespace SyllabusManager.Logic.Services
                                        .Include(s => s.Description)
                                        .Include(s => s.SubjectDescriptions)
                                        .ThenInclude(sd => sd.Subject)
+                                       .Include(s => s.PointLimits)
                                        .OrderByDescending(s => s.Version)
                                        .FirstOrDefaultAsync(s =>
                                            s.FieldOfStudy.Code == fos
@@ -38,7 +40,8 @@ namespace SyllabusManager.Logic.Services
                     FieldOfStudy = _dbContext.FieldsOfStudies.Include(f => f.Specializations).FirstOrDefault(f => f.Code == fos),
                     Specialization = _dbContext.Specializations.Find(spec),
                     AcademicYear = year,
-                    Version = "new"
+                    Version = "new",
+                    PointLimits = SyllabusHelper.PredefinedPointLimits
                 };
             }
 
@@ -70,10 +73,12 @@ namespace SyllabusManager.Logic.Services
                 sd.Id = Guid.NewGuid();
                 if (sd.Subject != null)
                 {
-                    Data.Models.Subjects.Subject subj = _dbContext.Subjects.Find(sd.Subject.Code);
+                    Data.Models.Subjects.Subject subj = _dbContext.Subjects.Find(sd.Subject.Id);
                     sd.Subject = subj;
                 }
             });
+
+            syllabus.PointLimits.ForEach(pl => pl.Id = Guid.NewGuid());
 
             syllabus.Description.Id = Guid.NewGuid();
 
@@ -106,6 +111,7 @@ namespace SyllabusManager.Logic.Services
             currentSyllabus.IntershipType = syllabus.IntershipType;
             currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;
             currentSyllabus.ScopeOfDiplomaExam = syllabus.ScopeOfDiplomaExam;
+            currentSyllabus.PointLimits = syllabus.PointLimits;
 
             return await Save(currentSyllabus, user);
         }
@@ -126,6 +132,7 @@ namespace SyllabusManager.Logic.Services
                                               .Include(s => s.SubjectDescriptions)
                                               .ThenInclude(sd => sd.Subject)
                                               .Include(s => s.Description)
+                                              .Include(s => s.PointLimits)
                                               .FirstOrDefaultAsync(s =>
                                                                        s.Id == currentDocId
                                                                     && !s.IsDeleted);
@@ -136,6 +143,7 @@ namespace SyllabusManager.Logic.Services
                                             .Include(s => s.SubjectDescriptions)
                                             .ThenInclude(sd => sd.Subject)
                                             .Include(s => s.Description)
+                                            .Include(s => s.PointLimits)
                                             .FirstOrDefaultAsync(s =>
                                                                      s.FieldOfStudy.Code == fosCode
                                                                   && s.AcademicYear == academicYear
@@ -150,6 +158,7 @@ namespace SyllabusManager.Logic.Services
             currentSyllabus.IntershipType = syllabus.IntershipType;
             currentSyllabus.OpinionDeadline = syllabus.OpinionDeadline;
             currentSyllabus.ScopeOfDiplomaExam = syllabus.ScopeOfDiplomaExam;
+            currentSyllabus.PointLimits = syllabus.PointLimits;
 
             return await Save(currentSyllabus, user);
         }
@@ -163,8 +172,6 @@ namespace SyllabusManager.Logic.Services
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
                                             .Include(s => s.Specialization)
-                                            .Include(s => s.SubjectDescriptions)
-                                            .ThenInclude(sd => sd.Subject)
                                             .Include(s => s.Description)
                                             .FirstOrDefaultAsync(s =>
                                                                      s.Id == id

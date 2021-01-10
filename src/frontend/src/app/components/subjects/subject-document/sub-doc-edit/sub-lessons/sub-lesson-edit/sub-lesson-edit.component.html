@@ -87,15 +87,7 @@
   <div>
     <h2>Treści programowe</h2>
     <div *ngFor="let entry of editableClassForms" [appDisable]="readOnly">
-      <mat-form-field>
-        <mat-label>Opis</mat-label>
-        <textarea required matInput [(ngModel)]="entry.description" ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Liczba godzin</mat-label>
-        <input required matInput type="number" [(ngModel)]="entry.hours" />
-        <mat-hint align="start">Dopuszczalny przedział 1 - 200</mat-hint>
-      </mat-form-field>
+      <app-sub-lessons-program [entry]="entry"></app-sub-lessons-program>
       <button *ngIf="!readOnly" mat-icon-button (click)="remove(entry)"><mat-icon>remove</mat-icon></button>
     </div>
     <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>

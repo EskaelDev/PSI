@@ -8,6 +8,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SyllabusManager.Data.Models.User;
+using iText.Layout;
+using SyllabusManager.Logic.Helpers;
+using iText.Layout.Element;
+using SyllabusManager.Logic.Extensions;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -201,6 +205,34 @@ namespace SyllabusManager.Logic.Services
             syllabuses.ForEach(s => s.IsDeleted = true);
             var state = await _dbContext.SaveChangesAsync();
             return state > 0;
+        }
+
+        public async Task<bool> Pdf(Guid id)
+        {
+            Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
+                                            .Include(s => s.Specialization)
+                                            .Include(s => s.SubjectDescriptions)
+                                            .ThenInclude(sd => sd.Subject)
+                                            .Include(s => s.Description)
+                                            .FirstOrDefaultAsync(s =>
+                                                                     s.Id == id
+                                                                  && !s.IsDeleted);
+
+
+
+            using (Document doc = PdfHelper.Document(true))
+            {
+                // Todo: Dokończyć pdf
+                doc.Add(new Paragraph("Program Studiów".ToUpper())
+                                     .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+                doc.Paragraph("Program Studiów2".ToUpper())
+                   .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+            }
+
+            if (syllabus is null)
+                return false;
+            return true;
         }
     }
 }

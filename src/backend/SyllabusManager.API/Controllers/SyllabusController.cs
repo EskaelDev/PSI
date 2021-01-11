@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SyllabusManager.API.Helpers;
 using SyllabusManager.Data.Models.User;
+using System.IO;
+using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -130,7 +132,21 @@ namespace SyllabusManager.API.Controllers
         public async Task<IActionResult> Pdf(Guid currentDocId,
                                             [FromQuery] string version)
         {
-            return Ok("Not implemented");
+            var result = await _syllabusService.Pdf(currentDocId);
+            if (result == false)
+            {
+                return NotFound();
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(PdfHelper.PATH, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
+
         }
 
 

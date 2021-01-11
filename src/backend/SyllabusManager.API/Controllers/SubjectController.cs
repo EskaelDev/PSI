@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.API.Helpers;
 using SyllabusManager.Data.Models.Subjects;
@@ -7,6 +8,7 @@ using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Helpers;
 using SyllabusManager.Logic.Services;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers
@@ -123,10 +125,25 @@ namespace SyllabusManager.API.Controllers
         // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
         [HttpGet]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(Guid currentDocId,
-                                            [FromQuery] string version)
+        public async Task<IActionResult> Pdf(Guid currentDocId)
         {
-            return Ok("Not implemented");
+            Log.Information("Generating pdf for Subject id:" + currentDocId.ToString());
+
+            var result = await _subjectService.Pdf(currentDocId);
+            if (result == false)
+            {
+                Log.Error("Subject id " + currentDocId.ToString() + " not found");
+                return NotFound();
+            }
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(PdfHelper.PATH, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
         }
 
         [HttpGet]

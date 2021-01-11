@@ -6,7 +6,7 @@ namespace SyllabusManager.Data.Models.Syllabuses
 {
     public class SyllabusDescription : ModelBase
     {
-        public int NumOfSemesters { get; set; }
+        public int NumOfSemesters { get; set; } = 1;
         [NotMapped]
         public int Ects => NumOfSemesters * 30;
         [Required]

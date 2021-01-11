@@ -352,3 +352,7 @@ MigrationBackup/
 src/backend/SyllabusManager.API/appsettings.Development.json
 
 src/backend/SyllabusManager.API/temp.pdf
+
+.idea/*
+
+src/.idea/*

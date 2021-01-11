@@ -34,7 +34,10 @@
               "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "localize": [
+              "pl"
+            ]
           },
           "configurations": {
             "production": {
@@ -124,6 +127,12 @@
               "devServerTarget": "syllabus-manager:serve:production"
             }
           }
+        }
+      },
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "pl": "src/locale/messages.pl.xlf"
         }
       }
     }

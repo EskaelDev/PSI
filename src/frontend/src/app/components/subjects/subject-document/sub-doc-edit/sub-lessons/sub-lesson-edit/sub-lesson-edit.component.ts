@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormOfCrediting } from 'src/app/core/enums/subject/form-of-crediting.enum';
 import { LessonType } from 'src/app/core/enums/subject/lesson-type.enum';
 import { ClassForm } from 'src/app/core/models/subject/class-form';

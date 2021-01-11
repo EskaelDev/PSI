@@ -173,6 +173,10 @@ export class SubjectDocumentComponent implements OnInit {
       this.alerts.showCustomWarningMessage('Tabela Narzędzia dydaktyczne posiada nieuzupełnione pola!');
       isValid = false;
     }
+    if (!this.validateLessons()) {
+      this.alerts.showCustomWarningMessage('Do grupy kursów muszą należeć min 2 zajęcia');
+      isValid = false;
+    }
     return isValid;
   }
 
@@ -181,5 +185,10 @@ export class SubjectDocumentComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  validateLessons(): boolean {
+    const courseGroups = this.subjectDocument?.lessons.filter(l => l.isGroup);
+    return courseGroups?.length !== 1;
   }
 }

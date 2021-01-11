@@ -328,14 +328,14 @@ namespace SyllabusManager.Logic.Services
                             .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT))
                         .SetFixedLeading(0.5f));
                 // kod
-                doc.Add(new Paragraph("Kod przedmiotu ")
+                doc.Add(new Paragraph("Kod przedmiotu: ")
                         .Add(new Paragraph(subject.Code.ToUpper())
                             .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT))
                         .SetFixedLeading(0.5f));
                 // grupa
                 var isGroup = subject.Lessons.Any(l => l.IsGroup);
 
-                doc.Add(new Paragraph("Grupa kursów ")
+                doc.Add(new Paragraph("Grupa kursów: ")
                         .Add(new Paragraph(isGroup ? "TAK" : "NIE")
                             .SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT))
                         .SetFixedLeading(0.5f));

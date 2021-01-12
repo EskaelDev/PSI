@@ -223,7 +223,7 @@ namespace SyllabusManager.Logic.Services
                                             .Include(s => s.Specialization)
                                             .Include(s => s.SubjectDescriptions)
                                             .ThenInclude(sd => sd.Subject)
-                                            .ThenInclude(sb=>sb.Lessons)
+                                            .ThenInclude(sb => sb.Lessons)
                                             .Include(s => s.Description)
                                             .Include(s => s.PointLimits)
                                             .FirstOrDefaultAsync(s =>
@@ -235,6 +235,15 @@ namespace SyllabusManager.Logic.Services
             using (Document doc = PdfHelper.Document(true))
             {
                 const string lorem = "Lorem ipsum dolor sit amet lorem. Praesent lacinia at, egestas at, volutpat ut, condimentum dignissim. Pellentesque nunc. Praesent gravida justo, posuere urna vitae sem. Pellentesque fringilla ligula eleifend ac, eleifend erat volutpat. Pellentesque aliquam enim. Donec ullamcorper, risus metus eleifend neque ultrices iaculis. In vitae arcu erat, molestie nulla bibendum risus. Suspendisse vel hendrerit tellus et leo. Vivamus orci sit amet, euismod eget, rutrum ligula, et netus et netus et magnis dis parturient montes, nascetur ridiculus mus. Integer mi risus, pellentesque eget, bibendum ac, molestie tincidunt. Pellentesque euismod nulla fermentum vel, arcu. Etiam vel turpis vitae lacus. Ut sed enim. ";
+
+                Paragraph info = new Paragraph("BK – liczba punktów ECTS przypisanych godzinom zajęć wymagających bezpośredniego kontaktu nauczycieli i studentów" +
+                                               "\nTradycyjna – T, zdalna – Z" +
+                                               "\nEgzamin -E, zaliczenie na ocenę – Z. W grupie kursów po literze E lub Z w nawiasie wpisać formę kursu końcowego (w,c,l,s,p) " +
+                                               "\nKurs/grupa kursów Ogólnouczelniany – O" +
+                                               "\nKurs/grupa kursów Praktyczny – P. W grupie kursów w nawiasie wpisać liczbę punktów ECTS dla kursów o charakterze praktycznym, " +
+                                               "\nKO – kształcenia ogólnego, PH – podstawowy, K – kierunkowy, S – specjalnościowy" +
+                                               "\nW – wybieralny, OB. – obowiązkowy").SetFontSize(7);
+
 
                 doc.Add(new Paragraph("Program Studiów".ToUpper())
                                      .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
@@ -395,16 +404,110 @@ namespace SyllabusManager.Logic.Services
 
                 // lista modółów
                 doc.Add(new Paragraph("Lista modułów kształcenia").SetFontSize(14));
+
+                // Moduły obowiązkowe
                 doc.Add(new Paragraph("4.1.   Lista modułów obowiązkowych").SetFontSize(14));
+
+                // kształcenie ogólne
                 doc.Add(new Paragraph("4.1.1.   Lista modułów kształcenia ogólnego").SetFontSize(13));
-                
                 // humanistyczne
-                doc.Add(new Paragraph("4.1.1.1.   Moduł ").SetFontSize(13).Add(new Paragraph("przedmioty z obszaru nauk humanistycznych").SetItalic().SetFontSize(13)));
-                doc.Add(ModuleTable(syllabus.SubjectDescriptions.Where(s => s.Subject.KindOfSubject == KindOfSubject.Maths).Select(s => s.Subject).ToList()));
+                doc.Add(new Paragraph("4.1.1.1.   Moduł ").SetFontSize(13).Add(new Paragraph(
+                    "przedmioty z obszaru nauk humanistycznych").SetItalic().SetFontSize(13)));
+                doc.Add(moduleTable(syllabus.SubjectDescriptions.Where(s => s.Subject.KindOfSubject == KindOfSubject.Humanistic).Select(s => s.Subject).ToList()));
 
-                // ToDo: Dopisać reszte tabel
+                doc.Add(info);
 
+                // naki podstawowe
+                doc.Add(new Paragraph("4.1.2.   Lista modułów z zaktesu nauk podstawowych").SetFontSize(13));
+                // matematyka
+                doc.Add(new Paragraph("4.1.2.1.   Moduł ").SetFontSize(13).Add(new Paragraph(
+                    "Matematyka").SetItalic().SetFontSize(13)));
+                doc.Add(moduleTable(syllabus.SubjectDescriptions.Where(s => s.Subject.KindOfSubject == KindOfSubject.Maths).Select(s => s.Subject).ToList()));
+                // fizyka
+                doc.Add(new Paragraph("4.1.2.2.   Moduł ").SetFontSize(13).Add(new Paragraph(
+                    "Fizyka").SetItalic().SetFontSize(13)));
+                doc.Add(moduleTable(syllabus.SubjectDescriptions.Where(s => s.Subject.KindOfSubject == KindOfSubject.Physics).Select(s => s.Subject).ToList()));
 
+                doc.Add(info);
+
+                // Moduły wybieralne
+                doc.Add(new Paragraph("4.2.   Lista modułów wybieralnych").SetFontSize(14));
+
+                // kształcenie ogólne
+                doc.Add(new Paragraph("4.2.1.   Lista modułów kształcenia ogólnego").SetFontSize(13));
+                // humanistyczne
+                doc.Add(new Paragraph("4.2.1.1.   Moduł ").SetFontSize(13).Add(new Paragraph(
+                    "Języki obce").SetItalic().SetFontSize(13)));
+                doc.Add(moduleTable(syllabus.SubjectDescriptions.Where(s => s.Subject.KindOfSubject == KindOfSubject.ForeignLanguage).Select(s => s.Subject).ToList()));
+
+                doc.Add(info);
+
+                // kształcenie ogólne
+                doc.Add(new Paragraph("4.2.2.   Lista modułów kształcenia ogólnego").SetFontSize(13));
+                // kierunkowe wybieralne
+                doc.Add(new Paragraph("4.2.2.1.   Moduł ").SetFontSize(13).Add(new Paragraph(
+                    "kierunkowe wybieralne").SetItalic().SetFontSize(13)));
+                doc.Add(moduleTable(syllabus.SubjectDescriptions.Where(s => s.Subject.ModuleType == ModuleType.Thesis).Select(s => s.Subject).ToList()));
+
+                doc.Add(info);
+
+                // specjalnosciowe
+                doc.Add(new Paragraph("4.2.3.   Lista modułów specjalnościowych").SetFontSize(13));
+                // kierunkowe wybieralne
+                doc.Add(new Paragraph("4.2.3.1.   Moduł ").SetFontSize(13).Add(new Paragraph(
+                    "Przedmioty specjalnościowe").SetItalic().SetFontSize(13)));
+                doc.Add(moduleTable(syllabus.SubjectDescriptions.Where(s => s.Subject.ModuleType == ModuleType.Specialization
+                                                                         || s.Subject.ModuleType == ModuleType.FieldOfStudy).Select(s => s.Subject).ToList()));
+
+                doc.Add(info);
+
+                // blok praktyk
+                doc.Add(new Paragraph("4.3.   Blok praktyk ").SetFontSize(13));
+                doc.Add(new Paragraph(syllabus.IntershipType));
+                // blok praca dyplomowa
+                doc.Add(new Paragraph("4.4.   \"Praca dyplomowa\"").SetFontSize(13));
+                doc.Add(new Paragraph(syllabus.ThesisCourse));
+
+                // sposoby weryfikacji
+                doc.Add(new Paragraph("5.   Sposoby weryfikacji zakładanych efektów uczenia się ").SetFontSize(13));
+                Table formOfCreditTable = new Table(2).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("Typ zajęć")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("Sposoby weryfikacji zakładanych efektów uczenia się").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("wykład")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("np. egzamin, kolokwium").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("ćwiczenia")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("np. test, kolokwium").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("laboratorium")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("np. wejściówka, sprawozdanie z laboratorium").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("projekt")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("np. obrona projektu").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("seminarium")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("np. udział w dyskusji, prezentacja tematu, esej").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("praktyka")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("np. raport z praktyki").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("praca dyplomowa")));
+                formOfCreditTable.AddCell(new Cell().Add(new Paragraph("przygotowana praca dyplomowa").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)));
+
+                doc.Add(formOfCreditTable);
+
+                // zakres egzaminu
+                doc.Add(new Paragraph("6.   Zakres egzaminu dyplomowego").SetFontSize(13));
+                doc.Add(new Paragraph(syllabus.ScopeOfDiplomaExam));
+
+                doc.Add(new Paragraph("7.   Wymagania dotyczące terminu zaliczenia określonych kursów/grup kursów lub wszystkich kursów w poszczególnych modułach").SetFontSize(13));
+
+                Table completitionTable = new Table(4).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+                completitionTable.AddCell(new Paragraph("Lp."));
+                completitionTable.AddCell(new Paragraph("Kod kursu"));
+                completitionTable.AddCell(new Paragraph("Nazwa kursu"));
+                completitionTable.AddCell(new Paragraph("Termin zaliczenia do... (numer semestru)"));
+                int i = 1;
+                syllabus.SubjectDescriptions.ForEach(sd =>
+                {
+                    completitionTable = completitionCell(completitionTable, sd, i);
+                });
+
+                doc.Add(completitionTable);
             }
 
             if (syllabus is null)
@@ -426,7 +529,7 @@ namespace SyllabusManager.Logic.Services
             return cell;
         }
 
-        private Table ModuleTable(List<Subject> subject)
+        private Table moduleTable(List<Subject> subject)
         {
 
             Table moduleTable = new Table(19);
@@ -455,76 +558,184 @@ namespace SyllabusManager.Logic.Services
             moduleTable.AddCell(new Cell(1, 1).SetFontSize(9).Add(new Paragraph("rodzaj")));
             moduleTable.AddCell(new Cell(1, 1).SetFontSize(9).Add(new Paragraph("typ")));
 
-            subject.ForEach(s =>
+            //w = 0, c = 1, l = 2, p = 3, s = 4, zzu = 5, cnps = 6, ects = 7, ectsbk = 8;
+            int[] acc = new int[9];
+            Array.Clear(acc, 0, 9);
+
+            subject.ForEach(su =>
             {
                 int i = 1;
-                s.Lessons.ForEach(l =>
+
+                su.Lessons.ForEach(l =>
                 {
-                    
-                    moduleTable = AppendToTable(i, s, l, moduleTable);
+                    moduleTable = appendToTable(i, acc, su, l, moduleTable);
                     i++;
                 });
-
             });
+
+            moduleTable = appendSum(moduleTable, acc);
             return moduleTable;
         }
 
-        private Table AppendToTable(int i, Subject subject, Lesson lesson, Table tab)
+        private Table appendToTable(int i, int[] acc, Subject subject, Lesson lesson, Table tab)
         {
             if (subject is null)
                 return tab;
-            // lp
-            tab.AddCell(ModuleTabCell(i.ToString()));
-            // kod kursu
-            tab.AddCell(ModuleTabCell(subject.Code));
-            // nazwa kursu
-            tab.AddCell(ModuleTabCell(subject.NamePl + (subject.Lessons.Any(l => l.IsGroup) ? "GK" : "")));
-            // w
-            tab.AddCell(ModuleTabCell(
-                lesson.LessonType == LessonType.Lecture ? lesson.HoursAtUniversity.ToString() : ""));
-            // ćw
-            tab.AddCell(ModuleTabCell(
-                lesson.LessonType == LessonType.Classes ? lesson.HoursAtUniversity.ToString() : ""));
-            // l
-            tab.AddCell(ModuleTabCell(
-                lesson.LessonType == LessonType.Laboratory ? lesson.HoursAtUniversity.ToString() : ""));
-            // p
-            tab.AddCell(ModuleTabCell(
-                lesson.LessonType == LessonType.Project ? lesson.HoursAtUniversity.ToString() : ""));
-            // s
-            tab.AddCell(ModuleTabCell(
-                lesson.LessonType == LessonType.Seminar ? lesson.HoursAtUniversity.ToString() : ""));
-            // symbol efektu uczenia
 
-            tab.AddCell(ModuleTabCell(subject.LearningOutcomeEvaluations.Aggregate("", (los, next) => los += next.LearningOutcomeSymbol + "\n", los => los)));
+            // lp
+            tab.AddCell(moduleTabCell(i.ToString()));
+
+            // kod kursu
+            tab.AddCell(moduleTabCell(subject.Code));
+
+            // nazwa kursu
+            tab.AddCell(moduleTabCell(subject.NamePl + (subject.Lessons.Any(l => l.IsGroup) ? "GK" : "")));
+
+            // w
+            acc[0] += lesson.LessonType == LessonType.Lecture ? lesson.HoursAtUniversity : 0;
+            tab.AddCell(moduleTabCell(
+                lesson.LessonType == LessonType.Lecture ? lesson.HoursAtUniversity.ToString() : ""));
+
+            // ćw
+            acc[1] += lesson.LessonType == LessonType.Classes ? lesson.HoursAtUniversity : 0;
+            tab.AddCell(moduleTabCell(
+                lesson.LessonType == LessonType.Classes ? lesson.HoursAtUniversity.ToString() : ""));
+
+            // l
+            acc[2] += lesson.LessonType == LessonType.Laboratory ? lesson.HoursAtUniversity : 0;
+            tab.AddCell(moduleTabCell(
+                lesson.LessonType == LessonType.Laboratory ? lesson.HoursAtUniversity.ToString() : ""));
+
+            // p
+            acc[3] += lesson.LessonType == LessonType.Project ? lesson.HoursAtUniversity : 0;
+            tab.AddCell(moduleTabCell(
+                lesson.LessonType == LessonType.Project ? lesson.HoursAtUniversity.ToString() : ""));
+
+            // s
+            acc[4] += lesson.LessonType == LessonType.Seminar ? lesson.HoursAtUniversity : 0;
+            tab.AddCell(moduleTabCell(
+                lesson.LessonType == LessonType.Seminar ? lesson.HoursAtUniversity.ToString() : ""));
+
+            // symbol efektu uczenia
+            tab.AddCell(moduleTabCell(subject.LearningOutcomeEvaluations.Aggregate("", (los, next) => los += next.LearningOutcomeSymbol + "\n", los => los)));
+
             // ZZU
-            tab.AddCell(ModuleTabCell(lesson.HoursAtUniversity.ToString()));
+            acc[5] += lesson.HoursAtUniversity;
+            tab.AddCell(moduleTabCell(lesson.HoursAtUniversity.ToString()));
+
             //CNPS
-            tab.AddCell(ModuleTabCell(lesson.StudentWorkloadHours.ToString()));
+            acc[6] += lesson.StudentWorkloadHours;
+            tab.AddCell(moduleTabCell(lesson.StudentWorkloadHours.ToString()));
+
             //"łączna"
-            tab.AddCell(ModuleTabCell(lesson.Ects.ToString()));
+            acc[7] += lesson.Ects;
+            tab.AddCell(moduleTabCell(lesson.Ects.ToString()));
+
             //"zajęć BK"
-            tab.AddCell(ModuleTabCell(lesson.EctsinclDirectTeacherStudentContactClasses.ToString()));
+            acc[8] += lesson.EctsinclDirectTeacherStudentContactClasses;
+            tab.AddCell(moduleTabCell(lesson.EctsinclDirectTeacherStudentContactClasses.ToString()));
+
             //"Forma kursu/grupy kursów"
-            tab.AddCell(ModuleTabCell("T"));
+            tab.AddCell(moduleTabCell("T"));
+
             //"Sposób zaliczenia"
-            tab.AddCell(ModuleTabCell(EnumTranslator.Translate(lesson.FormOfCrediting.ToString())));
+            tab.AddCell(moduleTabCell(EnumTranslator.Translate(lesson.FormOfCrediting.ToString())));
+
             //"ogólnouczelniany"
-            tab.AddCell(ModuleTabCell(subject.ModuleType == ModuleType.General ? "T" : ""));
+            tab.AddCell(moduleTabCell(subject.ModuleType == ModuleType.General ? "T" : ""));
+
             //"o charakterze praktycznym"
-            tab.AddCell(ModuleTabCell(lesson.LessonType == LessonType.Project || lesson.LessonType == LessonType.Laboratory ? $"P({lesson.Ects})" : ""));
+            tab.AddCell(moduleTabCell(lesson.LessonType == LessonType.Project || lesson.LessonType == LessonType.Laboratory ? $"P({lesson.Ects})" : ""));
+
             //"rodzaj"
-            tab.AddCell(ModuleTabCell(EnumTranslator.Translate(subject.ModuleType.ToString())));
+            tab.AddCell(moduleTabCell(EnumTranslator.Translate(subject.ModuleType.ToString())));
+
             //"typ"
-            tab.AddCell(ModuleTabCell(EnumTranslator.Translate(subject.TypeOfSubject.ToString())));
+            tab.AddCell(moduleTabCell(EnumTranslator.Translate(subject.TypeOfSubject.ToString())));
 
 
             return tab;
         }
 
-        private Cell ModuleTabCell(string text)
+        private Cell moduleTabCell(string text)
         {
             return new Cell().SetFontSize(9).Add(new Paragraph(text));
+        }
+
+        private Table appendSum(Table tab, int[] acc)
+        {
+            // lp
+            tab.AddCell(new Cell().SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER)
+                                  .SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER)
+                                  .SetBorderRight(iText.Layout.Borders.Border.NO_BORDER));
+
+            // kod kursu
+            tab.AddCell(new Cell().SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER)
+                                  .SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER));
+
+            // nazwa kursu
+            tab.AddCell("Razem");
+
+            // w
+            tab.AddCell(moduleTabCell(acc[0] == 0 ? "" : acc[0].ToString()));
+
+            // ćw
+            tab.AddCell(moduleTabCell(acc[1] == 0 ? "" : acc[1].ToString()));
+
+            // l
+            tab.AddCell(moduleTabCell(acc[2] == 0 ? "" : acc[2].ToString()));
+
+            // p
+            tab.AddCell(moduleTabCell(acc[3] == 0 ? "" : acc[3].ToString()));
+
+            // s
+            tab.AddCell(moduleTabCell(acc[4] == 0 ? "" : acc[4].ToString()));
+
+            // symbol efektu uczenia
+            tab.AddCell("");
+
+            // ZZU
+            tab.AddCell(moduleTabCell(acc[5] == 0 ? "" : acc[5].ToString()));
+
+            //CNPS
+            tab.AddCell(moduleTabCell(acc[6] == 0 ? "" : acc[6].ToString()));
+
+            //"łączna"
+            tab.AddCell(moduleTabCell(acc[7] == 0 ? "" : acc[7].ToString()));
+
+            //"zajęć BK"
+            tab.AddCell(moduleTabCell(acc[8] == 0 ? "" : acc[8].ToString()));
+
+            //"Forma kursu/grupy kursów"
+            tab.AddCell("");
+
+            //"Sposób zaliczenia"
+            tab.AddCell("");
+
+            //"ogólnouczelniany"
+            tab.AddCell("");
+
+            //"o charakterze praktycznym"
+            tab.AddCell("");
+
+            //"rodzaj"
+            tab.AddCell("");
+
+            //"typ"
+            tab.AddCell("");
+            return tab;
+        }
+
+        private Table completitionCell(Table tab, SubjectInSyllabusDescription desc, int i)
+        {
+            if (desc.Subject == null)
+                return tab;
+            tab.AddCell(new Paragraph(i.ToString()));
+            tab.AddCell(new Paragraph(desc.Subject.Code));
+            tab.AddCell(new Paragraph(desc.Subject.NamePl));
+            tab.AddCell(new Paragraph(desc.CompletionSemester.ToString()).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER));
+            i++;
+            return tab;
         }
     }
 }

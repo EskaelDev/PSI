@@ -128,7 +128,9 @@ export class SubjectDocumentComponent implements OnInit {
   pdf() {
     if (this.subjectDocument) {
       this.subjectService.pdf(this.subjectDocument.id).subscribe(res => {
-        this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}_${this.subjectDocument?.version}`);
+        if (res) {
+          this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}`);
+        }
       });
     }
   }
@@ -148,7 +150,9 @@ export class SubjectDocumentComponent implements OnInit {
 
           sub.componentInstance.download.subscribe((version: string) => {
             this.subjectService.pdf(version.split(':')[0]).subscribe(res => {
-              this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}_${version.split(':')[1]}`);
+              if (res) {
+                this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${this.subjectDocument?.namePl}_${this.subjectDocument?.fieldOfStudy.code}_${this.subjectDocument?.specialization.code}_${this.subjectDocument?.academicYear}_${version.split(':')[1]}`);
+              }
             });
           });
         });

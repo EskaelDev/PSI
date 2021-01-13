@@ -137,7 +137,7 @@ export class LearningOutcomeDocumentComponent implements OnInit {
     if (this.learningOutcomeDocument) {
       this.learningOutcomeService.pdf(this.learningOutcomeDocument.id).subscribe(res => {
         if (res) {
-          this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}_${this.learningOutcomeDocument?.version}`);
+          this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}`);
         }
       });
     }

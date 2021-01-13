@@ -149,7 +149,9 @@ export class SyllabusDocumentComponent implements OnInit {
   pdf() {
     if (this.syllabusDocument) {
       this.syllabusService.pdf(this.syllabusDocument.id).subscribe(res => {
-        this.fileHelper.downloadItem(res.body, `Program_Studiów_${this.syllabusDocument?.fieldOfStudy.code}_${this.syllabusDocument?.specialization.code}_${this.syllabusDocument?.academicYear}_${this.syllabusDocument?.version}`);
+        if (res) {
+          this.fileHelper.downloadItem(res.body, `Program_Studiów_${this.syllabusDocument?.fieldOfStudy.code}_${this.syllabusDocument?.specialization.code}_${this.syllabusDocument?.academicYear}`);
+        }
       });
     }
   }
@@ -169,7 +171,9 @@ export class SyllabusDocumentComponent implements OnInit {
 
           sub.componentInstance.download.subscribe((version: string) => {
             this.syllabusService.pdf(version.split(':')[0]).subscribe(res => {
-              this.fileHelper.downloadItem(res.body, `Program_Studiów_${this.syllabusDocument?.fieldOfStudy.code}_${this.syllabusDocument?.specialization.code}_${this.syllabusDocument?.academicYear}_${version.split(':')[1]}`);
+              if (res) {
+                this.fileHelper.downloadItem(res.body, `Program_Studiów_${this.syllabusDocument?.fieldOfStudy.code}_${this.syllabusDocument?.specialization.code}_${this.syllabusDocument?.academicYear}_${version.split(':')[1]}`);
+              }
             });
           });
         });

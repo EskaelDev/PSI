@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FieldOfStudy } from 'src/app/core/models/field-of-study/field-of-study';
 import { Specialization } from 'src/app/core/models/field-of-study/specialization';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { FileHelper } from 'src/app/helpers/FileHelper';
 import { FieldOfStudyService } from 'src/app/services/field-of-study/field-of-study.service';
 import { SubjectService } from 'src/app/services/subject/subject.service';
 import { AddSubjectComponent } from './add-subject/add-subject.component';
@@ -40,7 +41,8 @@ export class SubjectPickerComponent implements OnInit {
     private readonly router: Router,
     public dialog: MatDialog,
     private fosService: FieldOfStudyService,
-    private subjectService: SubjectService
+    private subjectService: SubjectService,
+    private fileHelper: FileHelper
   ) {}
 
   ngOnInit(): void {
@@ -121,6 +123,14 @@ export class SubjectPickerComponent implements OnInit {
 
     sub.afterClosed().subscribe(() => {
       this.loadSubjects();
+    });
+  }
+
+  download(subject: Subject) {
+    this.subjectService.pdf(subject.id).subscribe(res => {
+      if (res) {
+        this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${subject.namePl}_${subject.fieldOfStudy.code}_${subject.specialization.code}_${subject.academicYear}`);
+      }
     });
   }
 }

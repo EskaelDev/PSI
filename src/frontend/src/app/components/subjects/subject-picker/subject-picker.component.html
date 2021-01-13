@@ -61,6 +61,9 @@
   <div *ngIf="filteredSubjects.length > 0">
     <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">
       <div>{{ subject.code }}: {{ subject.namePl }}</div>
+      <button mat-raised-button (click)="download(subject)">
+        <mat-icon style="margin-right: 5px">save_alt</mat-icon>PDF
+      </button>
       <button mat-raised-button color="primary" (click)="edit(subject)" *ngIf="subject.isAdmin || subject.isSupervisor">
         <mat-icon style="margin-right: 5px">edit</mat-icon>Edytuj
       </button>

@@ -143,6 +143,15 @@ export class LearningOutcomeService {
     );
   }
 
+  pdfLatest(fos: string, year: string): Observable<any> {
+    return this.http.get(this.baseUrl + `/pdf?fos=${fos}&year=${year}`, { observe: 'response', responseType: 'blob' }).pipe(
+      catchError(() => {
+        this.alerts.showDefaultDocumentDownloadFailMessage();
+        return of(false);
+      })
+    );
+  }
+
   history(id: string): Observable<string[]> {
     return this.http.get<string[]>(this.baseUrl + `/history/${id}`).pipe(
       catchError(() => {

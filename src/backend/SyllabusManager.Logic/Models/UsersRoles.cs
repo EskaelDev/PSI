@@ -10,6 +10,5 @@
 
         public const string AdminTeacher = "Admin, Teacher";
         public const string AdminStudentGovernment = "Admin, StudentGovernment";
-
     }
 }

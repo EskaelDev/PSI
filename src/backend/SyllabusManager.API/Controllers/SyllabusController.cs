@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using SyllabusManager.Logic.Models;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -30,6 +32,7 @@ namespace SyllabusManager.API.Controllers
         /// <param name="year">Academic year</param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Latest(
                                                 [FromQuery] string fos,
                                                 [FromQuery] string spec,
@@ -49,6 +52,7 @@ namespace SyllabusManager.API.Controllers
         /// <param name="syllabus"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Save([FromBody] Syllabus syllabus)
         {
             if (!await CheckIfUserIsFosSupervisor(syllabus.FieldOfStudy.Code)) return Forbid();
@@ -70,6 +74,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
 
         [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> SaveAs([FromQuery] string fos,
                                                 [FromQuery] string spec,
                                                 [FromQuery] string year,
@@ -95,6 +100,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> ImportFrom(Guid currentDocId,
                                                    [FromQuery] string fos,
                                                    [FromQuery] string spec,
@@ -116,6 +122,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
             if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
@@ -199,12 +206,76 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> History(Guid currentDocId)
         {
             List<string> result = await _syllabusService.History(currentDocId);
             if (result is null)
                 return NotFound();
             return Ok(result);
+        }
+
+        [HttpPut]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
+        public async Task<IActionResult> Verify([FromBody] Syllabus syllabus)
+        {
+            return Ok(await _syllabusService.Verify(syllabus));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
+        public async Task<IActionResult> SendToAcceptance([FromBody] Syllabus syllabus)
+        {
+            if (!await CheckIfUserIsFosSupervisor(syllabus.FieldOfStudy.Code)) return Forbid();
+
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = await _syllabusService.SendToAcceptance(syllabus, user);
+
+            if (!result) return BadRequest();
+            return Ok();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminStudentGovernment)]
+        public IActionResult ToAccept(
+            [FromQuery] string fos,
+            [FromQuery] string spec,
+            [FromQuery] string year)
+        {
+            return Ok(_syllabusService.ToAccept(fos, spec, year));
+        }
+
+        [HttpGet]
+        public IActionResult Documents(
+            [FromQuery] string fos,
+            [FromQuery] string spec,
+            [FromQuery] string year)
+        {
+            return Ok(_syllabusService.Documents(fos, spec, year));
+        }
+
+        [HttpPut]
+        [Route("{syllabusId}")]
+        [Authorize(Roles = UsersRoles.AdminStudentGovernment)]
+        public async Task<IActionResult> Accept(Guid syllabusId)
+        {
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = _syllabusService.Accept(syllabusId, user);
+
+            if (!result) return BadRequest();
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{syllabusId}")]
+        [Authorize(Roles = UsersRoles.AdminStudentGovernment)]
+        public async Task<IActionResult> Reject(Guid syllabusId)
+        {
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = _syllabusService.Reject(syllabusId, user);
+
+            if (!result) return BadRequest();
+            return Ok();
         }
     }
 }

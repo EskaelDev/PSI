@@ -120,7 +120,7 @@ const routes: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
           permissions: {
-            only: ['Admin', 'StudentGoverment'],
+            only: ['Admin', 'StudentGovernment'],
             redirectTo: '/noaccess'
           }
         }

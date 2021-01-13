@@ -12,7 +12,6 @@ using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.API.Controllers
 {
-    [Authorize(Roles = UsersRoles.AdminTeacher)]
     public class FieldOfStudyController : NonVersionedControllerBase<FieldOfStudy>
     {
         private readonly IFieldOfStudyService _fieldOfStudyService;
@@ -25,6 +24,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> AllMy()
         {
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
@@ -33,6 +33,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> PossibleSupervisors()
         {
             return Ok(await _fieldOfStudyService.GetPossibleSupervisors());
@@ -45,6 +46,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> Save([FromBody] FieldOfStudy fos)
         {
             FieldOfStudy result = await _fieldOfStudyService.SaveAsync(fos);
@@ -55,6 +57,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> Delete(string id)
         {
             bool result = await _fieldOfStudyService.SoftDeleteAsync(id);

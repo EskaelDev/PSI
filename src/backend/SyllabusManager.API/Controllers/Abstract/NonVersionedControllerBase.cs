@@ -12,20 +12,9 @@ namespace SyllabusManager.API.Controllers.Abstract
     {
         protected readonly INonVersionedService<T> _modelService;
 
-        public NonVersionedControllerBase(INonVersionedService<T> crudService)
+        protected NonVersionedControllerBase(INonVersionedService<T> crudService)
         {
             _modelService = crudService;
-        }
-
-        [HttpPost]
-        public virtual async Task<IActionResult> Add([FromBody] T entity)
-        {
-            T result = await _modelService.AddAsync(entity);
-            if (result == null)
-            {
-                return BadRequest();
-            }
-            return Created(result.Id.ToString(), result);
         }
 
         [HttpGet]
@@ -49,8 +38,8 @@ namespace SyllabusManager.API.Controllers.Abstract
             {
                 return NotFound();
             }
+
             return Ok(result);
         }
-
     }
 }

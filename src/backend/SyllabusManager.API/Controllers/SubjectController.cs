@@ -10,6 +10,8 @@ using SyllabusManager.Logic.Services;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using SyllabusManager.Logic.Models;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -25,12 +27,14 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> PossibleTeachers()
         {
             return Ok(await _fosService.GetPossibleSupervisors());
         }
 
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> All([FromQuery] string fos,
             [FromQuery] string spec,
             [FromQuery] string year)
@@ -45,6 +49,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Latest(
                                                 [FromQuery] string fos,
                                                 [FromQuery] string spec,
@@ -61,6 +66,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Save([FromBody] Subject subject)
         {
             if (subject.Id == Guid.Empty)
@@ -86,6 +92,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> ImportFrom(Guid currentDocId,
                                                    [FromQuery] string fos,
                                                    [FromQuery] string spec,
@@ -110,6 +117,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpDelete]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
             var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
@@ -122,7 +130,6 @@ namespace SyllabusManager.API.Controllers
             return NotFound();
         }
 
-        // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
         [HttpGet]
         [Route("{currentDocId}")]
         public async Task<IActionResult> Pdf(Guid currentDocId)
@@ -148,6 +155,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> History(Guid currentDocId)
         {
             var result = await _subjectService.History(currentDocId);

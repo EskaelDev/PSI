@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
 import { State } from 'src/app/core/enums/syllabus/state.enum';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
 import { AlertService } from 'src/app/services/alerts/alert.service';
 import { SyllabusService } from 'src/app/services/syllabus/syllabus.service';
+import { SylVerificationComponent } from './syl-verification/syl-verification.component';
 
 @Component({
   selector: 'app-syl-acceptance',
@@ -16,7 +18,8 @@ export class SylAcceptanceComponent implements OnInit {
 
   constructor(
     private syllabusService: SyllabusService,
-    private readonly alerts: AlertService
+    private readonly alerts: AlertService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
@@ -48,16 +51,19 @@ export class SylAcceptanceComponent implements OnInit {
             this.alerts.showCustomSuccessMessage('Wysłano do akceptacji');
             this.changed.emit();
           }
+          else {
+            this.verify();
+          }
         });
       }
     })
   }
 
   verify() {
-    this.syllabusService.verify(this.document).subscribe(result => {
-      if (result) {
-        this.alerts.showCustomSuccessMessage('Zweryfikowano');
-      }
+    this.dialog.open(SylVerificationComponent, {
+      height: '500px',
+      width: '600px',
+      data: this.document
     });
   }
 }

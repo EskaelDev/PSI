@@ -312,14 +312,42 @@ namespace SyllabusManager.Logic.Services
             return true;
         }
 
-        public async Task<List<string>> Verify(Syllabus syllabus)
+        public List<string> Verify(Syllabus syllabus)
         {
-            return new List<string>();
+            var errors = new List<string>();
+
+            // description
+            if (syllabus.Description.NumOfSemesters < 1 || syllabus.Description.NumOfSemesters > 10) errors.Add("Niepoprawna liczba semestrów. (Dopuszczalne wartości 1-10)");
+            if (string.IsNullOrWhiteSpace(syllabus.Description.Prerequisites) || syllabus.Description.Prerequisites == ".") errors.Add("Nieuzupełnione pole Wymagania wstępne.");
+            if (string.IsNullOrWhiteSpace(syllabus.Description.EmploymentOpportunities) || syllabus.Description.EmploymentOpportunities == ".") errors.Add("Nieuzupełnione pole Sylwetka absolwenta.");
+            if (string.IsNullOrWhiteSpace(syllabus.Description.PossibilityOfContinuation) || syllabus.Description.PossibilityOfContinuation == ".") errors.Add("Nieuzupełnione pole Możliwość kontynuacji studiów.");
+
+            // subjects
+            var wrongSubjects =
+                syllabus.SubjectDescriptions.Where(sd => sd.AssignedSemester > syllabus.Description.NumOfSemesters);
+            foreach (var subject in wrongSubjects)
+            {
+                errors.Add($"Przedmiot {subject.Subject.Code} \"{subject.Subject.NamePl}\" posiada niepoprawny przypisany semestr.");
+            }
+
+            wrongSubjects =
+                syllabus.SubjectDescriptions.Where(sd => sd.CompletionSemester != null && sd.AssignedSemester > sd.CompletionSemester);
+            foreach (var subject in wrongSubjects)
+            {
+                errors.Add($"Przedmiot {subject.Subject.Code} \"{subject.Subject.NamePl}\" posiada przypisany semestr większy niż semestr ukończenia.");
+            }
+
+            // obligatory fields
+            if (string.IsNullOrWhiteSpace(syllabus.ThesisCourse) || syllabus.ThesisCourse == ".") errors.Add("Nieuzupełnione pole Praca dyplomowa.");
+            if (string.IsNullOrWhiteSpace(syllabus.ScopeOfDiplomaExam) || syllabus.ScopeOfDiplomaExam == ".") errors.Add("Nieuzupełnione pole Zakres egzaminu dyplomowego.");
+            if (string.IsNullOrWhiteSpace(syllabus.IntershipType) || syllabus.IntershipType == ".") errors.Add("Nieuzupełnione pole Praktyki.");
+            
+            return errors;
         }
 
         public async Task<bool> SendToAcceptance(Syllabus syllabus, SyllabusManagerUser user)
         {
-            if (!(await Verify(syllabus)).Any() && syllabus.State != State.Approved)
+            /*if (!Verify(syllabus).Any() && syllabus.State != State.Approved)
             {
                 var result = await Save(syllabus, user);
                 result.State = State.SentToAcceptance;
@@ -327,7 +355,7 @@ namespace SyllabusManager.Logic.Services
                 result.StudentRepresentativeName = string.Empty;
                 await _dbContext.SaveChangesAsync();
                 return true;
-            }
+            }*/
 
             return false;
         }

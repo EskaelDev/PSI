@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
 import { State } from 'src/app/core/enums/syllabus/state.enum';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
+import { SyllabusDescription } from 'src/app/core/models/syllabus/syllabus-description';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../alerts/alert.service';
 
@@ -219,9 +220,6 @@ export class SyllabusService {
       }),
       catchError((err) => {
         if (err.status === 400) {
-          this.alerts.showCustomInfoMessage(
-            'Aby uzyskać szczegóły kliknij Sprawdź poprawność dokumentu'
-          );
           this.alerts.showCustomErrorMessage(
             'Dokument nie przeszedł walidacji!'
           );
@@ -262,7 +260,7 @@ export class SyllabusService {
   }
 
   verify(syllabus: Syllabus): Observable<string[] | null> {
-    return this.http.put<any>(this.baseUrl + '/verify', syllabus).pipe(
+    return this.http.put<any>(this.baseUrl + '/verify', this.fixMissingFields(syllabus)).pipe(
       catchError(() => {
         this.alerts.showDefaultErrorMessage();
         return of(null);
@@ -309,40 +307,42 @@ export class SyllabusService {
   }
 
   private fixMissingFields(syl: Syllabus): Syllabus {
+    const output = Object.assign(new Syllabus(), syl);
+    output.description = Object.assign(new SyllabusDescription(), syl.description);
     if (
-      syl.state === State.Draft ||
-      (syl.state === State.Rejected &&
-        syl?.studentGovernmentOpinion === Opinion.Rejected)
+      output.state === State.Draft ||
+      (output.state === State.Rejected &&
+        output?.studentGovernmentOpinion === Opinion.Rejected)
     ) {
       if (
-        !syl.scopeOfDiplomaExam ||
-        syl.scopeOfDiplomaExam.trim().length === 0
+        !output.scopeOfDiplomaExam ||
+        output.scopeOfDiplomaExam.trim().length === 0
       ) {
-        syl.scopeOfDiplomaExam = '.';
+        output.scopeOfDiplomaExam = '.';
       }
       if (
-        syl.description &&
-        (!syl.description?.prerequisites ||
-          syl.description?.prerequisites.trim().length === 0)
+        output.description &&
+        (!output.description?.prerequisites ||
+          output.description?.prerequisites.trim().length === 0)
       ) {
-        syl.description.prerequisites = '.';
+        output.description.prerequisites = '.';
       }
       if (
-        syl.description &&
-        (!syl.description?.employmentOpportunities ||
-          syl.description?.employmentOpportunities.trim().length === 0)
+        output.description &&
+        (!output.description?.employmentOpportunities ||
+          output.description?.employmentOpportunities.trim().length === 0)
       ) {
-        syl.description.employmentOpportunities = '.';
+        output.description.employmentOpportunities = '.';
       }
       if (
-        syl.description &&
-        (!syl.description?.possibilityOfContinuation ||
-          syl.description?.possibilityOfContinuation.trim().length === 0)
+        output.description &&
+        (!output.description?.possibilityOfContinuation ||
+          output.description?.possibilityOfContinuation.trim().length === 0)
       ) {
-        syl.description.possibilityOfContinuation = '.';
+        output.description.possibilityOfContinuation = '.';
       }
     }
-    return syl;
+    return output;
   }
 
   private emptyFields(syl: Syllabus): Syllabus {

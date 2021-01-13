@@ -21,10 +21,10 @@ export class SylDescriptionComponent implements OnInit {
   graduations = Object.values(GraduationForm);
   @Output() semNum: EventEmitter<any> = new EventEmitter();
 
-  numOfSem = new FormControl([0, [Validators.max(10), Validators.min(1)]]);
-  preq = new FormControl(['', Validators.required]);
-  finish = new FormControl(['', Validators.required]);
-  cont = new FormControl(['', Validators.required]);
+  numOfSem = new FormControl(0, [Validators.max(10), Validators.min(1)]);
+  preq = new FormControl('', Validators.required);
+  finish = new FormControl('', Validators.required);
+  cont = new FormControl('', Validators.required);
 
   constructor(private alerts: AlertService) {}
 

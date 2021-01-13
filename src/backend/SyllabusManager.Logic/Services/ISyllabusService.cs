@@ -18,7 +18,7 @@ namespace SyllabusManager.Logic.Services
         Task<bool> Pdf(Guid id);
         Task<bool> Pdf(string fos, string spec, string year);
         Task<bool> PlanPdf(Guid id);
-        Task<List<string>> Verify(Syllabus syllabus);
+        List<string> Verify(Syllabus syllabus);
         Task<bool> SendToAcceptance(Syllabus syllabus, SyllabusManagerUser user);
         bool Accept(Guid syllabusId, SyllabusManagerUser user);
         bool Reject(Guid syllabusId, SyllabusManagerUser user);

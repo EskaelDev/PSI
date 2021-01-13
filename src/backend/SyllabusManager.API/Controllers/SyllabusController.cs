@@ -217,9 +217,9 @@ namespace SyllabusManager.API.Controllers
 
         [HttpPut]
         [Authorize(Roles = UsersRoles.AdminTeacher)]
-        public async Task<IActionResult> Verify([FromBody] Syllabus syllabus)
+        public IActionResult Verify([FromBody] Syllabus syllabus)
         {
-            return Ok(await _syllabusService.Verify(syllabus));
+            return Ok(_syllabusService.Verify(syllabus));
         }
 
         [HttpPost]

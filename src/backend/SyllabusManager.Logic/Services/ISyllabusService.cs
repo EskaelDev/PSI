@@ -16,5 +16,9 @@ namespace SyllabusManager.Logic.Services
         Task<Syllabus> SaveAs(string fosCode, string specCode, string academicYear, Syllabus syllabus, SyllabusManagerUser user);
         Task<bool> Delete(Guid id);
         Task<bool> Pdf(Guid id);
+        Task<bool> Pdf(string fos, string spec, string year);
+
+
+        Task<bool> PlanPdf(Guid id);
     }
 }

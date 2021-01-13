@@ -25,7 +25,8 @@ namespace SyllabusManager.Logic.Helpers
         public static readonly PdfNumber SEASCAPE = new PdfNumber(270);
 
         private static PdfFont FONT => PdfFontFactory.CreateFont(StandardFonts.HELVETICA, PdfEncodings.CP1250);
-        public static string PATH => Directory.GetCurrentDirectory() + "/temp.pdf";
+        private static string PATH => Directory.GetCurrentDirectory() + "/temp.pdf";
+        public static string PATH_PAGED => Directory.GetCurrentDirectory() + "/temp_paged.pdf";
         public static Document Document(bool horizontal = false)
         {
             PdfDocument pdfDocument = new PdfDocument(new PdfWriter(new FileStream(PATH, FileMode.Create, FileAccess.Write)));
@@ -35,6 +36,26 @@ namespace SyllabusManager.Logic.Helpers
             Document doc = new Document(pdfDocument);
             doc.SetFont(PdfHelper.FONT);
             return doc;
+        }
+
+
+        public static void AddPages()
+        {
+            PdfDocument pdfDocument = new PdfDocument(new PdfReader(PATH), new PdfWriter(new FileStream(PATH_PAGED, FileMode.Create, FileAccess.Write)));
+            Document doc = new Document(pdfDocument);
+
+            int numberOfPages = pdfDocument.GetNumberOfPages();
+            var size = pdfDocument.GetPage(1).GetPageSize();
+            
+
+            for (int i = 1; i <= numberOfPages; i++)
+            {
+                // Write aligned text to the specified by parameters point
+                doc.ShowTextAligned(new Paragraph("Strona " + i + " z " + numberOfPages),
+                        size.GetWidth()-50, 20, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+            }
+
+            doc.Close();
         }
 
         public static Table Table(List<string> headers, List<List<string>> cells)

@@ -137,7 +137,7 @@ namespace SyllabusManager.API.Controllers
             }
 
             var memory = new MemoryStream();
-            using (var stream = new FileStream(PdfHelper.PATH, FileMode.Open))
+            using (var stream = new FileStream(PdfHelper.PATH_PAGED, FileMode.Open))
             {
                 await stream.CopyToAsync(memory);
             }

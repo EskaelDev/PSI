@@ -1,17 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SyllabusManager.Data;
+using SyllabusManager.Data.Enums.Subjects;
 using SyllabusManager.Data.Models.ManyToMany;
 using SyllabusManager.Data.Models.Subjects;
+using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using SyllabusManager.Data.Enums.Subjects;
-using SyllabusManager.Data.Models.User;
-using SyllabusManager.Logic.Helpers;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -24,7 +22,7 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<List<Subject>> GetAll(string fos, string spec, string year, SyllabusManagerUser user)
         {
-            var latestIds = _dbSet.AsNoTracking().Where(s =>
+            IEnumerable<Guid> latestIds = _dbSet.AsNoTracking().Where(s =>
                 s.FieldOfStudy.Code == fos
                 && s.Specialization.Code == spec
                 && s.AcademicYear == year
@@ -33,13 +31,13 @@ namespace SyllabusManager.Logic.Services
                 .Select(g => g.OrderByDescending(s => s.Version)
                     .First().Id);
 
-            var result = await _dbSet.Include(s => s.FieldOfStudy)
+            List<Subject> result = await _dbSet.Include(s => s.FieldOfStudy)
                 .Include(s => s.Specialization)
                 .Include(s => s.Supervisor)
                 .Include(s => s.SubjectsTeachers)
                 .ThenInclude(st => st.Teacher)
                 .Where(s => latestIds.Contains(s.Id)).ToListAsync();
-            
+
             return result.Select(r =>
             {
                 r.IsSupervisor = r.Supervisor.Id == user.Id;
@@ -51,7 +49,7 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<Subject> Latest(string fos, string spec, string code, string year, SyllabusManagerUser user)
         {
-            var subject = await _dbSet.Include(s => s.FieldOfStudy)
+            Subject subject = await _dbSet.Include(s => s.FieldOfStudy)
                                        .Include(s => s.Specialization)
                                        .Include(s => s.Supervisor)
                                        .Include(s => s.CardEntries)
@@ -92,7 +90,7 @@ namespace SyllabusManager.Logic.Services
         {
             if (subject.Id == Guid.Empty)
             {
-                var existing = await _dbSet.Include(s => s.FieldOfStudy)
+                Subject existing = await _dbSet.Include(s => s.FieldOfStudy)
                     .Include(s => s.Specialization)
                     .FirstOrDefaultAsync(s =>
                         s.AcademicYear == subject.AcademicYear
@@ -153,7 +151,7 @@ namespace SyllabusManager.Logic.Services
 
             if (subject.FieldOfStudy is null || subject.Specialization is null || subject.Supervisor is null)
                 return 1;
-            
+
             subject.IsDeleted = false;
 
             await _dbSet.AddAsync(subject);
@@ -164,14 +162,14 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<int> ImportFrom(Guid currentDocId, string fosCode, string specCode, string code, string academicYear)
         {
-            var currentSubject = await _dbSet.AsNoTracking()
+            Subject currentSubject = await _dbSet.AsNoTracking()
                                               .Include(s => s.FieldOfStudy)
                                               .Include(s => s.Specialization)
                                               .FirstOrDefaultAsync(s =>
                                                                        s.Id == currentDocId
                                                                     && !s.IsDeleted);
 
-            var subject = await _dbSet.AsNoTracking()
+            Subject subject = await _dbSet.AsNoTracking()
                                             .Include(s => s.FieldOfStudy)
                                             .Include(s => s.Specialization)
                                             .Include(s => s.CardEntries)
@@ -207,7 +205,7 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<List<string>> History(Guid id)
         {
-            var subject = await _dbSet.Include(s => s.FieldOfStudy)
+            Subject subject = await _dbSet.Include(s => s.FieldOfStudy)
                                             .Include(s => s.Specialization)
                                             .FirstOrDefaultAsync(s =>
                                                                      s.Id == id
@@ -228,10 +226,10 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<bool> Delete(Guid id)
         {
-            var entity = _dbSet.Include(s => s.FieldOfStudy)
+            Subject entity = _dbSet.Include(s => s.FieldOfStudy)
                 .Include(s => s.Specialization).FirstOrDefault(f => f.Id == id);
 
-            var subjects = await _dbSet.Include(s => s.FieldOfStudy)
+            List<Subject> subjects = await _dbSet.Include(s => s.FieldOfStudy)
                 .Include(s => s.Specialization)
                 .Where(s =>
                     s.FieldOfStudy == entity.FieldOfStudy
@@ -239,9 +237,9 @@ namespace SyllabusManager.Logic.Services
                     && s.Code == entity.Code
                     && s.AcademicYear == entity.AcademicYear
                     && !s.IsDeleted).ToListAsync();
-            
+
             subjects.ForEach(s => s.IsDeleted = true);
-            var state = await _dbContext.SaveChangesAsync();
+            int state = await _dbContext.SaveChangesAsync();
             return state > 0;
         }
 
@@ -250,5 +248,34 @@ namespace SyllabusManager.Logic.Services
             return _dbSet.Include(s => s.Supervisor)
                 .FirstOrDefault(s => s.Id == documentId)?.Supervisor?.Id;
         }
+
+        public async Task<bool> Pdf(Guid id)
+        {
+            Subject subject = await _dbSet.Include(s => s.FieldOfStudy)
+                                          .Include(s => s.Specialization)
+                                          .Include(s => s.Supervisor)
+                                          .Include(s => s.CardEntries)
+                                            .ThenInclude(ce => ce.Entries)
+                                          .Include(s => s.LearningOutcomeEvaluations)
+                                          .Include(s => s.Lessons)
+                                            .ThenInclude(l => l.ClassForms)
+                                          .Include(s => s.Literature)
+                                          .Include(s => s.SubjectsTeachers)
+                                            .ThenInclude(st => st.Teacher)
+                                          .OrderByDescending(s => s.Version)
+                                          .FirstOrDefaultAsync(s =>
+                                                                   s.Id == id
+                                                                && !s.IsDeleted);
+            if (subject is null)
+                return false;
+
+            PdfCreator pdf = new PdfCreator();
+            pdf.Create(subject);
+
+            return true;
+        }
+
+
+
     }
 }

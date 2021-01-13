@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.Data.Models.LearningOutcomes;
 using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 using SyllabusManager.Logic.Services;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Controllers
@@ -32,7 +34,7 @@ namespace SyllabusManager.API.Controllers
         {
             if (!readOnly && !await CheckIfUserIsFosSupervisor(fosCode)) return Forbid();
 
-            var result = await _learningOutcomeService.Latest(fosCode, academicYear, readOnly);
+            LearningOutcomeDocument result = await _learningOutcomeService.Latest(fosCode, academicYear, readOnly);
 
             if (result is null) return NotFound();
 
@@ -49,7 +51,7 @@ namespace SyllabusManager.API.Controllers
         {
             if (!await CheckIfUserIsFosSupervisor(learningOutcome.FieldOfStudy.Code)) return Forbid();
 
-            var result = await _learningOutcomeService.Save(learningOutcome);
+            LearningOutcomeDocument result = await _learningOutcomeService.Save(learningOutcome);
 
             if (result is null) return BadRequest();
             return Ok();
@@ -69,8 +71,8 @@ namespace SyllabusManager.API.Controllers
         {
             if (!await CheckIfUserIsFosSupervisor(fosCode)) return Forbid();
 
-            var result = await _learningOutcomeService.SaveAs(fosCode, academicYear, learningOutcome);
-            
+            LearningOutcomeDocument result = await _learningOutcomeService.SaveAs(fosCode, academicYear, learningOutcome);
+
             if (result is null) return BadRequest();
             return Ok();
         }
@@ -90,8 +92,8 @@ namespace SyllabusManager.API.Controllers
         {
             if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
 
-            var result = await _learningOutcomeService.ImportFrom(currentDocId, fosCode, academicYear);
-            
+            LearningOutcomeDocument result = await _learningOutcomeService.ImportFrom(currentDocId, fosCode, academicYear);
+
             if (result is null) return NotFound();
             return Ok();
         }
@@ -107,19 +109,51 @@ namespace SyllabusManager.API.Controllers
         {
             if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
 
-            var result = await _learningOutcomeService.Delete(currentDocId);
-            
+            bool result = await _learningOutcomeService.Delete(currentDocId);
+
             if (result) return Ok();
             return NotFound();
         }
 
-        // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
         [HttpGet]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(Guid currentDocId,
-                                            [FromQuery(Name = "version")] string version)
+        public async Task<IActionResult> Pdf(Guid currentDocId)
         {
-            return Ok("Not implemented");
+
+            bool result = await _learningOutcomeService.Pdf(currentDocId);
+            if (result == false)
+            {
+                return NotFound();
+            }
+
+            MemoryStream memory = new MemoryStream();
+            using (FileStream stream = new FileStream(PdfHelper.PATH_PAGED, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Pdf([FromQuery(Name = "fos")] string fosCode,
+                                             [FromQuery(Name = "year")] string academicYear)
+        {
+            bool result = await _learningOutcomeService.Pdf(fosCode, academicYear);
+            if (result == false)
+            {
+                return NotFound();
+            }
+
+            MemoryStream memory = new MemoryStream();
+            using (FileStream stream = new FileStream(PdfHelper.PATH_PAGED, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
         }
 
         /// <summary>
@@ -131,8 +165,8 @@ namespace SyllabusManager.API.Controllers
         [Route("{currentDocId}")]
         public async Task<IActionResult> History(Guid currentDocId)
         {
-            var result = await _learningOutcomeService.History(currentDocId);
-            
+            System.Collections.Generic.List<string> result = await _learningOutcomeService.History(currentDocId);
+
             if (result is null) return NotFound();
             return Ok(result);
         }

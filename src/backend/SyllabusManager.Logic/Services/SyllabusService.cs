@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SyllabusManager.Data;
+using SyllabusManager.Data.Enums.LearningOutcomes;
 using SyllabusManager.Data.Models.Syllabuses;
 using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Helpers;
@@ -104,7 +105,7 @@ namespace SyllabusManager.Logic.Services
         /// <returns></returns>
         public async Task<Syllabus> SaveAs(string fosCode, string specCode, string academicYear, Syllabus syllabus, SyllabusManagerUser user)
         {
-            var currentSyllabus = await Latest(fosCode, specCode, academicYear);
+            Syllabus currentSyllabus = await Latest(fosCode, specCode, academicYear);
 
             currentSyllabus.ThesisCourse = syllabus.ThesisCourse;
             currentSyllabus.Description = syllabus.Description;
@@ -192,10 +193,10 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<bool> Delete(Guid id)
         {
-            var entity = _dbSet.Include(s => s.FieldOfStudy)
+            Syllabus entity = _dbSet.Include(s => s.FieldOfStudy)
                 .Include(s => s.Specialization).FirstOrDefault(f => f.Id == id);
 
-            var syllabuses = await _dbSet.Include(s => s.FieldOfStudy)
+            List<Syllabus> syllabuses = await _dbSet.Include(s => s.FieldOfStudy)
                 .Include(s => s.Specialization)
                 .Where(s =>
                     s.FieldOfStudy == entity.FieldOfStudy
@@ -204,9 +205,108 @@ namespace SyllabusManager.Logic.Services
                     && !s.IsDeleted).ToListAsync();
 
             syllabuses.ForEach(s => s.IsDeleted = true);
-            var state = await _dbContext.SaveChangesAsync();
+            int state = await _dbContext.SaveChangesAsync();
             return state > 0;
         }
+
+        public async Task<bool> Pdf(Guid id)
+        {
+            Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
+                                            .Include(s => s.Specialization)
+                                            .Include(s => s.SubjectDescriptions)
+                                            .ThenInclude(sd => sd.Subject)
+                                            .ThenInclude(sb => sb.Lessons)
+                                            .Include(s => s.Description)
+                                            .Include(s => s.PointLimits)
+                                            .FirstOrDefaultAsync(s =>
+                                                                     s.Id == id
+                                                                  && !s.IsDeleted);
+
+            Dictionary<LearningOutcomeCategory, int> lods = (await _dbContext.LearningOutcomeDocuments.Include(lod => lod.FieldOfStudy)
+                                                     .Include(lod => lod.LearningOutcomes)
+                                                     .OrderByDescending(lod => lod.Version)
+                                                     .FirstOrDefaultAsync(lod =>
+                                                                                lod.FieldOfStudy.Code == syllabus.FieldOfStudy.Code
+                                                                             && lod.AcademicYear == syllabus.AcademicYear
+                                                                             && !lod.IsDeleted)
+                                                     )?.LearningOutcomes?.GroupBy(l => l.Category)
+                                                                         .Select(c => new { category = c.Key, count = c.Count() })
+                                                                         .ToDictionary(d => d.category, d => d.count);
+
+
+            if (syllabus is null || lods is null)
+                return false;
+
+            PdfCreator pdf = new PdfCreator();
+
+            pdf.Create(syllabus, lods);
+
+            return true;
+        }
+
+        public async Task<bool> Pdf(string fos, string spec, string year)
+        {
+            Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
+                                           .Include(s => s.Specialization)
+                                           .Include(s => s.SubjectDescriptions)
+                                           .ThenInclude(sd => sd.Subject)
+                                           .ThenInclude(sb => sb.Lessons)
+                                           .Include(s => s.Description)
+                                           .Include(s => s.PointLimits)
+                                           .FirstOrDefaultAsync(s =>
+                                                                    s.FieldOfStudy.Code == fos
+                                                                 && s.Specialization.Code == spec
+                                                                 && s.AcademicYear == year
+                                                                 && !s.IsDeleted);
+
+            Dictionary<LearningOutcomeCategory, int> lods = (await _dbContext.LearningOutcomeDocuments.Include(lod => lod.FieldOfStudy)
+                                                     .Include(lod => lod.LearningOutcomes)
+                                                     .OrderByDescending(lod => lod.Version)
+                                                     .FirstOrDefaultAsync(lod =>
+                                                                                lod.FieldOfStudy.Code == syllabus.FieldOfStudy.Code
+                                                                             && lod.AcademicYear == syllabus.AcademicYear
+                                                                             && !lod.IsDeleted)
+                                                     )?.LearningOutcomes?.GroupBy(l => l.Category)
+                                                                         .Select(c => new { category = c.Key, count = c.Count() })
+                                                                         .ToDictionary(d => d.category, d => d.count);
+
+
+            if (syllabus is null || lods is null)
+                return false;
+
+            PdfCreator pdf = new PdfCreator();
+
+            pdf.Create(syllabus, lods);
+
+            return true;
+        }
+
+        public async Task<bool> PlanPdf(Guid id)
+        {
+            Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
+                                          .Include(s => s.Specialization)
+                                          .Include(s => s.SubjectDescriptions)
+                                          .ThenInclude(sd => sd.Subject)
+                                          .ThenInclude(sb => sb.Lessons)
+                                          .Include(s => s.Description)
+                                          .Include(s => s.PointLimits)
+                                          .FirstOrDefaultAsync(s =>
+                                                                   s.Id == id
+                                                                && !s.IsDeleted);
+
+
+            if (syllabus is null)
+                return false;
+
+            PdfCreator pdf = new PdfCreator();
+
+            pdf.Create(syllabus);
+
+            return true;
+        }
+
+
+
     }
 }
 

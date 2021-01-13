@@ -30,9 +30,9 @@
   </mat-form-field>
 </div>
 
-<button *ngIf="visibleButtons" (click)="download()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
-  Download
+<button mat-icon-button *ngIf="visibleButtons" (click)="download()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
+  <mat-icon>save_alt</mat-icon>
 </button>
-<button *ngIf="visibleButtons" (click)="edit()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
-  Edit
+<button mat-icon-button *ngIf="visibleButtons" (click)="edit()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
+  <mat-icon>edit</mat-icon>
 </button>

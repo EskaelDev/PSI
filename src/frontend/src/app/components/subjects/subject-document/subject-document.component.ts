@@ -181,7 +181,7 @@ export class SubjectDocumentComponent implements OnInit {
   }
 
   validateCardEntry(type: SubjectCardEntryType): boolean {
-    if (this.subjectDocument?.cardEntries.find(e => e.type === SubjectCardEntryType.Prerequisite)?.entries.find(e => !e.code || !e.description)) {
+    if (this.subjectDocument?.cardEntries.find(e => e.type === type)?.entries.find(e => !e.code || !e.description)) {
       return false;
     }
     return true;

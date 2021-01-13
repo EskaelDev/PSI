@@ -32,8 +32,13 @@ export class UserService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultWrongDataErrorMessage();
+      catchError(err => {
+        if (err.status === 0 || err.status === 500) {
+          this.alerts.showDefaultErrorMessage();
+        }
+        else {
+          this.alerts.showDefaultWrongDataErrorMessage();
+        }
         return of(false);
       })
     );

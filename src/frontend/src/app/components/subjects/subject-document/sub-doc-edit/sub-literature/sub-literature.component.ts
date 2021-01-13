@@ -38,7 +38,7 @@ export class SubLiteratureComponent implements OnInit {
       this.document.literature.push(lit);
     }
     else {
-      this.alerts.showCustomErrorMessage('Literatura o podanym numerze ISBN już istnieje!');
+      this.alerts.showValidationFailMessage('Literatura o podanym numerze ISBN już istnieje!');
     }
   }
 

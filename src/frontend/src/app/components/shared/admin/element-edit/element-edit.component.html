@@ -3,6 +3,6 @@
   <ng-content></ng-content>
 </div>
 <div>
-  <button (click)="onSave()" [disabled]="!validForm">Zapisz</button>
-  <button (click)="onRemove()" *ngIf="canDelete">Usuń</button>
+  <button mat-icon-button (click)="onRemove()" *ngIf="canDelete"><mat-icon>delete</mat-icon></button>
+  <button mat-icon-button (click)="onSave()" [disabled]="!validForm"><mat-icon>done</mat-icon></button>
 </div>

@@ -136,7 +136,9 @@ export class LearningOutcomeDocumentComponent implements OnInit {
   pdf() {
     if (this.learningOutcomeDocument) {
       this.learningOutcomeService.pdf(this.learningOutcomeDocument.id).subscribe(res => {
-        this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}_${this.learningOutcomeDocument?.version}`);
+        if (res) {
+          this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}_${this.learningOutcomeDocument?.version}`);
+        }
       });
     }
   }
@@ -156,7 +158,9 @@ export class LearningOutcomeDocumentComponent implements OnInit {
 
           sub.componentInstance.download.subscribe((version: string) => {
             this.learningOutcomeService.pdf(version.split(':')[0]).subscribe(res => {
-              this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}_${version.split(':')[1]}`);
+              if (res) {
+                this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${this.learningOutcomeDocument?.fieldOfStudy.code}_${this.learningOutcomeDocument?.academicYear}_${version.split(':')[1]}`);
+              }
             });
           });
         });

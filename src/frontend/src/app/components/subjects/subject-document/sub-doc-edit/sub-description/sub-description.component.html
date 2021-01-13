@@ -55,7 +55,7 @@
   <div>
     <h2>Opiekun</h2>
     <span>{{document.supervisor?.name}}</span>
-    <button *ngIf="document.isAdmin" mat-raised-button (click)="changeSupervisor()">Zmień opiekuna</button>
+    <button *ngIf="document.isAdmin" mat-icon-button (click)="changeSupervisor()"><mat-icon>edit</mat-icon></button>
     <h2>Możliwi prowadzący</h2>
     <div *ngIf="document.teachers.length > 0">
       <div *ngFor="let teacher of document.teachers">

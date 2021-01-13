@@ -62,8 +62,11 @@ export class SyllabusService {
           if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
           }
-          else {
+          else if (err.status === 0 || err.status === 500) {
             this.alerts.showDefaultErrorMessage();
+          }
+          else {
+            this.alerts.showDefaultWrongDataErrorMessage();
           }
           return of(false);
         })
@@ -91,6 +94,9 @@ export class SyllabusService {
         catchError(err => {
           if (err.status === 400) {
             this.alerts.showCustomErrorMessage('Wymagane pola nie zostały uzupełnione!');
+          }
+          else if (err.status === 0 || err.status === 500) {
+            this.alerts.showDefaultErrorMessage();
           }
           else {
             this.alerts.showDefaultWrongDataErrorMessage();
@@ -122,7 +128,11 @@ export class SyllabusService {
             this.alerts.showCustomErrorMessage(
               'Wybrany dokument do zaimportowania nie istnieje!'
             );
-          } else {
+          } 
+          else if (err.status === 0 || err.status === 500) {
+            this.alerts.showDefaultErrorMessage();
+          }
+          else {
             this.alerts.showDefaultWrongDataErrorMessage();
           }
 
@@ -136,8 +146,16 @@ export class SyllabusService {
       map(() => {
         return true;
       }),
-      catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+      catchError(err => {
+        if (err.status === 403) {
+          this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje');
+        }
+        else {
+          this.alerts.showDefaultErrorMessage();
+        }
         return of(false);
       })
     );
@@ -146,7 +164,7 @@ export class SyllabusService {
   pdf(id: string): Observable<any> {
     return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
       catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+        this.alerts.showDefaultDocumentDownloadFailMessage();
         return of(false);
       })
     );
@@ -155,7 +173,7 @@ export class SyllabusService {
   history(id: string): Observable<string[]> {
     return this.http.get<string[]>(this.baseUrl + `/history/${id}`).pipe(
       catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+        this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);
       })
     );

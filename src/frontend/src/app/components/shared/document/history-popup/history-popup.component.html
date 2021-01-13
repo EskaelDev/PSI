@@ -1,6 +1,6 @@
 <div>
   <h1 mat-dialog-title>Historia</h1>
-  <div mat-dialog-content fxLayoutAlign="center">
+  <div mat-dialog-content fxLayoutAlign="center" style="height: 340px">
     <mat-list role="list" style="height: 330px; overflow: auto" *ngIf="values.length > 0">
       <mat-list-item role="listitem" *ngFor="let value of values"
         ><div><span style="font-weight: bold; margin-right: 10px;">{{value.split(':')[1]}}</span></div>

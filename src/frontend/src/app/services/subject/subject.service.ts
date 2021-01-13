@@ -74,6 +74,9 @@ export class SubjectService {
         else if (err.status === 404) {
           this.alerts.showCustomErrorMessage('Podany kierunek studiów lub specjalizacja nie istnieje');
         }
+        else if (err.status === 0 || err.status === 500) {
+          this.alerts.showDefaultErrorMessage();
+        }
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
         }
@@ -93,6 +96,9 @@ export class SubjectService {
         }
         else if (err.status === 404) {
           this.alerts.showCustomErrorMessage('Wybrany dokument do zaimportowania nie istnieje!');
+        }
+        else if (err.status === 0 || err.status === 500) {
+          this.alerts.showDefaultErrorMessage();
         }
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
@@ -126,7 +132,7 @@ export class SubjectService {
   pdf(id: string): Observable<any> {
     return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
       catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+        this.alerts.showDefaultDocumentDownloadFailMessage();
         return of(false);
       })
     );
@@ -135,7 +141,7 @@ export class SubjectService {
   history(id: string): Observable<string[]> {
     return this.http.get<string[]>(this.baseUrl + `/history/${id}`).pipe(
       catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+        this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);
       })
     );

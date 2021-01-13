@@ -61,7 +61,7 @@
     </mat-form-field>
   </form>
   <div>
-    <button (click)="delete()" [disabled]="isNew">Usuń</button>
-    <button (click)="save()" [disabled]="!loForm.valid">Zapisz</button>
+    <button mat-icon-button (click)="delete()" [disabled]="isNew"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button (click)="save()" [disabled]="!loForm.valid"><mat-icon>done</mat-icon></button>
   </div>
 </div>

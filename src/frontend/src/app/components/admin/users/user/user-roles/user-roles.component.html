@@ -9,11 +9,11 @@
     </mat-select>
   </mat-form-field>
 </div>
-<button (click)="assignRole()" [disabled]="!selectedRole">Add</button>
+<button mat-icon-button (click)="assignRole()" [disabled]="!selectedRole"><mat-icon>add</mat-icon></button>
 <div *ngFor="let userRole of editableRoles">
   <div>
     {{ "roles." + userRole | translate
-    }}<mat-icon (click)="unassignRole(userRole)">close</mat-icon>
+    }}<mat-icon (click)="unassignRole(userRole)">remove</mat-icon>
   </div>
 </div>
-<button (click)="saveRoles()">save</button>
+<button mat-icon-button (click)="saveRoles()"><mat-icon>done</mat-icon></button>

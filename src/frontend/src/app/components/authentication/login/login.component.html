@@ -44,8 +44,9 @@
           <a class="password-reset">
             Przypomnij hasło
           </a>
-          <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">
-            Zaloguj
+          <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid || isLoading">
+            <div *ngIf="!isLoading">Zaloguj</div>
+            <div *ngIf="isLoading" fxLayoutAlign="center center"><mat-spinner [diameter]="30"></mat-spinner></div>
           </button>
         </div>
       </div>

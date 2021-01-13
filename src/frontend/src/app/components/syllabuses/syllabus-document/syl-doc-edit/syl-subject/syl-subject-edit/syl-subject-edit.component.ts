@@ -21,9 +21,11 @@ import { AlertService } from 'src/app/services/alerts/alert.service';
 export class SylSubjectEditComponent implements OnInit {
   _elem: SubjectInSyllabusDescription | null = null;
   editableElem: SubjectInSyllabusDescription | null = null;
+  tempSub?: Subject;
 
   @Input() set elem(sub: SubjectInSyllabusDescription) {
     this._elem = sub;
+    this.tempSub = sub.subject;
     this.subForm = this.fb.group({
       subject: [
         sub.subject,
@@ -60,9 +62,10 @@ export class SylSubjectEditComponent implements OnInit {
         this.subForm.value
       );
       this.saved.emit(result);
-    }
-    else {
-      this.alerts.showCustomWarningMessage('Semestr ukończenia jest mniejszy niż przypisany semestr');
+    } else {
+      this.alerts.showCustomWarningMessage(
+        'Semestr ukończenia jest mniejszy niż przypisany semestr'
+      );
       this.alerts.showCustomErrorMessage('Zapis nie powiódł się!');
     }
   }
@@ -79,6 +82,10 @@ export class SylSubjectEditComponent implements OnInit {
       value instanceof Subject
         ? value.namePl.toLowerCase() + value.code.toLowerCase()
         : value?.toLowerCase();
+
+    if (value instanceof Subject) {
+      this.tempSub = value;
+    }
 
     return this.subjects.filter((subject) =>
       (subject.namePl.toLowerCase() + subject.code.toLowerCase()).includes(
@@ -100,7 +107,7 @@ export class SylSubjectEditComponent implements OnInit {
     if (
       this.subForm.get('completionSemester')?.value &&
       this.subForm.get('completionSemester')?.value <
-      this.subForm.get('assignedSemester')?.value
+        this.subForm.get('assignedSemester')?.value
     ) {
       return false;
     }

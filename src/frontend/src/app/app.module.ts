@@ -11,9 +11,11 @@ import { SyllabusesModule } from './components/syllabuses/syllabuses.module';
 import { DocumentsModule } from './components/documents/documents.module';
 import { SharedComponentsModule } from './components/shared/shared-components.module';
 import { UserModule } from './components/user/user.module';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LeftMenuComponent],
   imports: [
     BrowserModule,
     SharedModule,
@@ -25,7 +27,8 @@ import { UserModule } from './components/user/user.module';
     SubjectsModule,
     SyllabusesModule,
     DocumentsModule,
-    UserModule
+    UserModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent],

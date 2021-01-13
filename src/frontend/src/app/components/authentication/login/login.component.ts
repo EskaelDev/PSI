@@ -13,7 +13,7 @@ import { TokenStorageService } from 'src/app/services/authentication/token-stora
 export class LoginComponent implements OnInit {
   isLoading = false;
   loginInvalid: boolean = false;
-  navigateUrl: string = 'home';
+  navigateUrl: string = '/';
 
   loginForm: FormGroup;
 

@@ -10,7 +10,7 @@ namespace SyllabusManager.Data.Models.Syllabuses
         [NotMapped]
         public int Ects => NumOfSemesters * 30;
         [Required]
-        public string Prerequisites { get; set; }
+        public string Prerequisites { get; set; } = "";
         public ProfessionalTitle ProfessionalTitleAfterGraduation { get; set; }
         [Required]
         public string EmploymentOpportunities { get; set; }

@@ -10,14 +10,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SyllabusManager.Logic.Pdf;
 
 namespace SyllabusManager.Logic.Services
 {
     public class SubjectService : DocumentInAcademicYearService<Subject>, ISubjectService
     {
-        public SubjectService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager) : base(dbContext, userManager)
-        {
+        private readonly ISubjectPdf _subjectPdf;
 
+        public SubjectService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager, ISubjectPdf subjectPdf) : base(dbContext, userManager)
+        {
+            _subjectPdf = subjectPdf;
         }
 
         public async Task<List<Subject>> GetAll(string fos, string spec, string year, SyllabusManagerUser user)
@@ -269,8 +272,7 @@ namespace SyllabusManager.Logic.Services
             if (subject is null)
                 return false;
 
-            PdfCreator pdf = new PdfCreator();
-            pdf.Create(subject);
+            _subjectPdf.Create(subject);
 
             return true;
         }

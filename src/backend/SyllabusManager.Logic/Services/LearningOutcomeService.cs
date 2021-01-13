@@ -8,14 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SyllabusManager.Logic.Pdf;
 
 namespace SyllabusManager.Logic.Services
 {
     public class LearningOutcomeService : DocumentInAcademicYearService<LearningOutcomeDocument>, ILearningOutcomeService
     {
-        public LearningOutcomeService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager) : base(dbContext, userManager)
-        {
+        private readonly ILearningOutcomePdf _learningOutcomePdf;
 
+        public LearningOutcomeService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager, ILearningOutcomePdf learningOutcomePdf) : base(dbContext, userManager)
+        {
+            _learningOutcomePdf = learningOutcomePdf;
         }
 
 
@@ -190,8 +193,7 @@ namespace SyllabusManager.Logic.Services
             if (lod is null)
                 return false;
 
-            PdfCreator pdf = new PdfCreator();
-            pdf.Create(lod);
+            _learningOutcomePdf.Create(lod);
 
             return true;
         }
@@ -213,8 +215,7 @@ namespace SyllabusManager.Logic.Services
             if (lod is null)
                 return false;
 
-            PdfCreator pdf = new PdfCreator();
-            pdf.Create(lod);
+            _learningOutcomePdf.Create(lod);
 
             return true;
         }

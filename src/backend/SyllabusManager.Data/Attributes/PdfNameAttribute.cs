@@ -5,7 +5,7 @@ using System.Text;
 namespace SyllabusManager.Data.Attributes
 {
 
-    [System.AttributeUsage(System.AttributeTargets.Property | System.AttributeTargets.Enum | System.AttributeTargets.Field)]
+    [System.AttributeUsage(AttributeTargets.Property | AttributeTargets.Enum | AttributeTargets.Field)]
     public class PdfNameAttribute : System.Attribute
     {
         public string name;

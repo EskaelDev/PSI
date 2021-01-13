@@ -10,14 +10,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SyllabusManager.Logic.Pdf;
 
 namespace SyllabusManager.Logic.Services
 {
     public class SyllabusService : DocumentInAcademicYearService<Syllabus>, ISyllabusService
     {
-        public SyllabusService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager) : base(dbContext, userManager)
-        {
+        private readonly ISyllabusPdf _syllabusPdf;
+        private readonly IPlanPdf _planPdf;
 
+        public SyllabusService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager, ISyllabusPdf syllabusPdf, IPlanPdf planPdf) : base(dbContext, userManager)
+        {
+            this._syllabusPdf = syllabusPdf;
+            _planPdf = planPdf;
         }
 
         public async Task<Syllabus> Latest(string fos, string spec, string year)
@@ -222,6 +227,11 @@ namespace SyllabusManager.Logic.Services
                                                                      s.Id == id
                                                                   && !s.IsDeleted);
 
+
+            if (syllabus is null)
+                return false;
+
+
             Dictionary<LearningOutcomeCategory, int> lods = (await _dbContext.LearningOutcomeDocuments.Include(lod => lod.FieldOfStudy)
                                                      .Include(lod => lod.LearningOutcomes)
                                                      .OrderByDescending(lod => lod.Version)
@@ -233,13 +243,7 @@ namespace SyllabusManager.Logic.Services
                                                                          .Select(c => new { category = c.Key, count = c.Count() })
                                                                          .ToDictionary(d => d.category, d => d.count);
 
-
-            if (syllabus is null || lods is null)
-                return false;
-
-            PdfCreator pdf = new PdfCreator();
-
-            pdf.Create(syllabus, lods);
+            _syllabusPdf.Create(syllabus, lods);
 
             return true;
         }
@@ -259,6 +263,10 @@ namespace SyllabusManager.Logic.Services
                                                                  && s.AcademicYear == year
                                                                  && !s.IsDeleted);
 
+
+            if (syllabus is null)
+                return false;
+
             Dictionary<LearningOutcomeCategory, int> lods = (await _dbContext.LearningOutcomeDocuments.Include(lod => lod.FieldOfStudy)
                                                      .Include(lod => lod.LearningOutcomes)
                                                      .OrderByDescending(lod => lod.Version)
@@ -270,13 +278,7 @@ namespace SyllabusManager.Logic.Services
                                                                          .Select(c => new { category = c.Key, count = c.Count() })
                                                                          .ToDictionary(d => d.category, d => d.count);
 
-
-            if (syllabus is null || lods is null)
-                return false;
-
-            PdfCreator pdf = new PdfCreator();
-
-            pdf.Create(syllabus, lods);
+            _syllabusPdf.Create(syllabus, lods);
 
             return true;
         }
@@ -298,9 +300,7 @@ namespace SyllabusManager.Logic.Services
             if (syllabus is null)
                 return false;
 
-            PdfCreator pdf = new PdfCreator();
-
-            pdf.Create(syllabus);
+            _planPdf.Create(syllabus);
 
             return true;
         }

@@ -10,13 +10,14 @@ using SyllabusManager.Data.Models.User;
 using SyllabusManager.Data.ProviderContexts;
 using SyllabusManager.Logic.Interfaces;
 using SyllabusManager.Logic.Models;
+using SyllabusManager.Logic.Pdf;
 using SyllabusManager.Logic.Services;
 using System;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.API.Extensions
 {
-    public static class IServiceCollectionExtension
+    public static class ServiceCollectionExtension
     {
         public static async Task SetRolesAndAccounts(this IServiceCollection services)
         {
@@ -84,6 +85,10 @@ namespace SyllabusManager.API.Extensions
             services.AddTransient<ILearningOutcomeService, LearningOutcomeService>();
             services.AddTransient<ISyllabusService, SyllabusService>();
             services.AddTransient<ISubjectService, SubjectService>();
+            services.AddTransient<ISyllabusPdf, SyllabusPdf>();
+            services.AddTransient<IPlanPdf, PlanPdf>();
+            services.AddTransient<ILearningOutcomePdf, LearningOutcomePdf>();
+            services.AddTransient<ISubjectPdf, SubjectPdf>();
         }
 
         public static void SetAuth(this IServiceCollection services, IConfiguration configuration)

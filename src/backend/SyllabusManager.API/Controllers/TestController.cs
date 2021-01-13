@@ -11,15 +11,5 @@ namespace SyllabusManager.API.Controllers
         [HttpGet]
         [Route("IsAlive")]
         public IActionResult IsAlive() => Ok("SyllabusManager is running");
-
-
-        [HttpGet]
-        [Route("Pdf")]
-        public IActionResult Pdf()
-        {
-
-            PdfHelper.test();
-            return Ok();
-        }
     }
 }

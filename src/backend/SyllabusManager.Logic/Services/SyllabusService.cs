@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SyllabusManager.Logic.Pdf;
+using SyllabusManager.Data.Enums.Syllabuses;
 
 namespace SyllabusManager.Logic.Services
 {
@@ -28,22 +29,23 @@ namespace SyllabusManager.Logic.Services
         public async Task<Syllabus> Latest(string fos, string spec, string year)
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
-                                       .Include(s => s.Specialization)
-                                       .Include(s => s.Description)
-                                       .Include(s => s.SubjectDescriptions)
-                                       .ThenInclude(sd => sd.Subject)
-                                       .Include(s => s.PointLimits)
-                                       .OrderByDescending(s => s.Version)
-                                       .FirstOrDefaultAsync(s =>
-                                           s.FieldOfStudy.Code == fos
-                                           && s.Specialization.Code == spec
-                                           && s.AcademicYear == year
-                                           && !s.IsDeleted);
+                .Include(s => s.Specialization)
+                .Include(s => s.Description)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .Include(s => s.PointLimits)
+                .OrderByDescending(s => s.Version)
+                .FirstOrDefaultAsync(s =>
+                    s.FieldOfStudy.Code == fos
+                    && s.Specialization.Code == spec
+                    && s.AcademicYear == year
+                    && !s.IsDeleted);
             if (syllabus is null)
             {
                 syllabus = new Syllabus
                 {
-                    FieldOfStudy = _dbContext.FieldsOfStudies.Include(f => f.Specializations).FirstOrDefault(f => f.Code == fos),
+                    FieldOfStudy = _dbContext.FieldsOfStudies.Include(f => f.Specializations)
+                        .FirstOrDefault(f => f.Code == fos),
                     Specialization = _dbContext.Specializations.Find(spec),
                     AcademicYear = year,
                     Version = "new",
@@ -108,7 +110,8 @@ namespace SyllabusManager.Logic.Services
         /// <param name="year"></param>
         /// <param name="syllabus"></param>
         /// <returns></returns>
-        public async Task<Syllabus> SaveAs(string fosCode, string specCode, string academicYear, Syllabus syllabus, SyllabusManagerUser user)
+        public async Task<Syllabus> SaveAs(string fosCode, string specCode, string academicYear, Syllabus syllabus,
+            SyllabusManagerUser user)
         {
             Syllabus currentSyllabus = await Latest(fosCode, specCode, academicYear);
 
@@ -130,31 +133,32 @@ namespace SyllabusManager.Logic.Services
         /// <param name="spec"></param>
         /// <param name="year"></param>
         /// <returns></returns>
-        public async Task<Syllabus> ImportFrom(Guid currentDocId, string fosCode, string specCode, string academicYear, SyllabusManagerUser user)
+        public async Task<Syllabus> ImportFrom(Guid currentDocId, string fosCode, string specCode, string academicYear,
+            SyllabusManagerUser user)
         {
             Syllabus currentSyllabus = await _dbSet.AsNoTracking()
-                                              .Include(s => s.FieldOfStudy)
-                                              .Include(s => s.Specialization)
-                                              .Include(s => s.SubjectDescriptions)
-                                              .ThenInclude(sd => sd.Subject)
-                                              .Include(s => s.Description)
-                                              .Include(s => s.PointLimits)
-                                              .FirstOrDefaultAsync(s =>
-                                                                       s.Id == currentDocId
-                                                                    && !s.IsDeleted);
+                .Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .Include(s => s.Description)
+                .Include(s => s.PointLimits)
+                .FirstOrDefaultAsync(s =>
+                    s.Id == currentDocId
+                    && !s.IsDeleted);
 
             Syllabus syllabus = await _dbSet.AsNoTracking()
-                                            .Include(s => s.FieldOfStudy)
-                                            .Include(s => s.Specialization)
-                                            .Include(s => s.SubjectDescriptions)
-                                            .ThenInclude(sd => sd.Subject)
-                                            .Include(s => s.Description)
-                                            .Include(s => s.PointLimits)
-                                            .FirstOrDefaultAsync(s =>
-                                                                     s.FieldOfStudy.Code == fosCode
-                                                                  && s.AcademicYear == academicYear
-                                                                  && s.Specialization.Code == specCode
-                                                                  && !s.IsDeleted);
+                .Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .Include(s => s.Description)
+                .Include(s => s.PointLimits)
+                .FirstOrDefaultAsync(s =>
+                    s.FieldOfStudy.Code == fosCode
+                    && s.AcademicYear == academicYear
+                    && s.Specialization.Code == specCode
+                    && !s.IsDeleted);
 
             if (currentSyllabus is null || syllabus?.FieldOfStudy is null || syllabus.Specialization is null)
                 return null;
@@ -177,22 +181,22 @@ namespace SyllabusManager.Logic.Services
         public async Task<List<string>> History(Guid id)
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
-                                            .Include(s => s.Specialization)
-                                            .Include(s => s.Description)
-                                            .FirstOrDefaultAsync(s =>
-                                                                     s.Id == id
-                                                                  && !s.IsDeleted);
+                .Include(s => s.Specialization)
+                .Include(s => s.Description)
+                .FirstOrDefaultAsync(s =>
+                    s.Id == id
+                    && !s.IsDeleted);
 
             List<string> versions = await _dbSet.Include(s => s.FieldOfStudy)
-                                                .Include(s => s.Specialization)
-                                                .Where(s =>
-                                                           s.AcademicYear == syllabus.AcademicYear
-                                                        && s.FieldOfStudy == syllabus.FieldOfStudy
-                                                           && s.Specialization == syllabus.Specialization
-                                                           && !s.IsDeleted)
-                                                .OrderByDescending(s => s.Version)
-                                                .Select(s => $"{s.Id}:{s.Version}")
-                                                .ToListAsync();
+                .Include(s => s.Specialization)
+                .Where(s =>
+                    s.AcademicYear == syllabus.AcademicYear
+                    && s.FieldOfStudy == syllabus.FieldOfStudy
+                    && s.Specialization == syllabus.Specialization
+                    && !s.IsDeleted)
+                .OrderByDescending(s => s.Version)
+                .Select(s => $"{s.Id}:{s.Version}")
+                .ToListAsync();
             return versions;
         }
 
@@ -217,15 +221,15 @@ namespace SyllabusManager.Logic.Services
         public async Task<bool> Pdf(Guid id)
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
-                                            .Include(s => s.Specialization)
-                                            .Include(s => s.SubjectDescriptions)
-                                            .ThenInclude(sd => sd.Subject)
-                                            .ThenInclude(sb => sb.Lessons)
-                                            .Include(s => s.Description)
-                                            .Include(s => s.PointLimits)
-                                            .FirstOrDefaultAsync(s =>
-                                                                     s.Id == id
-                                                                  && !s.IsDeleted);
+                .Include(s => s.Specialization)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .ThenInclude(sb => sb.Lessons)
+                .Include(s => s.Description)
+                .Include(s => s.PointLimits)
+                .FirstOrDefaultAsync(s =>
+                    s.Id == id
+                    && !s.IsDeleted);
 
 
             if (syllabus is null)
@@ -251,17 +255,17 @@ namespace SyllabusManager.Logic.Services
         public async Task<bool> Pdf(string fos, string spec, string year)
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
-                                           .Include(s => s.Specialization)
-                                           .Include(s => s.SubjectDescriptions)
-                                           .ThenInclude(sd => sd.Subject)
-                                           .ThenInclude(sb => sb.Lessons)
-                                           .Include(s => s.Description)
-                                           .Include(s => s.PointLimits)
-                                           .FirstOrDefaultAsync(s =>
-                                                                    s.FieldOfStudy.Code == fos
-                                                                 && s.Specialization.Code == spec
-                                                                 && s.AcademicYear == year
-                                                                 && !s.IsDeleted);
+                .Include(s => s.Specialization)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .ThenInclude(sb => sb.Lessons)
+                .Include(s => s.Description)
+                .Include(s => s.PointLimits)
+                .FirstOrDefaultAsync(s =>
+                    s.FieldOfStudy.Code == fos
+                    && s.Specialization.Code == spec
+                    && s.AcademicYear == year
+                    && !s.IsDeleted);
 
 
             if (syllabus is null)
@@ -286,15 +290,15 @@ namespace SyllabusManager.Logic.Services
         public async Task<bool> PlanPdf(Guid id)
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
-                                          .Include(s => s.Specialization)
-                                          .Include(s => s.SubjectDescriptions)
-                                          .ThenInclude(sd => sd.Subject)
-                                          .ThenInclude(sb => sb.Lessons)
-                                          .Include(s => s.Description)
-                                          .Include(s => s.PointLimits)
-                                          .FirstOrDefaultAsync(s =>
-                                                                   s.Id == id
-                                                                && !s.IsDeleted);
+                .Include(s => s.Specialization)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .ThenInclude(sb => sb.Lessons)
+                .Include(s => s.Description)
+                .Include(s => s.PointLimits)
+                .FirstOrDefaultAsync(s =>
+                    s.Id == id
+                    && !s.IsDeleted);
 
 
             if (syllabus is null)
@@ -305,8 +309,117 @@ namespace SyllabusManager.Logic.Services
             return true;
         }
 
+        public List<string> Verify(Syllabus syllabus)
+        {
+            var errors = new List<string>();
 
+            // description
+            if (syllabus.Description.NumOfSemesters < 1 || syllabus.Description.NumOfSemesters > 10) errors.Add("Niepoprawna liczba semestrów. (Dopuszczalne wartości 1-10)");
+            if (string.IsNullOrWhiteSpace(syllabus.Description.Prerequisites) || syllabus.Description.Prerequisites == ".") errors.Add("Nieuzupełnione pole Wymagania wstępne.");
+            if (string.IsNullOrWhiteSpace(syllabus.Description.EmploymentOpportunities) || syllabus.Description.EmploymentOpportunities == ".") errors.Add("Nieuzupełnione pole Sylwetka absolwenta.");
+            if (string.IsNullOrWhiteSpace(syllabus.Description.PossibilityOfContinuation) || syllabus.Description.PossibilityOfContinuation == ".") errors.Add("Nieuzupełnione pole Możliwość kontynuacji studiów.");
 
+            // subjects
+            var wrongSubjects =
+                syllabus.SubjectDescriptions.Where(sd => sd.AssignedSemester > syllabus.Description.NumOfSemesters);
+            foreach (var subject in wrongSubjects)
+            {
+                errors.Add($"Przedmiot {subject.Subject.Code} \"{subject.Subject.NamePl}\" posiada niepoprawny przypisany semestr.");
+            }
+
+            wrongSubjects =
+                syllabus.SubjectDescriptions.Where(sd => sd.CompletionSemester != null && sd.AssignedSemester > sd.CompletionSemester);
+            foreach (var subject in wrongSubjects)
+            {
+                errors.Add($"Przedmiot {subject.Subject.Code} \"{subject.Subject.NamePl}\" posiada przypisany semestr większy niż semestr ukończenia.");
+            }
+
+            // obligatory fields
+            if (string.IsNullOrWhiteSpace(syllabus.ThesisCourse) || syllabus.ThesisCourse == ".") errors.Add("Nieuzupełnione pole Praca dyplomowa.");
+            if (string.IsNullOrWhiteSpace(syllabus.ScopeOfDiplomaExam) || syllabus.ScopeOfDiplomaExam == ".") errors.Add("Nieuzupełnione pole Zakres egzaminu dyplomowego.");
+            if (string.IsNullOrWhiteSpace(syllabus.IntershipType) || syllabus.IntershipType == ".") errors.Add("Nieuzupełnione pole Praktyki.");
+            
+            return errors;
+        }
+
+        public async Task<bool> SendToAcceptance(Syllabus syllabus, SyllabusManagerUser user)
+        {
+            /*if (!Verify(syllabus).Any() && syllabus.State != State.Approved)
+            {
+                var result = await Save(syllabus, user);
+                result.State = State.SentToAcceptance;
+                result.StudentGovernmentOpinion = Option.Pending;
+                result.StudentRepresentativeName = string.Empty;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }*/
+
+            return false;
+        }
+
+        public bool Accept(Guid syllabusId, SyllabusManagerUser user)
+        {
+            var document = _dbSet.Find(syllabusId);
+            if (document.State == State.SentToAcceptance)
+            {
+                document.StudentGovernmentOpinion = Option.Approved;
+                document.StudentRepresentativeName = user.Name;
+                document.State = State.Approved;
+                _dbContext.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Reject(Guid syllabusId, SyllabusManagerUser user)
+        {
+            var document = _dbSet.Find(syllabusId);
+            if (document.State == State.SentToAcceptance)
+            {
+                document.StudentGovernmentOpinion = Option.Rejected;
+                document.StudentRepresentativeName = user.Name;
+                document.State = State.Rejected;
+                _dbContext.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public List<Syllabus> ToAccept(string fos, string spec, string year)
+        {
+            return _dbSet.AsNoTracking()
+                .Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Where(s =>
+                    (fos == null || s.FieldOfStudy.Code == fos)
+                    && (spec == null || s.Specialization.Code == spec)
+                    && (year == null || s.AcademicYear == year)
+                    && s.State == State.SentToAcceptance
+                    && !s.IsDeleted).ToList()
+                .GroupBy(s => new { s.FieldOfStudy, s.Specialization, s.AcademicYear })
+                .Select(g => g.OrderByDescending(s => s.Version)
+                    .First()).ToList();
+        }
+
+        public List<Syllabus> Documents(string fos, string spec, string year)
+        {
+            return _dbSet.AsNoTracking()
+                .Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .Where(s =>
+                    (fos == null || s.FieldOfStudy.Code == fos)
+                    && (spec == null || s.Specialization.Code == spec)
+                    && (year == null || s.AcademicYear == year)
+                    && s.State == State.Approved
+                    && !s.IsDeleted).ToList()
+                .GroupBy(s => new { s.FieldOfStudy, s.Specialization, s.AcademicYear })
+                .Select(g => g.OrderByDescending(s => s.Version)
+                    .First()).ToList();
+        }
     }
 }
 

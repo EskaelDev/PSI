@@ -8,6 +8,8 @@ using SyllabusManager.Logic.Services;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using SyllabusManager.Logic.Models;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -28,6 +30,7 @@ namespace SyllabusManager.API.Controllers
         /// <param name="readOnly">Tylko do odczytu</param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Latest([FromQuery(Name = "fos")] string fosCode,
                                                 [FromQuery(Name = "year")] string academicYear,
                                                 [FromQuery(Name = "readOnly")] bool readOnly)
@@ -47,6 +50,7 @@ namespace SyllabusManager.API.Controllers
         /// <param name="learningOutcome"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Save(LearningOutcomeDocument learningOutcome)
         {
             if (!await CheckIfUserIsFosSupervisor(learningOutcome.FieldOfStudy.Code)) return Forbid();
@@ -65,6 +69,7 @@ namespace SyllabusManager.API.Controllers
         /// <param name="learningOutcome"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> SaveAs([FromQuery(Name = "fos")] string fosCode,
                                                 [FromQuery(Name = "year")] string academicYear,
                                                 [FromBody] LearningOutcomeDocument learningOutcome)
@@ -86,6 +91,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> ImportFrom(Guid currentDocId,
                                                    [FromQuery(Name = "fos")] string fosCode,
                                                    [FromQuery(Name = "year")] string academicYear)
@@ -105,6 +111,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
             if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
@@ -119,7 +126,6 @@ namespace SyllabusManager.API.Controllers
         [Route("{currentDocId}")]
         public async Task<IActionResult> Pdf(Guid currentDocId)
         {
-
             bool result = await _learningOutcomeService.Pdf(currentDocId);
             if (result == false)
             {
@@ -163,6 +169,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> History(Guid currentDocId)
         {
             System.Collections.Generic.List<string> result = await _learningOutcomeService.History(currentDocId);

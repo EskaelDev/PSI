@@ -1,0 +1,37 @@
+<div>
+  <h1 mat-dialog-title>Weryfikacja poprawności dokumentu</h1>
+  <div mat-dialog-content fxLayoutAlign="center center" style="height: 340px">
+    <div *ngIf="!isLoading">
+      <div *ngIf="isErrorState">
+        <div style="text-align: center;">
+          <mat-icon style="color: red; font-size: 80px; width: 80px; height: 80px;">error</mat-icon>
+        </div>
+        <div>Błąd weryfikacji</div>
+      </div>
+      <div *ngIf="!isErrorState && results && results.length === 0">
+        <div style="text-align: center;">
+          <mat-icon style="color: greenyellow; font-size: 80px; width: 80px; height: 80px;">verified</mat-icon>
+        </div>
+        <div>Dokument poprawny</div>
+      </div>
+      <div *ngIf="!isErrorState && results && results.length > 0">
+        <div style="text-align: center;">
+          <mat-icon style="color: orange; font-size: 50px; width: 50px; height: 50px;">warning</mat-icon>
+        </div>
+        <div style="text-align: center; margin-bottom: 30px;">Dokument zawiera błędy</div>
+        <div style="height: 200px; width: 500px; overflow: auto;">
+            <div *ngFor="let res of results; let i = index">{{i+1}}. {{res}}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isLoading">
+      <div style="margin-bottom: 30px">Trwa weryfikacja...</div>
+      <div fxLayoutAlign="center center"><mat-spinner></mat-spinner></div>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button [mat-dialog-close]="true" [disabled]="isLoading">
+      Zamknij
+    </button>
+  </mat-dialog-actions>
+</div>

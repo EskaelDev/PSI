@@ -17,8 +17,12 @@ namespace SyllabusManager.Logic.Services
         Task<bool> Delete(Guid id);
         Task<bool> Pdf(Guid id);
         Task<bool> Pdf(string fos, string spec, string year);
-
-
         Task<bool> PlanPdf(Guid id);
+        List<string> Verify(Syllabus syllabus);
+        Task<bool> SendToAcceptance(Syllabus syllabus, SyllabusManagerUser user);
+        bool Accept(Guid syllabusId, SyllabusManagerUser user);
+        bool Reject(Guid syllabusId, SyllabusManagerUser user);
+        List<Syllabus> ToAccept(string fos, string spec, string year);
+        List<Syllabus> Documents(string fos, string spec, string year);
     }
 }

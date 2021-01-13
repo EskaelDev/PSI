@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'src/app/core/models/subject/subject';
+import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
+import { FileHelper } from 'src/app/helpers/FileHelper';
 import { SubjectService } from 'src/app/services/subject/subject.service';
 
 @Component({
@@ -11,19 +13,24 @@ import { SubjectService } from 'src/app/services/subject/subject.service';
 export class SubjectCardsComponent implements OnInit {
 
   subjects: Subject[] = [];
+  syllabus: Syllabus = new Syllabus();
 
   constructor(public dialogRef: MatDialogRef<SubjectCardsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private subjectService: SubjectService) { 
-    this.subjects = data.subjects;
+    private subjectService: SubjectService,
+    private fileHelper: FileHelper) { 
+    this.subjects = data.syllabus.subjectDescriptions.map((sd: { subject: any; }) => sd.subject);
+    this.syllabus = data.syllabus;
   }
 
   ngOnInit(): void {
   }
 
   downloadSubject(subject: Subject) {
-    this.subjectService.pdf(subject.id).subscribe(() => {
-
+    this.subjectService.pdf(subject.id).subscribe(res => {
+      if (res) {
+        this.fileHelper.downloadItem(res.body, `Karta_Przedmiotu_${subject.namePl}_${this.syllabus.fieldOfStudy.code}_${this.syllabus.specialization.code}_${subject.academicYear}`);
+      }
     });
   }
 

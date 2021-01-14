@@ -10,20 +10,14 @@ import {NavbarService} from './services/navbar/navbar.service';
 })
 export class AppComponent implements AfterViewInit {
   title = 'syllabus-manager';
-  public onSideNavChange: boolean | undefined;
 
   constructor(
     translate: TranslateService,
     private readonly authService: AuthenticationService,
-    private readonly cd: ChangeDetectorRef,
-    private sidenavService: NavbarService
+    private readonly cd: ChangeDetectorRef
   ) {
     translate.setDefaultLang('pl');
     translate.use('pl');
-    this.sidenavService.sideNavState$.subscribe( res => {
-      console.log(res);
-      this.onSideNavChange = res;
-    });
   }
 
   ngAfterViewInit(): void {

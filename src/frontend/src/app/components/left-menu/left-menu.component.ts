@@ -1,5 +1,5 @@
-import { Component, Input,  OnInit } from '@angular/core';
-import { onSideNavChange, animateText } from '../../animations/animations';
+import {Component, Input, OnInit} from '@angular/core';
+import {onSideNavChange, animateText} from '../../animations/animations';
 import {MatSidenav} from '@angular/material/sidenav';
 import {NavbarService} from '../../services/navbar/navbar.service';
 
@@ -23,17 +23,21 @@ export class LeftMenuComponent implements OnInit {
   public linkText = false;
 
   public pages: Page[] = [
-    {name: 'Inbox', link: 'some-link', icon: 'home'},
-    {name: 'Starred', link: 'some-link', icon: 'get_app'},
-    {name: 'Send email', link: 'some-link', icon: 'filter_frames'},
-    {name: 'Send email', link: 'some-link', icon: 'insert_drive_file'},
-    {name: 'Send email', link: 'some-link', icon: 'school'},
-    {name: 'Send email', link: 'some-link', icon: 'settings'},
-    {name: 'Send email', link: 'some-link', icon: 'perm_identity'},
-    {name: 'Send email', link: 'some-link', icon: 'power_settings_new'},
+    {name: 'Strona główna', link: '/home', icon: 'home'},
+    {name: 'Dokumenty', link: '/documents', icon: 'get_app'},
+    {name: 'Programy studiów', link: '/syllabus', icon: 'filter_frames'},
+    {name: 'Przedmioty', link: '/subject', icon: 'insert_drive_file'},
+    {name: 'Efekty uczenia się', link: '/learning-outcome', icon: 'school'},
+    {name: 'Administracja', link: '/acceptance', icon: 'settings'}
   ];
 
-  constructor(private sidenavService: NavbarService) { }
+  public userNavigation: Page[] = [
+    {name: '', link: '/account', icon: 'perm_identity'},
+    {name: '', link: '/', icon: 'power_settings_new'},
+  ];
+
+  constructor(private sidenavService: NavbarService) {
+  }
 
   onSidenavToggle(): void {
     this.sideNavState = !this.sideNavState;

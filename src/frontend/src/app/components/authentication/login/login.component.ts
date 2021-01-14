@@ -12,8 +12,8 @@ import { TokenStorageService } from 'src/app/services/authentication/token-stora
 })
 export class LoginComponent implements OnInit {
   isLoading = false;
-  loginInvalid: boolean = false;
-  navigateUrl: string = '/';
+  loginInvalid = false;
+  navigateUrl = '/';
 
   loginForm: FormGroup;
 
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login() {
+  login(): void {
     this.isLoading = true;
     this.loginInvalid = false;
     const credentials = new UserCredentials(

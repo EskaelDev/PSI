@@ -44,7 +44,7 @@
           <a class="password-reset">
             Przypomnij hasło
           </a>
-          <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid">
+          <button mat-raised-button color="primary" class="login-button" [disabled]="!loginForm.valid" (click)="login()">
             Zaloguj
           </button>
         </div>

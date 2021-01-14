@@ -349,8 +349,6 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-src/backend/SyllabusManager.API/appsettings.Development.json
-
 src/backend/SyllabusManager.API/temp.pdf
 
 .idea/*

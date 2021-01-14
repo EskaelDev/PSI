@@ -21,7 +21,7 @@ export class SyllabusPickerComponent implements OnInit {
   download(choice: any) {
     this.syllabusService.pdfLatest(choice.fos.code, choice.spec.code, choice.year).subscribe(res => {
       if (res) {
-        this.fileHelper.downloadItem(res.body, `Program_Studiów__${choice.fos}_${choice.year}`);
+        this.fileHelper.downloadItem(res.body, `Program_Studiów__${choice.fos.code}_${choice.year}`);
       }
     });
   }

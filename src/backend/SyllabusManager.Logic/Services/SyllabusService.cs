@@ -40,6 +40,7 @@ namespace SyllabusManager.Logic.Services
                     && s.Specialization.Code == spec
                     && s.AcademicYear == year
                     && !s.IsDeleted);
+
             if (syllabus is null)
             {
                 syllabus = new Syllabus
@@ -65,14 +66,27 @@ namespace SyllabusManager.Logic.Services
         /// <returns></returns>
         public async Task<Syllabus> Save(Syllabus syllabus, SyllabusManagerUser user)
         {
-            if (syllabus.Id == Guid.Empty)
+            Syllabus currentDocument = await _dbSet.Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Include(s => s.Description)
+                .Include(s => s.SubjectDescriptions)
+                .ThenInclude(sd => sd.Subject)
+                .Include(s => s.PointLimits)
+                .OrderByDescending(s => s.Version)
+                .FirstOrDefaultAsync(s =>
+                    s.FieldOfStudy.Code == syllabus.FieldOfStudy.Code
+                    && s.Specialization.Code == syllabus.Specialization.Code
+                    && s.AcademicYear == syllabus.AcademicYear
+                    && !s.IsDeleted);
+
+            if (currentDocument is null)
             {
-                syllabus.Version = DateTime.UtcNow.ToString("yyyyMMdd") + "01";
+                syllabus.Version = NewVersion();
                 syllabus.CreationDate = DateTime.Now;
                 syllabus.AuthorName = user.Name;
             }
             else
-                syllabus.Version = IncreaseVersion(syllabus.Version);
+                syllabus.Version = IncreaseVersion(currentDocument.Version);
 
             syllabus.Id = Guid.NewGuid();
 
@@ -419,6 +433,11 @@ namespace SyllabusManager.Logic.Services
                 .GroupBy(s => new { s.FieldOfStudy, s.Specialization, s.AcademicYear })
                 .Select(g => g.OrderByDescending(s => s.Version)
                     .First()).ToList();
+        }
+
+        public static bool AreChanges(Syllabus previous, Syllabus current)
+        {
+            return true;
         }
     }
 }

@@ -32,19 +32,21 @@ namespace SyllabusManager.Logic.Services.Abstract
                        .FirstOrDefault(f => f.Code == fosCode)?.Supervisor.Id == user.Id;
         }
 
-        protected string IncreaseVersion(string version)
+        public string IncreaseVersion(string version)
         {
-            string newVersion = DateTime.UtcNow.ToString("yyyyMMdd");
+            string newVersion = DateTime.UtcNow.ToString("yyyy_MM_dd");
 
-            if (version.Substring(0, 8) == newVersion)
+            if (version.Substring(0, 10) == newVersion)
             {
-                string currentV = version.Substring(8);
+                string currentV = version[10..];
                 int newV = int.Parse(currentV) + 1;
-                return version.Substring(0, 8) + newV.ToString("00");
+                return version.Substring(0, 10) + "_" + newV.ToString("00");
             }
 
-            return newVersion + "01";
+            return newVersion + "_01";
         }
+
+        public string NewVersion() => DateTime.UtcNow.ToString("yyyy_MM_dd_") + "01";
 
         private string GetFosCode(Guid documentId)
         {

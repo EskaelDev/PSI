@@ -29,7 +29,7 @@ namespace SyllabusManager.Data.Models.Subjects
         public List<SubjectTeacher> SubjectsTeachers { get; set; } = new List<SubjectTeacher>();
         [NotMapped]
         public List<SyllabusManagerUser> Teachers { get; set; } = new List<SyllabusManagerUser>();
-        public Specialization Specialization { get; set; } = new Specialization();
+        public Specialization Specialization { get; set; }
         [NotMapped]
         public bool IsAdmin { get; set; }
         [NotMapped]

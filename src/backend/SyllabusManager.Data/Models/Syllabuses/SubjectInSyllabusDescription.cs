@@ -6,6 +6,6 @@ namespace SyllabusManager.Data.Models.Syllabuses
     {
         public int AssignedSemester { get; set; } = 0;
         public int? CompletionSemester { get; set; }
-        public Subject Subject { get; set; } = new Subject();
+        public Subject Subject { get; set; }
     }
 }

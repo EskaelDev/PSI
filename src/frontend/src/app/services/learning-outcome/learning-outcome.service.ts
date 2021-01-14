@@ -39,7 +39,7 @@ export class LearningOutcomeService {
     return this.http.get<LearningOutcomeDocument>(this.baseUrl + `/latest?fos=${fosCode}&year=${encodeURIComponent(year)}&readOnly=true`).pipe(
       catchError(err => {
         if (err.status === 404) {
-          this.alerts.showCustomErrorMessage('Brak dostępnych efektów uczenia się');
+          this.alerts.showCustomWarningMessage('Brak dostępnych efektów uczenia się');
         }
         else {
           this.alerts.showDefaultLoadingDataErrorMessage();
@@ -136,8 +136,13 @@ export class LearningOutcomeService {
 
   pdf(id: string): Observable<any> {
     return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
-      catchError(() => {
-        this.alerts.showDefaultDocumentDownloadFailMessage();
+      catchError(err => {
+        if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultDocumentDownloadFailMessage();
+        }
         return of(false);
       })
     );
@@ -145,8 +150,13 @@ export class LearningOutcomeService {
 
   pdfLatest(fos: string, year: string): Observable<any> {
     return this.http.get(this.baseUrl + `/pdf?fos=${fos}&year=${year}`, { observe: 'response', responseType: 'blob' }).pipe(
-      catchError(() => {
-        this.alerts.showDefaultDocumentDownloadFailMessage();
+      catchError(err => {
+        if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultDocumentDownloadFailMessage();
+        }
         return of(false);
       })
     );

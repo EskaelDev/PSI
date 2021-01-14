@@ -15,7 +15,7 @@ namespace SyllabusManager.Data.Models.Syllabuses
         public State State { get; set; } = State.Draft;
         public Option? StudentGovernmentOpinion { get; set; } = Option.Pending;
         public DateTime? OpinionDeadline { get; set; }
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTime CreationDate { get; set; }
         public DateTime? ApprovalDate { get; set; }
         public DateTime? ValidFrom { get; set; }
         public string StudentRepresentativeName { get; set; } = "";
@@ -28,7 +28,7 @@ namespace SyllabusManager.Data.Models.Syllabuses
         public string IntershipType { get; set; } = "";
         public SyllabusDescription Description { get; set; } = new SyllabusDescription();
         public List<SubjectInSyllabusDescription> SubjectDescriptions { get; set; } = new List<SubjectInSyllabusDescription>();
-        public Specialization Specialization { get; set; } = new Specialization();
+        public Specialization Specialization { get; set; }
         public List<PointLimit> PointLimits { get; set; } = new List<PointLimit>();
 
     }

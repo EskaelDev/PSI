@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SyllabusManager.Logic.Pdf;
 
 namespace SyllabusManager.Logic.Services
@@ -67,11 +68,29 @@ namespace SyllabusManager.Logic.Services
         /// <returns>Zapisany LearningOutcomeDocument</returns>
         public async Task<LearningOutcomeDocument> Save(LearningOutcomeDocument learningOutcome)
         {
-            if (learningOutcome.Id == Guid.Empty)
-                learningOutcome.Version = DateTime.UtcNow.ToString("yyyyMMdd") + "01";
-            else
-                learningOutcome.Version = IncreaseVersion(learningOutcome.Version);
+            var currentDocument = await _dbSet.AsNoTracking()
+                .Include(lod => lod.FieldOfStudy)
+                .ThenInclude(fs => fs.Specializations)
+                .Include(lod => lod.LearningOutcomes)
+                .ThenInclude(lo => lo.Specialization)
+                .Where(lod =>
+                    lod.IsDeleted == false
+                    && lod.AcademicYear == learningOutcome.AcademicYear
+                    && lod.FieldOfStudy.Code == learningOutcome.FieldOfStudy.Code
+                    && !lod.IsDeleted)
+                .OrderByDescending(lod => lod.Version)
+                .FirstOrDefaultAsync();
 
+            if (currentDocument is null)
+            {
+                learningOutcome.Version = NewVersion();
+            }
+            else
+            {
+                if (!AreChanges(currentDocument, learningOutcome)) return learningOutcome;
+                learningOutcome.Version = IncreaseVersion(currentDocument.Version);
+            }
+            
             learningOutcome.Id = Guid.NewGuid();
             learningOutcome.LearningOutcomes.ForEach(lo =>
             {
@@ -90,7 +109,6 @@ namespace SyllabusManager.Logic.Services
 
             return learningOutcome;
         }
-
 
         /// <summary>
         /// Zapisuje obiekt w najnowszej wersji ale jako inny obiekt o podanych parametrach
@@ -220,5 +238,11 @@ namespace SyllabusManager.Logic.Services
             return true;
         }
 
+        public static bool AreChanges(LearningOutcomeDocument previous, LearningOutcomeDocument current)
+        {
+            var previousJson = JsonConvert.SerializeObject(previous.LearningOutcomes.OrderBy(l => l.Symbol).ToList());
+            var currentJson = JsonConvert.SerializeObject(current.LearningOutcomes.OrderBy(l => l.Symbol).ToList());
+            return previousJson != currentJson;
+        }
     }
 }

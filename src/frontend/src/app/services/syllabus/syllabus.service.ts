@@ -169,8 +169,13 @@ export class SyllabusService {
         responseType: 'blob',
       })
       .pipe(
-        catchError(() => {
-          this.alerts.showDefaultDocumentDownloadFailMessage();
+        catchError(err => {
+          if (err.status === 404) {
+            this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+          }
+          else {
+            this.alerts.showDefaultDocumentDownloadFailMessage();
+          }
           return of(false);
         })
       );
@@ -197,8 +202,13 @@ export class SyllabusService {
         responseType: 'blob',
       })
       .pipe(
-        catchError(() => {
-          this.alerts.showDefaultDocumentDownloadFailMessage();
+        catchError(err => {
+          if (err.status === 404) {
+            this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+          }
+          else {
+            this.alerts.showDefaultDocumentDownloadFailMessage();
+          }
           return of(false);
         })
       );

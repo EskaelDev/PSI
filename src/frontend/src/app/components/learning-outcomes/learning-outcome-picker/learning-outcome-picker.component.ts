@@ -21,7 +21,7 @@ export class LearningOutcomePickerComponent implements OnInit {
   download(choice: any) {
     this.learningOutcomeService.pdfLatest(choice.fos.code, choice.year).subscribe(res => {
       if (res) {
-        this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${choice.fos}_${choice.year}`);
+        this.fileHelper.downloadItem(res.body, `EfektyKształcenia_${choice.fos.code}_${choice.year}`);
       }
     });
   }

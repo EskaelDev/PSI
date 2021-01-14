@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SyllabusManager.Logic.Pdf;
 
 namespace SyllabusManager.Logic.Services
@@ -25,12 +26,15 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<List<Subject>> GetAll(string fos, string spec, string year, SyllabusManagerUser user)
         {
-            IEnumerable<Guid> latestIds = _dbSet.AsNoTracking().Where(s =>
+            IEnumerable<Guid> latestIds = _dbSet.AsNoTracking()
+                .Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Where(s =>
                 s.FieldOfStudy.Code == fos
                 && s.Specialization.Code == spec
                 && s.AcademicYear == year
                 && !s.IsDeleted).ToList()
-                .GroupBy(s => new { s.FieldOfStudy, s.Specialization, s.AcademicYear })
+                .GroupBy(s => new { fos = s.FieldOfStudy.Code, spec = s.Specialization.Code, s.AcademicYear })
                 .Select(g => g.OrderByDescending(s => s.Version)
                     .First().Id);
 
@@ -91,20 +95,20 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<int> Save(Subject subject)
         {
+            Subject existing = await _dbSet.Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .FirstOrDefaultAsync(s =>
+                    s.AcademicYear == subject.AcademicYear
+                    && s.FieldOfStudy.Code == subject.FieldOfStudy.Code
+                    && s.Specialization.Code == subject.Specialization.Code
+                    && s.Code == subject.Code
+                    && !s.IsDeleted);
+
             if (subject.Id == Guid.Empty)
             {
-                Subject existing = await _dbSet.Include(s => s.FieldOfStudy)
-                    .Include(s => s.Specialization)
-                    .FirstOrDefaultAsync(s =>
-                        s.AcademicYear == subject.AcademicYear
-                        && s.FieldOfStudy.Code == subject.FieldOfStudy.Code
-                        && s.Specialization.Code == subject.Specialization.Code
-                        && s.Code == subject.Code
-                        && !s.IsDeleted);
-
                 if (existing != null) return 2;
 
-                subject.Version = DateTime.UtcNow.ToString("yyyyMMdd") + "01";
+                subject.Version = NewVersion();
                 subject.CardEntries.Add(new CardEntries()
                 {
                     Type = SubjectCardEntryType.Goal,
@@ -122,7 +126,7 @@ namespace SyllabusManager.Logic.Services
                 });
             }
             else
-                subject.Version = IncreaseVersion(subject.Version);
+                subject.Version = IncreaseVersion(existing.Version);
 
             subject.Id = Guid.NewGuid();
 
@@ -277,7 +281,9 @@ namespace SyllabusManager.Logic.Services
             return true;
         }
 
-
-
+        public static bool AreChanges(Subject previous, Subject current)
+        {
+            return true;
+        }
     }
 }

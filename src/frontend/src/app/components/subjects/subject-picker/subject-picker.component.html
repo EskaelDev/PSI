@@ -58,7 +58,7 @@
       >
     </div>
   </div>
-  <div *ngIf="filteredSubjects.length > 0">
+  <div *ngIf="filteredSubjects.length > 0 && !isLoading">
     <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">
       <div>{{ subject.code }}: {{ subject.namePl }}</div>
       <div>

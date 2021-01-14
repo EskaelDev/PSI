@@ -131,8 +131,13 @@ export class SubjectService {
 
   pdf(id: string): Observable<any> {
     return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
-      catchError(() => {
-        this.alerts.showDefaultDocumentDownloadFailMessage();
+      catchError(err => {
+        if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultDocumentDownloadFailMessage();
+        }
         return of(false);
       })
     );

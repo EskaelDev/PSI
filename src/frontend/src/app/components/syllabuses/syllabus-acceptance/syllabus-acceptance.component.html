@@ -5,15 +5,15 @@
   ></app-fos-year-filter>
   <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
     <app-document-tile
-      (click)="download(syllabus)"
       *ngFor="let syllabus of syllabuses"
-      [name]="syllabus.fieldOfStudy.name"
-      [spec]="syllabus.specialization.name"
+      [name]="syllabus.fieldOfStudy?.name"
+      [spec]="syllabus.specialization?.name"
       [year]="syllabus.academicYear"
     >
       <div fxLayoutAlign="center center" fxLayoutGap="30px">
-        <button (click)="reject(syllabus)">Odrzuć</button
-        ><button (click)="accept(syllabus)">Zaakceptuj</button>
+        <button mat-icon-button (click)="download(syllabus)"><mat-icon>save_alt</mat-icon></button>
+        <button mat-raised-button (click)="reject(syllabus)">Odrzuć <mat-icon>clear</mat-icon></button
+        ><button mat-raised-button (click)="accept(syllabus)">Zaakceptuj <mat-icon>done</mat-icon></button>
       </div>
     </app-document-tile>
   </div>

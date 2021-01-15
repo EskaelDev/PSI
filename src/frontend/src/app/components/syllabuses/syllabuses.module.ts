@@ -12,6 +12,8 @@ import { SylSubjectListElemComponent } from './syllabus-document/syl-doc-edit/sy
 import { SylAcceptanceComponent } from './syllabus-document/syl-acceptance/syl-acceptance.component';
 import { PointsLimitComponent } from './syllabus-document/syl-doc-edit/points-limit/points-limit.component';
 import { PointsElemComponent } from './syllabus-document/syl-doc-edit/points-limit/points-elem/points-elem.component';
+import { SylSubDetailsComponent } from './syllabus-document/syl-doc-edit/syl-subject/syl-subject-edit/syl-sub-details/syl-sub-details.component';
+import { SylVerificationComponent } from './syllabus-document/syl-acceptance/syl-verification/syl-verification.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,12 @@ import { PointsElemComponent } from './syllabus-document/syl-doc-edit/points-lim
     SylAcceptanceComponent,
     PointsLimitComponent,
     PointsElemComponent,
+    SylSubDetailsComponent,
+    SylVerificationComponent,
   ],
   imports: [SharedModule, SharedComponentsModule],
+  entryComponents: [
+    SylVerificationComponent
+  ]
 })
 export class SyllabusesModule {}

@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SyllabusManager.API.Controllers.Abstract;
 using SyllabusManager.Logic.Interfaces;
+using SyllabusManager.Logic.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using User = SyllabusManager.Logic.Models.DTO.UserDTO;
 
 namespace SyllabusManager.API.Controllers
 {
-
+    [Authorize]
     public class UserController : ApiControllerBase
     {
         private readonly IUserService _userService;
@@ -19,6 +21,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> ById(string id)
         {
             User result = await _userService.GetByIdAsync(id);
@@ -30,6 +33,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> ByEmail(string email)
         {
             User result = await _userService.GetByEmailAsync(email);
@@ -39,6 +43,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> All()
         {
             List<User> result = await _userService.GetAllAsync();
@@ -46,6 +51,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> Save([FromBody] User user)
         {
             User result = await _userService.AddOrUpdateAsync(user);
@@ -56,6 +62,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = UsersRoles.Admin)]
         public IActionResult ResetPassword(string id)
         {
             // todo: Reset password and send by email
@@ -64,6 +71,7 @@ namespace SyllabusManager.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> Delete(string id)
         {
             bool result = await _userService.DeleteAsync(id);

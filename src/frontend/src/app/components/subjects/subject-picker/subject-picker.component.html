@@ -52,28 +52,43 @@
     <div>
       <mat-checkbox [(ngModel)]="whereSupervisor" (change)="filterSubjects()"
         >Gdzie jestem opiekunem</mat-checkbox
-      ><br/>
+      ><br />
       <mat-checkbox [(ngModel)]="whereTeacher" (change)="filterSubjects()"
         >Gdzie jestem współprowadzącym</mat-checkbox
       >
     </div>
   </div>
-  <div *ngIf="filteredSubjects.length > 0">
+  <div *ngIf="filteredSubjects.length > 0 && !isLoading">
     <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">
       <div>{{ subject.code }}: {{ subject.namePl }}</div>
-      <button mat-raised-button color="primary" (click)="edit(subject)" *ngIf="subject.isAdmin || subject.isSupervisor">
-        <mat-icon style="margin-right: 5px">edit</mat-icon>Edytuj
-      </button>
-      <button mat-raised-button color="primary" (click)="edit(subject)" *ngIf="!subject.isAdmin && !subject.isSupervisor">
-        <mat-icon style="margin-right: 5px">visibility</mat-icon>Podgląd
-      </button>
+      <div>
+        <button mat-raised-button (click)="download(subject)">
+          <mat-icon style="margin-right: 5px">save_alt</mat-icon>PDF
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="edit(subject)"
+          *ngIf="subject.isAdmin || subject.isSupervisor"
+        >
+          <mat-icon style="margin-right: 5px">edit</mat-icon>Edytuj
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="edit(subject)"
+          *ngIf="!subject.isAdmin && !subject.isSupervisor"
+        >
+          <mat-icon style="margin-right: 5px">visibility</mat-icon>Podgląd
+        </button>
+      </div>
     </div>
   </div>
   <div
     *ngIf="
       filteredSubjects.length === 0 &&
-      (!selectedFos || !selectedSpec || !selectedYear)
-      && !isLoading
+      (!selectedFos || !selectedSpec || !selectedYear) &&
+      !isLoading
     "
   >
     Wypełnij wszystkie filtry aby załadować listę przedmiotów

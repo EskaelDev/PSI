@@ -8,10 +8,12 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication/authentication.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService,
+    private router: Router) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -21,6 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err.status === 401) {
           this.authenticationService.sessionExpired();
+          this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
         }
         return throwError(err);
       })

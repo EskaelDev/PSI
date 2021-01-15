@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SyllabusManager.Logic.Helpers;
+using SyllabusManager.Logic.Services;
 
 namespace SyllabusManager.API.Controllers
 {

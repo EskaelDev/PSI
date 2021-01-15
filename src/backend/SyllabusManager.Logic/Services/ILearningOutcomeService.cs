@@ -14,5 +14,7 @@ namespace SyllabusManager.Logic.Services
         Task<LearningOutcomeDocument> Save(LearningOutcomeDocument learningOutcome);
         Task<LearningOutcomeDocument> SaveAs(string fosCode, string academicYear, LearningOutcomeDocument learningOutcome);
         Task<bool> Delete(Guid id);
+        Task<bool> Pdf(Guid currentDocId);
+        Task<bool> Pdf(string fosCode, string academicYear);
     }
 }

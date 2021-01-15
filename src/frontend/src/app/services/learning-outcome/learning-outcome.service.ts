@@ -39,7 +39,7 @@ export class LearningOutcomeService {
     return this.http.get<LearningOutcomeDocument>(this.baseUrl + `/latest?fos=${fosCode}&year=${encodeURIComponent(year)}&readOnly=true`).pipe(
       catchError(err => {
         if (err.status === 404) {
-          this.alerts.showCustomErrorMessage('Brak dostępnych efektów uczenia się');
+          this.alerts.showCustomWarningMessage('Brak dostępnych efektów uczenia się');
         }
         else {
           this.alerts.showDefaultLoadingDataErrorMessage();
@@ -55,8 +55,12 @@ export class LearningOutcomeService {
         return true;
       }),
       catchError(err => {
+        console.log(err);
         if (err.status === 403) {
           this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 0 || err.status === 500) {
+          this.alerts.showDefaultErrorMessage();
         }
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
@@ -74,6 +78,9 @@ export class LearningOutcomeService {
       catchError(err => {
         if (err.status === 403) {
           this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do docelowego dokumentu');
+        }
+        else if (err.status === 0 || err.status === 500) {
+          this.alerts.showDefaultErrorMessage();
         }
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
@@ -94,6 +101,9 @@ export class LearningOutcomeService {
         }
         else if (err.status === 403) {
           this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
+        }
+        else if (err.status === 0 || err.status === 500) {
+          this.alerts.showDefaultErrorMessage();
         }
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
@@ -126,8 +136,27 @@ export class LearningOutcomeService {
 
   pdf(id: string): Observable<any> {
     return this.http.get(this.baseUrl + `/pdf/${id}`, { observe: 'response', responseType: 'blob' }).pipe(
-      catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+      catchError(err => {
+        if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultDocumentDownloadFailMessage();
+        }
+        return of(false);
+      })
+    );
+  }
+
+  pdfLatest(fos: string, year: string): Observable<any> {
+    return this.http.get(this.baseUrl + `/pdf?fos=${fos}&year=${year}`, { observe: 'response', responseType: 'blob' }).pipe(
+      catchError(err => {
+        if (err.status === 404) {
+          this.alerts.showCustomErrorMessage('Dokument nie istnieje!');
+        }
+        else {
+          this.alerts.showDefaultDocumentDownloadFailMessage();
+        }
         return of(false);
       })
     );
@@ -136,7 +165,7 @@ export class LearningOutcomeService {
   history(id: string): Observable<string[]> {
     return this.http.get<string[]>(this.baseUrl + `/history/${id}`).pipe(
       catchError(() => {
-        this.alerts.showDefaultErrorMessage();
+        this.alerts.showDefaultLoadingDataErrorMessage();
         return of([]);
       })
     );

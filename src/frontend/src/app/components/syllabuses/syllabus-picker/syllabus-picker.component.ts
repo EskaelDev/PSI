@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FileHelper } from 'src/app/helpers/FileHelper';
+import { SyllabusService } from 'src/app/services/syllabus/syllabus.service';
 
 @Component({
   selector: 'app-syllabus-picker',
@@ -9,15 +11,19 @@ import { Router } from '@angular/router';
 export class SyllabusPickerComponent implements OnInit {
   title = 'program studiów';
 
-  constructor(private readonly router: Router) { }
+  constructor(private readonly router: Router,
+    private syllabusService: SyllabusService,
+    private fileHelper: FileHelper) { }
 
   ngOnInit(): void {
   }
 
   download(choice: any) {
-    choice.fos;
-    choice.spec;
-    choice.year;
+    this.syllabusService.pdfLatest(choice.fos.code, choice.spec.code, choice.year).subscribe(res => {
+      if (res) {
+        this.fileHelper.downloadItem(res.body, `Program_Studiów__${choice.fos.code}_${choice.year}`);
+      }
+    });
   }
 
   edit(choice: any) {

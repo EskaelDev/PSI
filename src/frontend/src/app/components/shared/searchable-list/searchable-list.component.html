@@ -17,7 +17,7 @@
     <mat-icon>close</mat-icon>
   </button>
 </mat-form-field>
-<button (click)="newElement()">New element</button>
+<button mat-icon-button (click)="newElement()"><mat-icon>add</mat-icon></button>
 <div
   *ngFor="let element of filteredElements"
   (click)="selectElement(element)"

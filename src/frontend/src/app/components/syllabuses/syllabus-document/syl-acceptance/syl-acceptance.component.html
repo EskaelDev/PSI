@@ -14,9 +14,9 @@
         <span *ngIf="!document.studentGovernmentOpinion">brak oceny</span>
     </div>
     <div *ngIf="canSend(document)">
-        <button (click)="send()">{{getActionText(document)}}</button>
+        <button mat-raised-button color="accent" (click)="send()">{{getActionText(document)}}</button>
     </div>
-    <div>
-        <button (click)="verify()">Sprawdź poprawność dokumentu</button>
+    <div *ngIf="canSend(document)">
+        <button mat-raised-button color="primary" (click)="verify()">Sprawdź poprawność dokumentu</button>
     </div>
 </div>

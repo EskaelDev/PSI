@@ -7,9 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DocumentTileComponent implements OnInit {
 
-  @Input() name: string = '';
-  @Input() spec: string = '';
-  @Input() year: string = '';
+  @Input() name?: string = '';
+  @Input() spec?: string = '';
+  @Input() year?: string = '';
 
   constructor() { }
 

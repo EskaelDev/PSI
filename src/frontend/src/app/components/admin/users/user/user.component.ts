@@ -65,20 +65,42 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   removeUser() {
-    this.userService.deleteUser(this.originalUser.id).subscribe((result) => {
-      if (result) {
-        this.messageHub.notifyUsersChanged();
-        this.alerts.showCustomSuccessMessage('Użytkownik usunięty');
-      }
-    });
+    this.alerts
+      .showYesNoDialog(
+        'Usunięcie użytkownika',
+        `Czy napewno usunąć użytkownika ${this.originalUser.name}?`
+      )
+      .then((res) => {
+        if (res) {
+          this.userService
+            .deleteUser(this.originalUser.id)
+            .subscribe((result) => {
+              if (result) {
+                this.messageHub.notifyUsersChanged();
+                this.alerts.showCustomSuccessMessage('Użytkownik usunięty');
+              }
+            });
+        }
+      });
   }
 
   resetPassword() {
-    this.userService.resetPassword(this.originalUser.id).subscribe((result) => {
-      if (result) {
-        this.alerts.showCustomSuccessMessage('Hasło zresetowane');
-      }
-    });
+    this.alerts
+      .showYesNoDialog(
+        'Reset hasła',
+        `Czy napewno zresetować hasło użytkownika ${this.originalUser.name}?`
+      )
+      .then((res) => {
+        if (res) {
+          this.userService
+            .resetPassword(this.originalUser.id)
+            .subscribe((result) => {
+              if (result) {
+                this.alerts.showCustomSuccessMessage('Hasło zresetowane');
+              }
+            });
+        }
+      });
   }
 
   openEditRolesWindow() {

@@ -2,19 +2,34 @@
 {
     public enum KindOfSubject
     {
-		//modułów kształcenia ogólnego - język obcy
+
+        /// <summary>
+        ///modułów kształcenia ogólnego - język obcy
+        /// </summary>
         ForeignLanguage,
-		//modułów kształcenia ogólnego -  nauki humanistyczne
+        /// <summary>
+        ///modułów kształcenia ogólnego -  nauki humanistyczne
+        /// </summary>
         Humanistic,
-		//modułów kształcenia ogólnego - technologie informacyjne
+        /// <summary>
+        ///modułów kształcenia ogólnego - technologie informacyjne
+        /// </summary>
         InformationTechnology,
-		//modułów kształcenia ogólnego - sport
+        /// <summary>
+        ///modułów kształcenia ogólnego - sport
+        /// </summary>
         Sport,
-		//modułów z zakresu nauk podstawowych - fizyka
+        /// <summary>
+        ///modułów z zakresu nauk podstawowych - fizyka
+        /// </summary>
         Physics,
-		//modułów z zakresu nauk podstawowych - matematyka
+        /// <summary>
+        ///modułów z zakresu nauk podstawowych - matematyka
+        /// </summary>
         Maths,
-		//modułów z zakresu nauk podstawowych- Elektronika i miernictwo
+        /// <summary>
+        ///modułów z zakresu nauk podstawowych- Elektronika i miernictwo
+        /// </summary>
         ElectronicsAndMetrology
     }
 }

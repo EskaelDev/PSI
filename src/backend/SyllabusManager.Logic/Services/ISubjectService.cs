@@ -16,5 +16,6 @@ namespace SyllabusManager.Logic.Services
         Task<int> Save(Subject syllabus);
         Task<bool> Delete(Guid id);
         string GetSupervisorId(Guid documentId);
+        Task<bool> Pdf(Guid id);
     }
 }

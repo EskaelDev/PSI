@@ -107,12 +107,23 @@ export class FosComponent implements OnInit, OnDestroy {
   }
 
   removeFos() {
-    this.fosService.deleteFos(this.originalFos.code).subscribe((result) => {
-      if (result) {
-        this.messageHub.notifyFieldsOfStudiesChanged();
-        this.alerts.showCustomSuccessMessage('Kierunek usunięty');
-      }
-    });
+    this.alerts
+      .showYesNoDialog(
+        'Usunięcie kierunku',
+        `Czy napewno usunąć kierunek ${this.originalFos.name}?`
+      )
+      .then((res) => {
+        if (res) {
+          this.fosService
+            .deleteFos(this.originalFos.code)
+            .subscribe((result) => {
+              if (result) {
+                this.messageHub.notifyFieldsOfStudiesChanged();
+                this.alerts.showCustomSuccessMessage('Kierunek usunięty');
+              }
+            });
+        }
+      });
   }
 
   openEditSpecsWindow() {

@@ -2,17 +2,17 @@
 {
     public enum ModuleType
     {
-		//moduły specjalnościowe
+        //moduły specjalnościowe
         Specialization,
-		//moduł kształcenia ogólnego
+        //moduł kształcenia ogólnego
         General,
-		//moduły kierunkowe
+        //moduły kierunkowe
         FieldOfStudy,
-		//modułów z zakresu nauk podstawowych
+        //modułów z zakresu nauk podstawowych
         BasicScience,
-		//moduł praca dyplomowa
+        //moduł praca dyplomowa
         Thesis,
-		//moduł praktyki
+        //moduł praktyki
         Internship
     }
 }

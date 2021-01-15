@@ -42,11 +42,10 @@
           </mat-form-field>
       </form>
       <div>
-        <button mat-icon-button (click)="delete()"><mat-icon>delete_outline</mat-icon></button>
+        <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
         <button mat-icon-button (click)="save()" [disabled]="!subForm.valid"><mat-icon>done</mat-icon></button>
       </div>
     </div>
-    <div>Szczegóły</div>
-    
+    <app-syl-sub-details [subject]="tempSub"></app-syl-sub-details>
   </div>
   

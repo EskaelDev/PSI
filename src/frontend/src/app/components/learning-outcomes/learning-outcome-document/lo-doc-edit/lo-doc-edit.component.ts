@@ -59,7 +59,7 @@ export class LoDocEditComponent implements OnInit {
       this._document.learningOutcomes = this._document.learningOutcomes.sort((lo1, lo2) => lo1.symbol > lo2.symbol ? 1 : -1);
     }
     else {
-      this.alerts.showCustomErrorMessage('Efekt o podanym symbolu już istnieje!');
+      this.alerts.showValidationFailMessage('Efekt o podanym symbolu już istnieje!');
     }
   }
 

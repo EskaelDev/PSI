@@ -41,7 +41,9 @@ export class LoEditComponent implements OnInit {
   ngOnInit(): void {}
 
   save() {
-    this.savedLo.emit(Object.assign(new LearningOutcome(), this.loForm.value));
+    const newLo = Object.assign(new LearningOutcome(), this.loForm.value);
+    newLo.specialization = this._elem?.specialization;
+    this.savedLo.emit(newLo);
   }
 
   delete() {

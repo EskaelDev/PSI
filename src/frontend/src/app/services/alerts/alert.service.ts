@@ -6,6 +6,8 @@ import { YesNoDialogComponent } from 'src/app/components/shared/yes-no-dialog/ye
 const ERROR_MESSAGE = 'Coś poszło nie tak, spróbuj ponownie!';
 const LOADING_ERROR_MESSAGE = 'Błąd ładowania danych!';
 const DATA_ERROR_MESSAGE = 'Niepoprawne dane!';
+const DOC_DOWNLOAD_FAIL_MESSAGE = 'Błąd pobierania dokumentu!';
+const ELEMENT_SAVE_ERROR_MESSAGE = 'Zapis elementu nieudany!';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +41,15 @@ export class AlertService {
 
   public showCustomInfoMessage(customMessage: string) {
     this.toastrService.info(customMessage);
+  }
+
+  public showValidationFailMessage(validationMessage: string) {
+    this.showCustomWarningMessage(validationMessage);
+    this.showCustomErrorMessage(ELEMENT_SAVE_ERROR_MESSAGE);
+  }
+
+  public showDefaultDocumentDownloadFailMessage() {
+    this.showCustomErrorMessage(DOC_DOWNLOAD_FAIL_MESSAGE);
   }
 
   public showYesNoDialog(title: string, message: string): Promise<boolean> {

@@ -16,7 +16,7 @@ namespace SyllabusManager.Data.Models.Subjects
         public string Code { get; set; }
         [Required]
         public string NamePl { get; set; }
-        public string NameEng { get; set; }
+        public string NameEng { get; set; } = "";
         public ModuleType ModuleType { get; set; }
         public KindOfSubject KindOfSubject { get; set; }
         public MainLanguage Language { get; set; }
@@ -29,7 +29,7 @@ namespace SyllabusManager.Data.Models.Subjects
         public List<SubjectTeacher> SubjectsTeachers { get; set; } = new List<SubjectTeacher>();
         [NotMapped]
         public List<SyllabusManagerUser> Teachers { get; set; } = new List<SyllabusManagerUser>();
-        public Specialization Specialization{ get; set; }
+        public Specialization Specialization { get; set; }
         [NotMapped]
         public bool IsAdmin { get; set; }
         [NotMapped]

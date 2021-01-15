@@ -1,21 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SyllabusManager.Data;
 using SyllabusManager.Data.Models.LearningOutcomes;
+using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using SyllabusManager.Data.Models.User;
+using Newtonsoft.Json;
+using SyllabusManager.Logic.Pdf;
 
 namespace SyllabusManager.Logic.Services
 {
     public class LearningOutcomeService : DocumentInAcademicYearService<LearningOutcomeDocument>, ILearningOutcomeService
     {
-        public LearningOutcomeService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager) : base(dbContext, userManager)
-        {
+        private readonly ILearningOutcomePdf _learningOutcomePdf;
 
+        public LearningOutcomeService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager, ILearningOutcomePdf learningOutcomePdf) : base(dbContext, userManager)
+        {
+            _learningOutcomePdf = learningOutcomePdf;
         }
 
 
@@ -36,7 +40,6 @@ namespace SyllabusManager.Logic.Services
                                                                   && lod.AcademicYear == academicYear
                                                                   && lod.FieldOfStudy.Code == fosCode
                                                                   && !lod.IsDeleted)
-
                                                         .OrderByDescending(lod => lod.Version)
                                                         .FirstOrDefaultAsync();
             if (lodDb == null)
@@ -65,11 +68,29 @@ namespace SyllabusManager.Logic.Services
         /// <returns>Zapisany LearningOutcomeDocument</returns>
         public async Task<LearningOutcomeDocument> Save(LearningOutcomeDocument learningOutcome)
         {
-            if (learningOutcome.Id == Guid.Empty)
-                learningOutcome.Version = DateTime.UtcNow.ToString("yyyyMMdd") + "01";
-            else
-                learningOutcome.Version = IncreaseVersion(learningOutcome.Version);
+            var currentDocument = await _dbSet.AsNoTracking()
+                .Include(lod => lod.FieldOfStudy)
+                .ThenInclude(fs => fs.Specializations)
+                .Include(lod => lod.LearningOutcomes)
+                .ThenInclude(lo => lo.Specialization)
+                .Where(lod =>
+                    lod.IsDeleted == false
+                    && lod.AcademicYear == learningOutcome.AcademicYear
+                    && lod.FieldOfStudy.Code == learningOutcome.FieldOfStudy.Code
+                    && !lod.IsDeleted)
+                .OrderByDescending(lod => lod.Version)
+                .FirstOrDefaultAsync();
 
+            if (currentDocument is null)
+            {
+                learningOutcome.Version = NewVersion();
+            }
+            else
+            {
+                if (!AreChanges(currentDocument, learningOutcome)) return learningOutcome;
+                learningOutcome.Version = IncreaseVersion(currentDocument.Version);
+            }
+            
             learningOutcome.Id = Guid.NewGuid();
             learningOutcome.LearningOutcomes.ForEach(lo =>
             {
@@ -88,7 +109,6 @@ namespace SyllabusManager.Logic.Services
 
             return learningOutcome;
         }
-
 
         /// <summary>
         /// Zapisuje obiekt w najnowszej wersji ale jako inny obiekt o podanych parametrach
@@ -118,13 +138,15 @@ namespace SyllabusManager.Logic.Services
         /// <returns></returns>
         public async Task<LearningOutcomeDocument> ImportFrom(Guid currentDocId, string fosCode, string academicYear)
         {
-            LearningOutcomeDocument currentLod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
-                                                        .Include(lod => lod.LearningOutcomes)
-                                                        .FirstOrDefaultAsync(l =>
-                                                                                 l.Id == currentDocId
-                                                                              && !l.IsDeleted);
+            LearningOutcomeDocument currentLod = await _dbSet.AsNoTracking()
+                                                             .Include(lod => lod.FieldOfStudy)
+                                                             .Include(lod => lod.LearningOutcomes)
+                                                             .FirstOrDefaultAsync(l =>
+                                                                                      l.Id == currentDocId
+                                                                                   && !l.IsDeleted);
 
-            LearningOutcomeDocument lod = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
+            LearningOutcomeDocument lod = await _dbSet.AsNoTracking()
+                                                      .Include(lod => lod.FieldOfStudy)
                                                       .Include(lod => lod.LearningOutcomes)
                                                       .ThenInclude(lo => lo.Specialization)
                                                       .Where(lod =>
@@ -162,17 +184,65 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<bool> Delete(Guid id)
         {
-            var entity = _dbSet.Include(lod => lod.FieldOfStudy).FirstOrDefault(f => f.Id == id);
+            LearningOutcomeDocument lod = _dbSet.Include(l => l.FieldOfStudy).FirstOrDefault(f => f.Id == id);
 
-            var learningOutcomes = await _dbSet.Include(s => s.FieldOfStudy)
+            List<LearningOutcomeDocument> learningOutcomes = await _dbSet.Include(s => s.FieldOfStudy)
                 .Where(s =>
-                    s.FieldOfStudy == entity.FieldOfStudy
-                    && s.AcademicYear == entity.AcademicYear
+                    s.FieldOfStudy == lod.FieldOfStudy
+                    && s.AcademicYear == lod.AcademicYear
                     && !s.IsDeleted).ToListAsync();
 
             learningOutcomes.ForEach(s => s.IsDeleted = true);
-            var state = await _dbContext.SaveChangesAsync();
+            int state = await _dbContext.SaveChangesAsync();
             return state > 0;
+        }
+
+
+        public async Task<bool> Pdf(Guid currentDocId)
+        {
+            LearningOutcomeDocument lod = await _dbSet.AsNoTracking()
+                                  .Include(lod => lod.FieldOfStudy)
+                                  .ThenInclude(fos => fos.Supervisor)
+                                  .Include(lod => lod.LearningOutcomes)
+                                  .ThenInclude(lo => lo.Specialization)
+                                  .FirstOrDefaultAsync(l =>
+                                                           l.Id == currentDocId
+                                                        && l.IsDeleted == false);
+            if (lod is null)
+                return false;
+
+            _learningOutcomePdf.Create(lod);
+
+            return true;
+        }
+
+        public async Task<bool> Pdf(string fosCode, string academicYear)
+        {
+            LearningOutcomeDocument lod = await _dbSet.AsNoTracking()
+                                  .Include(lod => lod.FieldOfStudy)
+                                  .ThenInclude(fos => fos.Supervisor)
+                                  .Include(lod => lod.LearningOutcomes)
+                                  .ThenInclude(lo => lo.Specialization)
+                                  .Where(lod =>
+                                               lod.IsDeleted == false
+                                            && lod.AcademicYear == academicYear
+                                            && lod.FieldOfStudy.Code == fosCode
+                                            && !lod.IsDeleted)
+                                  .OrderByDescending(lod => lod.Version)
+                                  .FirstOrDefaultAsync();
+            if (lod is null)
+                return false;
+
+            _learningOutcomePdf.Create(lod);
+
+            return true;
+        }
+
+        public static bool AreChanges(LearningOutcomeDocument previous, LearningOutcomeDocument current)
+        {
+            var previousJson = JsonConvert.SerializeObject(previous.LearningOutcomes.OrderBy(l => l.Symbol).ToList());
+            var currentJson = JsonConvert.SerializeObject(current.LearningOutcomes.OrderBy(l => l.Symbol).ToList());
+            return previousJson != currentJson;
         }
     }
 }

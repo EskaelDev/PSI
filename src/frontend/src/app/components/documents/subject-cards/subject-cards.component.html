@@ -1,11 +1,11 @@
 <div>
     <h1 mat-dialog-title>Karty przedmiotów</h1>
-    <div mat-dialog-content>
+    <div mat-dialog-content style="height: 340px;">
       <mat-list role="list" style="height: 330px; overflow: auto" *ngIf="subjects.length > 0">
         <mat-list-item role="listitem" *ngFor="let subject of subjects"
-          ><div><span class="round-title">{{subject.namePl}}</span></div>
-          <button mat-mini-fab color="accent" class="download-btn" (click)="downloadSubject(subject)">
-            <mat-icon>get_app</mat-icon>
+          ><div><span>{{subject.namePl}}</span></div>
+          <button mat-icon-button (click)="downloadSubject(subject)">
+            <mat-icon>save_alt</mat-icon>
           </button></mat-list-item
         >
       </mat-list>

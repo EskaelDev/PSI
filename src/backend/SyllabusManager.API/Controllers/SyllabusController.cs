@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SyllabusManager.API.Controllers.Abstract;
+using SyllabusManager.API.Helpers;
 using SyllabusManager.Data.Models.Syllabuses;
+using SyllabusManager.Data.Models.User;
+using SyllabusManager.Logic.Helpers;
 using SyllabusManager.Logic.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using SyllabusManager.API.Helpers;
-using SyllabusManager.Data.Models.User;
+using Microsoft.AspNetCore.Authorization;
+using SyllabusManager.Logic.Models;
 
 namespace SyllabusManager.API.Controllers
 {
@@ -28,6 +32,7 @@ namespace SyllabusManager.API.Controllers
         /// <param name="year">Academic year</param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Latest(
                                                 [FromQuery] string fos,
                                                 [FromQuery] string spec,
@@ -35,8 +40,8 @@ namespace SyllabusManager.API.Controllers
         {
             if (!await CheckIfUserIsFosSupervisor(fos)) return Forbid();
 
-            var result = await _syllabusService.Latest(fos, spec, year);
-            
+            Syllabus result = await _syllabusService.Latest(fos, spec, year);
+
             if (result is null) return NotFound();
             return Ok(result);
         }
@@ -47,13 +52,14 @@ namespace SyllabusManager.API.Controllers
         /// <param name="syllabus"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Save([FromBody] Syllabus syllabus)
         {
             if (!await CheckIfUserIsFosSupervisor(syllabus.FieldOfStudy.Code)) return Forbid();
 
-            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            var result = await _syllabusService.Save(syllabus, user);
-            
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            Syllabus result = await _syllabusService.Save(syllabus, user);
+
             if (result is null) return BadRequest();
             return Ok(result);
         }
@@ -68,6 +74,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
 
         [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> SaveAs([FromQuery] string fos,
                                                 [FromQuery] string spec,
                                                 [FromQuery] string year,
@@ -75,9 +82,9 @@ namespace SyllabusManager.API.Controllers
         {
             if (!await CheckIfUserIsFosSupervisor(fos)) return Forbid();
 
-            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            var result = await _syllabusService.SaveAs(fos, spec, year, syllabus, user);
-            
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            Syllabus result = await _syllabusService.SaveAs(fos, spec, year, syllabus, user);
+
             if (result is null) return BadRequest();
             return Ok();
         }
@@ -93,6 +100,7 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> ImportFrom(Guid currentDocId,
                                                    [FromQuery] string fos,
                                                    [FromQuery] string spec,
@@ -100,9 +108,9 @@ namespace SyllabusManager.API.Controllers
         {
             if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
 
-            var user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
-            var result = await _syllabusService.ImportFrom(currentDocId, fos, spec, year, user);
-            
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            Syllabus result = await _syllabusService.ImportFrom(currentDocId, fos, spec, year, user);
+
             if (result is null) return NotFound();
             return Ok();
         }
@@ -114,25 +122,82 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> Delete(Guid currentDocId)
         {
             if (!await CheckIfUserIsFosSupervisor(currentDocId)) return Forbid();
 
             bool result = await _syllabusService.Delete(currentDocId);
-            
+
             if (result) return Ok();
             return NotFound();
         }
 
-        // todo: /pdf/{currentDocId}?version={version} -> generuje pdf z wersji
+
         [HttpGet]
         [Route("{currentDocId}")]
-        public async Task<IActionResult> Pdf(Guid currentDocId,
-                                            [FromQuery] string version)
+        public async Task<IActionResult> Pdf(Guid currentDocId)
         {
-            return Ok("Not implemented");
+            bool result = await _syllabusService.Pdf(currentDocId);
+            if (result == false)
+            {
+                return NotFound();
+            }
+
+            MemoryStream memory = new MemoryStream();
+            using (FileStream stream = new FileStream(PdfHelper.PATH_PAGED, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
+
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Pdf([FromQuery] string fos,
+                                             [FromQuery] string spec,
+                                             [FromQuery] string year)
+        {
+            bool result = await _syllabusService.Pdf(fos, spec, year);
+            if (result == false)
+            {
+                return NotFound();
+            }
+
+            MemoryStream memory = new MemoryStream();
+            using (FileStream stream = new FileStream(PdfHelper.PATH_PAGED, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
+
+        }
+
+
+        [HttpGet]
+        [Route("{currentDocId}")]
+        public async Task<IActionResult> PlanPdf(Guid currentDocId)
+        {
+            bool result = await _syllabusService.PlanPdf(currentDocId);
+            if (result == false)
+            {
+                return NotFound();
+            }
+
+            MemoryStream memory = new MemoryStream();
+            using (FileStream stream = new FileStream(PdfHelper.PATH_PAGED, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return File(memory, "application/pdf", true);
+
+        }
 
         /// <summary>
         /// Pobiera historię wersji (jako lista string z nazwami wersji)
@@ -141,12 +206,76 @@ namespace SyllabusManager.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{currentDocId}")]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
         public async Task<IActionResult> History(Guid currentDocId)
         {
             List<string> result = await _syllabusService.History(currentDocId);
             if (result is null)
                 return NotFound();
             return Ok(result);
+        }
+
+        [HttpPut]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
+        public IActionResult Verify([FromBody] Syllabus syllabus)
+        {
+            return Ok(_syllabusService.Verify(syllabus));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = UsersRoles.AdminTeacher)]
+        public async Task<IActionResult> SendToAcceptance([FromBody] Syllabus syllabus)
+        {
+            if (!await CheckIfUserIsFosSupervisor(syllabus.FieldOfStudy.Code)) return Forbid();
+
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = await _syllabusService.SendToAcceptance(syllabus, user);
+
+            if (!result) return BadRequest();
+            return Ok();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = UsersRoles.AdminStudentGovernment)]
+        public IActionResult ToAccept(
+            [FromQuery] string fos,
+            [FromQuery] string spec,
+            [FromQuery] string year)
+        {
+            return Ok(_syllabusService.ToAccept(fos, spec, year));
+        }
+
+        [HttpGet]
+        public IActionResult Documents(
+            [FromQuery] string fos,
+            [FromQuery] string spec,
+            [FromQuery] string year)
+        {
+            return Ok(_syllabusService.Documents(fos, spec, year));
+        }
+
+        [HttpPut]
+        [Route("{syllabusId}")]
+        [Authorize(Roles = UsersRoles.AdminStudentGovernment)]
+        public async Task<IActionResult> Accept(Guid syllabusId)
+        {
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = _syllabusService.Accept(syllabusId, user);
+
+            if (!result) return BadRequest();
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{syllabusId}")]
+        [Authorize(Roles = UsersRoles.AdminStudentGovernment)]
+        public async Task<IActionResult> Reject(Guid syllabusId)
+        {
+            SyllabusManagerUser user = await AuthenticationHelper.GetAuthorizedUser(HttpContext.User, _userManager);
+            var result = _syllabusService.Reject(syllabusId, user);
+
+            if (!result) return BadRequest();
+            return Ok();
         }
     }
 }

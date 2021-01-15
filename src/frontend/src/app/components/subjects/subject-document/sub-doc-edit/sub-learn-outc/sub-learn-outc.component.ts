@@ -56,7 +56,7 @@ export class SubLearnOutcComponent implements OnInit {
     this._document.learningOutcomeEvaluations.push(learn);
     }
     else {
-      this.alerts.showCustomErrorMessage('Literatura o podanym numerze ISBN już istnieje!');
+      this.alerts.showValidationFailMessage('Wybrany kod efektu uczenia się jest już opisany!');
     }
   }
 

@@ -28,7 +28,7 @@ export class LeftMenuComponent implements OnInit {
     {name: 'Programy studiów', link: '/syllabus', icon: 'filter_frames'},
     {name: 'Przedmioty', link: '/subject', icon: 'insert_drive_file'},
     {name: 'Efekty uczenia się', link: '/learning-outcome', icon: 'school'},
-    {name: 'Administracja', link: '/acceptance', icon: 'settings'}
+    {name: 'Administracja', link: '/syllabus/acceptance', icon: 'settings'}
   ];
 
   public userNavigation: Page[] = [

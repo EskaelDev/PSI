@@ -25,8 +25,8 @@ export class LeftMenuComponent implements OnInit {
   public pages: Page[] = [
     {name: 'Strona główna', link: '/home', icon: 'home'},
     {name: 'Dokumenty', link: '/documents', icon: 'get_app'},
-    {name: 'Programy studiów', link: '/syllabus', icon: 'filter_frames'},
-    {name: 'Przedmioty', link: '/subject', icon: 'insert_drive_file'},
+    {name: 'Programy studiów', link: '/syllabus/choose', icon: 'filter_frames'},
+    {name: 'Przedmioty', link: '/subject/choose', icon: 'insert_drive_file'},
     {name: 'Efekty uczenia się', link: '/learning-outcome/choose', icon: 'school'},
     {name: 'Administracja', link: '/syllabus/acceptance', icon: 'settings'}
   ];

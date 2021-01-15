@@ -1,7 +1,13 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - psi-syllabus-manager
+name: Depoly backend to Azure
+
+
+env:
+  AZURE_WEBAPP_NAME: psi-syllabus-manager    # set this to your application's name
+  DOTNET_ROOT: '/src/backend/SyllabusManager.API/'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '5.0'           # set this to the dot net version to use
 
 on:
   push:

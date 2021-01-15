@@ -21,16 +21,6 @@ namespace SyllabusManager.API.Controllers
             _userManager = userManager;
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegistrationModel registrationModel)
-        {
-            Logic.Models.DTO.UserDTO result = await _authService.RegisterUser(registrationModel);
-            if (result == null)
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            return Ok();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {

@@ -13,30 +13,25 @@
   <div class="login-form-container">
     <img class="logo-bez-tla" src="/assets/logo_bez_tla.png">
     <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
-      <mat-error *ngIf="loginInvalid" i18n="Form Login|@@LoginNotFound">
-        The username and password were not recognised
-      </mat-error>
       <mat-form-field class="login-element">
         <input
           matInput
           placeholder="Email"
-          i18n-placeholder="Form Login|@@EmailPlaceholder"
           formControlName="email"
           required
         />
-        <mat-error i18n="Form Login|@@EmailInvalid">Please provide a valid email address</mat-error>
+        <mat-error>Pole wymagane</mat-error>
       </mat-form-field>
       <br/>
       <mat-form-field class="login-element">
         <input
           matInput
           type="password"
-          placeholder="Password"
-          i18n-placeholder="Form Login|@@PasswordPlaceholder"
+          placeholder="Hasło"
           formControlName="password"
           required
         />
-        <mat-error i18n="Form Login|@@PasswordInvalid">Please provide a valid password</mat-error>
+        <mat-error>Pole wymagane</mat-error>
       </mat-form-field>
       <br/>
       <div class="controls-container">

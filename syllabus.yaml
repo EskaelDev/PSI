@@ -1,0 +1,99 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: back
+    labels:
+      app: back
+  spec:
+    selector:
+      app: back
+    ports:
+    - name: "5000"
+      port: 5000
+      targetPort: 5000
+    type: LoadBalancer
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: front
+    labels:
+      app: front
+  spec:
+    selector:
+      app: front
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+    type: LoadBalancer
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: back
+    labels:
+      app: back
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: back
+    template:
+      metadata:
+        labels:
+          app: back
+      spec:
+        containers:
+        - name: back
+          image: kingapwr/syllabus-back
+          ports:
+          - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /api/test/IsAlive
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /api/test/IsAlive
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 15
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: front
+    labels:
+      app: front
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: front
+    template:
+      metadata:
+        labels:
+          app: front
+      spec:
+        containers:
+        - name: front
+          image: kingapwr/syllabus-front         
+          ports:
+          - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+kind: List

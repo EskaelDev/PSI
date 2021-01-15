@@ -6,7 +6,8 @@ name: Depoly backend to Azure
 
 env:
   AZURE_WEBAPP_NAME: psi-syllabus-manager    # set this to your application's name
-  DOTNET_ROOT: src/backend      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_ROOT: src/backend/SyllabusManager.API      # set this to the path to your web app project, defaults to the repository root
+  PROJ_PATH: src/backend/SyllabusManager.API/SyllabusManager.API.csproj
   DOTNET_VERSION: '5.0'           # set this to the dot net version to use
 
 on:
@@ -27,12 +28,10 @@ jobs:
         dotnet-version: '5.0.x'
 
     - name: Build with dotnet
-      run: dotnet build --configuration Release
-      working-directory: ${{env.DOTNET_ROOT}}
+      run: dotnet build ${{env.PROJ_PATH}} --configuration Release
 
     - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-      working-directory: ${{env.DOTNET_ROOT}}
+      run: dotnet publish ${{env.PROJ_PATH}} -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2

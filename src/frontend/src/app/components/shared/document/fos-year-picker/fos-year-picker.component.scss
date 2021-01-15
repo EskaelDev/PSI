@@ -1,0 +1,33 @@
+h2{
+  left: -130px;
+  top: -130px;
+  position: absolute;
+  overflow: visible;
+  width: 535px;
+  white-space: nowrap;
+  text-align: left;
+  font-style: normal;
+  font-weight: lighter;
+  font-size: 45px;
+  color: rgba(255, 255, 255, 1);
+}
+
+
+.dropdown{
+  width: 230px
+}
+
+.buttons{
+  position: relative;
+  left: 30px;
+  margin: auto;
+
+  button{
+    margin: 20px;
+  }
+
+  mat-icon{
+    font-size: 45px;
+    width: 45px;
+  }
+}

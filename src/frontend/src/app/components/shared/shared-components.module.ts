@@ -15,6 +15,7 @@ import { YearSubjectPickerComponent } from './document/year-subject-picker/year-
 import { FrameComponent } from './frame/frame.component';
 import { FosYearFilterComponent } from './documents-view/fos-year-filter/fos-year-filter.component';
 import { DocumentTileComponent } from './documents-view/document-tile/document-tile.component';
+import { BackgroudLoggedInComponent } from './backgroud-logged-in/backgroud-logged-in.component';
 
 @NgModule({
   declarations: [
@@ -33,23 +34,25 @@ import { DocumentTileComponent } from './documents-view/document-tile/document-t
     FrameComponent,
     FosYearFilterComponent,
     DocumentTileComponent,
+    BackgroudLoggedInComponent,
   ],
   imports: [SharedModule],
-  exports: [
-    SearchableListComponent,
-    ElementEditComponent,
-    AdminComponent,
-    FosYearPickerComponent,
-    FosDetailsComponent,
-    ControlButtonsPanelComponent,
-    DocumentComponent,
-    FosYearPopupPickerComponent,
-    HistoryPopupComponent,
-    YesNoDialogComponent,
-    FrameComponent,
-    FosYearFilterComponent,
-    DocumentTileComponent
-  ],
+    exports: [
+        SearchableListComponent,
+        ElementEditComponent,
+        AdminComponent,
+        FosYearPickerComponent,
+        FosDetailsComponent,
+        ControlButtonsPanelComponent,
+        DocumentComponent,
+        FosYearPopupPickerComponent,
+        HistoryPopupComponent,
+        YesNoDialogComponent,
+        FrameComponent,
+        FosYearFilterComponent,
+        DocumentTileComponent,
+        BackgroudLoggedInComponent
+    ],
   entryComponents: [
     FosYearPopupPickerComponent,
     HistoryPopupComponent,

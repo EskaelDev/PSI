@@ -1,6 +1,6 @@
 <div class="mat-typography app-frame mat-app-background">
   <!--    <app-login></app-login>-->
-  <mat-sidenav-container class="sidenav-container" *ngIf="false">
+  <mat-sidenav-container class="sidenav-container" *ngIf="true">
     <mat-sidenav #leftSidenav mode="side" opened>
       <app-left-menu></app-left-menu>
     </mat-sidenav>
@@ -13,7 +13,7 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 
-  <router-outlet *ngIf="!loggedIn"></router-outlet>
+<!--  <router-outlet *ngIf="!loggedIn"></router-outlet>-->
 
 </div>
 

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeLayoutComponent } from './home-layout.component';
+import { BackgroudLoggedInComponent } from './backgroud-logged-in.component';
 
-describe('HomeLayoutComponent', () => {
-  let component: HomeLayoutComponent;
-  let fixture: ComponentFixture<HomeLayoutComponent>;
+describe('BackgroudLoggedInComponent', () => {
+  let component: BackgroudLoggedInComponent;
+  let fixture: ComponentFixture<BackgroudLoggedInComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeLayoutComponent ]
+      declarations: [ BackgroudLoggedInComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeLayoutComponent);
+    fixture = TestBed.createComponent(BackgroudLoggedInComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

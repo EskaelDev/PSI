@@ -29,7 +29,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.authService.loadLoggedInUser();
-    // this.loggedIn = true;
     this.cd.detectChanges();
   }
 }

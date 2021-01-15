@@ -1,0 +1,189 @@
+body {
+  font-size: 1vw;
+  font-family: Microsoft Sans Serif;
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: rgba(28, 30, 35, 1);
+  background-color: rgba(28, 30, 35, 1);
+  overflow: hidden;
+  display: flex;
+  --web-scale-on-resize: true;
+  --web-enable-deep-linking: true;
+  font-size: 1.21vw;
+}
+
+
+#background {
+  #polygon-left {
+    overflow: visible;
+    position: absolute;
+    width: 75.8%;
+    height: 80.2%;
+    transform: matrix(1, 0, 0, 1, -583.1332, -93.9199) rotate(-18deg);
+    transform-origin: center;
+    left: 0px;
+    top: 0px;
+
+    path {
+      opacity: 0.57;
+      fill: rgba(188, 158, 35, 1);
+      stroke: rgba(188, 158, 35, 1);
+      stroke-width: 1px;
+      stroke-linejoin: miter;
+      stroke-linecap: butt;
+      stroke-miterlimit: 4;
+      shape-rendering: auto;
+    }
+  }
+
+  #polygon-right {
+    filter: drop-shadow(0px 25px 49px rgba(0, 0, 0, 0.161));
+    overflow: visible;
+    position: absolute;
+    width: 148%;
+    height: 108.23%;
+    transform: matrix(1, 0, 0, 1, -238, -6) rotate(180deg);
+    transform-origin: center;
+    left: 0px;
+    top: 0px;
+
+    path {
+      opacity: 0.92;
+      fill: rgba(154, 52, 45, 1);
+    }
+  }
+}
+
+.buttons{
+
+}
+
+#button_syllabus {
+  position: absolute;
+  width: 511px;
+  height: 414px;
+  left: 473px;
+  top: 267px;
+  overflow: visible;
+  background-color: rgba(39, 42, 49, 1);
+
+  #Programy_studiw {
+    left: 300px;
+    top: 363px;
+    position: absolute;
+    font-family: Microsoft Sans Serif;
+    font-size: 24px;
+    color: rgba(216, 213, 206, 1);
+  }
+
+  #school_icon{
+      width: 332.875px;
+      height: 152.97px;
+      left: 563.746px;
+      top: 391px;
+      top: 391px;
+      font-size: 48px;
+    }
+  .material-icons.md-18 { font-size: 18px; }
+}
+
+#button_learning_outcome{
+  position: absolute;
+  width: 511px;
+  height: 170px;
+  left: 473px;
+  top: 686px;
+  overflow: visible;
+  background-color: rgba(39, 42, 49, 1);
+
+  #Efekty_uczenia_si {
+    left: 300px;
+    top: 124px;
+    position: absolute;
+    overflow: visible;
+    font-family: Microsoft Sans Serif;
+    font-size: 24px;
+    color: rgba(216, 213, 206, 1);
+  }
+}
+
+#button_docs{
+  position: absolute;
+  width: 492px;
+  height: 170px;
+  left: 988px;
+  top: 267px;
+  overflow: visible;
+  background-color: rgba(39, 42, 49, 1);
+
+  #Dokumenty {
+    left: 347px;
+    top: 118px;
+    position: absolute;
+    font-family: Microsoft Sans Serif;
+    font-size: 24px;
+    color: rgba(216, 213, 206, 1);
+  }
+}
+
+#button_accept{
+  position: absolute;
+  width: 242px;
+  height: 241px;
+  left: 988px;
+  top: 441px;
+  overflow: visible;
+  background-color: rgba(39, 42, 49, 1);
+
+  #Akceptacja {
+    left: 102px;
+    top: 189px;
+    position: absolute;
+    font-family: Microsoft Sans Serif;
+    font-size: 24px;
+    color: rgba(216, 213, 206, 1);
+  }
+}
+
+#button_subject{
+  position: absolute;
+  width: 246px;
+  height: 241px;
+  left: 1234px;
+  top: 441px;
+  overflow: visible;
+  background-color: rgba(39, 42, 49, 1);
+
+  #Przedmioty {
+    left: 105px;
+    top: 190px;
+    position: absolute;
+    font-family: Microsoft Sans Serif;
+    font-size: 24px;
+    color: rgba(216, 213, 206, 1);
+  }
+}
+
+#button_admin{
+  position: absolute;
+  width: 492px;
+  height: 170px;
+  left: 988px;
+  top: 686px;
+  overflow: visible;
+  background-color: rgba(39, 42, 49, 1);
+
+  #Administracja {
+    left: 323px;
+    top: 123px;
+    position: absolute;
+    font-family: Microsoft Sans Serif;
+    font-size: 24px;
+    color: rgba(216, 213, 206, 1);
+  }
+}
+

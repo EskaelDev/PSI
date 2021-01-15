@@ -1,14 +1,52 @@
-<ng-template ngxPermissionsOnly="Admin"
-  ><button [routerLink]="'/admin/menu'">Administracja</button></ng-template
->
-<ng-template [ngxPermissionsOnly]="['Admin', 'Teacher']"
-  ><button [routerLink]="'/learning-outcome/choose'">Efekty uczenia się</button>
-  <button [routerLink]="'/subject/choose'">Przedmioty</button>
-  <button [routerLink]="'/syllabus/choose'">Programy studiów (edycja)</button></ng-template
->
-<ng-template [ngxPermissionsOnly]="['Admin', 'StudentGovernment']"
-  ><button [routerLink]="'/syllabus/acceptance'">
-    Programy studiów (akceptacja)
-  </button></ng-template
->
-<button [routerLink]="'/documents'">Dokumenty</button>
+<div class="container">
+  <div id="background">
+    <svg id="polygon-left" viewBox="0 0 1454 809" preserveAspectRatio="xMidYMin slice">
+      <path d="M 726.9999389648438 0 L 1454 809 L 0 809 Z">
+      </path>
+    </svg>
+    <svg id="polygon-right" viewBox="0 0 2840 1092" preserveAspectRatio="xMidYMin slice">
+      <path d="M 1419.999877929688 0 L 2840 1092 L 0 1092 Z">
+      </path>
+    </svg>
+  </div>
+</div>
+
+<div id="HomePanel">
+  <div class="buttons_container">
+    <ng-template [ngxPermissionsOnly]="['Admin', 'Teacher']">
+      <button mat-button id="button_syllabus" [routerLink]="'/syllabus/choose'">
+        <mat-icon id="school_icon" class="material-icons.md-48 ">school</mat-icon>
+        <span id="Programy_studiw">Programy studiów</span>
+      </button>
+
+      <button mat-button id="button_learning_outcome" [routerLink]="'/learning-outcome/choose'">
+        <mat-icon>filter_frames</mat-icon>
+        <span id="Efekty_uczenia_si">Efekty uczenia się</span>
+      </button>
+
+      <button mat-button id="button_subject" [routerLink]="'/subject/choose'">
+        <mat-icon>insert_drive_file</mat-icon>
+        <span id="Przedmioty">Przedmioty</span>
+      </button>
+    </ng-template>
+
+    <button mat-button id="button_docs" [routerLink]="'/documents'">
+      <mat-icon>get_app</mat-icon>
+      <span id="Dokumenty">Dokumenty</span>
+    </button>
+
+    <ng-template [ngxPermissionsOnly]="['Admin', 'StudentGovernment']">
+      <button mat-button id="button_accept" [routerLink]="'/syllabus/acceptance'">
+        <mat-icon>done</mat-icon>
+        <span id="Akceptacja">Akceptacja</span>
+      </button>
+    </ng-template>
+
+    <ng-template ngxPermissionsOnly="Admin">
+      <button mat-button id="button_admin" [routerLink]="'/admin/menu'">
+        <mat-icon>settings</mat-icon>
+        <span id="Administracja">Administracja</span>
+      </button>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+.sidenav_container {
+  //min-width: 60px;
+  max-width: 61px;
+  height: 100%;
+  //height: calc(100vh - 200px);
+  background-color: #94362F;
+  position: relative;
+
+  .logo-bez-tla {
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: 1em auto auto auto;
+  }
+
+  .pages{
+    padding-top: 50px;
+  }
+
+  .userNavigation {
+    position: absolute;
+    background-color: #94362F;
+    float: bottom;
+    bottom: 10px;
+  }
+}
+
+.jim {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.material-icons.color_white {
+  color: #D8D5CE;
+}

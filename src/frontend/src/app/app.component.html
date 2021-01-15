@@ -1,6 +1,16 @@
 <div class="mat-typography app-frame mat-app-background">
-<!--  <app-navbar></app-navbar>-->
-  <div>
-    <router-outlet></router-outlet>
-  </div>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #leftSidenav mode="side" opened *ngIf="loggedIn">
+      <app-left-menu></app-left-menu>
+    </mat-sidenav>
+    <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
+      <div class="main_content-container">
+        <div class="main_content">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
+
+

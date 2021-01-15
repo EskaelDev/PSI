@@ -16,8 +16,8 @@ namespace SyllabusManager.Logic.Services.Abstract
 
         public ModelBaseService(SyllabusManagerDbContext dbContext)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-            _dbSet = _dbContext.Set<T>();
+            _dbContext = dbContext;
+            _dbSet = _dbContext?.Set<T>();
         }
 
         public virtual async Task<List<T>> GetAllAsync()

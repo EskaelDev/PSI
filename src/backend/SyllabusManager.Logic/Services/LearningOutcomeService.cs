@@ -31,7 +31,7 @@ namespace SyllabusManager.Logic.Services
         /// <returns>LearningOutcomeDocument o najwyższej wersji</returns>
         public async Task<LearningOutcomeDocument> Latest(string fosCode, string academicYear, bool isReadOnly = false)
         {
-            LearningOutcomeDocument lodDb = await _dbSet.Include(lod => lod.FieldOfStudy)
+            LearningOutcomeDocument lodDb = await _dbSet.AsNoTracking().Include(lod => lod.FieldOfStudy)
                                                         .ThenInclude(fs => fs.Specializations)
                                                         .Include(lod => lod.LearningOutcomes)
                                                         .ThenInclude(lo => lo.Specialization)

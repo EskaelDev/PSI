@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -18,6 +18,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SyllabusManager.API\SyllabusManager.API.csproj" />
+    <ProjectReference Include="..\SyllabusManager.Data\SyllabusManager.Data.csproj" />
+    <ProjectReference Include="..\SyllabusManager.DbMigrator\SyllabusManager.DbMigrator.csproj" />
+    <ProjectReference Include="..\SyllabusManager.Logic\SyllabusManager.Logic.csproj" />
   </ItemGroup>
 
 </Project>

@@ -23,12 +23,11 @@
           <br/>
           <mat-form-field appearance="fill">
             <mat-label>Semestr</mat-label>
-            <mat-select formControlName="assignedSemester" required>
+            <mat-select formControlName="assignedSemester">
               <mat-option *ngFor="let sem of semesters" [value]="sem.id">{{
                 sem.name
               }}</mat-option>
             </mat-select>
-            <mat-error> Pole wymagane </mat-error>
           </mat-form-field>
           <br>
           <mat-form-field appearance="fill">

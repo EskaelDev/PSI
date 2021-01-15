@@ -10,8 +10,8 @@ using SyllabusManager.Data.ProviderContexts;
 namespace SyllabusManager.Data.Migrations.SqlServer
 {
     [DbContext(typeof(SqlServerSyllabusManagerDbContext))]
-    [Migration("20210110162803_SyllabusPointLimit3")]
-    partial class SyllabusPointLimit3
+    [Migration("20210115164231_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

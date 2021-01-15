@@ -13,7 +13,7 @@ namespace SyllabusManager.Data.Models.Syllabuses
     public class Syllabus : DocumentInAcademicYearBase
     {
         public State State { get; set; } = State.Draft;
-        public Option? StudentGovernmentOpinion { get; set; } = Option.Pending;
+        public Option? StudentGovernmentOpinion { get; set; }
         public DateTime? OpinionDeadline { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? ApprovalDate { get; set; }

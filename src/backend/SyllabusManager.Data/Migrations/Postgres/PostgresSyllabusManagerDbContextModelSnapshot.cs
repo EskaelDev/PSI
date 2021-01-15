@@ -212,7 +212,7 @@ namespace SyllabusManager.Data.Migrations.Postgres
 
                     b.HasIndex("FieldOfStudyCode");
 
-                    b.ToTable("Specialization");
+                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.LearningOutcomes.LearningOutcome", b =>
@@ -480,7 +480,7 @@ namespace SyllabusManager.Data.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("FieldOfStudyCode")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
@@ -502,6 +502,9 @@ namespace SyllabusManager.Data.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("SpecializationCode")
+                        .HasColumnType("text");
+
                     b.Property<string>("SupervisorId")
                         .HasColumnType("text");
 
@@ -514,9 +517,40 @@ namespace SyllabusManager.Data.Migrations.Postgres
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FieldOfStudyCode");
+
+                    b.HasIndex("SpecializationCode");
+
                     b.HasIndex("SupervisorId");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.PointLimit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("KindOfSubject")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ModuleType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("SyllabusId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("TypeOfSubject")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SyllabusId");
+
+                    b.ToTable("PointLimit");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SubjectInSyllabusDescription", b =>
@@ -564,9 +598,6 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("DeanName")
-                        .HasColumnType("text");
-
                     b.Property<Guid?>("DescriptionId")
                         .HasColumnType("uuid");
 
@@ -579,6 +610,9 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("OpinionDeadline")
                         .HasColumnType("timestamp without time zone");
 
@@ -589,10 +623,16 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.Property<string>("SpecializationCode")
                         .HasColumnType("text");
 
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("StudentGovernmentOpinion")
                         .HasColumnType("integer");
 
                     b.Property<string>("StudentRepresentativeName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ThesisCourse")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("ValidFrom")
@@ -617,9 +657,6 @@ namespace SyllabusManager.Data.Migrations.Postgres
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
-
-                    b.Property<int>("Ects")
-                        .HasColumnType("integer");
 
                     b.Property<string>("EmploymentOpportunities")
                         .IsRequired()
@@ -666,11 +703,17 @@ namespace SyllabusManager.Data.Migrations.Postgres
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("character varying(256)")
@@ -771,7 +814,7 @@ namespace SyllabusManager.Data.Migrations.Postgres
 
             modelBuilder.Entity("SyllabusManager.Data.Models.FieldOfStudies.Specialization", b =>
                 {
-                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", null)
                         .WithMany("Specializations")
                         .HasForeignKey("FieldOfStudyCode");
                 });
@@ -853,9 +896,24 @@ namespace SyllabusManager.Data.Migrations.Postgres
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.Subject", b =>
                 {
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
+                        .WithMany()
+                        .HasForeignKey("FieldOfStudyCode");
+
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationCode");
+
                     b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerUser", "Supervisor")
                         .WithMany()
                         .HasForeignKey("SupervisorId");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.PointLimit", b =>
+                {
+                    b.HasOne("SyllabusManager.Data.Models.Syllabuses.Syllabus", null)
+                        .WithMany("PointLimits")
+                        .HasForeignKey("SyllabusId");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SubjectInSyllabusDescription", b =>

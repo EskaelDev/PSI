@@ -55,7 +55,6 @@ export class LearningOutcomeService {
         return true;
       }),
       catchError(err => {
-        console.log(err);
         if (err.status === 403) {
           this.alerts.showCustomErrorMessage('Nie posiadasz uprawnień do tego dokumentu');
         }

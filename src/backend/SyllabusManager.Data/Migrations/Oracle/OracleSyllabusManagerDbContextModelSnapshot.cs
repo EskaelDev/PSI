@@ -212,7 +212,7 @@ namespace SyllabusManager.Data.Migrations.Oracle
 
                     b.HasIndex("FieldOfStudyCode");
 
-                    b.ToTable("Specialization");
+                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.LearningOutcomes.LearningOutcome", b =>
@@ -480,8 +480,8 @@ namespace SyllabusManager.Data.Migrations.Oracle
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("Discriminator")
-                        .HasColumnType("NVARCHAR2(2000)");
+                    b.Property<string>("FieldOfStudyCode")
+                        .HasColumnType("NVARCHAR2(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("NUMBER(1)");
@@ -502,6 +502,9 @@ namespace SyllabusManager.Data.Migrations.Oracle
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
+                    b.Property<string>("SpecializationCode")
+                        .HasColumnType("NVARCHAR2(450)");
+
                     b.Property<string>("SupervisorId")
                         .HasColumnType("NVARCHAR2(450)");
 
@@ -514,9 +517,40 @@ namespace SyllabusManager.Data.Migrations.Oracle
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FieldOfStudyCode");
+
+                    b.HasIndex("SpecializationCode");
+
                     b.HasIndex("SupervisorId");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.PointLimit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<int?>("KindOfSubject")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("ModuleType")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<Guid?>("SyllabusId")
+                        .HasColumnType("RAW(16)");
+
+                    b.Property<int?>("TypeOfSubject")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SyllabusId");
+
+                    b.ToTable("PointLimit");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SubjectInSyllabusDescription", b =>
@@ -564,9 +598,6 @@ namespace SyllabusManager.Data.Migrations.Oracle
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<string>("DeanName")
-                        .HasColumnType("NVARCHAR2(2000)");
-
                     b.Property<Guid?>("DescriptionId")
                         .HasColumnType("RAW(16)");
 
@@ -579,6 +610,9 @@ namespace SyllabusManager.Data.Migrations.Oracle
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("NUMBER(1)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("NVARCHAR2(2000)");
+
                     b.Property<DateTime?>("OpinionDeadline")
                         .HasColumnType("TIMESTAMP(7)");
 
@@ -589,10 +623,16 @@ namespace SyllabusManager.Data.Migrations.Oracle
                     b.Property<string>("SpecializationCode")
                         .HasColumnType("NVARCHAR2(450)");
 
+                    b.Property<int>("State")
+                        .HasColumnType("NUMBER(10)");
+
                     b.Property<int?>("StudentGovernmentOpinion")
                         .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("StudentRepresentativeName")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ThesisCourse")
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<DateTime?>("ValidFrom")
@@ -617,9 +657,6 @@ namespace SyllabusManager.Data.Migrations.Oracle
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("RAW(16)");
-
-                    b.Property<int>("Ects")
-                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("EmploymentOpportunities")
                         .IsRequired()
@@ -666,11 +703,17 @@ namespace SyllabusManager.Data.Migrations.Oracle
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("NUMBER(1)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("NUMBER(1)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("NUMBER(1)");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("NVARCHAR2(256)")
@@ -771,7 +814,7 @@ namespace SyllabusManager.Data.Migrations.Oracle
 
             modelBuilder.Entity("SyllabusManager.Data.Models.FieldOfStudies.Specialization", b =>
                 {
-                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", null)
                         .WithMany("Specializations")
                         .HasForeignKey("FieldOfStudyCode");
                 });
@@ -853,9 +896,24 @@ namespace SyllabusManager.Data.Migrations.Oracle
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Subjects.Subject", b =>
                 {
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.FieldOfStudy", "FieldOfStudy")
+                        .WithMany()
+                        .HasForeignKey("FieldOfStudyCode");
+
+                    b.HasOne("SyllabusManager.Data.Models.FieldOfStudies.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationCode");
+
                     b.HasOne("SyllabusManager.Data.Models.User.SyllabusManagerUser", "Supervisor")
                         .WithMany()
                         .HasForeignKey("SupervisorId");
+                });
+
+            modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.PointLimit", b =>
+                {
+                    b.HasOne("SyllabusManager.Data.Models.Syllabuses.Syllabus", null)
+                        .WithMany("PointLimits")
+                        .HasForeignKey("SyllabusId");
                 });
 
             modelBuilder.Entity("SyllabusManager.Data.Models.Syllabuses.SubjectInSyllabusDescription", b =>

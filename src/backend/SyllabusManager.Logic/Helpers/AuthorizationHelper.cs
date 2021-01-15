@@ -11,7 +11,7 @@ namespace SyllabusManager.Logic.Helpers
             UserManager<SyllabusManagerUser> userManager)
         {
             var roles = await userManager.GetRolesAsync(user);
-            return roles.Contains(UsersRoles.Admin);
+            return roles?.Contains(UsersRoles.Admin) ?? false;
         }
     }
 }

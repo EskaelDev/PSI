@@ -358,15 +358,16 @@ namespace SyllabusManager.Logic.Services
 
         public async Task<bool> SendToAcceptance(Syllabus syllabus, SyllabusManagerUser user)
         {
-            /*if (!Verify(syllabus).Any() && syllabus.State != State.Approved)
+            if (!Verify(syllabus).Any() && syllabus.State != State.Approved)
             {
                 var result = await Save(syllabus, user);
                 result.State = State.SentToAcceptance;
                 result.StudentGovernmentOpinion = Option.Pending;
                 result.StudentRepresentativeName = string.Empty;
+                result.OpinionDeadline = DateTime.Now.AddDays(14);
                 await _dbContext.SaveChangesAsync();
                 return true;
-            }*/
+            }
 
             return false;
         }
@@ -379,6 +380,8 @@ namespace SyllabusManager.Logic.Services
                 document.StudentGovernmentOpinion = Option.Approved;
                 document.StudentRepresentativeName = user.Name;
                 document.State = State.Approved;
+                document.ApprovalDate = DateTime.Now;
+                document.ValidFrom = DateTime.Now;
                 _dbContext.SaveChanges();
                 return true;
             }

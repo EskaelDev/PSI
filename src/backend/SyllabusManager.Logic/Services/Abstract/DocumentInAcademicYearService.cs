@@ -6,6 +6,7 @@ using SyllabusManager.Data.Models.User;
 using SyllabusManager.Logic.Helpers;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SyllabusManager.Logic.Services.Abstract
@@ -32,13 +33,15 @@ namespace SyllabusManager.Logic.Services.Abstract
                        .FirstOrDefault(f => f.Code == fosCode)?.Supervisor.Id == user.Id;
         }
 
-        public string IncreaseVersion(string version)
+        public static string IncreaseVersion(string version)
         {
+            if (!Regex.IsMatch(version, @"^\d{4}_\d{2}_\d{2}_\d{2}$")) return version;
+
             string newVersion = DateTime.UtcNow.ToString("yyyy_MM_dd");
 
             if (version.Substring(0, 10) == newVersion)
             {
-                string currentV = version[10..];
+                string currentV = version[11..];
                 int newV = int.Parse(currentV) + 1;
                 return version.Substring(0, 10) + "_" + newV.ToString("00");
             }
@@ -46,7 +49,7 @@ namespace SyllabusManager.Logic.Services.Abstract
             return newVersion + "_01";
         }
 
-        public string NewVersion() => DateTime.UtcNow.ToString("yyyy_MM_dd_") + "01";
+        public static string NewVersion() => DateTime.UtcNow.ToString("yyyy_MM_dd_") + "01";
 
         private string GetFosCode(Guid documentId)
         {

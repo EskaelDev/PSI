@@ -27,7 +27,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     translate.setDefaultLang('pl');
     translate.use('pl');
     this.sidenavService.sideNavState$.subscribe(res => {
-      console.log(res);
       this.onSideNavChange = res;
     });
   }

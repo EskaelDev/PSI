@@ -31,7 +31,7 @@ export class SylSubjectEditComponent implements OnInit {
         sub.subject,
         [this.autocompleteObjectValidator(), Validators.required],
       ],
-      assignedSemester: [sub.assignedSemester, Validators.required],
+      assignedSemester: [sub.assignedSemester],
       completionSemester: [sub.completionSemester],
     });
   }
@@ -105,6 +105,7 @@ export class SylSubjectEditComponent implements OnInit {
 
   validateCompletionSemester(): boolean {
     if (
+      this.subForm.get('assignedSemester')?.value &&
       this.subForm.get('completionSemester')?.value &&
       this.subForm.get('completionSemester')?.value <
         this.subForm.get('assignedSemester')?.value

@@ -29,7 +29,7 @@ export class SylDocEditComponent implements OnInit {
   }
 
   createSemestersList(semNum?: number): ListElement[] {
-    const semestersList = [new ListElement(null, '-')];
+    const semestersList = [new ListElement(0, '-')];
     if (semNum) {
       for (let i = 1; i <= semNum; i++) {
         semestersList.push(new ListElement(i, i.toString()));

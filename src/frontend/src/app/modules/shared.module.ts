@@ -8,7 +8,7 @@ import {
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MaterialModule } from './material/material.module';
@@ -30,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NoopAnimationsModule,
     NgxPermissionsModule.forRoot(),
     FlexLayoutModule,
     ReactiveFormsModule,
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     NgxPermissionsModule,
     BrowserAnimationsModule,
+    NoopAnimationsModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,

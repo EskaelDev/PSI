@@ -3,7 +3,7 @@
     <mat-sidenav #leftSidenav mode="side" opened *ngIf="loggedIn">
       <app-left-menu></app-left-menu>
     </mat-sidenav>
-    <mat-sidenav-content [@onMainContentChange]="onSideNavChange ? 'open': 'close'">
+    <mat-sidenav-content (MainContentChange)="onSideNavChange ? 'open': 'close'">
       <div class="main_content-container">
         <div class="main_content">
           <router-outlet></router-outlet>

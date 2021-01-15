@@ -6,7 +6,7 @@ name: Depoly backend to Azure
 
 env:
   AZURE_WEBAPP_NAME: psi-syllabus-manager    # set this to your application's name
-  DOTNET_ROOT: /src/backend/SyllabusManager.API      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_ROOT: src/backend/SyllabusManager.API      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '5.0'           # set this to the dot net version to use
 
 on:

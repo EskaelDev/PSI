@@ -33,7 +33,7 @@ export class LeftMenuComponent implements OnInit {
 
   public userNavigation: Page[] = [
     {name: '', link: '/account', icon: 'perm_identity'},
-    {name: '', link: '/', icon: 'power_settings_new'},
+    {name: '', link: '/logout', icon: 'power_settings_new'},
   ];
 
   constructor(private sidenavService: NavbarService) {

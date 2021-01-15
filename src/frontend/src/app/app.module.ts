@@ -12,7 +12,6 @@ import { DocumentsModule } from './components/documents/documents.module';
 import { SharedComponentsModule } from './components/shared/shared-components.module';
 import { UserModule } from './components/user/user.module';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [AppComponent, LeftMenuComponent],
@@ -27,8 +26,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     SubjectsModule,
     SyllabusesModule,
     DocumentsModule,
-    UserModule,
-    MatSidenavModule
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent],

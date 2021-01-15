@@ -12,7 +12,7 @@ import { DocumentsModule } from './components/documents/documents.module';
 import { SharedComponentsModule } from './components/shared/shared-components.module';
 import { UserModule } from './components/user/user.module';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
-import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatSidenavModule} from '@angular/material/sidenav';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 

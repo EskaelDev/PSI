@@ -64,7 +64,6 @@ namespace SyllabusManager.Logic.Helpers
             if (dict.ContainsKey(text))
                 return dict[text];
             return text;
-
         }
 
     }

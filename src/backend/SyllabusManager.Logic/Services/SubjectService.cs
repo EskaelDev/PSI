@@ -126,7 +126,10 @@ namespace SyllabusManager.Logic.Services
                 });
             }
             else
+            {
+                if (!AreChanges(existing, subject)) return 0;
                 subject.Version = IncreaseVersion(existing.Version);
+            }
 
             subject.Id = Guid.NewGuid();
 
@@ -283,7 +286,9 @@ namespace SyllabusManager.Logic.Services
 
         public static bool AreChanges(Subject previous, Subject current)
         {
-            return true;
+            var previousJson = string.Join(string.Empty, JsonConvert.SerializeObject(previous).OrderBy(c => c));
+            var currentJson = string.Join(string.Empty, JsonConvert.SerializeObject(current).OrderBy(c => c));
+            return previousJson != currentJson;
         }
     }
 }

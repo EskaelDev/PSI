@@ -32,7 +32,7 @@ namespace SyllabusManager.API.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{email}")]
         [Authorize(Roles = UsersRoles.Admin)]
         public async Task<IActionResult> ByEmail(string email)
         {

@@ -63,8 +63,8 @@ export class LeftMenuComponent implements OnInit {
         if (res) {
           this.pages.push({
             name: 'Programy studiów',
-            link: '/subject/choose',
-            icon: 'filter_frames',
+            link: '/syllabus/choose',
+            icon: 'school',
           });
           this.pages.push({
             name: 'Przedmioty',
@@ -74,7 +74,7 @@ export class LeftMenuComponent implements OnInit {
           this.pages.push({
             name: 'Efekty uczenia się',
             link: '/learning-outcome/choose',
-            icon: 'school',
+            icon: 'filter_frames',
           });
         }
       });

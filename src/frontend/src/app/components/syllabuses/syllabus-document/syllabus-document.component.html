@@ -16,8 +16,8 @@
         (history)="history()"
       ></app-control-buttons-panel>
       <div class="clearfix"></div>
-      <div class="edition-container" fxLayoutAlign="start start" fxLayoutGap="30px">
-        <div class="details-container" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5px">
+      <div class="edition-container">
+        <div class="details-container" fxLayout="column">
           <app-fos-details
             [fos]="syllabusDocument.fieldOfStudy"
             [spec]="syllabusDocument.specialization"
@@ -28,7 +28,9 @@
             (changed)="loadSyllabus()"
           ></app-syl-acceptance>
         </div>
-        <app-syl-doc-edit [disabled]="!isInEditMode(syllabusDocument)" [document]="syllabusDocument"></app-syl-doc-edit>
+        <div class="edit-container">
+          <app-syl-doc-edit [disabled]="!isInEditMode(syllabusDocument)" [document]="syllabusDocument"></app-syl-doc-edit>
+        </div>
       </div>
     </div>
     <div *ngIf="!syllabusDocument && !isLoading">Błąd wczytywania dokumentu</div>

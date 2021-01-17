@@ -1,110 +1,167 @@
-<app-frame mainTitle="Przedmioty">
-  <button mat-raised-button color="primary" (click)="newSubject()">
-    Nowy przedmiot<mat-icon style="margin-right: 5px">add</mat-icon>
-  </button>
-  <div fxLayoutAlign="start center" fxLayoutGap="20px">
-    <mat-form-field>
-      <mat-label>Wyszukaj</mat-label>
-      <input
-        matInput
-        type="text"
-        [(ngModel)]="searchPhrase"
-        (input)="filterSubjects()"
-      />
-      <button
-        mat-button
-        *ngIf="searchPhrase"
-        matSuffix
-        mat-icon-button
-        aria-label="Clear"
-        (click)="searchPhrase = ''"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="dropdown">
-      <mat-label>Wybierz kierunek studiów</mat-label>
-      <mat-select
-        [(value)]="selectedFos"
-        (selectionChange)="selectedFosChanged()"
-      >
-        <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos"
+<div class="main-container">
+  <app-backgroud-logged-in class="background" [mainTitle]="mainTitle" [subtitle]="subtitle"></app-backgroud-logged-in>
+
+  <div class="sub-container">
+    <button mat-basic-button (click)="newSubject()">
+      Nowy przedmiot
+      <mat-icon style="margin-right: 5px">add</mat-icon>
+    </button>
+
+    <!--    SEARCH BAR   -->
+    <div fxLayoutAlign="start center" fxLayoutGap="20px">
+
+      <!--    FILTERS     -->
+      <mat-form-field>
+        <mat-label>Wyszukaj</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="searchPhrase"
+          (input)="filterSubjects()"
+        />
+        <button
+          mat-button
+          *ngIf="searchPhrase"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="searchPhrase = ''"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="dropdown">
+        <mat-label>Wybierz kierunek studiów</mat-label>
+        <mat-select
+          [(value)]="selectedFos"
+          (selectionChange)="selectedFosChanged()"
+        >
+          <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos"
           >{{ fos.code }}: {{ fos.name }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="dropdown">
-      <mat-label>Wybierz specjalizację</mat-label>
-      <mat-select [(value)]="selectedSpec" (selectionChange)="loadSubjects()">
-        <mat-option *ngFor="let spec of specs" [value]="spec"
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="dropdown">
+        <mat-label>Wybierz specjalizację</mat-label>
+        <mat-select [(value)]="selectedSpec" (selectionChange)="loadSubjects()">
+          <mat-option *ngFor="let spec of specs" [value]="spec"
           >{{ spec.code }}: {{ spec.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="dropdown">
+        <mat-label>Wybierz rok akademicki</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="loadSubjects()">
+          <mat-option *ngFor="let year of years" [value]="year">{{
+            year
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <!--      CHECKBOXES / ADDED FILTERS-->
+      <div class="checkboxes">
+        <mat-checkbox [(ngModel)]="whereSupervisor" (change)="filterSubjects()"
+        >Gdzie jestem opiekunem
+        </mat-checkbox
         >
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="dropdown">
-      <mat-label>Wybierz rok akademicki</mat-label>
-      <mat-select [(value)]="selectedYear" (selectionChange)="loadSubjects()">
-        <mat-option *ngFor="let year of years" [value]="year">{{
-          year
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div>
-      <mat-checkbox [(ngModel)]="whereSupervisor" (change)="filterSubjects()"
-        >Gdzie jestem opiekunem</mat-checkbox
-      ><br />
-      <mat-checkbox [(ngModel)]="whereTeacher" (change)="filterSubjects()"
-        >Gdzie jestem współprowadzącym</mat-checkbox
-      >
-    </div>
-  </div>
-  <div *ngIf="filteredSubjects.length > 0 && !isLoading">
-    <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">
-      <div>{{ subject.code }}: {{ subject.namePl }}</div>
-      <div>
-        <button mat-raised-button (click)="download(subject)">
-          <mat-icon style="margin-right: 5px">save_alt</mat-icon>PDF
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="edit(subject)"
-          *ngIf="subject.isAdmin || subject.isSupervisor"
+        <br/>
+        <mat-checkbox [(ngModel)]="whereTeacher" (change)="filterSubjects()"
+        >Gdzie jestem współprowadzącym
+        </mat-checkbox
         >
-          <mat-icon style="margin-right: 5px">edit</mat-icon>Edytuj
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="edit(subject)"
-          *ngIf="!subject.isAdmin && !subject.isSupervisor"
-        >
-          <mat-icon style="margin-right: 5px">visibility</mat-icon>Podgląd
-        </button>
       </div>
     </div>
-  </div>
-  <div
-    *ngIf="
+
+
+    <!--    SUBJECT TILE-->
+    <div *ngIf="filteredSubjects.length > 0 && !isLoading" class="subject-tile">
+      <mat-card *ngFor="let subject of filteredSubjects">
+        <mat-card-content>
+          <p>
+            {{ subject.code }}: {{ subject.namePl }}
+          </p>
+          <div class="tile-buttons">
+            <button mat-raised-button (click)="download(subject)">
+            <mat-icon>save_alt</mat-icon>
+            PDF
+            </button>
+            <button
+              mat-raised-button
+              (click)="edit(subject)"
+              *ngIf="subject.isAdmin || subject.isSupervisor"
+            >
+              <mat-icon>edit</mat-icon>
+              Edytuj
+            </button>
+            <button
+              mat-raised-button
+              (click)="edit(subject)"
+              *ngIf="!subject.isAdmin && !subject.isSupervisor"
+            >
+              <mat-icon style="margin-right: 5px">visibility</mat-icon>
+              Podgląd
+            </button>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+<!--    <div *ngIf="filteredSubjects.length > 0 && !isLoading" class="checkboxes">-->
+<!--      <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">-->
+<!--        <div>{{ subject.code }}: {{ subject.namePl }}</div>-->
+<!--        <div>-->
+<!--          <button mat-raised-button (click)="download(subject)">-->
+<!--            <mat-icon>save_alt</mat-icon>-->
+<!--            PDF-->
+<!--          </button>-->
+<!--          <button-->
+<!--            mat-raised-button-->
+<!--            (click)="edit(subject)"-->
+<!--            *ngIf="subject.isAdmin || subject.isSupervisor"-->
+<!--          >-->
+<!--            <mat-icon>edit</mat-icon>-->
+<!--            Edytuj-->
+<!--          </button>-->
+<!--          <button-->
+<!--            mat-raised-button-->
+<!--            (click)="edit(subject)"-->
+<!--            *ngIf="!subject.isAdmin && !subject.isSupervisor"-->
+<!--          >-->
+<!--            <mat-icon style="margin-right: 5px">visibility</mat-icon>-->
+<!--            Podgląd-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+
+    <!-- U COMMUNICATION / ERRORS / LOADING-->
+    <div class="checkboxes"
+         *ngIf="
       filteredSubjects.length === 0 &&
       (!selectedFos || !selectedSpec || !selectedYear) &&
       !isLoading
     "
-  >
-    Wypełnij wszystkie filtry aby załadować listę przedmiotów
-  </div>
-  <div
-    *ngIf="
+    >
+      Wypełnij wszystkie filtry aby załadować listę przedmiotów
+    </div>
+    <div class="checkboxes"
+         *ngIf="
       filteredSubjects.length === 0 &&
       selectedFos &&
       selectedSpec &&
       selectedYear &&
       !isLoading
     "
-  >
-    Brak pasujących przedmiotów
+    >
+      Brak pasujących przedmiotów
+    </div>
+    <div *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
   </div>
-  <div *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
-</app-frame>
+
+
+</div>

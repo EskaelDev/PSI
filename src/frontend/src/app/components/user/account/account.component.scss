@@ -1,0 +1,24 @@
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto auto auto 15%;
+  font-size: 1em;
+  background-color: rgba(39, 42, 49, 1);
+  border: rgba(112, 112, 112, 1) 1px solid;
+
+  .mat-card {
+    background-color: transparent;
+
+    .button {
+      color: transparent;
+      .mat-icon {
+        color: #7B6D35;
+        z-index: 9999;
+        font-size: 2em;
+      }
+
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { LearningOutcomeDocument } from '../../core/models/learning-outcome/learning-outcome-document';
 import { AlertService } from '../alerts/alert.service';
 
@@ -107,7 +107,7 @@ export class LearningOutcomeService {
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
         }
-        
+
         return of(false);
       })
     );
@@ -127,7 +127,7 @@ export class LearningOutcomeService {
         }
         else {
           this.alerts.showDefaultErrorMessage();
-        }  
+        }
         return of(false);
       })
     );

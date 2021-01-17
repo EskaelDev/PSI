@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from 'src/app/core/models/user/user';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { AlertService } from '../alerts/alert.service';
 
 @Injectable({

@@ -7,7 +7,7 @@ import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
 import { State } from 'src/app/core/enums/syllabus/state.enum';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
 import { SyllabusDescription } from 'src/app/core/models/syllabus/syllabus-description';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { AlertService } from '../alerts/alert.service';
 
 @Injectable({

@@ -1,11 +1,27 @@
-<app-frame mainTitle="Moje konto"
-  ><div *ngIf="user">
-    <div>
-      <span>Name:</span><span>{{ user?.name }}</span>
-    </div>
-    <div>
-      <span>Email:</span><span>{{ user?.email }}</span>
-    </div>
+<div class="main-container">
+  <app-backgroud-logged-in class="background" [mainTitle]="mainTitle" [subtitle]="subtitle"></app-backgroud-logged-in>
+
+
+  <div class="sub-container">
+    <mat-card *ngIf="user" >
+      <mat-card-content>
+<!--        <button mat-basic-icon>-->
+<!--          <mat-icon>user</mat-icon>-->
+<!--        </button>-->
+
+        <span>Name: </span><span>{{ user?.name }}</span>
+        <br />
+        <span>Email: </span><span>{{ user?.email }}</span>
+      </mat-card-content>
+    </mat-card>
+    <div *ngIf="!user">Brak danych użytkownika</div>
+
+<!--    <div *ngIf="user">-->
+<!--      <mat-icon>user</mat-icon>-->
+<!--        <span>Name:</span><span>{{ user?.name }}</span>-->
+<!--      <br />-->
+<!--      <span>Email:</span><span>{{ user?.email }}</span>-->
+<!--    </div>-->
+<!--    <div *ngIf="!user">Brak danych użytkownika</div>-->
   </div>
-  <div *ngIf="!user">Brak danych użytkownika</div></app-frame
->
+</div>

@@ -1,21 +1,37 @@
-<app-frame mainTitle="Dokumenty" subtitle="kierunku">
-  <app-fos-year-filter
-    (criteriaChange)="criteriaChanged($event)"
-    [isSpec]="true"
-  ></app-fos-year-filter>
-  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
-    <app-document-tile
-      *ngFor="let syllabus of syllabuses"
-      [name]="syllabus.fieldOfStudy.name"
-      [spec]="syllabus.specialization.name"
-      [year]="syllabus.academicYear"
-    >
-      <div>
-        <div><button mat-raised-button (click)="downloadSyllabus(syllabus)">Program studiów</button></div>
-        <div><button mat-raised-button (click)="downloadPlan(syllabus)">Plan studiów</button></div>
-        <div><button mat-raised-button (click)="downloadLearningOutcomes(syllabus)">Efekty uczenia się</button></div>
-        <div><button mat-raised-button (click)="downloadSubjects(syllabus)">Karty przedmiotów</button></div>
-      </div>
-    </app-document-tile>
+<div class="main-container">
+  <app-backgroud-logged-in class="background" [mainTitle]="mainTitle" [subtitle]="subtitle"></app-backgroud-logged-in>
+
+  <div class="sub-container">
+    <app-fos-year-filter
+      (criteriaChange)="criteriaChanged($event)"
+      [isSpec]="true"
+    ></app-fos-year-filter>
+    <div class="cards" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
+      <app-document-tile
+        *ngFor="let syllabus of syllabuses"
+        [name]="syllabus.fieldOfStudy.name"
+        [spec]="syllabus.specialization.name"
+        [year]="syllabus.academicYear"
+      >
+        <div class="buttons">
+          <button mat-basic-button (click)="downloadSyllabus(syllabus)">
+            <mat-icon>description</mat-icon>
+              Program studiów
+          </button>
+          <button mat-basic-button (click)="downloadPlan(syllabus)">
+            <mat-icon>description</mat-icon>
+            Plan studiów
+          </button>
+          <button mat-basic-button (click)="downloadLearningOutcomes(syllabus)">
+            <mat-icon>description</mat-icon>
+            Efekty uczenia się
+          </button>
+          <button mat-basic-button (click)="downloadSubjects(syllabus)">
+            <mat-icon>description</mat-icon>
+            Karty przedmiotów
+          </button>
+        </div>
+      </app-document-tile>
+    </div>
   </div>
-</app-frame>
+</div>

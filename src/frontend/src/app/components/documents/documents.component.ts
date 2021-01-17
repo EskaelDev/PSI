@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
-import { FileHelper } from 'src/app/helpers/FileHelper';
-import { AlertService } from 'src/app/services/alerts/alert.service';
-import { LearningOutcomeService } from 'src/app/services/learning-outcome/learning-outcome.service';
-import { SyllabusService } from 'src/app/services/syllabus/syllabus.service';
-import { SubjectCardsComponent } from './subject-cards/subject-cards.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Syllabus} from 'src/app/core/models/syllabus/syllabus';
+import {FileHelper} from 'src/app/helpers/FileHelper';
+import {AlertService} from 'src/app/services/alerts/alert.service';
+import {LearningOutcomeService} from 'src/app/services/learning-outcome/learning-outcome.service';
+import {SyllabusService} from 'src/app/services/syllabus/syllabus.service';
+import {SubjectCardsComponent} from './subject-cards/subject-cards.component';
 
 @Component({
   selector: 'app-documents',
@@ -13,6 +13,8 @@ import { SubjectCardsComponent } from './subject-cards/subject-cards.component';
   styleUrls: ['./documents.component.scss']
 })
 export class DocumentsComponent implements OnInit {
+  mainTitle: string = 'Dokumenty';
+  subtitle: string = 'kierunku';
 
   syllabuses: Syllabus[] = [];
 
@@ -21,7 +23,8 @@ export class DocumentsComponent implements OnInit {
     private learningOutcomeService: LearningOutcomeService,
     private fileHelper: FileHelper,
     public dialog: MatDialog
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadDocuments(null, null, null);

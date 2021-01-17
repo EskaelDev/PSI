@@ -1,17 +1,6 @@
-<app-backgroud-logged-in></app-backgroud-logged-in>
-
 <!--INPUTS FORM -->
 <div class="main-container">
-  <svg id="window">
-    <rect rx="0" ry="0" x="0" y="0" width="679" height="478">
-    </rect>
-  </svg>
-  <svg class="line" viewBox="0 0 1 78">
-    <path d="M 0 0 L 1 78">
-    </path>
-  </svg>
-  <app-fos-year-picker [title]="title" (downloadDoc)="download($event)" (editDoc)="edit($event)"
+  <app-backgroud-logged-in class="background"></app-backgroud-logged-in>
+  <app-fos-year-picker class="sub-container" [title]="title" (downloadDoc)="download($event)" (editDoc)="edit($event)"
                        id="dropdown"></app-fos-year-picker>
 </div>
-
-

@@ -1,4 +1,22 @@
-app-syl-description{
-  padding: 0.5rem;
+app-syl-description, app-syl-subject{
+  padding: 0.1rem;
   display: flex;
+}
+//
+//app-syl-subject{
+//  height: 100%;
+//}
+
+.mat-tab-body-wrapper{
+  flex-grow: 1;
+  height: 100%;
+}
+
+#tab-group{
+  height: 100%;
+  overflow: auto;
+}
+
+#tab-group mat-tab-body {
+  flex-grow: 1;
 }

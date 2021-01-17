@@ -10,7 +10,6 @@ import { LearningOutcomeService } from 'src/app/services/learning-outcome/learni
 })
 export class LearningOutcomePickerComponent implements OnInit {
   title = 'efekty uczenia się';
-
   constructor(private readonly router: Router,
     private learningOutcomeService: LearningOutcomeService,
     private fileHelper: FileHelper) { }

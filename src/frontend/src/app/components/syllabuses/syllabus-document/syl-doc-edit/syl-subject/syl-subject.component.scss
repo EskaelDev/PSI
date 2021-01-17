@@ -1,0 +1,18 @@
+.subject-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  div:first-child {
+    width: 33%;
+    height: 100%;
+  }
+  div:last-child {
+    width: 67%;
+    height: 100%;
+    app-syl-subject-edit {
+      height: 100%;
+    }
+  }
+}

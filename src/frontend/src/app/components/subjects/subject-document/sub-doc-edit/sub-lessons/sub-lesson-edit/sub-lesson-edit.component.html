@@ -1,7 +1,7 @@
 <div fxLayoutAlign="center" fxLayoutGap="20px">
   <div>
     <form [formGroup]="lesForm" [appDisable]="readOnly">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Typ zajęć</mat-label>
         <mat-select formControlName="lessonType" required>
           <mat-option *ngFor="let lesson of lessons" [value]="lesson">{{
@@ -11,7 +11,7 @@
         <mat-error> Pole wymagane </mat-error>
       </mat-form-field>
       <br />
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Forma zaliczenia</mat-label>
         <mat-select formControlName="formOfCrediting" required>
           <mat-option
@@ -92,5 +92,5 @@
     </div>
     <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
   </div>
-  
+
 </div>

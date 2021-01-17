@@ -1,4 +1,11 @@
-<app-document [title]="title">
+
+
+<div id="title-container">
+  <h1>Edycja</h1>
+  <h3>przedmiotu</h3>
+</div>
+
+<!--<app-document [title]="title">-->
   <div *ngIf="subjectDocument && !isLoading">
     <app-control-buttons-panel
       [isNew]="subjectDocument.id === guidEmpty"
@@ -26,4 +33,4 @@
   <div *ngIf="isLoading" style="margin-top: 50px">
     <mat-spinner></mat-spinner>
   </div>
-</app-document>
+<!--</app-document>-->

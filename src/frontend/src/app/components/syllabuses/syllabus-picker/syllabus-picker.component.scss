@@ -1,48 +1,17 @@
-body {
-  font-size: 1vw;
-  font-family: Microsoft YaHei;
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto auto auto 15%;
+  font-size: 1em;
+  background-color: rgba(39, 42, 49, 1);
+  border: rgba(112, 112, 112, 1) 1px solid;
 }
 
-.main-container{
-  #window {
-    position: absolute;
-    overflow: visible;
-    width: 679px;
-    height: 478px;
-    left: 313px;
-    top: 248px;
-
-    rect {
-      fill: rgba(39, 42, 49, 1);
-      stroke: rgba(112, 112, 112, 1);
-      stroke-width: 1px;
-      stroke-linejoin: miter;
-      stroke-linecap: butt;
-      stroke-miterlimit: 4;
-      shape-rendering: auto;
-    }
-  }
-
-  .line {
-    overflow: visible;
-    position: absolute;
-    width: 6.999px;
-    height: 78.077px;
-    left: 360px;
-    top: 280px;
-
-    path {
-      fill: transparent;
-      stroke: rgba(112, 112, 112, 1);
-      stroke-width: 6px;
-    }
-  }
-
-  #dropdown{
-    overflow: visible;
-    position: absolute;
-    left: 535px;
-    top: 390px;
-  }
+::ng-deep .title-container {
+  position: absolute;
+  text-align: right;
+  margin-left: 15%;
+  margin-top: 10%;
 }
-

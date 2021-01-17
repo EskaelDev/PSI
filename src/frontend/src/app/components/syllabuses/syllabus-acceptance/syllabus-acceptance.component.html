@@ -1,20 +1,29 @@
-<app-frame mainTitle="Akceptacja" subtitle="programu studiów">
-  <app-fos-year-filter
-    [isSpec]="true"
-    (criteriaChange)="criteriaChanged($event)"
-  ></app-fos-year-filter>
-  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
+<div class="main-container">
+  <app-backgroud-logged-in class="background" [mainTitle]="mainTitle" [subtitle]="subtitle"></app-backgroud-logged-in>
+
+  <div class="sub-container">
+    <app-fos-year-filter class="select-dropdown"
+                         [isSpec]="true"
+                         (criteriaChange)="criteriaChanged($event)"
+    ></app-fos-year-filter>
+  <div class="cards" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="30px">
     <app-document-tile
       *ngFor="let syllabus of syllabuses"
       [name]="syllabus.fieldOfStudy?.name"
       [spec]="syllabus.specialization?.name"
       [year]="syllabus.academicYear"
     >
-      <div fxLayoutAlign="center center" fxLayoutGap="30px">
-        <button mat-icon-button (click)="download(syllabus)"><mat-icon>save_alt</mat-icon></button>
-        <button mat-raised-button (click)="reject(syllabus)">Odrzuć <mat-icon>clear</mat-icon></button
-        ><button mat-raised-button (click)="accept(syllabus)">Zaakceptuj <mat-icon>done</mat-icon></button>
-      </div>
+        <button mat-icon-button (click)="download(syllabus)">
+          <mat-icon>save_alt</mat-icon>
+        </button>
+        <button mat-icon-button (click)="reject(syllabus)">
+          <mat-icon>clear</mat-icon>
+        </button
+        >
+        <button mat-icon-button (click)="accept(syllabus)">
+          <mat-icon>done</mat-icon>
+        </button>
     </app-document-tile>
+    </div>
   </div>
-</app-frame>
+</div>

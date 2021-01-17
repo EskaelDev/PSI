@@ -21,7 +21,7 @@
             <mat-error> Pole wymagane </mat-error>
           </mat-form-field>
           <br/>
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline" class="dropdown">
             <mat-label>Semestr</mat-label>
             <mat-select formControlName="assignedSemester">
               <mat-option *ngFor="let sem of semesters" [value]="sem.id">{{
@@ -30,7 +30,7 @@
             </mat-select>
           </mat-form-field>
           <br>
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline" class="dropdown">
             <mat-label>Max semestr ukończenia (opcjonalne)</mat-label>
             <mat-select formControlName="completionSemester">
               <mat-option *ngFor="let sem of semesters" [value]="sem.id">{{
@@ -47,4 +47,3 @@
     </div>
     <app-syl-sub-details [subject]="tempSub"></app-syl-sub-details>
   </div>
-  

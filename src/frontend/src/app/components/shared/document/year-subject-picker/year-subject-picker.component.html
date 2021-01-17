@@ -2,7 +2,7 @@
   <h1 mat-dialog-title>{{ title }}</h1>
   <div mat-dialog-content style="height: 340px" fxLayoutAlign="center center">
     <div>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz kierunek studiów</mat-label>
         <mat-select
           [(value)]="selectedFos"
@@ -14,7 +14,7 @@
         </mat-select>
       </mat-form-field>
       <br />
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz specjalizację</mat-label>
         <mat-select
           [(value)]="selectedSpec"
@@ -26,7 +26,7 @@
         </mat-select>
       </mat-form-field>
       <br />
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz rok akademicki</mat-label>
         <mat-select [(value)]="selectedYear" (selectionChange)="loadSubjects()">
           <mat-option *ngFor="let year of years" [value]="year">{{

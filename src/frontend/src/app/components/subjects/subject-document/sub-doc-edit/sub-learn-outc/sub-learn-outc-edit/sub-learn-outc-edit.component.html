@@ -1,6 +1,6 @@
 <div>
   <form [formGroup]="learnForm" [appDisable]="readOnly">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Sposób oceniania</mat-label>
       <mat-select formControlName="gradingSystem" required>
         <mat-option *ngFor="let grading of gradings" [value]="grading">{{
@@ -10,7 +10,7 @@
       <mat-error> Pole wymagane </mat-error>
     </mat-form-field>
     <br />
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Symbol efektu</mat-label>
         <mat-select formControlName="learningOutcomeSymbol" required>
           <mat-option *ngFor="let lo of learningOutcomes" [value]="lo.symbol">{{

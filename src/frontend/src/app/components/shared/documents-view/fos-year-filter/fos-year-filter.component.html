@@ -1,6 +1,6 @@
-<div fxLayoutAlign="start center" fxLayoutGap="20px">
-  <div>
-    <mat-form-field appearance="fill">
+<div fxLayoutAlign="start center" fxLayoutGap="20px" class="dropdown_container">
+  <div class="dropdown">
+    <mat-form-field appearance="outline">
       <mat-label>Wybierz kierunek studiów</mat-label>
       <mat-select
         [(value)]="selectedFos"
@@ -15,8 +15,8 @@
       <mat-icon>clear</mat-icon>
     </button>
   </div>
-  <div>
-    <mat-form-field appearance="fill" *ngIf="isSpec">
+  <div class="dropdown">
+    <mat-form-field appearance="outline" *ngIf="isSpec">
       <mat-label>Wybierz specjalizację</mat-label>
       <mat-select
         [(value)]="selectedSpec"
@@ -31,8 +31,8 @@
       <mat-icon>clear</mat-icon>
     </button>
   </div>
-  <div>
-    <mat-form-field appearance="fill">
+  <div class="dropdown">
+    <mat-form-field appearance="outline">
       <mat-label>Wybierz rok akademicki</mat-label>
       <mat-select
         [(value)]="selectedYear"

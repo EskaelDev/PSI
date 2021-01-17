@@ -1,0 +1,37 @@
+.sub-container {
+  display: block;
+  margin: 10% auto auto 5%;
+  font-size: 1em;
+  background-color: #707070;
+  //border: rgba(112, 112, 112, 1) 1px solid;
+}
+
+::ng-deep .title-container {
+  position: absolute;
+  text-align: right;
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.edition-container {
+  clear: both;
+  margin-top: 0.5rem;
+  .details-container {
+    color: #D8D5CE;
+    background-color: #272A31;
+    border: rgba(112, 112, 112, 1) 1px solid;
+    app-syl-acceptance{
+      width: 100%;
+    }
+  }
+}
+
+app-fos-details {
+  height: 100%;
+}

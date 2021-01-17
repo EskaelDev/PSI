@@ -16,7 +16,7 @@
       <input matInput type="text" [(ngModel)]="document.nameEng" />
     </mat-form-field>
     <br />
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Rodzaj modułu</mat-label>
       <mat-select [(value)]="document.moduleType" required>
         <mat-option *ngFor="let module of modules" [value]="module">{{
@@ -25,7 +25,7 @@
       </mat-select>
     </mat-form-field>
     <br />
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Rodzaj</mat-label>
       <mat-select [(value)]="document.kindOfSubject" required>
         <mat-option *ngFor="let kind of kinds" [value]="kind">{{
@@ -34,7 +34,7 @@
       </mat-select>
     </mat-form-field>
     <br />
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Typ</mat-label>
       <mat-select [(value)]="document.typeOfSubject" required>
         <mat-option *ngFor="let subType of subTypes" [value]="subType">{{
@@ -43,7 +43,7 @@
       </mat-select>
     </mat-form-field>
     <br />
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Język</mat-label>
       <mat-select [(value)]="document.language" required>
         <mat-option *ngFor="let language of languages" [value]="language">{{

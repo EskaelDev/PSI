@@ -1,14 +1,9 @@
-<div class="container">
-  <div id="background">
-    <!--Background -->
-    <svg id="rectangle-down">
-      <rect rx="0" ry="0" x="0" y="0" width="440" height="436">
-      </rect>
-    </svg>
-    <svg id="rectangle-up">
-      <rect rx="0" ry="0" x="0" y="0" width="440" height="300">
-      </rect>
-    </svg>
+<!--Background -->
+<div class="rectangle-back"></div>
+<div class="rectangle-front"></div>
 
-  </div>
+<!--Title-->
+<div class="title-container">
+  <h1 *ngIf="mainTitle">{{ mainTitle }}</h1>
+  <h3 *ngIf="subtitle">{{ subtitle }}</h3>
 </div>

@@ -1,22 +1,20 @@
-<div>
-    <div>
+<div class="acceptance-details"  fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5px">
+    <div class="text-description">
         <span>Status dokumentu:</span>
         <span>{{"states." + document.state | translate}}</span>
     </div>
-    <div>
+    <div class="text-description">
         <span>Status akceptacji:</span>
         <span *ngIf="document.studentGovernmentOpinion">{{"opinions." + document.studentGovernmentOpinion | translate}}</span>
         <span *ngIf="!document.studentGovernmentOpinion">brak oceny</span>
     </div>
-    <div>
+    <div class="text-description">
         <span>Oceniający:</span>
         <span *ngIf="document.studentGovernmentOpinion">{{document.studentRepresentativeName ? document.studentRepresentativeName : 'nieznany'}}</span>
         <span *ngIf="!document.studentGovernmentOpinion">brak oceny</span>
     </div>
-    <div *ngIf="canSend(document)">
+    <div *ngIf="canSend(document)" class="acceptance-buttons">
         <button mat-raised-button color="accent" (click)="send()">{{getActionText(document)}}</button>
-    </div>
-    <div *ngIf="canSend(document)">
         <button mat-raised-button color="primary" (click)="verify()">Sprawdź poprawność dokumentu</button>
     </div>
 </div>

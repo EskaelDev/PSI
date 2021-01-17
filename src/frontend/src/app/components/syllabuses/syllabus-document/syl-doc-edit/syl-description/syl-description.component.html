@@ -1,5 +1,5 @@
-<div *ngIf="document.description">
-  <mat-form-field>
+<div *ngIf="document.description" class="description-container">
+  <mat-form-field class="input-field">
     <mat-label>Liczba semestrów</mat-label>
     <input
       matInput
@@ -10,8 +10,8 @@
     />
     <mat-error>Dopuszczalne wartości 1-10</mat-error>
   </mat-form-field>
-  <br />
-  <mat-form-field>
+<!--  <br />-->
+  <mat-form-field  class="input-field">
     <mat-label>Liczba ECTS</mat-label>
     <input
       matInput
@@ -41,7 +41,7 @@
     </mat-select>
   </mat-form-field>
   <br />
-  <mat-form-field>
+  <mat-form-field class="textarea-container">
     <mat-label>Wymagania wstępne</mat-label>
     <textarea
       matInput
@@ -52,7 +52,7 @@
     <mat-error>Pole wymagane</mat-error>
   </mat-form-field>
   <br />
-  <mat-form-field>
+  <mat-form-field class="textarea-container">
     <mat-label>Sylwetka absolwenta</mat-label>
     <textarea
       matInput
@@ -63,7 +63,7 @@
     <mat-error>Pole wymagane</mat-error>
   </mat-form-field>
   <br />
-  <mat-form-field>
+  <mat-form-field class="textarea-container">
     <mat-label>Możliwość kontynuacji studiów</mat-label>
     <textarea
       matInput

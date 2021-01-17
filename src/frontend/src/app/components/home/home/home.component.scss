@@ -58,10 +58,6 @@ body {
   }
 }
 
-.buttons{
-
-}
-
 #button_syllabus {
   position: absolute;
   width: 511px;
@@ -81,14 +77,20 @@ body {
   }
 
   #school_icon{
-      width: 332.875px;
-      height: 152.97px;
+      width: 250px;
+      height: 250px;
       left: 563.746px;
       top: 391px;
       top: 391px;
-      font-size: 48px;
+      font-size: 250px;
     }
   .material-icons.md-18 { font-size: 18px; }
+}
+
+#button_syllabus:disabled{
+  #Programy_studiw {
+    color: rgb(100, 100, 100);
+  }
 }
 
 #button_learning_outcome{
@@ -108,6 +110,12 @@ body {
     font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
+  }
+}
+
+#button_learning_outcome:disabled{
+  #Efekty_uczenia_si {
+    color: rgb(100, 100, 100);
   }
 }
 
@@ -149,6 +157,12 @@ body {
   }
 }
 
+#button_accept:disabled{
+  #Akceptacja {
+    color: rgb(100, 100, 100);
+  }
+}
+
 #button_subject{
   position: absolute;
   width: 246px;
@@ -165,6 +179,12 @@ body {
     font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
+  }
+}
+
+#button_subject:disabled{
+  #Przedmioty {
+    color: rgb(100, 100, 100);
   }
 }
 
@@ -185,5 +205,17 @@ body {
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
   }
+}
+
+#button_admin:disabled{
+  #Administracja {
+    color: rgb(100, 100, 100);
+  }
+}
+
+.home-icon {
+  height: 70px;
+  width: 70px;
+  font-size: 70px;
 }
 

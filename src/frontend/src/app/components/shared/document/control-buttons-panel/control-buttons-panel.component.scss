@@ -1,11 +1,12 @@
 .buttons-bar {
   background-color: #272A31;
-  border: rgba(112, 112, 112, 1) 1px solid;
+  //border: rgba(112, 112, 112, 1) 1px solid;
   float: left;
 }
 
 button {
-  padding: 0.25rem 2rem;
+  padding: 0.7rem 1.5rem;
+  width: 7.89em;
   white-space: nowrap;
   text-align: center;
   font-style: normal;
@@ -13,4 +14,8 @@ button {
   font-size: 1rem;
   background-color: #272A31;
   color: rgba(255,255,255,1);
+  border-top: none;
+  border-bottom: none;
+  border-left: rgba(112, 112, 112, 1) 3px  solid;
+  border-right: rgba(112, 112, 112, 1) 3px  solid;
 }

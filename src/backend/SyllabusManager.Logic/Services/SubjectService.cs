@@ -34,11 +34,12 @@ namespace SyllabusManager.Logic.Services
                 && s.Specialization.Code == spec
                 && s.AcademicYear == year
                 && !s.IsDeleted).ToList()
-                .GroupBy(s => new { fos = s.FieldOfStudy.Code, spec = s.Specialization.Code, s.AcademicYear })
+                .GroupBy(s => new { fos = s.FieldOfStudy.Code, spec = s.Specialization.Code, s.AcademicYear, s.Code })
                 .Select(g => g.OrderByDescending(s => s.Version)
                     .First().Id);
 
             List<Subject> result = await _dbSet.Include(s => s.FieldOfStudy)
+                .ThenInclude(ss => ss.Supervisor)
                 .Include(s => s.Specialization)
                 .Include(s => s.Supervisor)
                 .Include(s => s.SubjectsTeachers)
@@ -50,6 +51,7 @@ namespace SyllabusManager.Logic.Services
                 r.IsSupervisor = r.Supervisor.Id == user.Id;
                 r.IsTeacher = r.SubjectsTeachers.Any(t => t.Teacher.Id == user.Id);
                 r.SubjectsTeachers = new List<SubjectTeacher>();
+                r.FieldOfStudy.Supervisor.SubjectsTeachers = new List<SubjectTeacher>();
                 return r;
             }).ToList();
         }
@@ -97,6 +99,7 @@ namespace SyllabusManager.Logic.Services
         {
             Subject existing = await _dbSet.Include(s => s.FieldOfStudy)
                 .Include(s => s.Specialization)
+                .OrderByDescending(s => s.Version)
                 .FirstOrDefaultAsync(s =>
                     s.AcademicYear == subject.AcademicYear
                     && s.FieldOfStudy.Code == subject.FieldOfStudy.Code
@@ -126,7 +129,10 @@ namespace SyllabusManager.Logic.Services
                 });
             }
             else
+            {
+                if (!AreChanges(existing, subject)) return 0;
                 subject.Version = IncreaseVersion(existing.Version);
+            }
 
             subject.Id = Guid.NewGuid();
 
@@ -172,26 +178,27 @@ namespace SyllabusManager.Logic.Services
             Subject currentSubject = await _dbSet.AsNoTracking()
                                               .Include(s => s.FieldOfStudy)
                                               .Include(s => s.Specialization)
+                                              .Include(s => s.Supervisor)
                                               .FirstOrDefaultAsync(s =>
                                                                        s.Id == currentDocId
                                                                     && !s.IsDeleted);
 
-            Subject subject = await _dbSet.AsNoTracking()
-                                            .Include(s => s.FieldOfStudy)
-                                            .Include(s => s.Specialization)
-                                            .Include(s => s.CardEntries)
-                                            .ThenInclude(ce => ce.Entries)
-                                            .Include(s => s.LearningOutcomeEvaluations)
-                                            .Include(s => s.Lessons)
-                                            .ThenInclude(l => l.ClassForms)
-                                            .Include(s => s.Literature)
-                                            .Include(s => s.SubjectsTeachers)
-                                            .ThenInclude(st => st.Teacher)
-                                            .FirstOrDefaultAsync(s =>
-                                                                     s.FieldOfStudy.Code == fosCode
-                                                                  && s.AcademicYear == academicYear
-                                                                  && s.Specialization.Code == specCode
-                                                                  && !s.IsDeleted);
+            Subject subject = await _dbSet.AsNoTracking().Include(s => s.FieldOfStudy)
+                .Include(s => s.Specialization)
+                .Include(s => s.Supervisor)
+                .Include(s => s.CardEntries)
+                .ThenInclude(ce => ce.Entries)
+                .Include(s => s.LearningOutcomeEvaluations)
+                .Include(s => s.Lessons)
+                .ThenInclude(l => l.ClassForms)
+                .Include(s => s.Literature)
+                .OrderByDescending(s => s.Version)
+                .FirstOrDefaultAsync(s =>
+                    s.FieldOfStudy.Code == fosCode
+                    && s.Specialization.Code == specCode
+                    && s.Code == code
+                    && s.AcademicYear == academicYear
+                    && !s.IsDeleted);
 
             if (currentSubject is null || subject is null) return 1;
 
@@ -205,7 +212,6 @@ namespace SyllabusManager.Logic.Services
             currentSubject.Lessons = subject.Lessons;
             currentSubject.LearningOutcomeEvaluations = subject.LearningOutcomeEvaluations;
             currentSubject.CardEntries = subject.CardEntries;
-            currentSubject.Teachers = subject.Teachers;
 
             return await Save(currentSubject);
         }
@@ -283,7 +289,9 @@ namespace SyllabusManager.Logic.Services
 
         public static bool AreChanges(Subject previous, Subject current)
         {
-            return true;
+            var previousJson = string.Join(string.Empty, JsonConvert.SerializeObject(previous).OrderBy(c => c));
+            var currentJson = string.Join(string.Empty, JsonConvert.SerializeObject(current).OrderBy(c => c));
+            return previousJson != currentJson;
         }
     }
 }

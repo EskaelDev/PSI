@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using SyllabusManager.Data.Enums.FieldOfStudies;
+using SyllabusManager.Data.Enums.Subjects;
 using SyllabusManager.Logic.Pdf;
 using SyllabusManager.Data.Enums.Syllabuses;
 
@@ -26,6 +29,11 @@ namespace SyllabusManager.Logic.Services
             _planPdf = planPdf;
         }
 
+        public SyllabusService(SyllabusManagerDbContext dbContext, UserManager<SyllabusManagerUser> userManager, DbSet<Syllabus> set) : base(dbContext, userManager)
+        {
+            _dbSet = set;
+        }
+
         public async Task<Syllabus> Latest(string fos, string spec, string year)
         {
             Syllabus syllabus = await _dbSet.Include(s => s.FieldOfStudy)
@@ -33,6 +41,7 @@ namespace SyllabusManager.Logic.Services
                 .Include(s => s.Description)
                 .Include(s => s.SubjectDescriptions)
                 .ThenInclude(sd => sd.Subject)
+                .ThenInclude(ss => ss.Lessons)
                 .Include(s => s.PointLimits)
                 .OrderByDescending(s => s.Version)
                 .FirstOrDefaultAsync(s =>
@@ -86,7 +95,10 @@ namespace SyllabusManager.Logic.Services
                 syllabus.AuthorName = user.Name;
             }
             else
+            {
+                if (!AreChanges(currentDocument, syllabus)) return syllabus;
                 syllabus.Version = IncreaseVersion(currentDocument.Version);
+            }
 
             syllabus.Id = Guid.NewGuid();
 
@@ -332,6 +344,7 @@ namespace SyllabusManager.Logic.Services
             if (string.IsNullOrWhiteSpace(syllabus.Description.Prerequisites) || syllabus.Description.Prerequisites == ".") errors.Add("Nieuzupełnione pole Wymagania wstępne.");
             if (string.IsNullOrWhiteSpace(syllabus.Description.EmploymentOpportunities) || syllabus.Description.EmploymentOpportunities == ".") errors.Add("Nieuzupełnione pole Sylwetka absolwenta.");
             if (string.IsNullOrWhiteSpace(syllabus.Description.PossibilityOfContinuation) || syllabus.Description.PossibilityOfContinuation == ".") errors.Add("Nieuzupełnione pole Możliwość kontynuacji studiów.");
+            if (syllabus.FieldOfStudy.Type == CourseType.FullTime && syllabus.FieldOfStudy.Level == DegreeLevel.FirstLevel && syllabus.Description.NumOfSemesters < 6) errors.Add($"Studia stacjonarne pierwszego stopnia muszą trwać co najmniej 6 semestrów. Podana liczba semestrów: {syllabus.Description.NumOfSemesters}");
 
             // subjects
             var wrongSubjects =
@@ -353,6 +366,67 @@ namespace SyllabusManager.Logic.Services
             if (string.IsNullOrWhiteSpace(syllabus.ScopeOfDiplomaExam) || syllabus.ScopeOfDiplomaExam == ".") errors.Add("Nieuzupełnione pole Zakres egzaminu dyplomowego.");
             if (string.IsNullOrWhiteSpace(syllabus.IntershipType) || syllabus.IntershipType == ".") errors.Add("Nieuzupełnione pole Praktyki.");
             
+            // ects
+            var semestersSubjects = syllabus.SubjectDescriptions.Where(s => s.AssignedSemester > 0)
+                .GroupBy(s => s.AssignedSemester);
+            foreach (var semesterSubjects in semestersSubjects)
+            {
+                var totalEctsForSem = semesterSubjects.Sum(s => s.Subject.Lessons.Sum(l => l.Ects));
+                if (totalEctsForSem != 30)
+                {
+                    errors.Add($"Semestr: {semesterSubjects.Key}. Liczba ECTS przypisanych przedmiotów ({totalEctsForSem}) jest niezgodna z oczekiwaną liczbą ECTS (30).");
+                }
+
+                var totalStudentWorkload = semesterSubjects.Sum(s => s.Subject.Lessons.Sum(l => l.StudentWorkloadHours));
+                if (totalStudentWorkload < 750 || totalStudentWorkload > 900)
+                {
+                    errors.Add($"Semestr: {semesterSubjects.Key}. Liczba godzin CNPS ({totalStudentWorkload})  poza dopuszczalnym przedziałem 750 - 900.");
+                }
+            }
+
+            // elective subjects
+            var subjectGroups = syllabus.SubjectDescriptions.Where(s => s.Subject.TypeOfSubject == TypeOfSubject.Elective)
+                .GroupBy(s => new {s.Subject.ModuleType, s.Subject.KindOfSubject});
+            foreach (var subjectGroup in subjectGroups)
+            {
+                if (subjectGroup.Select(s => s.Subject.Lessons.Sum(l => l.Ects)).Distinct().Count() > 1)
+                {
+                    errors.Add($"Grupa: {EnumTranslator.Translate(subjectGroup.Key.ModuleType.ToString())} {EnumTranslator.Translate(subjectGroup.Key.KindOfSubject.ToString())}. W grupie kursów wybieralnych nie może być przedmiotów o różnej liczbie ECTS.");
+                }
+            }
+
+            // point limits
+            foreach (var limit in syllabus.PointLimits)
+            {
+                var totalSubjectEcts = syllabus.SubjectDescriptions.Where(s =>
+                    s.Subject.ModuleType == limit.ModuleType
+                    && (limit.KindOfSubject is null || s.Subject.KindOfSubject == limit.KindOfSubject)
+                    && (limit.TypeOfSubject is null || s.Subject.TypeOfSubject == limit.TypeOfSubject))
+                    .Sum(s => s.Subject.Lessons.Sum(l => l.Ects));
+
+                if (totalSubjectEcts < limit.Points)
+                {
+                    errors.Add($"Grupa: {EnumTranslator.Translate(limit.ModuleType.ToString())} {EnumTranslator.Translate(limit.KindOfSubject?.ToString() ?? string.Empty)} {EnumTranslator.Translate(limit.TypeOfSubject?.ToString() ?? string.Empty)}. Liczba punktów ECTS poniżej limitu ({limit.Points}).");
+                }
+            }
+
+            // practical lessons
+            var practicalLessons = syllabus.SubjectDescriptions.Where(s => s.AssignedSemester > 0).SelectMany(s => s.Subject.Lessons.Where(l => l.LessonType != LessonType.Lecture));
+            var practicalEcts = practicalLessons.Sum(l => l.Ects);
+            if ((double)practicalEcts / syllabus.Description.Ects < 0.3)
+            {
+                errors.Add($"Zajęcia kształtujące umiejętności praktyczne posiadają mniej niż 30% punktów ECTS ({(int)((double)practicalEcts / syllabus.Description.Ects * 100)}%)");
+            }
+
+            var practicalHours = practicalLessons.Sum(l => l.HoursAtUniversity);
+            var totalHours = syllabus.SubjectDescriptions.Where(s => s.AssignedSemester > 0)
+                .Sum(s => s.Subject.Lessons.Sum(l => l.HoursAtUniversity));
+
+            if ((double)practicalHours / totalHours < 0.4)
+            {
+                errors.Add($"Zajęcia kształtujące umiejętności praktyczne posiadają mniej niż 40% godzin ({(int)((double)practicalHours / totalHours * 100)}%)");
+            }
+
             return errors;
         }
 
@@ -440,7 +514,9 @@ namespace SyllabusManager.Logic.Services
 
         public static bool AreChanges(Syllabus previous, Syllabus current)
         {
-            return true;
+            var previousJson = string.Join(string.Empty, JsonConvert.SerializeObject(previous).OrderBy(c => c));
+            var currentJson = string.Join(string.Empty, JsonConvert.SerializeObject(current).OrderBy(c => c));
+            return previousJson != currentJson;
         }
     }
 }

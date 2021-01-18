@@ -38,7 +38,7 @@ export class SubLessonsComponent implements OnInit {
       this.document.lessons.push(les);
     }
     else {
-      this.alerts.showCustomErrorMessage('Zajęcia tego typu już istnieją!');
+      this.alerts.showValidationFailMessage('Zajęcia tego typu już istnieją!');
     }
   }
 

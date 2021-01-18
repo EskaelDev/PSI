@@ -12,7 +12,7 @@ namespace SyllabusManager.Logic.Services.Abstract
     public abstract class ModelBaseService<T> : IModelBaseService<T> where T : ModelBase
     {
         protected readonly SyllabusManagerDbContext _dbContext;
-        protected readonly DbSet<T> _dbSet;
+        protected DbSet<T> _dbSet;
 
         public ModelBaseService(SyllabusManagerDbContext dbContext)
         {

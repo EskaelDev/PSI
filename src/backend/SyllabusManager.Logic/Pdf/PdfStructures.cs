@@ -110,27 +110,27 @@ namespace SyllabusManager.Logic.Pdf
             // w
             acc[0] += lesson.LessonType == LessonType.Lecture ? lesson.HoursAtUniversity : 0;
             tab.AddCell(moduleTabCell(
-                lesson.LessonType == LessonType.Lecture ? lesson.HoursAtUniversity.ToString() : ""));
+                lesson.LessonType == LessonType.Lecture ? (lesson.HoursAtUniversity/15).ToString() : ""));
 
             // ćw
             acc[1] += lesson.LessonType == LessonType.Classes ? lesson.HoursAtUniversity : 0;
             tab.AddCell(moduleTabCell(
-                lesson.LessonType == LessonType.Classes ? lesson.HoursAtUniversity.ToString() : ""));
+                lesson.LessonType == LessonType.Classes ? (lesson.HoursAtUniversity/15).ToString() : ""));
 
             // l
             acc[2] += lesson.LessonType == LessonType.Laboratory ? lesson.HoursAtUniversity : 0;
             tab.AddCell(moduleTabCell(
-                lesson.LessonType == LessonType.Laboratory ? lesson.HoursAtUniversity.ToString() : ""));
+                lesson.LessonType == LessonType.Laboratory ? (lesson.HoursAtUniversity/15).ToString() : ""));
 
             // p
             acc[3] += lesson.LessonType == LessonType.Project ? lesson.HoursAtUniversity : 0;
             tab.AddCell(moduleTabCell(
-                lesson.LessonType == LessonType.Project ? lesson.HoursAtUniversity.ToString() : ""));
+                lesson.LessonType == LessonType.Project ? (lesson.HoursAtUniversity/15).ToString() : ""));
 
             // s
             acc[4] += lesson.LessonType == LessonType.Seminar ? lesson.HoursAtUniversity : 0;
             tab.AddCell(moduleTabCell(
-                lesson.LessonType == LessonType.Seminar ? lesson.HoursAtUniversity.ToString() : ""));
+                lesson.LessonType == LessonType.Seminar ? (lesson.HoursAtUniversity/15).ToString() : ""));
 
             // symbol efektu uczenia
             tab.AddCell(moduleTabCell(subject.LearningOutcomeEvaluations.Aggregate("", (los, next) => los += next.LearningOutcomeSymbol + "\n", los => los)));

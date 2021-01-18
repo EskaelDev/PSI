@@ -3,6 +3,8 @@ using SyllabusManager.Data.Models.Subjects;
 using SyllabusManager.Data.Models.Syllabuses;
 using System.Collections;
 using System.Collections.Generic;
+using SyllabusManager.Data.Enums.FieldOfStudies;
+using SyllabusManager.Data.Enums.Subjects;
 
 namespace SyllabusManager.Tests.TestData
 {
@@ -18,6 +20,7 @@ namespace SyllabusManager.Tests.TestData
         {
             Code = "TEST001",
             Name = "Test",
+            Level = DegreeLevel.SecondLevel,
             Specializations = new List<Specialization>()
             {
                 _spec
@@ -39,9 +42,29 @@ namespace SyllabusManager.Tests.TestData
                     Description = new SyllabusDescription()
                     {
                         EmploymentOpportunities = "test",
-                        NumOfSemesters = 5,
+                        NumOfSemesters = 1,
                         PossibilityOfContinuation = "test",
                         Prerequisites = "test"
+                    },
+                    SubjectDescriptions = new List<SubjectInSyllabusDescription>()
+                    {
+                        new SubjectInSyllabusDescription()
+                        {
+                            AssignedSemester = 1,
+                            Subject = new Subject()
+                            {
+                                Lessons = new List<Lesson>()
+                                {
+                                    new Lesson()
+                                    {
+                                        LessonType = LessonType.Classes,
+                                        Ects = 30,
+                                        HoursAtUniversity = 500,
+                                        StudentWorkloadHours = 750
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 new List<string>()
@@ -66,7 +89,8 @@ namespace SyllabusManager.Tests.TestData
                     "Nieuzupełnione pole Możliwość kontynuacji studiów.",
                     "Nieuzupełnione pole Praca dyplomowa.",
                     "Nieuzupełnione pole Zakres egzaminu dyplomowego.",
-                    "Nieuzupełnione pole Praktyki."
+                    "Nieuzupełnione pole Praktyki.",
+                    "Zajęcia kształtujące umiejętności praktyczne posiadają mniej niż 30% punktów ECTS (0%)"
                 }
             },
             new object[]
@@ -97,6 +121,11 @@ namespace SyllabusManager.Tests.TestData
                     }
                 },
                 new List<string>()
+                {
+                    "Semestr: 3. Liczba ECTS przypisanych przedmiotów (0) jest niezgodna z oczekiwaną liczbą ECTS (30).",
+                    "Semestr: 3. Liczba godzin CNPS (0)  poza dopuszczalnym przedziałem 750 - 900.",
+                    "Zajęcia kształtujące umiejętności praktyczne posiadają mniej niż 30% punktów ECTS (0%)"
+                }
             },
             new object[]
             {
@@ -138,7 +167,12 @@ namespace SyllabusManager.Tests.TestData
                 new List<string>()
                 {
                     "Przedmiot 123 \"Test\" posiada niepoprawny przypisany semestr.",
-                    "Przedmiot 123 \"Test\" posiada przypisany semestr większy niż semestr ukończenia."
+                    "Przedmiot 123 \"Test\" posiada przypisany semestr większy niż semestr ukończenia.",
+                    "Semestr: 3. Liczba ECTS przypisanych przedmiotów (0) jest niezgodna z oczekiwaną liczbą ECTS (30).",
+                    "Semestr: 3. Liczba godzin CNPS (0)  poza dopuszczalnym przedziałem 750 - 900.",
+                    "Semestr: 7. Liczba ECTS przypisanych przedmiotów (0) jest niezgodna z oczekiwaną liczbą ECTS (30).",
+                    "Semestr: 7. Liczba godzin CNPS (0)  poza dopuszczalnym przedziałem 750 - 900.",
+                    "Zajęcia kształtujące umiejętności praktyczne posiadają mniej niż 30% punktów ECTS (0%)"
                 }
             },
         };

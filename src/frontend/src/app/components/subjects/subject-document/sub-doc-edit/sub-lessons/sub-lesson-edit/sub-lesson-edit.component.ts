@@ -24,9 +24,9 @@ export class SubLessonEditComponent implements OnInit {
     this.lesForm = this.fb.group({
       lessonType: [les.lessonType, Validators.required],
       hoursAtUniversity: [les.hoursAtUniversity, [Validators.required, Validators.min(1), Validators.max(200)]],
-      studentWorkloadHours: [les.studentWorkloadHours, [Validators.required, Validators.min(1), Validators.max(200)]],
+      studentWorkloadHours: [les.studentWorkloadHours, [Validators.required, Validators.min(1), Validators.max(500)]],
       formOfCrediting: [les.formOfCrediting, Validators.required],
-      ects: [les.ects, [Validators.required, Validators.min(1), Validators.max(30)]],
+      ects: [les.ects, [Validators.required, Validators.min(0), Validators.max(30)]],
       ectsinclPracticalClasses: [les.ectsinclPracticalClasses, Validators.required],
       ectsinclDirectTeacherStudentContactClasses: [les.ectsinclDirectTeacherStudentContactClasses, Validators.required],
       isFinal: [les.isFinal, Validators.required],

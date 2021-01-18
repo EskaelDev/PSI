@@ -1,27 +1,14 @@
 <div class="main-container">
   <app-backgroud-logged-in class="background" [mainTitle]="mainTitle" [subtitle]="subtitle"></app-backgroud-logged-in>
-
-
-  <div class="sub-container">
-    <mat-card *ngIf="user" >
+  <div class="sub-container" style="padding: 30px 40px;">
+    <div fxLayoutAlign="start center" fxLayoutGap="20px"><img src="/assets/user.png"/>
+    <div *ngIf="user" >
       <mat-card-content>
-<!--        <button mat-basic-icon>-->
-<!--          <mat-icon>user</mat-icon>-->
-<!--        </button>-->
-
-        <span>Name: </span><span>{{ user?.name }}</span>
-        <br />
-        <span>Email: </span><span>{{ user?.email }}</span>
+        <div class="account-text" style="margin-bottom: 0;"><span class="account-title">Imię i nazwisko: </span><span>{{ user?.name }}</span></div>
+        <div class="account-text" style="margin-top: 0;"><span class="account-title">Email: </span><span>{{ user?.email }}</span></div>
       </mat-card-content>
-    </mat-card>
+    </div></div>
+    
     <div *ngIf="!user">Brak danych użytkownika</div>
-
-<!--    <div *ngIf="user">-->
-<!--      <mat-icon>user</mat-icon>-->
-<!--        <span>Name:</span><span>{{ user?.name }}</span>-->
-<!--      <span>Email:</span><span>{{ user?.email }}</span>-->
-<!--    </div>-->
-<!--    <div *ngIf="!user">Brak danych użytkownika</div>-->
-<!--      <br />-->
   </div>
 </div>

@@ -22,3 +22,21 @@
     }
   }
 }
+
+::ng-deep .title-container {
+  position: absolute;
+  text-align: right;
+  margin-left: 15%;
+  margin-top: 10%;
+}
+
+.account-text {
+  padding: 20px;
+  color: #D8D5CE;
+  font-size: 30px;
+}
+
+.account-title {
+  font-weight: bold;
+  margin-right: 10px;
+}

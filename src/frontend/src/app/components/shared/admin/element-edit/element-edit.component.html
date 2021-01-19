@@ -1,8 +1,18 @@
-<h3>{{ elementName }}</h3>
-<div>
-  <ng-content></ng-content>
-</div>
-<div>
-  <button mat-icon-button (click)="onRemove()" *ngIf="canDelete"><mat-icon>delete</mat-icon></button>
-  <button mat-icon-button (click)="onSave()" [disabled]="!validForm"><mat-icon>done</mat-icon></button>
-</div>
+<mat-card style="height: 96%; border: none;">
+  <div class="card-header">
+    <mat-card-title>{{ elementName }}</mat-card-title>
+  </div>
+  <mat-card-content>
+    <div>
+      <ng-content></ng-content>
+    </div>
+    <div style="margin-top: 25px;">
+      <button style="margin-right: 30px;" mat-icon-button (click)="onRemove()" *ngIf="canDelete">
+        <mat-icon class="action-btn">delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="onSave()" [disabled]="!validForm">
+        <mat-icon class="action-btn">done</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,26 +1,30 @@
 <div fxLayoutAlign="start start">
-  <app-element-edit
-    [elementName]="originalFos.name ? originalFos.name : 'Nowy kierunek'"
-    [canDelete]="originalFos && originalFos.code.length > 0"
-    [validForm]="fosForm.valid"
-    (save)="saveFos()"
-    (remove)="removeFos()"
-  >
-    <app-fos-form
-      [fosForm]="fosForm"
-      [supervisors]="supervisors"
-      [isNew]="originalFos.code.length === 0"
-    ></app-fos-form>
-    <app-fos-tags
-      [specs]="originalFos.specializations"
-      [isEditing]="isEditSpecs"
-      (editSpecs)="openEditSpecsWindow()"
+  <div class="sub-container-admin-fos">
+    <app-element-edit
+      [elementName]="originalFos.name ? originalFos.name : 'Nowy kierunek'"
+      [canDelete]="originalFos && originalFos.code.length > 0"
+      [validForm]="fosForm.valid"
+      (save)="saveFos()"
+      (remove)="removeFos()"
     >
-    </app-fos-tags>
-  </app-element-edit>
-  <app-fos-specializations
-    *ngIf="isEditSpecs"
-    [fosSpecs]="originalFos.specializations"
-    (specsSaved)="updateSpecs($event)"
-  ></app-fos-specializations>
+      <app-fos-form
+        [fosForm]="fosForm"
+        [supervisors]="supervisors"
+        [isNew]="originalFos.code.length === 0"
+      ></app-fos-form>
+      <app-fos-tags
+        [specs]="originalFos.specializations"
+        [isEditing]="isEditSpecs"
+        (editSpecs)="openEditSpecsWindow()"
+      >
+      </app-fos-tags>
+    </app-element-edit>
+  </div>
+
+  <div *ngIf="isEditSpecs" class="sub-container-admin-specs">
+    <app-fos-specializations
+      [fosSpecs]="originalFos.specializations"
+      (specsSaved)="updateSpecs($event)"
+    ></app-fos-specializations>
+  </div>
 </div>

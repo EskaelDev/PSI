@@ -12,8 +12,8 @@ export const onSideNavChange = trigger('onSideNavChange', [
       'min-width': '200px'
     })
   ),
-  transition('close => open', animate('50ms ease-in')),
-  transition('open => close', animate('50ms ease-in')),
+  transition('close => open', animate('200ms ease-in')),
+  transition('open => close', animate('200ms ease-in')),
 ]);
 
 

@@ -1,5 +1,7 @@
-<app-admin [title]="title"
-  ><div fxLayoutAlign="start start">
-    <app-users-list></app-users-list><app-user></app-user>
-  </div>
-</app-admin>
+<div class="main-container">
+  <app-backgroud-logged-in class="background" mainTitle="Panel zarządzania" subtitle="użytkownikami"></app-backgroud-logged-in>
+    <div fxLayoutAlign="start start" fxLayoutGap="20px" class="sub-container sub-container-admin">
+      <app-users-list></app-users-list><app-user></app-user>
+    </div>
+</div>
+

@@ -11,6 +11,6 @@ import {SharedComponentsModule} from '../shared/shared-components.module';
     NotFoundComponent,
     NoAccessComponent,
   ],
-  imports: [SharedModule, SharedComponentsModule]
+    imports: [SharedModule, SharedComponentsModule]
 })
 export class HomeModule {}

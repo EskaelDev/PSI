@@ -1,40 +1,55 @@
-<h3>Zarządzaj specjalizacjami</h3>
-<div>
-  <form [formGroup]="specializationForm">
-    <mat-form-field class="example-form-field">
-      <input
-        matInput
-        type="text"
-        placeholder="Kod specjalizacji"
-        formControlName="code"
-        required
-        [readonly]="!isNew"
-      />
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-    <mat-form-field class="example-form-field">
-      <input
-        matInput
-        type="text"
-        placeholder="Nazwa"
-        formControlName="name"
-        required
-      />
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-  </form>
-</div>
-<button mat-icon-button (click)="clearSpec()"><mat-icon>backspace</mat-icon></button>
-<button mat-icon-button (click)="saveCurrent()" [disabled]="!specializationForm.valid">
-  <mat-icon>done</mat-icon>
-</button>
-<div *ngFor="let spec of editableSpecs">
-  <div>
-    <span (click)="editSpec(spec)">{{ spec.name }}</span>
-    <mat-icon (click)="removeSpec(spec)">remove</mat-icon>
+<div class="manage-roles">
+  <h3>Zarządzaj specjalizacjami</h3>
+  <div fxLayoutAlign="center center">
+    <form [formGroup]="specializationForm">
+      <mat-form-field style="width: 290px">
+        <input
+          matInput
+          type="text"
+          placeholder="Kod specjalizacji"
+          formControlName="code"
+          required
+          [readonly]="!isNew"
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <mat-form-field style="width: 290px">
+        <input
+          matInput
+          type="text"
+          placeholder="Nazwa"
+          formControlName="name"
+          required
+        />
+        <mat-error> Pole wymagane </mat-error>
+      </mat-form-field>
+      <br />
+    </form>
+    <div>
+      <button
+        mat-icon-button
+        style="margin-top: 50px;"
+        (click)="saveCurrent()"
+        [disabled]="!specializationForm.valid"
+      >
+        <mat-icon class="action-btn">add</mat-icon></button
+      ><button class="clear-btn" mat-button (click)="clearSpec()">
+        wyczyść
+      </button>
+    </div>
+  </div>
+
+  <div fxLayoutAlign="center center" style="margin-top: 10px;">
+    <div fxLayoutAlign="center center" fxLayoutGap="5px" style="width: 350px; overflow: auto;">
+      <div *ngFor="let spec of editableSpecs">
+        <div class="role-tile" fxLayoutAlign="center center">
+          <span (click)="editSpec(spec)">{{ spec.name }}</span>
+          <mat-icon (click)="removeSpec(spec)">remove</mat-icon>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="saveSpecs()">
+      <mat-icon class="action-btn">done</mat-icon>
+    </button>
   </div>
 </div>
-
-<button mat-icon-button (click)="saveSpecs()"><mat-icon>done</mat-icon></button>

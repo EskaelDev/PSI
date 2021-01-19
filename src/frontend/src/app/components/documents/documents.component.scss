@@ -8,7 +8,7 @@
   position: absolute;
   text-align: right;
   margin-left: 15%;
-  margin-top: 10%;
+  margin-top: 7%;
 }
 
 .cards {
@@ -26,6 +26,7 @@
     text-align: left;
     align-items: center;
     background-color: transparent;
+    cursor: pointer;
 
     mat-icon {
       color: #7B6D35;

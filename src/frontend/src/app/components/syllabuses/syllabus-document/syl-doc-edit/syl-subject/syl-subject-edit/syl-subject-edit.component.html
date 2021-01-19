@@ -1,10 +1,13 @@
 <div class="syl-subject-edit-container">
-    <div>
+    <div class="subject-container">
+
+      <h2>Przedmiot</h2>
+
       <form [formGroup]="subForm">
         <mat-form-field>
             <input
               type="text"
-              placeholder="Przedmiot"
+              placeholder="Kod przedmiotu"
               aria-label="Number"
               formControlName="subject"
               matInput
@@ -40,7 +43,7 @@
             <mat-error> Semestr ukończenia nie może być mniejszy niż przypisany semestr </mat-error>
           </mat-form-field>
       </form>
-      <div>
+      <div class="buttons">
         <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
         <button mat-icon-button (click)="save()" [disabled]="!subForm.valid"><mat-icon>done</mat-icon></button>
       </div>

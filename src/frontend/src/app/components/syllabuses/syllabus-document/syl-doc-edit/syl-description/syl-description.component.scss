@@ -1,27 +1,32 @@
 .description-container {
   color: #D8D5CE;
   font-size: 1rem;
-  margin: 1rem 1rem 0 1rem;
+  margin: 2rem 2rem 0 2rem;
+  flex-wrap: wrap;
+  height: 600px;
+  width: 1000px;
 
-  .input-field {
-    width: 34%;
-    text-align: center;
-    &:first-child{
-      margin-right: 1rem;
+  .dropdown {
+    margin: 1rem;
+    width: 30%;
+  }
+
+  .textarea-container {
+    width:45%;
+    min-height: 20%;
+    max-height: 20%;
+    margin: 1.2rem 0 ;
+    textarea {
+      border: 2px solid #707070;
+      height: 6rem;
     }
-
-  }
-
-  .dropdown{
-    width: 100%;
-  }
-
-  .textarea-container{
-    width: 100%;
-    //margin: 1rem;
-    margin: 0 0 1.2rem 0 ;
-    height: 4rem;
   }
 }
+
+.input-field {
+  width: 12%;
+  margin-right: 1rem;
+}
+
 
 

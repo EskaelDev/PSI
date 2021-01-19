@@ -1,4 +1,4 @@
-<div fxLayoutAlign="stretch" fxLayoutGap="30px" [appDisable]="disabled">
+<div [appDisable]="disabled">
   <mat-tab-group mat-align-tabs="start" id="tab-group">
     <mat-tab label="Opis">
       <app-syl-description [document]="_document" (semNum)="updateSemesters()"></app-syl-description>
@@ -10,23 +10,24 @@
         <app-points-limit [document]="_document"></app-points-limit>
     </mat-tab>
     <mat-tab label="Zakres egzaminu dyplomowego">
-        <mat-form-field>
-            <mat-label>Zakres egzaminu dyplomowego</mat-label>
-            <textarea matInput [(ngModel)]="_document.scopeOfDiplomaExam" [formControl]="examControl"></textarea>
-            <mat-error>Pole wymagane</mat-error>
-          </mat-form-field>
+        <mat-form-field class="inputbox-container">
+          <mat-label>Zakres egzaminu dyplomowego</mat-label>
+          <textarea class="input-textarea" matInput [(ngModel)]="_document.scopeOfDiplomaExam" [formControl]="examControl"></textarea>
+          <mat-error>Pole wymagane</mat-error>
+        </mat-form-field>
+
     </mat-tab>
     <mat-tab label="Praca dyplomowa">
-        <mat-form-field>
+        <mat-form-field class="inputbox-container">
             <mat-label>Kurs praca dyplomowa</mat-label>
-            <textarea matInput [(ngModel)]="_document.thesisCourse" [formControl]="thesisControl"></textarea>
+            <textarea class="input-textarea" matInput [(ngModel)]="_document.thesisCourse" [formControl]="thesisControl"></textarea>
             <mat-error>Pole wymagane</mat-error>
           </mat-form-field>
     </mat-tab>
     <mat-tab label="Praktyki">
-        <mat-form-field>
+        <mat-form-field class="inputbox-container">
             <mat-label>Praktyki</mat-label>
-            <textarea matInput [(ngModel)]="_document.intershipType" [formControl]="internControl"></textarea>
+            <textarea class="input-textarea" matInput [(ngModel)]="_document.intershipType" [formControl]="internControl"></textarea>
             <mat-error>Pole wymagane</mat-error>
           </mat-form-field>
     </mat-tab>

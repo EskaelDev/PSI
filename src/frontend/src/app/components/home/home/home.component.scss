@@ -1,6 +1,5 @@
 #background {
   #polygon-left {
-    overflow: visible;
     position: absolute;
     width: 75.8%;
     height: 80.2%;
@@ -23,7 +22,6 @@
 
   #polygon-right {
     filter: drop-shadow(0px 25px 49px rgba(0, 0, 0, 0.161));
-    overflow: visible;
     position: absolute;
     width: 148%;
     height: 108.23%;
@@ -39,29 +37,36 @@
   }
 }
 
-#button_syllabus {
+.buttons_container{
+  position: absolute;
+  left: 120px;
+  top: 60px;
+  width: 80%;
+  height: 40%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.button_syllabus {
   position: absolute;
   width: 511px;
   height: 414px;
   left: 273px;
   top: 167px;
-  overflow: visible;
   background-color: rgba(39, 42, 49, 1);
 
-  #Programy_studiw {
+  .Programy_studiw {
     left: 300px;
     top: 363px;
     position: absolute;
-    font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
   }
 
-  #school_icon{
+  .school_icon{
       width: 250px;
       height: 250px;
       left: 563.746px;
-      top: 391px;
       top: 391px;
       font-size: 250px;
     }
@@ -74,122 +79,111 @@
   }
 }
 
-#button_learning_outcome{
+.button_learning_outcome{
   position: absolute;
   width: 511px;
   height: 170px;
   left: 273px;
   top: 586px;
-  overflow: visible;
   background-color: rgba(39, 42, 49, 1);
 
-  #Efekty_uczenia_si {
+  .Efekty_uczenia_si {
     left: 300px;
     top: 124px;
     position: absolute;
-    overflow: visible;
-    font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
   }
 }
 
-#button_learning_outcome:disabled{
-  #Efekty_uczenia_si {
+.button_learning_outcome:disabled{
+  .Efekty_uczenia_si {
     color: rgb(100, 100, 100);
   }
 }
 
-#button_docs{
+.button_docs{
   position: absolute;
   width: 492px;
   height: 170px;
   left: 788px;
   top: 167px;
-  overflow: visible;
   background-color: rgba(39, 42, 49, 1);
 
-  #Dokumenty {
+  .Dokumenty {
     left: 347px;
     top: 118px;
     position: absolute;
-    font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
   }
 }
 
-#button_accept{
+.button_accept{
   position: absolute;
   width: 242px;
   height: 241px;
   left: 788px;
   top: 341px;
-  overflow: visible;
   background-color: rgba(39, 42, 49, 1);
 
   #Akceptacja {
     left: 102px;
     top: 189px;
     position: absolute;
-    font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
   }
 }
 
-#button_accept:disabled{
-  #Akceptacja {
+.button_accept:disabled{
+  .Akceptacja {
     color: rgb(100, 100, 100);
   }
 }
 
-#button_subject{
+.button_subject{
   position: absolute;
   width: 246px;
   height: 241px;
   left: 1034px;
   top: 341px;
-  overflow: visible;
   background-color: rgba(39, 42, 49, 1);
 
-  #Przedmioty {
+  .Przedmioty {
     left: 105px;
     top: 190px;
     position: absolute;
-    font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
   }
 }
 
-#button_subject:disabled{
-  #Przedmioty {
+.button_subject:disabled{
+  .Przedmioty {
     color: rgb(100, 100, 100);
   }
 }
 
-#button_admin{
+.button_admin{
   position: absolute;
   width: 492px;
   height: 170px;
   left: 788px;
   top: 586px;
-  overflow: visible;
   background-color: rgba(39, 42, 49, 1);
 
-  #Administracja {
+  .Administracja {
     left: 323px;
     top: 123px;
     position: absolute;
-    font-family: Microsoft Sans Serif;
     font-size: 24px;
     color: rgba(216, 213, 206, 1);
   }
 }
 
-#button_admin:disabled{
-  #Administracja {
+.button_admin:disabled{
+  .Administracja {
     color: rgb(100, 100, 100);
   }
 }
@@ -199,4 +193,165 @@
   width: 70px;
   font-size: 70px;
 }
+//
+//.buttons_container{
+//  position: absolute;
+//  left: 370px;
+//  top: 170px;
+//  width: 80%;
+//  height: 40%;
+//  display: flex;
+//  flex-wrap: wrap;
+//}
+//
+//button{
+//  margin: 0.3%;
+//}
+//
+//.button_syllabus {
+//  width: 511px;
+//  height: 414px;
+//  background-color: rgba(39, 42, 49, 1);
+//
+//  .Programy_studiw {
+//    margin-left: 20px;
+//    font-size: 24px;
+//    color: rgba(216, 213, 206, 1);
+//  }
+//
+//  .school_icon{
+//    width: 250px;
+//    height: 250px;
+//    margin-left: 120px;
+//    font-size: 250px;
+//  }
+//  .material-icons.md-18 { font-size: 18px; }
+//}
+//
+//.button_syllabus:disabled{
+//  .Programy_studiw {
+//    color: rgb(100, 100, 100);
+//  }
+//}
+//
+//.button_learning_outcome{
+//  //position: absolute;
+//  width: 511px;
+//  height: 170px;
+//  //left: 273px;
+//  margin-top: 430px;
+//  //overflow: visible;
+//  background-color: rgba(39, 42, 49, 1);
+//
+//  .Efekty_uczenia_si {
+//    //left: 300px;
+//    //top: 124px;
+//    //position: absolute;
+//    //overflow: visible;
+//    font-size: 24px;
+//    color: rgba(216, 213, 206, 1);
+//  }
+//}
+//
+//.button_learning_outcome:disabled{
+//  .Efekty_uczenia_si {
+//    color: rgb(100, 100, 100);
+//  }
+//}
+//
+//.button_docs{
+//  //position: absolute;
+//  width: 492px;
+//  height: 170px;
+//  margin-left: 488px;
+//  //top: 167px;
+//  //overflow: visible;
+//  background-color: rgba(39, 42, 49, 1);
+//
+//  .Dokumenty {
+//    //left: 347px;
+//    //top: 118px;
+//    //position: absolute;
+//    font-size: 24px;
+//    color: rgba(216, 213, 206, 1);
+//  }
+//}
+//
+//.button_accept{
+//  //position: absolute;
+//  width: 242px;
+//  height: 241px;
+//  //left: 788px;
+//  //top: 341px;
+//  //overflow: visible;
+//  background-color: rgba(39, 42, 49, 1);
+//
+//  .Akceptacja {
+//    //left: 102px;
+//    //top: 189px;
+//    //position: absolute;
+//    font-size: 24px;
+//    color: rgba(216, 213, 206, 1);
+//  }
+//}
+//
+//.button_accept:disabled{
+//  .Akceptacja {
+//    color: rgb(100, 100, 100);
+//  }
+//}
+//
+//.button_subject{
+//  //position: absolute;
+//  width: 246px;
+//  height: 241px;
+//  //left: 1034px;
+//  //top: 341px;
+//  //overflow: visible;
+//  background-color: rgba(39, 42, 49, 1);
+//
+//  .Przedmioty {
+//    //left: 105px;
+//    //top: 190px;
+//    //position: absolute;
+//    font-size: 24px;
+//    color: rgba(216, 213, 206, 1);
+//  }
+//}
+//
+//.button_subject:disabled{
+//  .Przedmioty {
+//    color: rgb(100, 100, 100);
+//  }
+//}
+//
+//.button_admin{
+//  //position: absolute;
+//  width: 492px;
+//  height: 170px;
+//  //left: 788px;
+//  //top: 586px;
+//  //overflow: visible;
+//  background-color: rgba(39, 42, 49, 1);
+//
+//  .Administracja {
+//    //left: 323px;
+//    //top: 123px;
+//    //position: absolute;
+//    font-size: 24px;
+//    color: rgba(216, 213, 206, 1);
+//  }
+//}
+//
+//.button_admin:disabled{
+//  .Administracja {
+//    color: rgb(100, 100, 100);
+//  }
+//}
+//
+//.home-icon {
+//  height: 70px;
+//  width: 70px;
+//  font-size: 70px;
+//}
 

@@ -1,3 +1,6 @@
-<div (click)="select()" [ngClass]="{ selected: selected === elem }">
+<mat-card class="subject-card">
+  <div class="subjects" (click)="select()" [ngClass]="{ selected: selected === elem }">
     {{elem.subject?.code}}: {{elem.subject?.namePl}} s: {{elem.assignedSemester}}
-</div>
+  </div>
+</mat-card>
+

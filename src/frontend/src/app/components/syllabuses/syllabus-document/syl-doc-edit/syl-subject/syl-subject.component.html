@@ -9,7 +9,7 @@
                                  (selectedElem)="select($event)"
       ></app-syl-subject-list-elem>
     </div>
-    <div *ngIf="document.subjectDescriptions.length === 0">Brak wpisów</div>
+    <div class="info" *ngIf="document.subjectDescriptions.length === 0">Brak wpisów</div>
     <button mat-icon-button (click)="add()">
       <mat-icon>add</mat-icon>
     </button>

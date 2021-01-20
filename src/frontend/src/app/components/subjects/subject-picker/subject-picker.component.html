@@ -2,20 +2,21 @@
   <app-backgroud-logged-in class="background" [mainTitle]="mainTitle" [subtitle]="subtitle"></app-backgroud-logged-in>
 
   <div class="sub-container">
-    <button mat-basic-button (click)="newSubject()">
-      Nowy przedmiot
-      <mat-icon style="margin-right: 5px">add</mat-icon>
+    <button class="new-sub-btn" mat-basic-button (click)="newSubject()">
+      <div fxLayoutAlign="center center" fxLayoutGap="10px"><div>Nowy przedmiot</div>
+      <mat-icon style="margin-right: 5px">add</mat-icon></div>
     </button>
 
     <!--    SEARCH BAR   -->
     <div fxLayoutAlign="start center" fxLayoutGap="20px">
 
       <!--    FILTERS     -->
-      <mat-form-field>
+      <mat-form-field style="width: 250px;">
         <mat-label>Wyszukaj</mat-label>
         <input
           matInput
           type="text"
+          style="color: rgba(241, 239, 236, 1);"
           [(ngModel)]="searchPhrase"
           (input)="filterSubjects()"
         />
@@ -30,7 +31,7 @@
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="dropdown">
+      <mat-form-field appearance="outline" class="dropdown" style="width: 200px;">
         <mat-label>Wybierz kierunek studiów</mat-label>
         <mat-select
           [(value)]="selectedFos"
@@ -41,7 +42,7 @@
           >
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="dropdown">
+      <mat-form-field appearance="outline" class="dropdown" style="width: 200px;">
         <mat-label>Wybierz specjalizację</mat-label>
         <mat-select [(value)]="selectedSpec" (selectionChange)="loadSubjects()">
           <mat-option *ngFor="let spec of specs" [value]="spec"
@@ -49,7 +50,7 @@
           >
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="outline" class="dropdown">
+      <mat-form-field appearance="outline" class="dropdown" style="width: 200px;">
         <mat-label>Wybierz rok akademicki</mat-label>
         <mat-select [(value)]="selectedYear" (selectionChange)="loadSubjects()">
           <mat-option *ngFor="let year of years" [value]="year">{{
@@ -75,14 +76,14 @@
 
 
     <!--    SUBJECT TILE-->
-    <div *ngIf="filteredSubjects.length > 0 && !isLoading" class="subject-tile">
+    <div *ngIf="filteredSubjects.length > 0 && !isLoading" class="subject-tile" fxLayout="row-wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
       <mat-card *ngFor="let subject of filteredSubjects">
         <mat-card-content>
-          <p>
+          <p style="height: 50px;">
             {{ subject.code }}: {{ subject.namePl }}
           </p>
-          <div class="tile-buttons">
-            <button mat-raised-button (click)="download(subject)">
+          <div class="tile-buttons" style="text-align: center;">
+            <button style="margin-right: 10px;" mat-raised-button (click)="download(subject)">
             <mat-icon>save_alt</mat-icon>
             PDF
             </button>

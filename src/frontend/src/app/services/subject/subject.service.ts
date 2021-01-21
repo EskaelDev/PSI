@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Subject } from 'src/app/core/models/subject/subject';
 import { User } from 'src/app/core/models/user/user';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { AlertService } from '../alerts/alert.service';
 
 @Injectable({
@@ -103,7 +103,7 @@ export class SubjectService {
         else {
           this.alerts.showDefaultWrongDataErrorMessage();
         }
-        
+
         return of(false);
       })
     );

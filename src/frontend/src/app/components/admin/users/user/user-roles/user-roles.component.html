@@ -1,19 +1,34 @@
-<h3>Zarządzaj rolami</h3>
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Nazwa nowej roli</mat-label>
-    <mat-select [(value)]="selectedRole">
-      <mat-option *ngFor="let role of roles" [value]="role">{{
-        "roles." + role | translate
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<button mat-icon-button (click)="assignRole()" [disabled]="!selectedRole"><mat-icon>add</mat-icon></button>
-<div *ngFor="let userRole of editableRoles">
-  <div>
-    {{ "roles." + userRole | translate
-    }}<mat-icon (click)="unassignRole(userRole)">remove</mat-icon>
+<div class="manage-roles">
+  <h3>Zarządzaj rolami</h3>
+  <div fxLayoutAlign="center center">
+    <mat-form-field appearance="outline" class="dropdown">
+      <mat-label>Nazwa nowej roli</mat-label>
+      <mat-select [(value)]="selectedRole">
+        <mat-option *ngFor="let role of roles" [value]="role">{{
+          "roles." + role | translate
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      mat-icon-button
+      (click)="assignRole()"
+      [disabled]="!selectedRole"
+      style="margin-bottom: 25px"
+    >
+      <mat-icon class="action-btn">add</mat-icon>
+    </button>
+  </div>
+  <div fxLayoutAlign="center center">
+    <div fxLayoutAlign="center center" fxLayoutGap="5px" style="width: 250px; overflow: auto;">
+      <div *ngFor="let userRole of editableRoles">
+        <div class="role-tile" fxLayoutAlign="center center">
+          {{ "roles." + userRole | translate
+          }}<mat-icon (click)="unassignRole(userRole)">clear</mat-icon>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="saveRoles()">
+      <mat-icon class="action-btn">done</mat-icon>
+    </button>
   </div>
 </div>
-<button mat-icon-button (click)="saveRoles()"><mat-icon>done</mat-icon></button>

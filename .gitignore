@@ -358,3 +358,7 @@ src/.idea/*
 src/backend/SyllabusManager.API/temp2.pdf
 
 src/backend/SyllabusManager.API/temp_paged.pdf
+
+src/frontend/src/environments/environment.ts
+
+src/backend/SyllabusManager.API/appsettings.Development.json

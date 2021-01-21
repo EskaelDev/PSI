@@ -1,4 +1,4 @@
-<div>
+<div class="sub-lit-edit-container">
   <form [formGroup]="litForm" [appDisable]="readOnly">
     <mat-form-field>
       <input
@@ -8,9 +8,9 @@
         formControlName="authors"
         required
       />
-      <mat-error> Pole wymagane </mat-error>
+      <mat-error> Pole wymagane</mat-error>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field>
       <input
         matInput
@@ -19,9 +19,9 @@
         formControlName="title"
         required
       />
-      <mat-error> Pole wymagane </mat-error>
+      <mat-error> Pole wymagane</mat-error>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field>
       <input
         matInput
@@ -30,9 +30,9 @@
         formControlName="distributor"
       />
     </mat-form-field>
-    <br />
+    <br/>
     <mat-checkbox formControlName="isPrimary">podstawowa</mat-checkbox>
-    <br />
+    <br/>
     <mat-form-field>
       <input
         matInput
@@ -40,9 +40,9 @@
         placeholder="Rok wydania"
         formControlName="year"
       />
-      <mat-error> Rok nie może być ujemny i nie może przekraczać obecnego </mat-error>
+      <mat-error> Rok nie może być ujemny i nie może przekraczać obecnego</mat-error>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field>
       <input
         matInput
@@ -52,12 +52,18 @@
         required
         pattern="^(?:ISBN(?:-13)?:?\ )?(?=[0-9]{13}$|(?=(?:[0-9]+[-\ ]){4})[-\ 0-9]{17}$)97[89][-\ ]?[0-9]{1,5}[-\ ]?[0-9]+[-\ ]?[0-9]+[-\ ]?[0-9]$"
       />
-      <mat-error> Niepoprawny format </mat-error>
+      <mat-error> Niepoprawny format</mat-error>
     </mat-form-field>
-    <br />
+    <br/>
   </form>
-  <div *ngIf="!readOnly">
-    <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
-    <button mat-icon-button (click)="save()" [disabled]="!litForm.valid"><mat-icon>done</mat-icon></button>
+  <div class="buttons-container">
+    <div *ngIf="!readOnly" class="buttons">
+      <button mat-icon-button (click)="delete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="save()" [disabled]="!litForm.valid">
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

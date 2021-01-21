@@ -1,0 +1,10 @@
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto auto auto 15%;
+  font-size: 1em;
+  background-color: rgba(39, 42, 49, 1);
+  border: rgba(112, 112, 112, 1) 1px solid;
+}

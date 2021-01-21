@@ -1,0 +1,23 @@
+.document-details {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  font-size: 0.8rem;
+
+  app-fos-details-element {
+    margin: 0 0.1rem;
+    padding: 0.75rem;
+    background-color: #1C1E23;
+
+    ::ng-deep .name {
+      color: #7B6D35;
+    }
+
+    ::ng-deep .content {
+      text-align: right;
+      color: #D8D5CE;
+    }
+  }
+}

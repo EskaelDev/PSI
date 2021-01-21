@@ -1,27 +1,43 @@
-<mat-form-field>
-  <mat-label>Wyszukaj</mat-label>
-  <input
-    matInput
-    type="text"
-    [(ngModel)]="searchPhrase"
-    (input)="filterElements()"
-  />
-  <button
-    mat-button
-    *ngIf="searchPhrase"
-    matSuffix
-    mat-icon-button
-    aria-label="Clear"
-    (click)="searchPhrase = ''"
-  >
-    <mat-icon>close</mat-icon>
+<div fxLayoutAlign="start center" fxLayoutGap="5px">
+  <mat-form-field class="search-field">
+    <mat-label>Wyszukaj</mat-label>
+    <input
+      matInput
+      style="color: rgba(241, 239, 236, 1)"
+      type="text"
+      [(ngModel)]="searchPhrase"
+      (input)="filterElements()"
+    />
+    <button
+      mat-button
+      *ngIf="searchPhrase"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="searchPhrase = ''"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <button mat-icon-button>
+    <mat-icon>search</mat-icon>
   </button>
-</mat-form-field>
-<button mat-icon-button (click)="newElement()"><mat-icon>add</mat-icon></button>
-<div
-  *ngFor="let element of filteredElements"
-  (click)="selectElement(element)"
-  [ngClass]="{ selected: selectedId === element.id }"
->
-  <p>{{ element.name }}</p>
+</div>
+
+<div class="sub-container-admin-sub">
+  <div class="elems-list-box">
+    <div
+      class="list-elem"
+      *ngFor="let element of filteredElements"
+      (click)="selectElement(element)"
+      [ngClass]="{ selected: selectedId === element.id }"
+    >
+      <div>{{ element.name }}</div>
+    </div>
+  </div>
+  <div style="text-align: center">
+    <button mat-icon-button (click)="newElement()">
+      <mat-icon class="action-btn">add</mat-icon>
+    </button>
+  </div>
 </div>

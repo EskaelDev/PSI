@@ -1,0 +1,14 @@
+.sub-container {
+  display: flex;
+  flex-direction: column;
+  margin: 18% auto auto 15%;
+  font-size: 1em;
+}
+
+.cards {
+  app-document-tile {
+    flex: 1 1 0;
+  }
+  margin-top: 2rem;
+}
+

@@ -1,6 +1,12 @@
-<div style="cursor: pointer;">
-  <h2>{{ name }}</h2>
-  <h3 *ngIf="spec">{{ spec }}</h3>
-  <p>{{ year }}</p>
-  <ng-content></ng-content>
-</div>
+<mat-card>
+  <div class="card-header">
+    <mat-card-title>{{ name }}</mat-card-title>
+    <mat-card-subtitle *ngIf="spec">{{ spec }}</mat-card-subtitle>
+  </div>
+  <mat-card-content>
+    <p>{{ year }}</p>
+    <div class="buttons">
+      <ng-content></ng-content>
+    </div>
+  </mat-card-content>
+</mat-card>

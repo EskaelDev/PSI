@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { CardEntries } from 'src/app/core/models/subject/card-entries';
 import { CardEntry } from 'src/app/core/models/subject/card-entry';
 
@@ -9,12 +9,14 @@ import { CardEntry } from 'src/app/core/models/subject/card-entry';
 })
 export class SubCardComponent implements OnInit {
 
+  // @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   @Input() readOnly: boolean = true;
   @Input() card: CardEntries = new CardEntries();
 
   constructor() { }
 
   ngOnInit(): void {
+    // this.scrollToBottom();
   }
 
   remove(entry: CardEntry) {
@@ -23,5 +25,13 @@ export class SubCardComponent implements OnInit {
 
   add() {
     this.card.entries.push(new CardEntry());
+    // this.scrollToBottom();
   }
+  // scrollToBottom(){
+  //   try {
+  //     this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+  //   } catch (err) { }
+  // }
 }
+
+

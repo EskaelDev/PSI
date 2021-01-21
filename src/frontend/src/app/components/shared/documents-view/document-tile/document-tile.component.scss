@@ -1,0 +1,33 @@
+mat-card {
+  margin-bottom: 1em;
+  padding: 0.45em;
+  border: 1px solid rgba(112, 112, 112, 1);
+  background-color: rgba(39, 42, 49, 1);
+  color: rgba(216,213,206,1);
+  text-align: center;
+  .card-header {
+    background-color: rgba(28, 30, 35, 1);
+    padding: 1rem 0.682rem 0.682rem;
+    margin-bottom: 0.5rem;
+
+    mat-card-title {
+      padding-left: 5px;
+      border-left: 0.35rem #707070 solid;
+      font-size: 1.5rem;
+      line-height: 2.25rem;
+      font-weight: normal;
+    }
+
+    mat-card-subtitle {
+      margin: 0;
+      color: rgba(123,109,53,1);
+    }
+  }
+
+  mat-card-content {
+    div.buttons {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+}

@@ -1,5 +1,5 @@
-<div fxLayoutAlign="start" fxLayoutGap="30px">
-  <div>
+<div fxLayoutAlign="start" fxLayoutGap="30px" class="sub-literature-container">
+  <div class="sub-literature-first-column">
     <div *ngIf="document.literature.length > 0">
       <app-sub-lit-elem
         *ngFor="let elem of document.literature"
@@ -9,9 +9,11 @@
       ></app-sub-lit-elem>
     </div>
     <div *ngIf="document.literature.length === 0">Brak wpisów</div>
-    <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+    <button *ngIf="!readOnly" mat-icon-button (click)="add()">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
-  <div>
+  <div class="sub-literature-second-column">
     <app-sub-lit-edit
       [readOnly]="readOnly"
       *ngIf="selected"

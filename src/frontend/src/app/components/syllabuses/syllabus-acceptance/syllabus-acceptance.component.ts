@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
 import { FileHelper } from 'src/app/helpers/FileHelper';
 import { AlertService } from 'src/app/services/alerts/alert.service';
@@ -12,6 +12,8 @@ import { SyllabusService } from 'src/app/services/syllabus/syllabus.service';
 export class SyllabusAcceptanceComponent implements OnInit {
   syllabuses: Syllabus[] = [];
   criteria: any;
+  mainTitle: string = 'Akceptacja';
+  subtitle: string = 'programu studiów';
 
   constructor(
     private syllabusService: SyllabusService,

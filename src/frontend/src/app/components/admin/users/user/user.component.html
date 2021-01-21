@@ -1,26 +1,30 @@
 <div fxLayoutAlign="start start">
-  <app-element-edit
-    [elementName]="originalUser.name ? originalUser.name : 'Nowy użytkownik'"
-    [canDelete]="originalUser.id !== guidEmpty"
-    [validForm]="userForm.valid"
-    (save)="saveUser()"
-    (remove)="removeUser()"
-  >
-    <app-user-form
-      [isNew]="!originalUser.name"
-      [userForm]="userForm"
-      (passwordReset)="resetPassword()"
-    ></app-user-form>
-    <app-user-tags
-      [roles]="originalUser.roles"
-      [isEditing]="isEditRoles"
-      (editRoles)="openEditRolesWindow()"
+  <div class="sub-container-admin-sub">
+    <app-element-edit
+      [elementName]="originalUser.name ? originalUser.name : 'Nowy użytkownik'"
+      [canDelete]="originalUser.id !== guidEmpty"
+      [validForm]="userForm.valid"
+      (save)="saveUser()"
+      (remove)="removeUser()"
     >
-    </app-user-tags>
-  </app-element-edit>
-  <app-user-roles
-    *ngIf="isEditRoles"
-    [userRoles]="originalUser.roles"
-    (rolesSaved)="updateRoles($event)"
-  ></app-user-roles>
+      <app-user-form
+        [isNew]="!originalUser.name"
+        [userForm]="userForm"
+        (passwordReset)="resetPassword()"
+      ></app-user-form>
+      <app-user-tags
+        [roles]="originalUser.roles"
+        [isEditing]="isEditRoles"
+        (editRoles)="openEditRolesWindow()"
+      >
+      </app-user-tags>
+    </app-element-edit>
+  </div>
+
+  <div *ngIf="isEditRoles" class="sub-container-admin-roles">
+    <app-user-roles
+      [userRoles]="originalUser.roles"
+      (rolesSaved)="updateRoles($event)"
+    ></app-user-roles>
+  </div>
 </div>

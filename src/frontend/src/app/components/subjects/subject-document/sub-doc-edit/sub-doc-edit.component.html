@@ -1,26 +1,25 @@
-<div fxLayoutAlign="start start" fxLayoutGap="30px">
-    <mat-tab-group mat-align-tabs="start">
-      <mat-tab label="Dane">
-        <app-sub-description [document]="_document" [readOnly]="readOnly"></app-sub-description>
-      </mat-tab>
-      <mat-tab label="Zajęcia">
-        <app-sub-lessons [document]="_document" [readOnly]="readOnly"></app-sub-lessons>
-      </mat-tab>
-      <mat-tab label="Literatura">
-        <app-sub-literature [document]="_document" [readOnly]="readOnly"></app-sub-literature>
-      </mat-tab>
-      <mat-tab label="Efekty uczenia się">
-        <app-sub-learn-outc [document]="_document" [readOnly]="readOnly"></app-sub-learn-outc>
-      </mat-tab>
-      <mat-tab label="Wymagania wstępne">
-        <app-sub-card [card]="getCardEntry(preEntry)" [readOnly]="readOnly"></app-sub-card>
-      </mat-tab>
-      <mat-tab label="Cele przedmiotu">
-        <app-sub-card [card]="getCardEntry(goalEntry)" [readOnly]="readOnly"></app-sub-card>
-      </mat-tab>
-      <mat-tab label="Narzędzia dydaktyczne">
-          <app-sub-card [card]="getCardEntry(teachEntry)" [readOnly]="readOnly"></app-sub-card>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-  
+<div>
+  <mat-tab-group mat-align-tabs="start" id="tab-group">
+    <mat-tab label="Dane">
+      <app-sub-description [document]="_document" [readOnly]="readOnly"></app-sub-description>
+    </mat-tab>
+    <mat-tab label="Zajęcia">
+      <app-sub-lessons [document]="_document" [readOnly]="readOnly"></app-sub-lessons>
+    </mat-tab>
+    <mat-tab label="Literatura">
+      <app-sub-literature [document]="_document" [readOnly]="readOnly"></app-sub-literature>
+    </mat-tab>
+    <mat-tab label="Efekty uczenia się">
+      <app-sub-learn-outc [document]="_document" [readOnly]="readOnly"></app-sub-learn-outc>
+    </mat-tab>
+    <mat-tab label="Wymagania wstępne">
+      <app-sub-card [card]="getCardEntry(preEntry)" [readOnly]="readOnly"></app-sub-card>
+    </mat-tab>
+    <mat-tab label="Cele przedmiotu">
+      <app-sub-card [card]="getCardEntry(goalEntry)" [readOnly]="readOnly"></app-sub-card>
+    </mat-tab>
+    <mat-tab label="Narzędzia dydaktyczne">
+      <app-sub-card [card]="getCardEntry(teachEntry)" [readOnly]="readOnly"></app-sub-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>

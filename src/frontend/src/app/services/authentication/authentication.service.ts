@@ -8,7 +8,7 @@ import { User } from 'src/app/core/models/user/user';
 import { UserContext } from 'src/app/core/models/user/user-context';
 import { MessageHubService } from 'src/app/services/message-hub/message-hub.service';
 import { AlertService } from 'src/app/services/alerts/alert.service';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { TokenStorageService } from './token-storage.service';
 
 @Injectable({

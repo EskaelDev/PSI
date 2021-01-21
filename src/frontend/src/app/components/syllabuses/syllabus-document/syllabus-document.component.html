@@ -1,33 +1,46 @@
-<app-document [title]="title">
-  <div *ngIf="syllabusDocument && !isLoading">
-    <app-control-buttons-panel
-      [isNew]="syllabusDocument.id === guidEmpty"
-      [canSave]="isInEditMode(syllabusDocument)"
-      (save)="save()"
-      (saveAs)="saveAs()"
-      (import)="import()"
-      (close)="close()"
-      (delete)="delete()"
-      (pdf)="pdf()"
-      (history)="history()"
-    ></app-control-buttons-panel>
-    <div fxLayoutAlign="start start" fxLayoutGap="30px">
-      <div>
-        <app-fos-details
-        [fos]="syllabusDocument.fieldOfStudy"
-        [spec]="syllabusDocument.specialization"
-        [year]="syllabusDocument.academicYear"
-        ></app-fos-details>
-        <app-syl-acceptance
-          [document]="syllabusDocument"
-          (changed)="loadSyllabus()"
-        ></app-syl-acceptance>
+<div class="main-container">
+  <app-backgroud-logged-in class="background"></app-backgroud-logged-in>
+
+  <div class="title-container-edit">
+    <h1 *ngIf="mainTitle">{{ mainTitle }}</h1>
+    <h3 *ngIf="subtitle">{{ subtitle }}</h3>
+  </div>
+
+  <div class="sub-container">
+    <div *ngIf="syllabusDocument && !isLoading">
+      <app-control-buttons-panel
+        [isNew]="syllabusDocument.id === guidEmpty"
+        [canSave]="isInEditMode(syllabusDocument)"
+        (save)="save()"
+        (saveAs)="saveAs()"
+        (import)="import()"
+        (close)="close()"
+        (delete)="delete()"
+        (pdf)="pdf()"
+        (history)="history()"
+      ></app-control-buttons-panel>
+      <div class="clearfix"></div>
+      <div class="edition-container">
+        <div class="details-container" fxLayout="column">
+          <app-fos-details
+            [fos]="syllabusDocument.fieldOfStudy"
+            [spec]="syllabusDocument.specialization"
+            [year]="syllabusDocument.academicYear"
+          ></app-fos-details>
+          <app-syl-acceptance
+            [document]="syllabusDocument"
+            (changed)="loadSyllabus()"
+          ></app-syl-acceptance>
+        </div>
+        <div class="edit-container">
+          <app-syl-doc-edit [disabled]="!isInEditMode(syllabusDocument)"
+                            [document]="syllabusDocument"></app-syl-doc-edit>
+        </div>
       </div>
-      <app-syl-doc-edit [disabled]="!isInEditMode(syllabusDocument)" [document]="syllabusDocument"></app-syl-doc-edit>
+    </div>
+    <div *ngIf="!syllabusDocument && !isLoading">Błąd wczytywania dokumentu</div>
+    <div *ngIf="isLoading" style="margin-top: 50px">
+      <mat-spinner></mat-spinner>
     </div>
   </div>
-  <div *ngIf="!syllabusDocument && !isLoading">Błąd wczytywania dokumentu</div>
-  <div *ngIf="isLoading" style="margin-top: 50px">
-    <mat-spinner></mat-spinner>
-  </div>
-</app-document>
+</div>

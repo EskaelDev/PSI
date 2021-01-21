@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-admin-menu',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-menu.component.scss'],
 })
 export class AdminMenuComponent {
+
+  mainTitle = 'Panel zarządzania';
 }

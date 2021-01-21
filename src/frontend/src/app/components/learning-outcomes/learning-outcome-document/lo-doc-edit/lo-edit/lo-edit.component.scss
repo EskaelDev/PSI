@@ -1,0 +1,56 @@
+.lo-edit-inputs-container {
+  padding: 0.75rem;
+  height: 97%;
+  color: #D8D5CE;
+  border-left: 2px solid #707070;
+
+  h2 {
+    text-align: center;
+  }
+
+  .lo-edit-buttons-container {
+    align-items: center;
+    .lo-edit-buttons {
+      width: 62.8%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: row;
+      mat-icon {
+        font-size: 3rem;
+      }
+    }
+  }
+}
+
+.lo-edit-inputs {
+  font-size: 1rem;
+  line-height: 1rem;
+  margin: 0.55rem;
+  .lo-edit-inputs-fields-container {
+    display: flex;
+    justify-content: space-between;
+
+    .lo-edit-inputs-fields {
+      width: 46.5%;
+    }
+  }
+
+  .lo-edit-dropdowns {
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .lo-description {
+    mat-form-field {
+      width: 100%;
+
+      textarea {
+        border: 1px solid #707070;
+        width: 100%;
+      }
+    }
+  }
+}
+

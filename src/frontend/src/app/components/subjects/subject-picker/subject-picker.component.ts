@@ -15,6 +15,8 @@ import { AddSubjectComponent } from './add-subject/add-subject.component';
   styleUrls: ['./subject-picker.component.scss'],
 })
 export class SubjectPickerComponent implements OnInit {
+  mainTitle: string = 'Przedmioty';
+  subtitle: string = '';
   isLoading = false;
   searchPhrase = '';
   subjects: Subject[] = [];

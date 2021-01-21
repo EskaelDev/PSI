@@ -1,0 +1,37 @@
+.sub-container {
+  display: block;
+  margin: 10% auto auto 5%;
+  font-size: 1em;
+  //background-color: #707070;
+  width: 84%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.edition-container {
+  clear: both;
+  margin-top: 0.5rem;
+  display: flex;
+
+
+  .details-container {
+    color: #D8D5CE;
+    background-color: #272A31;
+    border: rgba(112, 112, 112, 1) 1px solid;
+    margin-right: 0.5rem;
+    width: 33%;
+  }
+
+  .edit-container {
+    background-color: #272A31;
+    align-self: stretch;
+    padding: 0.5rem;
+    height: 38rem;
+    font-size: 1rem;
+    width: 67%;
+  }
+}

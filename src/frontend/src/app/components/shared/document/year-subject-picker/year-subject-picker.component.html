@@ -2,39 +2,39 @@
   <h1 mat-dialog-title>{{ title }}</h1>
   <div mat-dialog-content style="height: 340px" fxLayoutAlign="center center">
     <div>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz kierunek studiów</mat-label>
         <mat-select
           [(value)]="selectedFos"
           (selectionChange)="selectedFosChanged()"
         >
           <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos"
-            >{{ fos.code }}: {{ fos.name }}</mat-option
+          >{{ fos.code }}: {{ fos.name }}</mat-option
           >
         </mat-select>
       </mat-form-field>
-      <br />
-      <mat-form-field appearance="fill">
+      <br/>
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz specjalizację</mat-label>
         <mat-select
           [(value)]="selectedSpec"
           (selectionChange)="selectedSpecChanged()"
         >
           <mat-option *ngFor="let spec of specs" [value]="spec"
-            >{{ spec.code }}: {{ spec.name }}</mat-option
+          >{{ spec.code }}: {{ spec.name }}</mat-option
           >
         </mat-select>
       </mat-form-field>
-      <br />
-      <mat-form-field appearance="fill">
+      <br/>
+      <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz rok akademicki</mat-label>
         <mat-select [(value)]="selectedYear" (selectionChange)="loadSubjects()">
           <mat-option *ngFor="let year of years" [value]="year">{{
             year
-          }}</mat-option>
+            }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
+      <br/>
       <mat-form-field>
         <input
           type="text"

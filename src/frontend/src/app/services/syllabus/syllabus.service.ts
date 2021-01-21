@@ -7,7 +7,7 @@ import { Opinion } from 'src/app/core/enums/syllabus/opinion.enum';
 import { State } from 'src/app/core/enums/syllabus/state.enum';
 import { Syllabus } from 'src/app/core/models/syllabus/syllabus';
 import { SyllabusDescription } from 'src/app/core/models/syllabus/syllabus-description';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { AlertService } from '../alerts/alert.service';
 
 @Injectable({
@@ -303,11 +303,12 @@ export class SyllabusService {
     year: string | null
   ): Observable<Syllabus[]> {
     const fos = fosCode ? `fos=${fosCode}` : '';
-    const spec = specCode ? `spec=${specCode}` : '';
+    const spec = (fosCode && specCode) ? `&spec=${specCode}` : '';
     const yr = year ? `year=${encodeURIComponent(year)}` : '';
     const params = (fosCode || specCode || year) ? '?' : '';
+    const onlyYear = (fosCode && specCode && year) ? '&' : '';
     return this.http
-      .get<Syllabus[]>(this.baseUrl + '/documents' + params + fos + spec + yr)
+      .get<Syllabus[]>(this.baseUrl + '/documents' + params + fos + spec + onlyYear + yr)
       .pipe(
         catchError(() => {
           this.alerts.showDefaultLoadingDataErrorMessage();

@@ -1,25 +1,29 @@
-<div fxLayoutAlign="start" fxLayoutGap="30px">
-    <div>
-      <div *ngIf="document.subjectDescriptions.length > 0">
-        <app-syl-subject-list-elem
-          *ngFor="let elem of document.subjectDescriptions"
-          [elem]="elem"
-          [selected]="selected"
-          (selectedElem)="select($event)"
-        ></app-syl-subject-list-elem>
-      </div>
-      <div *ngIf="document.subjectDescriptions.length === 0">Brak wpisów</div>
-      <button mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+<!--<div fxLayoutAlign="start" fxLayoutGap="30px">-->
+<div class="subject-container">
+  <div>
+    <div *ngIf="document.subjectDescriptions.length > 0">
+      <app-syl-subject-list-elem class="subject-list"
+                                 *ngFor="let elem of document.subjectDescriptions"
+                                 [elem]="elem"
+                                 [selected]="selected"
+                                 (selectedElem)="select($event)"
+      ></app-syl-subject-list-elem>
     </div>
-    <div>
-      <app-syl-subject-edit
-      [semesters]="semesters"
-      [subjects]="subjects"
-        *ngIf="selected"
-        [elem]="selected"
-        (deleted)="delete()"
-        (saved)="save($event)"
-      ></app-syl-subject-edit>
+    <div class="info">
+      <div *ngIf="document.subjectDescriptions.length === 0">Brak wpisów</div>
+      <button mat-icon-button (click)="add()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
   </div>
-  
+  <div>
+    <app-syl-subject-edit
+      [semesters]="semesters"
+      [subjects]="subjects"
+      *ngIf="selected"
+      [elem]="selected"
+      (deleted)="delete()"
+      (saved)="save($event)"
+    ></app-syl-subject-edit>
+  </div>
+</div>

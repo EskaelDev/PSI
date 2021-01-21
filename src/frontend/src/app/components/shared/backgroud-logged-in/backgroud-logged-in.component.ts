@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-backgroud-logged-in',
@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./backgroud-logged-in.component.scss']
 })
 export class BackgroudLoggedInComponent implements OnInit {
+  @Input() mainTitle: string = '';
+  @Input() subtitle: string = '';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

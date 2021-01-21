@@ -1,9 +1,9 @@
-<div>
-  <div *ngFor="let module of moduleTypes">
-    <h3>Moduł {{ "modules." + module | translate }}</h3>
-    <app-points-elem
-      *ngFor="let elem of filterElements(module)"
-      [elem]="elem"
+<div class="points-limit-container">
+  <div *ngFor="let module of moduleTypes" class="module-container">
+    <h2>Moduł {{ "modules." + module | translate }}</h2>
+    <app-points-elem class="input"
+                     *ngFor="let elem of filterElements(module)"
+                     [elem]="elem"
     ></app-points-elem>
   </div>
 </div>

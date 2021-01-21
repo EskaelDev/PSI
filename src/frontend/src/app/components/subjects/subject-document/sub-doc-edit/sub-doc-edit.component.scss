@@ -1,0 +1,8 @@
+#tab-group {
+  height: 100%;
+  flex-grow: 1;
+
+  ::ng-deep mat-tab-body {
+    height: 100%;
+  }
+}

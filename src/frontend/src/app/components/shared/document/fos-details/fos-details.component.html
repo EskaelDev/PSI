@@ -1,45 +1,51 @@
-<div>
+<div class="document-details" fxLayout="column">
   <app-fos-details-element
     name="Rok akademicki"
     [content]="year"
   ></app-fos-details-element>
-  <div *ngIf="fos">
-    <app-fos-details-element
-      name="Wydział"
-      [content]="fos.faculty"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      name="Kierunek studiów"
-      [content]="fos.name"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      *ngIf="spec"
-      name="Specjalizacja"
-      [content]="spec.name"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      name="Język"
-      [translatedContent]="'languages.' + fos.language"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      name="Poziom"
-      [translatedContent]="'levels.' + fos.level"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      name="Tryb"
-      [translatedContent]="'types.' + fos.type"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      name="Profil"
-      [translatedContent]="'profiles.' + fos.profile"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      name="Umiejscowienie"
-      [content]="fos.branchOfScience ? fos.branchOfScience : 'brak'"
-    ></app-fos-details-element>
-    <app-fos-details-element
-      name="Dyscyplina"
-      [content]="fos.discipline ? fos.discipline : 'brak'"
-    ></app-fos-details-element>
-  </div>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Wydział"
+    [content]="fos.faculty"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Kierunek studiów"
+    [content]="fos.name"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos && spec"
+    name="Specjalizacja"
+    [content]="spec.name"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Język"
+    [translatedContent]="'languages.' + fos.language"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Poziom"
+    [translatedContent]="'levels.' + fos.level"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Tryb"
+    [translatedContent]="'types.' + fos.type"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Profil"
+    [translatedContent]="'profiles.' + fos.profile"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Umiejscowienie"
+    [content]="fos.branchOfScience ? fos.branchOfScience : 'brak'"
+  ></app-fos-details-element>
+  <app-fos-details-element
+    *ngIf="fos"
+    name="Dyscyplina"
+    [content]="fos.discipline ? fos.discipline : 'brak'"
+  ></app-fos-details-element>
 </div>

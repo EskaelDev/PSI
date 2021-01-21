@@ -1,9 +1,9 @@
-<div fxLayoutAlign="space-between" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" (click)="save.emit()" [disabled]="!canSave">Zapisz</button>
-  <button mat-raised-button color="primary" *ngIf="!blockSaveAs" (click)="saveAs.emit()">Zapisz jako</button>
-  <button mat-raised-button color="primary" (click)="import.emit()" [disabled]="isNew || !canSave">Importuj z</button>
-  <button mat-raised-button color="primary" (click)="close.emit()">Zamknij</button>
-  <button mat-raised-button color="primary" (click)="askToDelete()" [disabled]="isNew || !canSave">Usuń</button>
-  <button mat-raised-button color="primary" (click)="pdf.emit()" [disabled]="isNew">PDF</button>
-  <button mat-raised-button color="primary" (click)="history.emit()" [disabled]="isNew">Historia</button>
+<div class="buttons-bar">
+  <button mat-basic-button (click)="save.emit()" [disabled]="!canSave">Zapisz</button>
+  <button mat-basic-button *ngIf="!blockSaveAs" (click)="saveAs.emit()">Zapisz jako</button>
+  <button mat-basic-button (click)="import.emit()" [disabled]="isNew || !canSave">Importuj z</button>
+  <button mat-basic-button (click)="close.emit()">Zamknij</button>
+  <button mat-basic-button (click)="askToDelete()" [disabled]="isNew || !canSave">Usuń</button>
+  <button mat-basic-button (click)="pdf.emit()" [disabled]="isNew">PDF</button>
+  <button mat-basic-button (click)="history.emit()" [disabled]="isNew">Historia</button>
 </div>

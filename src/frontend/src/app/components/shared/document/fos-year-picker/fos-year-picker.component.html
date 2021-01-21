@@ -1,38 +1,39 @@
 <h2 *ngIf="title">Wybierz {{ title }}</h2>
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Wybierz kierunek studiów</mat-label>
-    <mat-select [(value)]="selectedFos" (selectionChange)="selectedFosChanged()">
-      <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
-        fos.name
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div *ngIf="isSpec">
-  <mat-form-field appearance="fill">
-    <mat-label>Wybierz specjalizację</mat-label>
-    <mat-select [(value)]="selectedSpec" (selectionChange)="selectSpec.emit(selectedSpec)">
-      <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
-        spec.name
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Wybierz rok akademicki</mat-label>
-    <mat-select [(value)]="selectedYear" (selectionChange)="selectYear.emit(selectedYear)">
-      <mat-option *ngFor="let year of years" [value]="year">{{
-        year
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
 
-<button mat-icon-button *ngIf="visibleButtons" (click)="download()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
-  <mat-icon>save_alt</mat-icon>
-</button>
-<button mat-icon-button *ngIf="visibleButtons" (click)="edit()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
-  <mat-icon>edit</mat-icon>
-</button>
+<mat-form-field appearance="outline" class="dropdown">
+  <mat-label>Wybierz kierunek studiów</mat-label>
+  <mat-select [(value)]="selectedFos" (selectionChange)="selectedFosChanged()">
+    <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
+      fos.name
+      }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field *ngIf="isSpec" appearance="outline" class="dropdown">
+  <mat-label>Wybierz specjalizację</mat-label>
+  <mat-select [(value)]="selectedSpec" (selectionChange)="selectSpec.emit(selectedSpec)">
+    <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
+      spec.name
+      }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="outline" class="dropdown">
+  <mat-label>Wybierz rok akademicki</mat-label>
+  <mat-select [(value)]="selectedYear" (selectionChange)="selectYear.emit(selectedYear)">
+    <mat-option *ngFor="let year of years" [value]="year">{{
+      year
+      }}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div class="buttons">
+  <button mat-icon-button *ngIf="visibleButtons" (click)="download()"
+          [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
+    <mat-icon>save_alt</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="visibleButtons" (click)="edit()"
+          [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>

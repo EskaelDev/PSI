@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
 
+  mainTitle = '404';
+  subtitle = 'Nie znaleziono';
+
   constructor() { }
 
   ngOnInit(): void {

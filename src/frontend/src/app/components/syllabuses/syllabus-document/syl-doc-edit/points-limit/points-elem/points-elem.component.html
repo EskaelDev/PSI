@@ -1,9 +1,15 @@
-<div>
-  <span *ngIf="elem.kindOfSubject">{{ "kinds." + elem.kindOfSubject | translate }}&nbsp;</span>
-  <span *ngIf="elem.typeOfSubject">{{ "subTypes." + elem.typeOfSubject | translate }}</span>
-  <mat-form-field>
-    <mat-label>Liczba punktów</mat-label>
-    <input required matInput type="number" [(ngModel)]="elem.points" [formControl]="pointsControl"/>
-    <mat-error>Dopuszczalne wartości 0 - 200</mat-error>
-  </mat-form-field>
+<div class="points-container">
+  <div class="points-name">
+    <span *ngIf="elem.kindOfSubject">{{ "kinds." + elem.kindOfSubject | translate }}&nbsp;</span>
+    <span *ngIf="elem.typeOfSubject">{{ "subTypes." + elem.typeOfSubject | translate }}</span>
+  </div>
+
+  <div class="inputs">
+    <mat-form-field class="input-container">
+      <mat-label>Liczba punktów</mat-label>
+      <input required matInput type="number" [(ngModel)]="elem.points" [formControl]="pointsControl"/>
+      <mat-error>Dopuszczalne wartości 0 - 200</mat-error>
+    </mat-form-field>
+  </div>
+
 </div>

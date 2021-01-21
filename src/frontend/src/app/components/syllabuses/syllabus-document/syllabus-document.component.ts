@@ -18,7 +18,8 @@ import { HistoryPopupComponent } from '../../shared/document/history-popup/histo
 })
 export class SyllabusDocumentComponent implements OnInit {
   guidEmpty = AppConsts.EMPTY_ID;
-  title = 'programu studiów';
+  mainTitle = 'Edycja';
+  subtitle = 'programu studiów';
   isLoading = true;
 
   syllabusDocument: Syllabus | null = null;

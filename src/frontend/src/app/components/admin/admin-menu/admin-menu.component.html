@@ -1,6 +1,24 @@
-<app-admin>
-  <div>
-    <button mat-raised-button color="primary" [routerLink]="'/admin/manage-users'">Użytkownicy</button>
-    <button mat-raised-button color="primary" [routerLink]="'/admin/manage-fields-of-studies'">Kierunki studiów</button>
+<div class="main-container">
+  <app-backgroud-logged-in class="background"></app-backgroud-logged-in>
+
+  <div class="title-container">
+    <h1 *ngIf="mainTitle">{{ mainTitle }}</h1>
   </div>
-</app-admin>
+
+  <div class="sub-container buttons" fxLayoutAlign="start start" fxLayoutGap="20px">
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="'/admin/manage-users'"
+    >
+      Użytkownicy
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="'/admin/manage-fields-of-studies'"
+    >
+      Kierunki studiów
+    </button>
+  </div>
+</div>

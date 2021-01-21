@@ -9,6 +9,9 @@ import { TokenStorageService } from 'src/app/services/authentication/token-stora
 })
 export class AccountComponent implements OnInit {
 
+  mainTitle: string = 'Moje konto';
+  subtitle: string = '';
+
   user: User | null = null;
 
   constructor(private tokenService: TokenStorageService) { }

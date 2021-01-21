@@ -1,0 +1,29 @@
+  .sub-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20% auto auto 15%;
+    font-size: 1em;
+  }
+
+  .buttons {
+    display: inline-flex;
+    flex-direction: column;
+
+    button {
+      margin: 0.2rem;
+      padding: 1.2rem;
+      border: 3px solid #7B6D35;
+      text-align: left;
+      align-items: center;
+      background-color: transparent;
+      cursor: pointer;
+      color: #D8D5CE;
+      font-size: 30px;
+
+      mat-icon {
+        color: #7B6D35;
+      }
+    }
+  }

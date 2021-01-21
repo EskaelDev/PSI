@@ -1,0 +1,27 @@
+.points-container {
+  margin: 5% 5%;
+  display: inline-block;
+  align-content: space-around;
+
+  .points-name {
+    font-weight: bold;
+    color: #7B6D35;
+    margin-bottom: 2%;
+  }
+
+  .inputs {
+    display: inline;
+    margin-top: 20px;
+
+
+    .input-container {
+      width: 80%;
+    }
+  }
+}
+
+
+
+
+
+

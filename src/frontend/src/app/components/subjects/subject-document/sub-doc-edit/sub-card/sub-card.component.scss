@@ -1,0 +1,42 @@
+.sub-card-container {
+  width: 100%;
+  height: 35rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  h2 {
+    text-align: center;
+  }
+
+  .sub-card-elem-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    gap: 0.25rem;
+
+    app-sub-card-elem {
+      width: 90%;
+      float: left;
+    }
+
+    button {
+      margin-top: 1.75rem;
+      color: rgb(175 17 5 / 85%);
+
+      mat-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  button {
+    margin-top: 2%;
+
+    mat-icon {
+      font-size: 2rem;
+    }
+  }
+}

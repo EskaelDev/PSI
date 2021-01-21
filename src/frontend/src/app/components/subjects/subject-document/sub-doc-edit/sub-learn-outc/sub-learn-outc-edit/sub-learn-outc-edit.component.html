@@ -1,25 +1,25 @@
-<div>
+<div class="sub-learn-edit-container">
   <form [formGroup]="learnForm" [appDisable]="readOnly">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Sposób oceniania</mat-label>
       <mat-select formControlName="gradingSystem" required>
         <mat-option *ngFor="let grading of gradings" [value]="grading">{{
           "gradings." + grading | translate
-        }}</mat-option>
-      </mat-select>
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-    <mat-form-field appearance="fill">
-        <mat-label>Symbol efektu</mat-label>
-        <mat-select formControlName="learningOutcomeSymbol" required>
-          <mat-option *ngFor="let lo of learningOutcomes" [value]="lo.symbol">{{
-            lo.symbol
           }}</mat-option>
-        </mat-select>
-        <mat-error> Pole wymagane </mat-error>
-      </mat-form-field>
-      <br />
+      </mat-select>
+      <mat-error> Pole wymagane</mat-error>
+    </mat-form-field>
+    <br/>
+    <mat-form-field appearance="outline" class="dropdown">
+      <mat-label>Symbol efektu</mat-label>
+      <mat-select formControlName="learningOutcomeSymbol" required>
+        <mat-option *ngFor="let lo of learningOutcomes" [value]="lo.symbol">{{
+          lo.symbol
+          }}</mat-option>
+      </mat-select>
+      <mat-error> Pole wymagane</mat-error>
+    </mat-form-field>
+    <br/>
     <mat-form-field>
       <textarea
         matInput
@@ -29,8 +29,15 @@
       ></textarea>
     </mat-form-field>
   </form>
-  <div *ngIf="!readOnly">
-    <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
-    <button mat-icon-button (click)="save()" [disabled]="!learnForm.valid"><mat-icon>done</mat-icon></button>
+  <div class="buttons-container">
+    <div *ngIf="!readOnly" class="buttons">
+      <button mat-icon-button (click)="delete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="save()" [disabled]="!learnForm.valid">
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
   </div>
+
 </div>

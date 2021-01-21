@@ -1,3 +1,44 @@
+#background {
+  #polygon-left {
+    overflow: visible;
+    position: absolute;
+    width: 75.8%;
+    height: 80.2%;
+    transform: matrix(1, 0, 0, 1, -583.1332, -93.9199) rotate(-18deg);
+    transform-origin: center;
+    left: 0px;
+    top: 0px;
+
+    path {
+      opacity: 0.57;
+      fill: rgba(188, 158, 35, 1);
+      stroke: rgba(188, 158, 35, 1);
+      stroke-width: 1px;
+      stroke-linejoin: miter;
+      stroke-linecap: butt;
+      stroke-miterlimit: 4;
+      shape-rendering: auto;
+    }
+  }
+
+  #polygon-right {
+    filter: drop-shadow(0px 25px 49px rgba(0, 0, 0, 0.161));
+    overflow: visible;
+    position: absolute;
+    width: 148%;
+    height: 108.23%;
+    transform: matrix(1, 0, 0, 1, -238, -6) rotate(180deg);
+    transform-origin: center;
+    left: 0px;
+    top: 0px;
+
+    path {
+      opacity: 0.92;
+      fill: rgba(154, 52, 45, 1);
+    }
+  }
+}
+
 .main-container {
   display: flex;
   justify-content: center;

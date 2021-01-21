@@ -210,7 +210,6 @@ html, body, app-root, .app-frame {
   padding: 25px;
   font-size: 35px;
   border-radius: 10px;
-  cursor: pointer;
 }
 
 .material-icons.color_white {
@@ -320,4 +319,18 @@ html, body, app-root, .app-frame {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.title-container {
+  position: absolute;
+  text-align: right;
+  margin-left: 15%;
+  margin-top: 7%;
+}
+
+.title-container-edit {
+  position: absolute;
+  text-align: right;
+  margin-left: 17%;
+  margin-top: 2%;
 }

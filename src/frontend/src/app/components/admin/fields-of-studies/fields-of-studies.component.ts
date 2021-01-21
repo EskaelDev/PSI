@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-fields-of-studies',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./fields-of-studies.component.scss'],
 })
 export class FieldsOfStudiesComponent {
-  title = 'kierunkami studiów';
+  mainTitle = 'Panel zarządzania';
+  subtitle = 'kierunkami studiów';
 }

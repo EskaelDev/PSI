@@ -1,26 +1,34 @@
-<app-document [title]="title">
-  <div *ngIf="learningOutcomeDocument && !isLoading">
-    <app-control-buttons-panel
-      [isNew]="learningOutcomeDocument.id === guidEmpty"
-      (save)="save()"
-      (saveAs)="saveAs()"
-      (import)="import()"
-      (close)="close()"
-      (delete)="delete()"
-      (pdf)="pdf()"
-      (history)="history()"
-    ></app-control-buttons-panel>
-    <div fxLayoutAlign="start start" fxLayoutGap="30px">
-      <div>
-        <app-fos-details
-          [fos]="learningOutcomeDocument.fieldOfStudy"
-          [year]="learningOutcomeDocument.academicYear"
-        ></app-fos-details>
-        <br/>
-        <h3>Objaśnienia:</h3>
-        <textarea style="font-size: 10px; width: 100%; height: 300px" matInput readonly> P6U – charakterystyki uniwersalne odpowiadające kształceniu na studiach pierwszego stopnia - 6 poziom PRK*
-P7U – charakterystyki uniwersalne odpowiadające kształceniu na studiach drugiego stopnia - 7 poziom PRK*
-P6S – charakterystyki drugiego stopnia odpowiadające kształceniu na studiach pierwszego stopnia studiów - 6 poziom PRK *
+<div class="main-container">
+  <app-backgroud-logged-in class="background"></app-backgroud-logged-in>
+
+  <div class="title-container-edit">
+    <h1 *ngIf="title">Edycja</h1>
+    <h3 *ngIf="title">{{ title }}</h3>
+  </div>
+
+  <div class="sub-container">
+    <div *ngIf="learningOutcomeDocument && !isLoading">
+      <app-control-buttons-panel
+        [isNew]="learningOutcomeDocument.id === guidEmpty"
+        (save)="save()"
+        (saveAs)="saveAs()"
+        (import)="import()"
+        (close)="close()"
+        (delete)="delete()"
+        (pdf)="pdf()"
+        (history)="history()"
+      ></app-control-buttons-panel>
+      <div class="clearfix"></div>
+      <div class="edition-container">
+        <div class="details-container" fxLayout="column">
+          <app-fos-details
+            [fos]="learningOutcomeDocument.fieldOfStudy"
+            [year]="learningOutcomeDocument.academicYear"
+          ></app-fos-details>
+          <div>
+            <h2>Objaśnienia:</h2>
+            <textarea matInput readonly> P6U – charakterystyki uniwersalne odpowiadające kształceniu na studiach pierwszego stopnia - 6 poziom PRK*
+P7U – charakterystyki uniwersalne odpowiadające kształceniu na studiach drugiego stopnia - 7 poziom PRK*P6S – charakterystyki drugiego stopnia odpowiadające kształceniu na studiach pierwszego stopnia studiów - 6 poziom PRK *
 P7S – charakterystyki drugiego stopnia odpowiadające kształceniu na studiach drugiego stopnia/ jednolitych magisterskich – 7 poziom PRK*
 W – kategoria „wiedza”
 U – kategoria „umiejętności”
@@ -32,14 +40,18 @@ S(symbol specjalności)_W…, S(symbol specjalności)_W…, S(symbol specjalnoś
 S(symbol specjalności)_U…, S(symbol specjalności)_U…, S(symbol specjalności)_U…, …- efekty specjalnościowe dot. kategorii „umiejętności”
 S(symbol specjalności)_K…, S(symbol specjalności)_K…, S(symbol specjalności)_K…, …- efekty specjalnościowe dot. kategorii „kompetencje społeczne”
  …._inż – efekty uczenia się umożliwiające uzyskanie kompetencji inżynierskich</textarea>
+          </div>
+        </div>
+        <div class="edit-container">
+          <app-lo-doc-edit [document]="learningOutcomeDocument"></app-lo-doc-edit>
+        </div>
       </div>
-      <app-lo-doc-edit [document]="learningOutcomeDocument"></app-lo-doc-edit>
+    </div>
+    <div *ngIf="!learningOutcomeDocument && !isLoading">
+      Błąd wczytywania dokumentu
+    </div>
+    <div *ngIf="isLoading" style="margin-top: 50px">
+      <mat-spinner></mat-spinner>
     </div>
   </div>
-  <div *ngIf="!learningOutcomeDocument && !isLoading">
-    Błąd wczytywania dokumentu
-  </div>
-  <div *ngIf="isLoading" style="margin-top: 50px">
-    <mat-spinner></mat-spinner>
-  </div>
-</app-document>
+</div>

@@ -1,7 +1,14 @@
 <div class="main-container">
-  <app-backgroud-logged-in class="background" mainTitle="Panel zarządzania" subtitle="użytkownikami"></app-backgroud-logged-in>
-    <div fxLayoutAlign="start start" fxLayoutGap="20px" class="sub-container sub-container-admin">
-      <app-users-list></app-users-list><app-user></app-user>
-    </div>
+  <app-backgroud-logged-in class="background"></app-backgroud-logged-in>
+
+  <div class="title-container">
+    <h1 *ngIf="mainTitle">{{ mainTitle }}</h1>
+    <h3 *ngIf="subtitle">{{ subtitle }}</h3>
+  </div>
+
+  <div fxLayoutAlign="start start" fxLayoutGap="20px" class="sub-container sub-container-admin">
+    <app-users-list></app-users-list>
+    <app-user></app-user>
+  </div>
 </div>
 

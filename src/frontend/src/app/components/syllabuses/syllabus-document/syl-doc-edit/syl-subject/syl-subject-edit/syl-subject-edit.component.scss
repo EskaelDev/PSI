@@ -9,17 +9,35 @@
 
   & > div {
     width: 50%;
-    padding: 0.75rem;
+    padding: 3rem 0.75rem 0.75rem;
     border-right: 1px solid #707070;
 
     mat-form-field {
       width: 100%;
     }
+
+    h2 {
+      text-align: center;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        margin: 5%;
+
+        mat-icon {
+          font-size: 2.5rem;
+        }
+      }
+    }
   }
 
   & > app-syl-sub-details {
     width: 50%;
-    padding: 0.75rem;
+    padding: 3rem 0.75rem 0.75rem;
   }
 }
 
@@ -27,27 +45,8 @@
   width: 200px;
 }
 
-.subject-container {
-  margin-top: 10%;
 
-  h2 {
-    text-align: center;
-  }
 
-  .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    button {
-      margin: 5%;
-
-      mat-icon {
-        font-size: 2.5rem;
-      }
-    }
-  }
-}
 
 
 

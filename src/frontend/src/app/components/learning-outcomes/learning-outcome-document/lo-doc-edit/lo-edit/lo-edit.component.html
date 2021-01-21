@@ -1,67 +1,79 @@
-<div>
-  <div>{{ isNew ? "Nowy wpis" : "Edycja wpisu" }}</div>
-  <form [formGroup]="loForm">
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        placeholder="Symbol efektu"
-        formControlName="symbol"
-        required
-      />
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-    <mat-form-field>
-      <mat-label>Kategoria</mat-label>
-      <mat-select formControlName="category" required>
-        <mat-option *ngFor="let cat of categories" [value]="cat">{{
-          "categories." + cat | translate
-        }}</mat-option>
-      </mat-select>
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-    <mat-form-field>
+<div class="lo-edit-inputs-container">
+
+  <h2>{{ isNew ? "Nowy wpis" : "Edycja wpisu" }}</h2>
+
+  <form [formGroup]="loForm" class="lo-edit-inputs">
+    <div class="lo-edit-inputs-fields-container">
+      <mat-form-field class="lo-edit-inputs-fields">
+        <input
+          matInput
+          type="text"
+          placeholder="Symbol efektu"
+          formControlName="symbol"
+          required
+        />
+        <mat-error> Pole wymagane</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="lo-edit-inputs-fields">
+        <mat-label>Kategoria</mat-label>
+        <mat-select formControlName="category" required>
+          <mat-option *ngFor="let cat of categories" [value]="cat">{{
+            "categories." + cat | translate
+            }}</mat-option>
+        </mat-select>
+        <mat-error> Pole wymagane</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="lo-edit-dropdowns">
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Uniwersalne charakterystyki (U)"
+          formControlName="u1degreeCharacteristics"
+          required
+        />
+        <mat-error> Pole wymagane</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="	Charakterystyki poziomu 6"
+          formControlName="s2degreePrk"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="	Charakterystyki poziomu 6 inż"
+          formControlName="s2degreePrkeng"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="lo-description">
+      <mat-form-field>
       <textarea
         matInput
         type="text"
         placeholder="Opis"
         formControlName="description"
       ></textarea>
-    </mat-form-field>
-    <br />
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        placeholder="Uniwersalne charakterystyki (U)"
-        formControlName="u1degreeCharacteristics"
-        required
-      />
-      <mat-error> Pole wymagane </mat-error>
-    </mat-form-field>
-    <br />
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        placeholder="	Charakterystyki poziomu 6"
-        formControlName="s2degreePrk"
-      />
-    </mat-form-field>
-    <br />
-    <mat-form-field>
-      <input
-        matInput
-        type="text"
-        placeholder="	Charakterystyki poziomu 6 inż"
-        formControlName="s2degreePrkeng"
-      />
-    </mat-form-field>
+      </mat-form-field>
+    </div>
+
   </form>
-  <div>
-    <button mat-icon-button (click)="delete()" [disabled]="isNew"><mat-icon>delete</mat-icon></button>
-    <button mat-icon-button (click)="save()" [disabled]="!loForm.valid"><mat-icon>done</mat-icon></button>
+  <div class="lo-edit-buttons-container">
+    <div class="lo-edit-buttons">
+      <button mat-icon-button (click)="delete()" [disabled]="isNew">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button (click)="save()" [disabled]="!loForm.valid">
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
   </div>
+
 </div>

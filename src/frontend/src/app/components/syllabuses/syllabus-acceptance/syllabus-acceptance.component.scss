@@ -1,17 +1,14 @@
 .sub-container {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin: 18% auto auto 15%;
   font-size: 1em;
 }
 
-::ng-deep .title-container {
-  position: absolute;
-  text-align: right;
-  margin-left: 15%;
-  margin-top: 7%;
-}
-
 .cards {
+  app-document-tile {
+    flex: 1 1 0;
+  }
   margin-top: 2rem;
 }
 

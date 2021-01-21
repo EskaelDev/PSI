@@ -1,0 +1,61 @@
+.sub-container {
+  display: block;
+  margin: 10% auto auto 5%;
+  font-size: 1em;
+  //background-color: #707070;
+  width: 85%;
+  height: 66%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.edition-container {
+  clear: both;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  .details-container {
+    color: #D8D5CE;
+    background-color: #272A31;
+    border: rgba(112, 112, 112, 1) 1px solid;
+    margin-right: 0.5rem;
+    width: 33%;
+
+
+    app-fos-details {
+      width: 100%;
+    }
+
+    h2{
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 0 0 0 2rem;
+    }
+
+    textarea{
+      padding: 0 2rem 1rem 2rem;
+      font-size: 0.8rem;
+      width: 80%;
+      height: 120px;
+      max-height: 150px;
+      margin-bottom: 0.3rem;
+    }
+  }
+
+  .edit-container {
+    background-color: #272A31;
+    align-self: stretch;
+    padding: 0.5rem;
+    width: 100%;
+    app-lo-doc-edit {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

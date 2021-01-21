@@ -1,357 +1,86 @@
-#background {
-  #polygon-left {
-    position: absolute;
-    width: 75.8%;
-    height: 80.2%;
-    transform: matrix(1, 0, 0, 1, -583.1332, -93.9199) rotate(-18deg);
-    transform-origin: center;
-    left: 0px;
-    top: 0px;
-
-    path {
-      opacity: 0.57;
-      fill: rgba(188, 158, 35, 1);
-      stroke: rgba(188, 158, 35, 1);
-      stroke-width: 1px;
-      stroke-linejoin: miter;
-      stroke-linecap: butt;
-      stroke-miterlimit: 4;
-      shape-rendering: auto;
-    }
-  }
-
-  #polygon-right {
-    filter: drop-shadow(0px 25px 49px rgba(0, 0, 0, 0.161));
-    position: absolute;
-    width: 148%;
-    height: 108.23%;
-    transform: matrix(1, 0, 0, 1, -238, -6) rotate(180deg);
-    transform-origin: center;
-    left: 0px;
-    top: 0px;
-
-    path {
-      opacity: 0.92;
-      fill: rgba(154, 52, 45, 1);
-    }
-  }
-}
-
-.buttons_container{
-  position: absolute;
-  left: 120px;
-  top: 60px;
-  width: 80%;
-  height: 40%;
+.main-container {
   display: flex;
-  flex-wrap: wrap;
-}
+  justify-content: center;
+  align-content: center;
 
-.button_syllabus {
-  position: absolute;
-  width: 511px;
-  height: 414px;
-  left: 273px;
-  top: 167px;
-  background-color: rgba(39, 42, 49, 1);
+  .sub-container {
+    width: 55.5%;
+    height: 58%;
+    margin-top: 12.5%;
 
-  .Programy_studiw {
-    left: 300px;
-    top: 363px;
-    position: absolute;
-    font-size: 24px;
-    color: rgba(216, 213, 206, 1);
-  }
+    .buttons_container {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      grid-template: 30% 40% 30% / 50% 25% 25%;
+      grid-gap: 0.3rem;
 
-  .school_icon{
-      width: 250px;
-      height: 250px;
-      left: 563.746px;
-      top: 391px;
-      font-size: 250px;
+      button {
+        background-color: rgba(39, 42, 49, 1);
+        color: rgba(216, 213, 206, 1);
+
+        &:disabled {
+          color: rgb(100, 100, 100);
+        }
+
+        &.button_syllabus {
+          grid-area: 1/1/3/2;
+
+          mat-icon {
+            width: 12rem;
+            height: 12rem;
+            font-size: 12rem;
+            padding-top: 17%;
+          }
+
+          span {
+            padding-top: 9%;
+          }
+        }
+
+        &.button_docs {
+          grid-area: 1/2/2/4;
+        }
+
+        &.button_accept {
+          grid-area: 2/2/3/3;
+        }
+
+        &.button_subject {
+          grid-area: 2/3/3/4;
+        }
+
+        &.button_learning_outcome {
+          grid-area: 3/1/4/2;
+        }
+
+        &.button_admin {
+          grid-area: 3/2/4/4;
+        }
+
+        mat-icon {
+          width: 3rem;
+          height: 3rem;
+          padding-top: 5%;
+          font-size: 3rem;
+        }
+
+        span {
+          display: block;
+          text-align: right;
+          padding-top: 5%;
+          font-size: 1.5rem;
+        }
+
+        &.button_subject, &.button_accept {
+          mat-icon {
+            padding-top: 25%;
+          }
+          span {
+            padding-top: 25%;
+          }
+        }
+      }
     }
-  .material-icons.md-18 { font-size: 18px; }
-}
-
-#button_syllabus:disabled{
-  #Programy_studiw {
-    color: rgb(100, 100, 100);
   }
 }
-
-.button_learning_outcome{
-  position: absolute;
-  width: 511px;
-  height: 170px;
-  left: 273px;
-  top: 586px;
-  background-color: rgba(39, 42, 49, 1);
-
-  .Efekty_uczenia_si {
-    left: 300px;
-    top: 124px;
-    position: absolute;
-    font-size: 24px;
-    color: rgba(216, 213, 206, 1);
-  }
-}
-
-.button_learning_outcome:disabled{
-  .Efekty_uczenia_si {
-    color: rgb(100, 100, 100);
-  }
-}
-
-.button_docs{
-  position: absolute;
-  width: 492px;
-  height: 170px;
-  left: 788px;
-  top: 167px;
-  background-color: rgba(39, 42, 49, 1);
-
-  .Dokumenty {
-    left: 347px;
-    top: 118px;
-    position: absolute;
-    font-size: 24px;
-    color: rgba(216, 213, 206, 1);
-  }
-}
-
-.button_accept{
-  position: absolute;
-  width: 242px;
-  height: 241px;
-  left: 788px;
-  top: 341px;
-  background-color: rgba(39, 42, 49, 1);
-
-  #Akceptacja {
-    left: 102px;
-    top: 189px;
-    position: absolute;
-    font-size: 24px;
-    color: rgba(216, 213, 206, 1);
-  }
-}
-
-.button_accept:disabled{
-  .Akceptacja {
-    color: rgb(100, 100, 100);
-  }
-}
-
-.button_subject{
-  position: absolute;
-  width: 246px;
-  height: 241px;
-  left: 1034px;
-  top: 341px;
-  background-color: rgba(39, 42, 49, 1);
-
-  .Przedmioty {
-    left: 105px;
-    top: 190px;
-    position: absolute;
-    font-size: 24px;
-    color: rgba(216, 213, 206, 1);
-  }
-}
-
-.button_subject:disabled{
-  .Przedmioty {
-    color: rgb(100, 100, 100);
-  }
-}
-
-.button_admin{
-  position: absolute;
-  width: 492px;
-  height: 170px;
-  left: 788px;
-  top: 586px;
-  background-color: rgba(39, 42, 49, 1);
-
-  .Administracja {
-    left: 323px;
-    top: 123px;
-    position: absolute;
-    font-size: 24px;
-    color: rgba(216, 213, 206, 1);
-  }
-}
-
-.button_admin:disabled{
-  .Administracja {
-    color: rgb(100, 100, 100);
-  }
-}
-
-.home-icon {
-  height: 70px;
-  width: 70px;
-  font-size: 70px;
-}
-//
-//.buttons_container{
-//  position: absolute;
-//  left: 370px;
-//  top: 170px;
-//  width: 80%;
-//  height: 40%;
-//  display: flex;
-//  flex-wrap: wrap;
-//}
-//
-//button{
-//  margin: 0.3%;
-//}
-//
-//.button_syllabus {
-//  width: 511px;
-//  height: 414px;
-//  background-color: rgba(39, 42, 49, 1);
-//
-//  .Programy_studiw {
-//    margin-left: 20px;
-//    font-size: 24px;
-//    color: rgba(216, 213, 206, 1);
-//  }
-//
-//  .school_icon{
-//    width: 250px;
-//    height: 250px;
-//    margin-left: 120px;
-//    font-size: 250px;
-//  }
-//  .material-icons.md-18 { font-size: 18px; }
-//}
-//
-//.button_syllabus:disabled{
-//  .Programy_studiw {
-//    color: rgb(100, 100, 100);
-//  }
-//}
-//
-//.button_learning_outcome{
-//  //position: absolute;
-//  width: 511px;
-//  height: 170px;
-//  //left: 273px;
-//  margin-top: 430px;
-//  //overflow: visible;
-//  background-color: rgba(39, 42, 49, 1);
-//
-//  .Efekty_uczenia_si {
-//    //left: 300px;
-//    //top: 124px;
-//    //position: absolute;
-//    //overflow: visible;
-//    font-size: 24px;
-//    color: rgba(216, 213, 206, 1);
-//  }
-//}
-//
-//.button_learning_outcome:disabled{
-//  .Efekty_uczenia_si {
-//    color: rgb(100, 100, 100);
-//  }
-//}
-//
-//.button_docs{
-//  //position: absolute;
-//  width: 492px;
-//  height: 170px;
-//  margin-left: 488px;
-//  //top: 167px;
-//  //overflow: visible;
-//  background-color: rgba(39, 42, 49, 1);
-//
-//  .Dokumenty {
-//    //left: 347px;
-//    //top: 118px;
-//    //position: absolute;
-//    font-size: 24px;
-//    color: rgba(216, 213, 206, 1);
-//  }
-//}
-//
-//.button_accept{
-//  //position: absolute;
-//  width: 242px;
-//  height: 241px;
-//  //left: 788px;
-//  //top: 341px;
-//  //overflow: visible;
-//  background-color: rgba(39, 42, 49, 1);
-//
-//  .Akceptacja {
-//    //left: 102px;
-//    //top: 189px;
-//    //position: absolute;
-//    font-size: 24px;
-//    color: rgba(216, 213, 206, 1);
-//  }
-//}
-//
-//.button_accept:disabled{
-//  .Akceptacja {
-//    color: rgb(100, 100, 100);
-//  }
-//}
-//
-//.button_subject{
-//  //position: absolute;
-//  width: 246px;
-//  height: 241px;
-//  //left: 1034px;
-//  //top: 341px;
-//  //overflow: visible;
-//  background-color: rgba(39, 42, 49, 1);
-//
-//  .Przedmioty {
-//    //left: 105px;
-//    //top: 190px;
-//    //position: absolute;
-//    font-size: 24px;
-//    color: rgba(216, 213, 206, 1);
-//  }
-//}
-//
-//.button_subject:disabled{
-//  .Przedmioty {
-//    color: rgb(100, 100, 100);
-//  }
-//}
-//
-//.button_admin{
-//  //position: absolute;
-//  width: 492px;
-//  height: 170px;
-//  //left: 788px;
-//  //top: 586px;
-//  //overflow: visible;
-//  background-color: rgba(39, 42, 49, 1);
-//
-//  .Administracja {
-//    //left: 323px;
-//    //top: 123px;
-//    //position: absolute;
-//    font-size: 24px;
-//    color: rgba(216, 213, 206, 1);
-//  }
-//}
-//
-//.button_admin:disabled{
-//  .Administracja {
-//    color: rgb(100, 100, 100);
-//  }
-//}
-//
-//.home-icon {
-//  height: 70px;
-//  width: 70px;
-//  font-size: 70px;
-//}
-

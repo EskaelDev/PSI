@@ -1,36 +1,43 @@
-<div fxLayoutAlign="start start" fxLayoutGap="30px">
-  <mat-tab-group mat-align-tabs="start">
+<div class="lo-doc-edit-container">
+  <mat-tab-group mat-align-tabs="start" id="tab-group">
     <mat-tab label="Kierunkowe">
-      <div>
-        <app-lo-list
-          [elems]="filterFieldLos(_document.learningOutcomes)"
-          (selectedElem)="selectLo($event)"
-        ></app-lo-list>
-        <div>
-          <button mat-icon-button (click)="newLo(null)"><mat-icon>add</mat-icon></button>
+      <div class="lo-list-container">
+        <div class="lo-list-container-fos">
+          <app-lo-list
+            [elems]="filterFieldLos(_document.learningOutcomes)"
+            (selectedElem)="selectLo($event)"
+          ></app-lo-list>
+          <button mat-icon-button (click)="newLo(null)">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
+        <app-lo-edit class="lo-edit-container" *ngIf="selectedLo" [elem]="selectedLo" [isNew]="isNew(selectedLo)"
+                     (deletedLo)="deleteLo()" (savedLo)="saveLo($event)"></app-lo-edit>
       </div>
     </mat-tab>
-    <mat-tab label="Specjalnościowe"
-      ><div>
-        <div>
+    <mat-tab label="Specjalnościowe">
+      <div class="lo-list-container">
+        <div class="lo-list-container-spec">
           <mat-form-field appearance="outline" class="dropdown">
             <mat-label>Wybierz specjalizację</mat-label>
             <mat-select [(value)]="selectedSpec" (selectionChange)="selectedLo = null">
               <mat-option *ngFor="let spec of specs" [value]="spec">{{
                 spec.name
-              }}</mat-option>
+                }}</mat-option>
             </mat-select>
           </mat-form-field>
+          <app-lo-list
+            [elems]="filterSpecLos(_document.learningOutcomes, selectedSpec)"
+            (selectedElem)="selectLo($event)"
+            [selected]="selectedLo"
+          ></app-lo-list>
+          <button mat-icon-button [disabled]="!selectedSpec" (click)="newLo(selectedSpec)">
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
-        <app-lo-list
-          [elems]="filterSpecLos(_document.learningOutcomes, selectedSpec)"
-          (selectedElem)="selectLo($event)"
-          [selected]="selectedLo"
-        ></app-lo-list><div>
-            <button mat-icon-button [disabled]="!selectedSpec" (click)="newLo(selectedSpec)"><mat-icon>add</mat-icon></button>
-          </div></div
-    ></mat-tab>
+        <app-lo-edit class="lo-edit-container" *ngIf="selectedLo" [elem]="selectedLo" [isNew]="isNew(selectedLo)"
+                     (deletedLo)="deleteLo()" (savedLo)="saveLo($event)"></app-lo-edit>
+      </div>
+    </mat-tab>
   </mat-tab-group>
-  <app-lo-edit *ngIf="selectedLo" [elem]="selectedLo" [isNew]="isNew(selectedLo)" (deletedLo)="deleteLo()" (savedLo)="saveLo($event)"></app-lo-edit>
 </div>

@@ -1,5 +1,11 @@
 <div class="main-container">
-  <app-backgroud-logged-in class="background" [mainTitle]="mainTitle" [subtitle]="subtitle"></app-backgroud-logged-in>
+  <app-backgroud-logged-in class="background"></app-backgroud-logged-in>
+
+  <div class="title-container">
+    <h1 *ngIf="mainTitle">{{ mainTitle }}</h1>
+    <h3 *ngIf="subtitle">{{ subtitle }}</h3>
+  </div>
+
   <div class="sub-container" style="padding: 30px 40px;">
     <div fxLayoutAlign="start center" fxLayoutGap="20px"><img src="/assets/user.png"/>
     <div *ngIf="user" >
@@ -8,7 +14,7 @@
         <div class="account-text" style="margin-top: 0;"><span class="account-title">Email: </span><span>{{ user?.email }}</span></div>
       </mat-card-content>
     </div></div>
-    
+
     <div *ngIf="!user">Brak danych użytkownika</div>
   </div>
 </div>

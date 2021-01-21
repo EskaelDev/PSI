@@ -12,17 +12,17 @@ body { margin: 0; font-family: OpenSansLight !important }
 ::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
   }
-   
+
   ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #888;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #555;
   }
 
 .page-header {
@@ -50,8 +50,8 @@ body { margin: 0; font-family: OpenSansLight !important }
     margin-bottom: 20px;
 
     .title {
-        background-color: antiquewhite; 
-        border-radius: 50px; 
+        background-color: antiquewhite;
+        border-radius: 50px;
         color: brown;
         padding: 2px 7px;
         margin-right: 10px;
@@ -59,8 +59,8 @@ body { margin: 0; font-family: OpenSansLight !important }
     }
 
     .sub-title {
-        background-color: brown; 
-        border-radius: 50px; 
+        background-color: brown;
+        border-radius: 50px;
         color: antiquewhite;
         padding: 2px 7px;
         margin: 0 120px 20px 120px;
@@ -73,7 +73,7 @@ body { margin: 0; font-family: OpenSansLight !important }
     margin-bottom: 20px;
 
     .title {
-        background-color: antiquewhite; 
+        background-color: antiquewhite;
         color: brown;
         padding: 2px 7px;
         margin-right: 10px;
@@ -81,7 +81,7 @@ body { margin: 0; font-family: OpenSansLight !important }
     }
 
     .sub-title {
-        background-color: brown; 
+        background-color: brown;
         color: antiquewhite;
         padding: 2px 7px;
         margin: 0 120px 20px 120px;
@@ -90,8 +90,8 @@ body { margin: 0; font-family: OpenSansLight !important }
 }
 
 .round-title {
-    background-color: antiquewhite; 
-    border-radius: 50px; 
+    background-color: antiquewhite;
+    border-radius: 50px;
     color: brown;
     padding: 2px 7px;
     margin-right: 10px;
@@ -109,5 +109,4 @@ body { margin: 0; font-family: OpenSansLight !important }
     padding: 25px;
     font-size: 35px;
     border-radius: 10px;
-    cursor: pointer;
 }

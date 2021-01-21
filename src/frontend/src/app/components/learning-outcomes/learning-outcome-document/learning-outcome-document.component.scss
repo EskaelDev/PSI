@@ -2,7 +2,6 @@
   display: block;
   margin: 10% auto auto 5%;
   font-size: 1em;
-  //background-color: #707070;
   width: 85%;
   height: 66%;
 }
@@ -32,13 +31,13 @@
       width: 100%;
     }
 
-    h2{
+    h2 {
       font-size: 1.2rem;
       font-weight: bold;
       margin: 0 0 0 2rem;
     }
 
-    textarea{
+    textarea {
       padding: 0 2rem 1rem 2rem;
       font-size: 0.8rem;
       width: 80%;
@@ -53,6 +52,7 @@
     align-self: stretch;
     padding: 0.5rem;
     width: 100%;
+
     app-lo-doc-edit {
       display: flex;
       flex-direction: row;

@@ -9,7 +9,7 @@
               "lessons." + lesson | translate
               }}</mat-option>
           </mat-select>
-          <mat-error> Pole wymagane </mat-error>
+          <mat-error> Pole wymagane</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="dropdown">
           <mat-label>Forma zaliczenia</mat-label>
@@ -20,7 +20,7 @@
             >{{ "creditings." + crediting | translate }}</mat-option
             >
           </mat-select>
-          <mat-error> Pole wymagane </mat-error>
+          <mat-error> Pole wymagane</mat-error>
         </mat-form-field>
       </div>
       <div class="sub-lesson-edit-inputs">
@@ -32,7 +32,7 @@
             type="number"
             formControlName="hoursAtUniversity"
           />
-          <mat-error> Pole wymagane, wartości 1-200 </mat-error>
+          <mat-error> Pole wymagane, wartości 1-200</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Liczba CNPS</mat-label>
@@ -42,12 +42,12 @@
             type="number"
             formControlName="studentWorkloadHours"
           />
-          <mat-error> Pole wymagane, wartości 1-500 </mat-error>
+          <mat-error> Pole wymagane, wartości 1-500</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Liczba ECTS</mat-label>
-          <input required matInput type="number" formControlName="ects" />
-          <mat-error> Pole wymagane, wartości 0-30 </mat-error>
+          <input required matInput type="number" formControlName="ects"/>
+          <mat-error> Pole wymagane, wartości 0-30</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Punkty ECTS P</mat-label>
@@ -57,7 +57,7 @@
             type="number"
             formControlName="ectsinclPracticalClasses"
           />
-          <mat-error> Pole wymagane </mat-error>
+          <mat-error> Pole wymagane</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Punkty ECTS BK</mat-label>
@@ -67,7 +67,7 @@
             type="number"
             formControlName="ectsinclDirectTeacherStudentContactClasses"
           />
-          <mat-error> Pole wymagane </mat-error>
+          <mat-error> Pole wymagane</mat-error>
         </mat-form-field>
       </div>
       <mat-checkbox formControlName="isFinal">końcowy</mat-checkbox>
@@ -78,8 +78,12 @@
     </form>
     <div class="buttons-container">
       <div *ngIf="!readOnly" class="buttons">
-        <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
-        <button mat-icon-button (click)="save()" [disabled]="!lesForm.valid || !checkClassForm(editableClassForms)"><mat-icon>done</mat-icon></button>
+        <button mat-icon-button (click)="delete()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="save()" [disabled]="!lesForm.valid || !checkClassForm(editableClassForms)">
+          <mat-icon>done</mat-icon>
+        </button>
       </div>
     </div>
   </div>
@@ -88,8 +92,12 @@
     <div class="app-sub-lessons-program-container" *ngFor="let entry of editableClassForms" [appDisable]="readOnly">
       <app-sub-lessons-program [entry]="entry">
       </app-sub-lessons-program>
-      <button *ngIf="!readOnly" mat-icon-button (click)="remove(entry)"><mat-icon>close</mat-icon></button>
+      <button *ngIf="!readOnly" mat-icon-button (click)="remove(entry)">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
-    <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+    <button *ngIf="!readOnly" mat-icon-button (click)="add()">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="sub-card-container" >
+<div class="sub-card-container">
   <h2>{{ card.name }}</h2>
   <div *ngIf="card.entries.length > 0" class="sub-card-elem-row">
     <div *ngFor="let entry of card.entries" [appDisable]="readOnly">

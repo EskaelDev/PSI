@@ -13,6 +13,7 @@
     }
   }
 }
+
 .lo-list-container {
   width: 100%;
   height: 100%;
@@ -22,7 +23,6 @@
 .lo-list-container-fos {
   display: block;
   width: 33%;
-  //height: 100%;
   margin-top: 1.5rem;
 
   app-lo-list {
@@ -36,24 +36,20 @@
 
 
 .lo-list-container-spec {
-    display: block;
-    width: 33%;
-    //height: 100%;
-    margin-top: 1.5rem;
+  display: block;
+  width: 33%;
+  margin-top: 1.5rem;
 
-    app-lo-list {
-      line-height: 2rem;
-    }
-
-    mat-icon {
-      font-size: 3rem;
-    }
+  app-lo-list {
+    line-height: 2rem;
   }
+
+  mat-icon {
+    font-size: 3rem;
+  }
+}
 
 .lo-edit-container {
   width: 67%;
   padding: 0.75rem;
-  //height: 100%;
-  //display: inline-flex;
-  //flex-direction: row;
 }

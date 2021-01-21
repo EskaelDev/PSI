@@ -8,12 +8,15 @@
 
   <div class="sub-container" style="padding: 30px 40px;">
     <div fxLayoutAlign="start center" fxLayoutGap="20px"><img src="/assets/user.png"/>
-    <div *ngIf="user" >
-      <mat-card-content>
-        <div class="account-text" style="margin-bottom: 0;"><span class="account-title">Imię i nazwisko: </span><span>{{ user?.name }}</span></div>
-        <div class="account-text" style="margin-top: 0;"><span class="account-title">Email: </span><span>{{ user?.email }}</span></div>
-      </mat-card-content>
-    </div></div>
+      <div *ngIf="user">
+        <mat-card-content>
+          <div class="account-text" style="margin-bottom: 0;"><span
+            class="account-title">Imię i nazwisko: </span><span>{{ user?.name }}</span></div>
+          <div class="account-text" style="margin-top: 0;"><span
+            class="account-title">Email: </span><span>{{ user?.email }}</span></div>
+        </mat-card-content>
+      </div>
+    </div>
 
     <div *ngIf="!user">Brak danych użytkownika</div>
   </div>

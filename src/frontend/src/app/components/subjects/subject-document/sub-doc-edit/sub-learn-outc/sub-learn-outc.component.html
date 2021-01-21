@@ -1,24 +1,26 @@
 <div fxLayoutAlign="start" fxLayoutGap="30px" class="sub-learn-container">
-    <div>
-      <div *ngIf="_document.learningOutcomeEvaluations.length > 0">
-        <app-sub-learn-outc-elem
-          *ngFor="let elem of _document.learningOutcomeEvaluations"
-          [elem]="elem"
-          [selected]="selected"
-          (selectedElem)="select($event)"
-        ></app-sub-learn-outc-elem>
-      </div>
-      <div *ngIf="_document.learningOutcomeEvaluations.length === 0">Brak wpisów</div>
-      <button *ngIf="!readOnly" mat-icon-button (click)="add()"><mat-icon>add</mat-icon></button>
+  <div>
+    <div *ngIf="_document.learningOutcomeEvaluations.length > 0">
+      <app-sub-learn-outc-elem
+        *ngFor="let elem of _document.learningOutcomeEvaluations"
+        [elem]="elem"
+        [selected]="selected"
+        (selectedElem)="select($event)"
+      ></app-sub-learn-outc-elem>
     </div>
-    <div>
-      <app-sub-learn-outc-edit
-        [readOnly]="readOnly"
-        [learningOutcomes]="learningOutcomes"
-        *ngIf="selected"
-        [elem]="selected"
-        (deleted)="delete()"
-        (saved)="save($event)"
-      ></app-sub-learn-outc-edit>
-    </div>
+    <div *ngIf="_document.learningOutcomeEvaluations.length === 0">Brak wpisów</div>
+    <button *ngIf="!readOnly" mat-icon-button (click)="add()">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
+  <div>
+    <app-sub-learn-outc-edit
+      [readOnly]="readOnly"
+      [learningOutcomes]="learningOutcomes"
+      *ngIf="selected"
+      [elem]="selected"
+      (deleted)="delete()"
+      (saved)="save($event)"
+    ></app-sub-learn-outc-edit>
+  </div>
+</div>

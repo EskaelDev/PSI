@@ -7,20 +7,21 @@
   border-radius: 0.4rem;
   border: 1px solid #707070;
   padding: 0.25rem 2rem;
+
   & > div {
     mat-form-field {
       width: 100%;
-      //input, textarea {
-      //}
     }
   }
 
   & > div:first-child {
     width: 20%;
+
     input {
       line-height: 2.3rem;
     }
   }
+
   & > div:last-child {
     width: 70%;
   }

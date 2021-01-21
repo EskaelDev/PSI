@@ -1,7 +1,8 @@
-.points-container{
-  margin:5% 5%;
+.points-container {
+  margin: 5% 5%;
   display: inline-block;
   align-content: space-around;
+
   .points-name {
     font-weight: bold;
     color: #7B6D35;
@@ -9,7 +10,6 @@
   }
 
   .inputs {
-    //display: inline-block;
     display: inline;
     margin-top: 20px;
 

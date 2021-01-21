@@ -12,13 +12,15 @@ button {
   font-weight: lighter;
   font-size: 1rem;
   background-color: #272A31;
-  color: rgba(255,255,255,1);
-  border: rgba(112, 112, 112, 1) 3px  solid;
+  color: rgba(255, 255, 255, 1);
+  border: rgba(112, 112, 112, 1) 3px solid;
   border-top: none;
   border-bottom: none;
+
   &:first-child {
     border-left: none;
   }
+
   &:last-child {
     border-right: none;
   }

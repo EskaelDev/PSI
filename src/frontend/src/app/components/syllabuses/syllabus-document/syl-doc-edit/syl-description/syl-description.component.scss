@@ -1,29 +1,31 @@
-//edit
 .description-container {
   color: #D8D5CE;
   font-size: 1rem;
   margin: 0.75rem;
   width: 96%;
   height: 33rem;
+
   .description-container-selector {
-    //flex-wrap: wrap;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     line-height: 2rem;
+
     .input-field {
       width: 12%;
-      //margin-top: 1rem;
       margin-right: 1rem;
     }
+
     .dropdown:not(:first-child) {
       margin-left: 1rem;
     }
   }
+
   .textarea-container {
-    width:100%;
+    width: 100%;
     height: 7rem;
     padding: 1rem 0 2rem 0;
+
     textarea {
       border: 2px solid #707070;
       min-height: 7rem;

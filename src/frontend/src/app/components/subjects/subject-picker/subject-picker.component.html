@@ -8,8 +8,10 @@
 
   <div class="sub-container">
     <button class="new-sub-btn" mat-basic-button (click)="newSubject()">
-      <div fxLayoutAlign="center center" fxLayoutGap="10px"><div>Nowy przedmiot</div>
-      <mat-icon style="margin-right: 5px">add</mat-icon></div>
+      <div fxLayoutAlign="center center" fxLayoutGap="10px">
+        <div>Nowy przedmiot</div>
+        <mat-icon style="margin-right: 5px">add</mat-icon>
+      </div>
     </button>
 
     <!--    SEARCH BAR   -->
@@ -81,7 +83,8 @@
 
 
     <!--    SUBJECT TILE-->
-    <div *ngIf="filteredSubjects.length > 0 && !isLoading" class="subject-tile" fxLayout="row-wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+    <div *ngIf="filteredSubjects.length > 0 && !isLoading" class="subject-tile" fxLayout="row-wrap"
+         fxLayoutAlign="start start" fxLayoutGap="10px">
       <mat-card *ngFor="let subject of filteredSubjects">
         <mat-card-content>
           <p style="height: 50px;">
@@ -89,8 +92,8 @@
           </p>
           <div class="tile-buttons" style="text-align: center;">
             <button style="margin-right: 10px;" mat-raised-button (click)="download(subject)">
-            <mat-icon>save_alt</mat-icon>
-            PDF
+              <mat-icon>save_alt</mat-icon>
+              PDF
             </button>
             <button
               mat-raised-button
@@ -113,35 +116,6 @@
 
       </mat-card>
     </div>
-
-<!--    <div *ngIf="filteredSubjects.length > 0 && !isLoading" class="checkboxes">-->
-<!--      <div *ngFor="let subject of filteredSubjects" fxLayoutAlign="space-between">-->
-<!--        <div>{{ subject.code }}: {{ subject.namePl }}</div>-->
-<!--        <div>-->
-<!--          <button mat-raised-button (click)="download(subject)">-->
-<!--            <mat-icon>save_alt</mat-icon>-->
-<!--            PDF-->
-<!--          </button>-->
-<!--          <button-->
-<!--            mat-raised-button-->
-<!--            (click)="edit(subject)"-->
-<!--            *ngIf="subject.isAdmin || subject.isSupervisor"-->
-<!--          >-->
-<!--            <mat-icon>edit</mat-icon>-->
-<!--            Edytuj-->
-<!--          </button>-->
-<!--          <button-->
-<!--            mat-raised-button-->
-<!--            (click)="edit(subject)"-->
-<!--            *ngIf="!subject.isAdmin && !subject.isSupervisor"-->
-<!--          >-->
-<!--            <mat-icon style="margin-right: 5px">visibility</mat-icon>-->
-<!--            Podgląd-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
 
     <!-- U COMMUNICATION / ERRORS / LOADING-->
     <div class="checkboxes"
@@ -168,6 +142,4 @@
       <mat-spinner></mat-spinner>
     </div>
   </div>
-
-
 </div>

@@ -9,7 +9,7 @@
   </mat-select>
 </mat-form-field>
 
-<mat-form-field *ngIf="isSpec"  appearance="outline" class="dropdown">
+<mat-form-field *ngIf="isSpec" appearance="outline" class="dropdown">
   <mat-label>Wybierz specjalizację</mat-label>
   <mat-select [(value)]="selectedSpec" (selectionChange)="selectSpec.emit(selectedSpec)">
     <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{

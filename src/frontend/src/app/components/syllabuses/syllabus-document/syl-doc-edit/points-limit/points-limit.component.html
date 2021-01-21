@@ -2,8 +2,8 @@
   <div *ngFor="let module of moduleTypes" class="module-container">
     <h2>Moduł {{ "modules." + module | translate }}</h2>
     <app-points-elem class="input"
-      *ngFor="let elem of filterElements(module)"
-      [elem]="elem"
+                     *ngFor="let elem of filterElements(module)"
+                     [elem]="elem"
     ></app-points-elem>
   </div>
 </div>

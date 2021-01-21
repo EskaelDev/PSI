@@ -1,4 +1,4 @@
-.sub-desc-container{
+.sub-desc-container {
   height: 100%;
   width: 98%;
   margin: 0.75rem;
@@ -7,30 +7,33 @@
   justify-content: space-between;
   color: #D8D5CE;
 
-  .suv-description-left-container{
+  .suv-description-left-container {
     width: 40%;
     height: 100%;
     padding: 0.75rem;
+
     mat-form-field {
-      width:100%;
+      width: 100%;
     }
   }
 
-  .suv-description-right-container{
+  .suv-description-right-container {
     width: 60%;
     height: 100%;
     padding: 0.75rem;
+
     mat-form-field {
-      width:100%;
+      width: 100%;
     }
 
-    .suv-description-guard{
+    .suv-description-guard {
 
     }
 
-    .suv-description-teacher{
+    .suv-description-teacher {
       margin-top: 10%;
-      mat-form-field{
+
+      mat-form-field {
         width: 60%;
       }
     }

@@ -5,8 +5,10 @@
 
   form {
     margin: 0.75rem 0.75rem 0;
+
     mat-form-field {
       width: 100%;
+
       textarea {
         min-height: 12rem;
         border: 1px solid #707070;
@@ -14,6 +16,7 @@
       }
     }
   }
+
   .buttons-container {
     width: 100%;
     display: block;

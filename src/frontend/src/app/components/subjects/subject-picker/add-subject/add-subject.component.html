@@ -10,9 +10,9 @@
           formControlName="code"
           required
         />
-        <mat-error> Pole wymagane </mat-error>
+        <mat-error> Pole wymagane</mat-error>
       </mat-form-field>
-      <br />
+      <br/>
       <mat-form-field>
         <input
           matInput
@@ -21,9 +21,9 @@
           formControlName="namePl"
           required
         />
-        <mat-error> Pole wymagane </mat-error>
+        <mat-error> Pole wymagane</mat-error>
       </mat-form-field>
-      <br />
+      <br/>
       <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz kierunek studiów</mat-label>
         <mat-select
@@ -32,10 +32,10 @@
         >
           <mat-option *ngFor="let fos of fieldsOfStudy" [value]="fos">{{fos.code}}: {{
             fos.name
-          }}</mat-option>
+            }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
+      <br/>
       <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz specjalizację</mat-label>
         <mat-select
@@ -43,20 +43,20 @@
         >
           <mat-option *ngFor="let spec of specs" [value]="spec">{{spec.code}}: {{
             spec.name
-          }}</mat-option>
+            }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <br />
+      <br/>
       <mat-form-field appearance="outline" class="dropdown">
         <mat-label>Wybierz rok akademicki</mat-label>
         <mat-select formControlName="academicYear" required>
           <mat-option *ngFor="let year of years" [value]="year">{{
             year
-          }}</mat-option>
+            }}</mat-option>
         </mat-select>
-        <mat-error> Pole wymagane </mat-error>
+        <mat-error> Pole wymagane</mat-error>
       </mat-form-field>
-      <br />
+      <br/>
       <mat-form-field>
         <input
           type="text"
@@ -74,7 +74,7 @@
             {{ supervisor.name }}
           </mat-option>
         </mat-autocomplete>
-        <mat-error> Pole wymagane </mat-error>
+        <mat-error> Pole wymagane</mat-error>
       </mat-form-field>
     </form>
   </div>

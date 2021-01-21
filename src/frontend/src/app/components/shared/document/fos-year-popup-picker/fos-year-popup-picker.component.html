@@ -11,7 +11,9 @@
     ></app-fos-year-picker>
   </div>
   <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" (click)="submit()" [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">Zatwierdź</button>
+    <button mat-raised-button color="primary" (click)="submit()"
+            [disabled]="!selectedFos || !selectedYear || (isSpec && !selectedSpec)">Zatwierdź
+    </button>
     <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>
       Anuluj
     </button>

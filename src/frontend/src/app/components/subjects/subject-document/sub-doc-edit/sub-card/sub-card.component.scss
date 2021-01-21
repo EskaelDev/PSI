@@ -5,7 +5,7 @@
   flex-direction: column;
   overflow-y: auto;
 
-  h2{
+  h2 {
     text-align: center;
   }
 
@@ -16,10 +16,12 @@
     justify-content: space-between;
     align-content: center;
     gap: 0.25rem;
+
     app-sub-card-elem {
       width: 90%;
       float: left;
     }
+
     button {
       margin-top: 1.75rem;
       color: rgb(175 17 5 / 85%);
@@ -29,6 +31,7 @@
       }
     }
   }
+
   button {
     margin-top: 2%;
 

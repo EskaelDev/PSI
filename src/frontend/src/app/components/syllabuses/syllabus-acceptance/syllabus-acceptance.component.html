@@ -11,7 +11,7 @@
       [isSpec]="true"
       (criteriaChange)="criteriaChanged($event)"
     ></app-fos-year-filter>
-    <div class="cards" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="30px">
+    <div class="cards" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="30px">
       <app-document-tile
         *ngFor="let syllabus of syllabuses"
         [name]="syllabus.fieldOfStudy?.name"

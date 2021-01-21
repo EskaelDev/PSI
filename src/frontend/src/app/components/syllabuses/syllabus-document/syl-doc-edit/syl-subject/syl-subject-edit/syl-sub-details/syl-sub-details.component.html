@@ -1,7 +1,13 @@
 <div class="sub-details-container">
   <h2>Detale przedmiotu</h2>
-  <div *ngIf="subject">
-    <div>{{subject.code}}</div>
+  <div *ngIf="subject" class="subject-details-box">
+    <div><span>Kod:</span>{{subject.code}}</div>
+    <div><span>Nazwa PL:</span> {{subject.namePl}}</div>
+    <div><span>Nazwa EN:</span> {{subject.nameEng ? subject.nameEng : 'brak' }}</div>
+    <div><span>Moduł:</span> {{ "modules." + subject.moduleType | translate}}</div>
+    <div><span>Rodzaj:</span> {{ "kinds." + subject.kindOfSubject | translate}}</div>
+    <div><span>Język:</span> {{ "languages." + subject.language | translate}}</div>
+    <div><span>Typ:</span> {{ "subTypes." + subject.typeOfSubject | translate}}</div>
   </div>
   <div *ngIf="!subject">
     Nie wybrano przedmiotu

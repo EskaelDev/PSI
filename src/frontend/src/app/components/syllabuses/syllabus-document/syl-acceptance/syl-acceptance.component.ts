@@ -61,7 +61,7 @@ export class SylAcceptanceComponent implements OnInit {
 
   verify() {
     this.dialog.open(SylVerificationComponent, {
-      height: '500px',
+      height: '550px',
       width: '600px',
       data: this.document
     });

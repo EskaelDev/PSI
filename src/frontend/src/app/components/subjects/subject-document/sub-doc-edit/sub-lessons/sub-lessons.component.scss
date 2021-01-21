@@ -1,0 +1,41 @@
+.subject-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 98%;
+  height: 100%;
+  color: #D8D5CE;
+  margin: 0.75rem;
+
+  .mat-icon {
+    font-size: 3rem;
+  }
+
+  & > div:first-child {
+    width: 30%;
+    height: 100%;
+  }
+
+  & > div:last-child {
+    width: 70%;
+    height: 100%;
+
+    app-sub-lesson-edit {
+      height: 100%;
+    }
+  }
+}
+
+.info {
+  display: flex;
+  margin: 0.75rem;
+  color: #D8D5CE;
+
+  div {
+    line-height: 40px;
+  }
+
+  .mat-icon {
+    font-size: 2rem;
+  }
+}

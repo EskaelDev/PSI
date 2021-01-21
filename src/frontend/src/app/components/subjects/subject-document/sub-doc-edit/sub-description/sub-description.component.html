@@ -1,95 +1,102 @@
-<div fxLayoutAlign="start" fxLayoutGap="30px">
-  <div [appDisable]="readOnly">
+<div class="sub-desc-container">
+  <div [appDisable]="readOnly" class="suv-description-left-container">
     <mat-form-field>
       <mat-label>Kod</mat-label>
-      <input matInput readonly type="text" [(ngModel)]="document.code" />
+      <input matInput readonly type="text" [(ngModel)]="document.code"/>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field>
       <mat-label>Nazwa polska</mat-label>
-      <input matInput required type="text" [(ngModel)]="document.namePl" />
+      <input matInput required type="text" [(ngModel)]="document.namePl"/>
       <mat-error>Pole wymagane</mat-error>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field>
       <mat-label>Nazwa angielska</mat-label>
-      <input matInput type="text" [(ngModel)]="document.nameEng" />
+      <input matInput type="text" [(ngModel)]="document.nameEng"/>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Rodzaj modułu</mat-label>
       <mat-select [(value)]="document.moduleType" required>
         <mat-option *ngFor="let module of modules" [value]="module">{{
           "modules." + module | translate
-        }}</mat-option>
+          }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Rodzaj</mat-label>
       <mat-select [(value)]="document.kindOfSubject" required>
         <mat-option *ngFor="let kind of kinds" [value]="kind">{{
           "kinds." + kind | translate
-        }}</mat-option>
+          }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Typ</mat-label>
       <mat-select [(value)]="document.typeOfSubject" required>
         <mat-option *ngFor="let subType of subTypes" [value]="subType">{{
           "subTypes." + subType | translate
-        }}</mat-option>
+          }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <br />
+    <br/>
     <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Język</mat-label>
       <mat-select [(value)]="document.language" required>
         <mat-option *ngFor="let language of languages" [value]="language">{{
           "languages." + language | translate
-        }}</mat-option>
+          }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div>
-    <h2>Opiekun</h2>
-    <span>{{document.supervisor?.name}}</span>
-    <button *ngIf="document.isAdmin" mat-icon-button (click)="changeSupervisor()"><mat-icon>edit</mat-icon></button>
-    <h2>Możliwi prowadzący</h2>
-    <div *ngIf="document.teachers.length > 0">
-      <div *ngFor="let teacher of document.teachers">
+  <div class="suv-description-right-container">
+    <div class="suv-description-guard">
+      <h2>Opiekun</h2>
+      <span>{{document.supervisor?.name}}</span>
+      <button *ngIf="document.isAdmin" mat-icon-button (click)="changeSupervisor()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <div class="suv-description-teacher">
+      <h2>Możliwi prowadzący</h2>
+      <div *ngIf="document.teachers.length > 0">
+        <div *ngFor="let teacher of document.teachers">
         <span>{{ teacher.name }}</span
-        ><button mat-icon-button (click)="removeTeacher(teacher)" *ngIf="!readOnly">
-          <mat-icon>remove</mat-icon>
+        >
+          <button mat-icon-button (click)="removeTeacher(teacher)" *ngIf="!readOnly">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="document.teachers.length === 0">
+        Brak przypisanych prowadzących
+      </div>
+      <div *ngIf="!readOnly">
+        <mat-form-field>
+          <input
+            type="text"
+            placeholder="Prowadzący"
+            aria-label="Number"
+            [formControl]="teacherControl"
+            matInput
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
+            <mat-option
+              *ngFor="let teacher of filteredTeachers | async"
+              [value]="teacher"
+            >
+              {{ teacher.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <button [disabled]="!validateTeacher(selectedTeacher)" mat-icon-button (click)="addTeacher()">
+          <mat-icon>add</mat-icon>
         </button>
       </div>
-    </div>
-    <div *ngIf="document.teachers.length === 0">
-      Brak przypisanych prowadzących
-    </div>
-    <div *ngIf="!readOnly">
-      <mat-form-field>
-        <input
-          type="text"
-          placeholder="Prowadzący"
-          aria-label="Number"
-          [formControl]="teacherControl"
-          matInput
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser">
-          <mat-option
-            *ngFor="let teacher of filteredTeachers | async"
-            [value]="teacher"
-          >
-            {{ teacher.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <button [disabled]="!validateTeacher(selectedTeacher)" mat-icon-button (click)="addTeacher()">
-        <mat-icon>add</mat-icon>
-      </button>
     </div>
   </div>
 </div>

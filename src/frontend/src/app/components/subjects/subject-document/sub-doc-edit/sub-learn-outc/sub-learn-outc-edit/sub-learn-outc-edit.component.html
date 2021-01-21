@@ -1,4 +1,4 @@
-<div>
+<div class="sub-learn-edit-container">
   <form [formGroup]="learnForm" [appDisable]="readOnly">
     <mat-form-field appearance="outline" class="dropdown">
       <mat-label>Sposób oceniania</mat-label>
@@ -29,8 +29,11 @@
       ></textarea>
     </mat-form-field>
   </form>
-  <div *ngIf="!readOnly">
-    <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
-    <button mat-icon-button (click)="save()" [disabled]="!learnForm.valid"><mat-icon>done</mat-icon></button>
+  <div class="buttons-container">
+    <div *ngIf="!readOnly" class="buttons">
+      <button mat-icon-button (click)="delete()"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button (click)="save()" [disabled]="!learnForm.valid"><mat-icon>done</mat-icon></button>
+    </div>
   </div>
+
 </div>

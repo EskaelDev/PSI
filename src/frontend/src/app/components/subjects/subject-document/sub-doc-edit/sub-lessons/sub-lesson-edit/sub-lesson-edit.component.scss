@@ -1,0 +1,82 @@
+.sub-lesson-edit-subject-container {
+
+  height: 34.5rem;
+
+  .sub-lesson-edit-subject {
+    width: 50%;
+    height: 100%;
+    margin: 0 1rem;
+    border-left: 2px solid #707070;
+
+    .sub-lesson-edit-dropdown {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .mat-form-field {
+        width: 45%;
+      }
+    }
+
+    form {
+      margin: 0.75rem 0.75rem 0;
+    }
+  }
+}
+
+.sub-lesson-edit-inputs {
+  .mat-form-field {
+    width: 100%;
+  }
+}
+
+.buttons-container {
+  width: 100%;
+  display: block;
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 35%;
+    margin: 1rem auto;
+
+    mat-icon {
+      font-size: 2rem;
+    }
+  }
+}
+
+.sub-lesson-edit-description {
+  width: 50%;
+  margin: 1rem;
+
+  .app-sub-lessons-program-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+
+    app-sub-lessons-program {
+      width: 90%;
+      float: left;
+    }
+
+    button {
+      margin-top: 4rem;
+      color: rgb(175 17 5 / 85%);
+
+      mat-icon {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  button {
+    margin-top: 2%;
+
+    mat-icon {
+      font-size: 2rem;
+    }
+  }
+}

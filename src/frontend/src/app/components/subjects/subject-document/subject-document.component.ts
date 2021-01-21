@@ -17,7 +17,8 @@ import { YearSubjectPickerComponent } from '../../shared/document/year-subject-p
 })
 export class SubjectDocumentComponent implements OnInit {
   guidEmpty = AppConsts.EMPTY_ID;
-  title = 'przedmiotu';
+  mainTitle = 'Edycja';
+  subtitle = 'przedmiotu';
   isLoading = true;
 
   subjectDocument: Subject | null = null;

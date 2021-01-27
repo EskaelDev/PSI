@@ -1,6 +1,6 @@
-<mat-card class="subject-card">
+<button class="subject-card">
   <div class="subjects" (click)="select()" [ngClass]="{ selected: selected === elem }">
     {{elem.subject?.code}}: {{elem.subject?.namePl}} <span>s: {{elem.assignedSemester}}</span>
   </div>
-</mat-card>
+</button>
 

@@ -9,6 +9,10 @@ app-syl-description, app-syl-subject {
   width: 100%;
 }
 
+::ng-deep mat-tab-body{
+  width: 33rem;
+}
+
 #tab-group {
   height: 100%;
   flex-grow: 1;

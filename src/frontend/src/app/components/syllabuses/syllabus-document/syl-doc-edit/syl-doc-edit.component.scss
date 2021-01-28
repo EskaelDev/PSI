@@ -11,6 +11,7 @@ app-syl-description, app-syl-subject {
 
 ::ng-deep mat-tab-body{
   width: 33rem;
+  height: 33.5rem;
 }
 
 #tab-group {
@@ -19,13 +20,15 @@ app-syl-description, app-syl-subject {
 
   .inputbox-container {
     padding: 0.75rem;
-    width: 97%;
+    width: 96%;
 
     .input-textarea {
+      width: 96%;
       height: 20rem;
       max-height: 28rem;
       border: 2px solid #707070;
       color: #D8D5CE;
+      padding: 1rem;
     }
   }
 }

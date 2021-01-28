@@ -7,13 +7,17 @@
   color: #D8D5CE;
   margin: 0.75rem;
 
-  .mat-icon {
-    font-size: 3rem;
-  }
 
   & > div:first-child {
     width: 30%;
     height: 100%;
+  .info{
+    margin: 0.75rem;
+    .mat-icon {
+      font-size: 3rem;
+    }
+  }
+
   }
 
   & > div:last-child {

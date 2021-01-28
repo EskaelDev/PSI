@@ -8,10 +8,12 @@
         (selectedElem)="select($event)"
       ></app-sub-learn-outc-elem>
     </div>
-    <div *ngIf="_document.learningOutcomeEvaluations.length === 0">Brak wpisów</div>
-    <button *ngIf="!readOnly" mat-icon-button (click)="add()">
-      <mat-icon>add</mat-icon>
-    </button>
+    <div class="info">
+      <div *ngIf="_document.learningOutcomeEvaluations.length === 0">Brak wpisów</div>
+      <button *ngIf="!readOnly" mat-icon-button (click)="add()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
   </div>
   <div>
     <app-sub-learn-outc-edit

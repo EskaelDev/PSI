@@ -8,7 +8,7 @@
         (selectedElem)="select($event)"
       ></app-sub-lesson-elem>
     </div>
-    <div>
+    <div class="info">
       <div *ngIf="document.lessons.length === 0">Brak wpisów</div>
       <button *ngIf="!readOnly" mat-icon-button (click)="add()">
         <mat-icon>add</mat-icon>

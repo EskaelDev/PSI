@@ -8,10 +8,13 @@
         (selectedElem)="select($event)"
       ></app-sub-lit-elem>
     </div>
-    <div *ngIf="document.literature.length === 0">Brak wpisów</div>
-    <button *ngIf="!readOnly" mat-icon-button (click)="add()">
-      <mat-icon>add</mat-icon>
-    </button>
+    <div class="info">
+      <div *ngIf="document.literature.length === 0">Brak wpisów</div>
+      <button *ngIf="!readOnly" mat-icon-button (click)="add()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
   </div>
   <div class="sub-literature-second-column">
     <app-sub-lit-edit
